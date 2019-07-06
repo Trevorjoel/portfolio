@@ -7,14 +7,25 @@ class App extends Component {
         response: '',
         post: '',
         responseToPost: '',
-        queryBody: ''
+        queryBody: [],
     };
     
     componentDidMount() {
         this.callApi()
-            .then(res => this.setState({queryBody: res.database1, response: res.express}))
-            .catch(err => console.log(err))
+            .then(res => this.setState({response: res.express}))
+            .catch(err => console.log(err));
+        this.queryDB()
+            .then(res => this.setState({queryBody: res.database1}))
     }
+    queryDB = async () => {
+        
+        const response = await fetch('/api/sql');
+        const query = await response.json();
+        if (response.status !== 200) throw Error(query.message);
+        
+        return query;
+    };
+    
     
     callApi = async () => {
         
@@ -33,26 +44,41 @@ class App extends Component {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({post: this.state.post}),
+            
         });
+       
         const body = await response.text();
-        
         this.setState({responseToPost: body});
+        console.log(body);
     };
     
     render() {
         return (
             
             <div className="App">
-                
                 <header className="App-header">
                     <img src={logo} className="App-logo" alt="logo"/>
                     <p>
                 22222
                     </p>
                 </header>
-                <p>{this.state.queryBody}</p>
+                <div>
+                
+                </div>
+                
                 <p>{this.state.response}</p>
+                
+                <div>
+                    <h4>Database connected: </h4>
+                    <ul>
+                        {this.state.queryBody.map(queryBody => <li>Name:
+                            {queryBody.empFirstName}, {queryBody.empLastName}</li>)}
+                    </ul>
+                </div>
+                
                 <form onSubmit={this.handleSubmit}>
+                    
+                   
                     <p>
                         <strong>Test post:</strong>
                     </p>

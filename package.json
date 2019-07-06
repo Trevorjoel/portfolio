@@ -25,5 +25,13 @@
   "devDependencies": {
     "@types/express": "^4.16.1",
     "nodemon": "^1.19.1"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Trevorjoel/portfolio.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Trevorjoel/portfolio/issues"
+  },
+  "homepage": "https://github.com/Trevorjoel/portfolio#readme"
 }

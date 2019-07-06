@@ -1,25 +1,27 @@
 import express from 'express';
 import router from './routes/api/index';
-const mysql = require('mysql');
+
 import bodyParser from 'body-parser';
 const app = express();
 const port = process.env.PORT || 5000;
 app.listen(port, () => console.log(`LISTENING on port ${port}`));
 // Use middleware
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 app.use(router);
 
 
 console.log();
-/*
 
+
+/*
 router.get('/api/hello', (req, res) => {
     res.send({ express: 'Express back-end, up and running!',
     });
     
 });
 
-app.post('/api/world', (req, res) => {
+router.post('/api/world', (req, res) => {
     console.log(req.body);
     res.send(
         `I received your  request. This is what you sent me: ${req.body.post}`,
@@ -29,7 +31,8 @@ app.post('/api/world', (req, res) => {
 
 
 
-let connection = mysql.createConnection({
+
+/*let connection = mysql.createConnection({
     host     : '127.0.0.1',
     user     : 'nodeapp',
     password : 'nodeapp',
@@ -60,7 +63,7 @@ connection.query('SELECT empFirstName FROM qualification.employee WHERE empDepar
             });
             
         });
-    });
+    });*/
 
 
 
