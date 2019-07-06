@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
-import './App.css';
+import NavBar from './components/Navbar';
+import 'bootstrap/dist/css/bootstrap.css';
+import './styles/custom.scss';
 
 class App extends Component {
     state = {
@@ -56,6 +58,7 @@ class App extends Component {
         return (
             
             <div className="App">
+                <NavBar />
                 <header className="App-header">
                     <img src={logo} className="App-logo" alt="logo"/>
                     <p>
@@ -68,7 +71,7 @@ class App extends Component {
                 
                 <p>{this.state.response}</p>
                 
-                <div>
+                <div className="table">
                     <h4>Database connected: </h4>
                     <ul>
                         {this.state.queryBody.map(queryBody => <li>Name:
