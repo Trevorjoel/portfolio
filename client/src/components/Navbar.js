@@ -1,4 +1,4 @@
-import logo1 from '../images/Sign96x96.png';
+import logo from '../images/Sign96x96.png';
 import React, { Component } from 'react';
 import {
     Collapse,
@@ -34,9 +34,9 @@ class NavBar extends Component {
     
     render() {
         return (
-            <div>
-                <Navbar light expand="md">
-                    <NavbarBrand href="/"><img alt="Trevor logo" className="App-logo" src={logo1}/>Trevor
+            <div className="shadow">
+                <Navbar light expand="md" >
+                    <NavbarBrand href="/"><img alt="Trevor logo" className="App-logo" src={logo}/>Trevor
                         Joel</NavbarBrand>
                    
                     <NavbarToggler onClick={this.toggle}/>
@@ -65,7 +65,7 @@ class NavBar extends Component {
                                 <NavLink href="/components/">Contact</NavLink>
                             </NavItem>
                             <NavItem>
-                                <NavLink href="/components/">Blog</NavLink>
+                                <NavLink href="https://fullstack-adventure.com">Blog</NavLink>
                             </NavItem>
                         </Nav>
                     </Collapse>

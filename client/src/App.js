@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import NavBar from './components/Navbar';
+import Header from './components/Header';
 import 'bootstrap/dist/css/bootstrap.css';
 import './styles/custom.scss';
 
@@ -18,6 +18,7 @@ class App extends Component {
             .catch(err => console.log(err));
         this.queryDB()
             .then(res => this.setState({queryBody: res.database1}))
+            .catch(err => console.log(err));
     }
     queryDB = async () => {
         
@@ -34,7 +35,6 @@ class App extends Component {
         const response = await fetch('/api/hello');
         const body = await response.json();
         if (response.status !== 200) throw Error(body.message);
-        
         return body;
     };
     
@@ -59,12 +59,8 @@ class App extends Component {
             
             <div className="App">
                 <NavBar />
-                <header className="App-header">
-                    <img src={logo} className="App-logo" alt="logo"/>
-                    <p>
-                22222
-                    </p>
-                </header>
+               
+                <Header />
                 <div>
                 
                 </div>
