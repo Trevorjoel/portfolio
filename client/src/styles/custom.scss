@@ -2,6 +2,7 @@
 // BODY / MAIN
 .App {
   text-align: center;
+
 }
 body {
   margin: 0;
@@ -10,6 +11,10 @@ body {
   sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: #08293f;
+}
+.text-on-primary{
+  color:$font-color-over-primary;
 }
 
 code {
@@ -18,13 +23,20 @@ code {
 }
 // NAV-BAR
 .App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 8vmin;
+
   pointer-events: none;
+  height: 8vmin;
+
 }
+.navbar-brand:hover{
+  animation: App-logo-spin infinite 2.5s cubic-bezier(.46,-0.56,.27,1.55);
+}
+
 h1.site-title{
   font-size: 2em;
-  text-shadow: 2px 3px 5px #000000;
+  text-shadow: 2px 2px 8px #000;
+  color:$font-color-over-primary;
+  width: fit-content;
 }
 .App-link {
   color: #61dafb;
@@ -49,18 +61,18 @@ h1.site-title{
 }
 // Font of nav bar
 .navbar-light .navbar-nav .nav-link  {
-  color: $font-color-nav;
+  color: $font-color-over-primary;
   font-size: 1.2em;
 }
 .navbar-light .navbar-brand{
-  color: $font-color-nav;
+  color: $font-color-over-primary;
   font-size: 1em;
 }
 a.nav-link {
-  color:$font-color-nav;
+  color:$font-color-over-primary;
 }
 .navbar-toggler-icon {
-  color: $font-color-nav;
+  color: $font-color-over-primary;
 }
 .shadow{
   box-shadow: 0 .5rem 1rem rgba(0,0,0,.4);
@@ -71,13 +83,13 @@ a.nav-link {
   background-color: #009eb5;
   background-repeat: no-repeat;
   background-position: center;
-  min-height: 90vh;
+ min-height: 90vh;
   max-height: 1908px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  font-size: $font-transform;
   color: white;
   margin-top:3em;
 
@@ -85,4 +97,64 @@ a.nav-link {
 .react-parallax-bgimage{
   margin-top:500px;
   height: 841px !important;
+}
+// Introduction
+.img-parent{
+ height:auto;
+  max-width:100%;
+  padding: 25px 25px 0 25px;
+  min-height: 70vh;
+  max-height:90vh;
+ transform:translate(0%, -34%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow:hidden;
+}
+h1.introduction-head{
+  font-size: $font-transform;
+  padding-bottom: 1em;
+  color:$font-color-over-primary;
+  transform: translate(0%, -200%);
+}
+.contain-intro{
+  background-color: $primaryColour;
+  max-width: inherit;
+  padding: 0 4em 0 4em;
+}
+.intro-text-row{
+  margin-bottom:6em;
+}
+
+.skills-col{
+  background-color: #b2b2b5;
+  border:solid steelblue;
+}
+.tab-title{
+  font-size: calc(10px + 1vmin);;
+}
+.nav-tabs {
+  border-bottom: 0 solid #dee2e6;
+}
+.card-body{
+  text-align: left;
+}
+button.skills-button{
+width:100%;
+  text-align: center;
+  background-color: #9E1467;
+}
+.button-wrapper{
+  display: inline-block;
+  margin:100px;
+}
+
+.project-card{
+  background-color: #ffff;
+  color: black;
+  margin-bottom: 30px;
+}
+h1.projects-title{
+  color: $font-color-over-primary;
 }

@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import NavBar from './components/Navbar';
 import Header from './components/Header';
+import Projects from './components/Projects';
+import Introduction from './components/Introduction';
 import 'bootstrap/dist/css/bootstrap.css';
 import './styles/custom.scss';
 
@@ -59,12 +61,9 @@ class App extends Component {
             
             <div className="App">
                 <NavBar />
-               
                 <Header />
-                <div>
-                
-                </div>
-                
+                <Introduction />
+            <Projects />
                 <p>{this.state.response}</p>
                 
                 <div className="table">

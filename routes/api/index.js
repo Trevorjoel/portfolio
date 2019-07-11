@@ -30,12 +30,13 @@ let connection = mysql.createConnection({
 connection.connect((err) =>{
     if (err){
         console.log(err);
+    }else {
+        console.log('connected....')
     }
-    console.log('connected....')
 });
 
 connection.query('SELECT * FROM qualification.employee',
-    function (error, results, fields) {
+    function (error, results) {
         if (error) throw error;
         
         console.log('The results are: ', results);
