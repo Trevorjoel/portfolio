@@ -158,3 +158,29 @@ width:100%;
 h1.projects-title{
   color: $font-color-over-primary;
 }
+
+// CONTACT FORM
+
+.form-wrapper{
+  background-color: $primaryColour;
+  padding:20px;
+  border: 1px solid #149e4b;
+  border-radius: 4px;
+
+  margin-top: 100px;
+  margin-bottom: 100px;
+}
+.form-wrapper:hover{
+  box-shadow: 1px 1px 20px #149e4b;
+}
+// TEST AREA
+.test-area-wrapper{
+  background-color: #dee2e6;
+  padding:20px;
+}
+// FOOTER
+
+.footer-wrapper{
+  background-color: $primaryColour;
+  padding:2em;
+}

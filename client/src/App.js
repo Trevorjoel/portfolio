@@ -1,93 +1,32 @@
 import React, { Component } from 'react';
+
 import NavBar from './components/Navbar';
 import Header from './components/Header';
 import Projects from './components/Projects';
+import TestArea from './components/TestArea';
+import Footer from './components/Footer';
+import ContactForm from './components/ContactForm';
 import Introduction from './components/Introduction';
 import 'bootstrap/dist/css/bootstrap.css';
 import './styles/custom.scss';
 
+
 class App extends Component {
-    state = {
-        response: '',
-        post: '',
-        responseToPost: '',
-        queryBody: [],
-    };
-    
-    componentDidMount() {
-        this.callApi()
-            .then(res => this.setState({response: res.express}))
-            .catch(err => console.log(err));
-        this.queryDB()
-            .then(res => this.setState({queryBody: res.database1}))
-            .catch(err => console.log(err));
-    }
-    queryDB = async () => {
-        
-        const response = await fetch('/api/sql');
-        const query = await response.json();
-        if (response.status !== 200) throw Error(query.message);
-        
-        return query;
-    };
-    
-    
-    callApi = async () => {
-        
-        const response = await fetch('/api/hello');
-        const body = await response.json();
-        if (response.status !== 200) throw Error(body.message);
-        return body;
-    };
-    
-    handleSubmit = async e => {
-        e.preventDefault();
-        const response = await fetch('/api/world', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({post: this.state.post}),
-            
-        });
-       
-        const body = await response.text();
-        this.setState({responseToPost: body});
-        console.log(body);
-    };
+   
     
     render() {
         return (
             
             <div className="App">
                 <NavBar />
+              
                 <Header />
                 <Introduction />
-            <Projects />
-                <p>{this.state.response}</p>
+                <Projects />
+            <ContactForm/>
+            <TestArea/>
                 
-                <div className="table">
-                    <h4>Database connected: </h4>
-                    <ul>
-                        {this.state.queryBody.map(queryBody => <li>Name:
-                            {queryBody.empFirstName}, {queryBody.empLastName}</li>)}
-                    </ul>
-                </div>
-                
-                <form onSubmit={this.handleSubmit}>
-                    
-                   
-                    <p>
-                        <strong>Test post:</strong>
-                    </p>
-                    <input
-                        type="text"
-                        value={this.state.post}
-                        onChange={e => this.setState({post: e.target.value})}
-                    />
-                    <button type="submit">Submit</button>
-                </form>
-                <p>{this.state.responseToPost}</p>
+                <Footer/>
             </div>
         );
     }

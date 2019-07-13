@@ -1,5 +1,6 @@
 import logo from '../images/Sign96x96.png';
 import React, { Component } from 'react';
+import { Link} from "react-scroll";
 import {
     Collapse,
     Navbar,
@@ -7,11 +8,7 @@ import {
     NavbarBrand,
     Nav,
     NavItem,
-    NavLink,
-    UncontrolledDropdown,
-    DropdownToggle,
-    DropdownMenu,
-    DropdownItem
+    NavLink
 } from 'reactstrap';
 
 
@@ -33,36 +30,72 @@ class NavBar extends Component {
     }
     
     render() {
+       
         return (
             <div className="shadow">
                 <Navbar light expand="md" >
-                    <NavbarBrand href="/"><img alt="Trevor logo" className="App-logo" src={logo}/>Trevor
-                        Joel</NavbarBrand>
+                    <Link
+                        activeClass="active"
+                        to="top"
+                        spy={true}
+                        smooth={true}
+                        offset={-5000}
+                        duration= {500}
+                    >
+                        <NavbarBrand href="/"><img alt="Trevor logo" className="App-logo" src={logo}/>Trevor
+                            Joel</NavbarBrand>
+                    </Link>
                    
                     <NavbarToggler onClick={this.toggle}/>
                     <Collapse isOpen={this.state.isOpen} navbar>
                         <Nav className="ml-auto" navbar>
                             <NavItem>
+                                <Link
+                                    activeClass="active"
+                                    to="introduction"
+                                    spy={true}
+                                    smooth={true}
+                                    offset={-200}
+                                    duration= {500}
+                                >
                                 <NavLink href="/components/">Introduction</NavLink>
+                                </Link>
                             </NavItem>
-                            
-                            <UncontrolledDropdown nav inNavbar>
-                                <DropdownToggle nav caret>
-                                    Projects
-                                </DropdownToggle>
-                                <DropdownMenu right>
-                                    <DropdownItem>
-                                        Option 1
-                                    </DropdownItem>
-                                    <DropdownItem>
-                                        Option 2
-                                    </DropdownItem>
-                                    <DropdownItem divider/>
-                                   
-                                </DropdownMenu>
-                            </UncontrolledDropdown>
                             <NavItem>
-                                <NavLink href="/components/">Contact</NavLink>
+                                <Link
+                                    activeClass="active"
+                                    to="skills"
+                                    spy={true}
+                                    smooth={true}
+                                    offset={-120}
+                                    duration= {500}
+                                >
+                                    <NavLink href="/components/">Skills</NavLink>
+                                </Link>
+                            </NavItem>
+                            <NavItem>
+                                <Link
+                                    activeClass="active"
+                                    to="projects"
+                                    spy={true}
+                                    smooth={true}
+                                    offset={-120}
+                                    duration= {500}
+                                >
+                                    <NavLink href="/components/">Projects</NavLink>
+                                </Link>
+                            </NavItem>
+                            <NavItem>
+                                <Link
+                                    activeClass="active"
+                                    to="contacts"
+                                    spy={true}
+                                    smooth={true}
+                                    offset={-70}
+                                    duration= {500}
+                                >
+                                    <NavLink href="/components/">Contact</NavLink>
+                                </Link>
                             </NavItem>
                             <NavItem>
                                 <NavLink href="https://fullstack-adventure.com">Blog</NavLink>

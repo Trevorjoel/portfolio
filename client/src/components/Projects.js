@@ -4,8 +4,8 @@ import placeholder from '../images/index.svg';
 class Projects extends React.Component {
     render() {
         return (
-            <Container>
-                <h1 className="projects-title">Latest Projects</h1>
+            <Container >
+                <h1 id="projects" className="projects-title">Latest Projects</h1>
                 <br />
                 <Row>
                     <Col xs="12" sm="6" md="6" lg="4">

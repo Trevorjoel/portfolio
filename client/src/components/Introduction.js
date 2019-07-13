@@ -25,7 +25,7 @@ class Introduction extends React.Component{
     render(){
         return(
 
-            <Container className="contain-intro">
+            <Container className="contain-intro" >
                 
                 <Row>
                     <Col>
@@ -33,7 +33,7 @@ class Introduction extends React.Component{
                             <Image className="img-thumbnail" src={portrait} roundedCircle fluid alt="Trevor" />
                             
                         </div>
-                        < h1 className="introduction-head">Welcome</h1>
+                        < h1 id="introduction" className="introduction-head">Welcome</h1>
                     </Col>
                     
                 </Row>
