@@ -1,40 +1,82 @@
-import {Button, Form, FormGroup, Label, Input} from 'reactstrap';
+import {Button, Form, FormGroup, Label, Input,Modal, ModalHeader, ModalBody, ModalFooter  } from 'reactstrap';
 import React from "react";
 import { Component } from 'react';
 import { Col, Container, Row} from "react-bootstrap";
+import { AvForm, AvField } from 'availity-reactstrap-validation';
+
 
 
 class ContactForm extends Component {
     render(){
+        const modalError = this.state.error ? 'not' : '';
         return(
             <Container>
-            <Row id="contacts">
-                <Col xs="12" sm="2" md="2" lg="2">
-            
+                <Row id="contacts">
+                    <Col xs="12" sm="2" md="2" lg="2">
+                    
                     </Col>
-                <Col xs="0" sm="8" md="8" lg="8">
-                    <div className="form-wrapper">
-                    <h1 className="projects-title">Contact me</h1>
-                    <Form>
-                        <FormGroup>
-                            <Label for="exampleEmail">Email</Label>
-                            <Input type="email" name="email" id="exampleEmail" placeholder="with a placeholder" />
-                        </FormGroup>
-        
-                        <FormGroup>
-                            <Label for="exampleText">Text Area</Label>
-                            <Input type="textarea" name="text" id="exampleText" />
-                        </FormGroup>
-        
-                        <Button>Submit</Button>
-                    </Form>
-                    </div>
-                </Col>
-                <Col xs="0" sm="2" md="2" lg="2">
-                </Col>
-            </Row>
+                    <Col xs="0" sm="8" md="8" lg="8">
+                        <div className="form-wrapper">
+                            <h1 className="projects-title">Contact me</h1>
+                            <AvForm onValidSubmit={this.handleValidSubmit} onInvalidSubmit={this.handleInvalidSubmit}>
+                                <FormGroup>
+                                    <Label for="email">Email</Label>
+                                    <AvField name="email" label="Email Address" type="email" required placeholder="Your email"  id="email"/>
+                                    
+                                </FormGroup>
+                                <AvField name="message" label="message" type="text" required placeholder="Your message"  id="message"/>
+                                <FormGroup>
+                                    <Label for="exampleText">Text Area</Label>
+                                    
+                                </FormGroup>
+                                
+                                <Button>Submit</Button>
+                            </AvForm>
+                            <Modal isOpen={this.state.email !== false} toggle={this.closeModal}>
+                                <ModalHeader toggle={this.closeModal}>Form is {modalError} valid!</ModalHeader>
+                                <ModalBody>
+                                    <p>{this.state.result}</p><br/>
+                                    Your email: <strong> {this.state.email}</strong><br/>
+                                    Your message: <p>{this.state.message}</p>
+                                </ModalBody>
+                                <ModalFooter>
+                                    <Button color="primary" onClick={this.closeModal}>Ok, got it!</Button>
+                                </ModalFooter>
+                            </Modal>
+                        </div>
+                    </Col>
+                    <Col xs="0" sm="2" md="2" lg="2">
+                    </Col>
+                </Row>
             </Container>
         )
+    }
+    constructor(props) {
+        super(props);
+        
+        this.handleValidSubmit = this.handleValidSubmit.bind(this);
+        this.handleInvalidSubmit = this.handleInvalidSubmit.bind(this);
+        this.closeModal = this.closeModal.bind(this);
+        this.state = {email: false,
+                        message:'',
+                        result: ''
+        };
+    }
+    
+    handleValidSubmit(event, values) {
+       
+        this.setState({email: values.email, message: values.message, result: 'Your submission went through. I will contact you soon.'});
+        
+    }
+    
+    handleInvalidSubmit(event, errors, values) {
+        
+            this.setState({email: values.email, error: true, message: values.message, result: 'Something went wrong with your submission.'});
+       
+    }
+    
+    closeModal() {
+        this.setState({email: false, error: false});
     }
 }
 export default ContactForm;

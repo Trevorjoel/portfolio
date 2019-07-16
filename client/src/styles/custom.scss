@@ -1,7 +1,12 @@
 @import "variables";
 // BODY / MAIN
+html{
+  overflow-x: hidden;
+}
 .App {
   text-align: center;
+overflow: inherit;
+
 
 }
 body {
@@ -12,6 +17,9 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: #08293f;
+  overflow-x: hidden;
+
+
 }
 .text-on-primary{
   color:$font-color-over-primary;
@@ -23,7 +31,6 @@ code {
 }
 // NAV-BAR
 .App-logo {
-
   pointer-events: none;
   height: 8vmin;
 
@@ -80,40 +87,45 @@ a.nav-link {
 
 // HEADER
 .App-header {
+
   background-color: #009eb5;
   background-repeat: no-repeat;
   background-position: center;
- min-height: 90vh;
-  max-height: 1908px;
+ min-height:  841px;
+  max-height: 841px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   font-size: $font-transform;
   color: white;
-  margin-top:3em;
+
 
 }
 .react-parallax-bgimage{
-  margin-top:500px;
-  height: 841px !important;
+
+ height: 1444px !important ;
+  overflow: inherit;
+  margin-top: 200px;
+
 }
+
 // Introduction
 .img-parent{
  height:auto;
   max-width:100%;
   padding: 25px 25px 0 25px;
-  min-height: 70vh;
-  max-height:90vh;
+  min-height: 82vh;
+  max-height:82vh;
  transform:translate(0%, -34%);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  overflow:hidden;
+
 }
 h1.introduction-head{
-  font-size: $font-transform;
+  font-size: calc(25px + 2vmin);
   padding-bottom: 1em;
   color:$font-color-over-primary;
   transform: translate(0%, -200%);
@@ -147,7 +159,7 @@ width:100%;
 }
 .button-wrapper{
   display: inline-block;
-  margin:100px;
+  margin:100px 0 100px 0;
 }
 
 .project-card{
@@ -166,6 +178,7 @@ h1.projects-title{
   padding:20px;
   border: 1px solid #149e4b;
   border-radius: 4px;
+  color:$font-color-over-primary;
 
   margin-top: 100px;
   margin-bottom: 100px;
@@ -183,4 +196,36 @@ h1.projects-title{
 .footer-wrapper{
   background-color: $primaryColour;
   padding:2em;
+  color: $font-color-over-primary;
 }
+.footer-links{
+  height: 6vmin;
+}
+.footer-icons{
+  margin:10px;
+  height: 5vmin;
+}
+a.footer-links:hover{
+  margin:10px;
+  height: 8vmin;
+}
+// Single project
+
+.modal-dialog.single-project-modal{
+  max-width: 80%;
+text-align: center;
+}
+h5.modal-title{
+  margin-left: auto;
+  text-align: center;
+}
+.project-modal-img{
+  padding: 2em 1em 2em 1em;
+}
+p.project-modal-text{
+
+}
+
+// MEDIA QUERIES
+
+// My face image on the header needs a margin at the top and the 'welcome texr needs a top margin on small screen sideways

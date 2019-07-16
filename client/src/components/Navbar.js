@@ -40,9 +40,9 @@ class NavBar extends Component {
                         spy={true}
                         smooth={true}
                         offset={-5000}
-                        duration= {500}
+                        duration= {1000}
                     >
-                        <NavbarBrand href="/"><img alt="Trevor logo" className="App-logo" src={logo}/>Trevor
+                        <NavbarBrand href="/" title="Back to top"><img alt="Trevor logo" className="App-logo" src={logo}/>Trevor
                             Joel</NavbarBrand>
                     </Link>
                    
@@ -97,9 +97,7 @@ class NavBar extends Component {
                                     <NavLink href="/components/">Contact</NavLink>
                                 </Link>
                             </NavItem>
-                            <NavItem>
-                                <NavLink href="https://fullstack-adventure.com">Blog</NavLink>
-                            </NavItem>
+                            
                         </Nav>
                     </Collapse>
                 </Navbar>

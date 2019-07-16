@@ -23,7 +23,7 @@ class SkillsModal extends React.Component {
         return (
             <div>
                 <div  id="skills" className="button-wrapper">
-                <Button block className="skills-button"  color="success" size="lg" onClick={this.toggle}>{this.props.buttonLabel}    Skills & Experience    </Button>
+                <Button block className="skills-button"  color="success" size="lg" onClick={this.toggle}>{this.props.buttonLabel}    Skills & Experience</Button>
                 </div>
                 <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
                     <ModalHeader toggle={this.toggle}>Skills!</ModalHeader>
@@ -31,8 +31,8 @@ class SkillsModal extends React.Component {
                         <SkillsTabs />
                     
                     <ModalFooter>
-                        <Button color="primary" onClick={this.toggle}>Do Something</Button>{' '}
-                        <Button color="secondary" onClick={this.toggle}>Cancel</Button>
+                        
+                        <Button color="secondary" onClick={this.toggle}>Close</Button>
                     </ModalFooter>
                 </Modal>
             </div>

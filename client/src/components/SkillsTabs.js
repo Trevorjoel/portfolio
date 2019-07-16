@@ -54,11 +54,20 @@ class SkillsTabs extends React.Component {
                             <Col sm="12">
                                 <Card body>
                                     <CardTitle>
-                                        <h2>Front-end</h2>
+                                        <h3>Front-end</h3>
                                     </CardTitle>
-                                    <CardText>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod<br/>tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,<br/>
-                                        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo<br/>consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse <br/>cillum dolore eu fugiat nulla pariatur.
-                                        Excepteur sint occaecat<br/>cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                                    <CardText>
+                                        <strong>Responsive design using:</strong>
+                                        <br/>HTML, CSS & JavaScript
+                                        <br/>Design & planning
+                                        <br/>Style guides
+                                        <br/>Wire-framing & mock-ups
+                                        <br/>PhotoShop
+                                        <br/>
+                                        <strong>Using the frameworks:</strong>
+                                        <br/>SASS
+                                        <br/>Foundation & Bootstrap
+                                        <br/>React
                                     </CardText>
                         
                                 </Card>
@@ -72,9 +81,16 @@ class SkillsTabs extends React.Component {
                                     <CardTitle>
                                         <h2>Back-end</h2>
                                     </CardTitle>
-                                    <CardText>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod<br/>tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,<br/>
-                                        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo<br/>consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse <br/>cillum dolore eu fugiat nulla pariatur.
-                                        Excepteur sint occaecat<br/>cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                                    <CardText><strong>Behind the scenes I can use:</strong>
+                                        <br/>PHP
+                                        <br/>Python
+                                        <br/>Java
+                                        <br/>C#
+                                        <br/>Node
+                                        <br/>Express
+                                        <br/>MySQL
+                                        <br/>MongoDB
+                                        <br/>Apache server
                                     </CardText>
                         
                                 </Card>

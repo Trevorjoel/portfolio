@@ -40,9 +40,10 @@ class Introduction extends React.Component{
                     <Row className="intro-text-row">
                     <Col sm={12} md={12} lg={12}>
                         <p className="text-on-primary">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod<br/>tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,<br/>
-                            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo<br/>consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse <br/>cillum dolore eu fugiat nulla pariatur.
-                            Excepteur sint occaecat<br/>cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                            My name is Trevor and I'm a full-stack developer.<br/>
+                            I have experience building applications in many different areas of web development using many different tools and technologies.<br/>
+                            Settling into front and back end JavaScript. <br/>I am available for freelance site-building with WordPress and consultations for small businesses
+                            and full-time developer positions.<br/>
                         </p>
                         <SkillsModal />
                     </Col>
@@ -54,3 +55,4 @@ class Introduction extends React.Component{
     }
 }
 export default Introduction;
+
