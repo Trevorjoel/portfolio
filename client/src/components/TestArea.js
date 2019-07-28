@@ -57,7 +57,7 @@ class TestArea extends Component{
             <p>{this.state.response}</p>
     
             <div className="table">
-            <p>Database connected: </p>
+            <p>Database: </p>
     <ul>
     {this.state.queryBody.map(queryBody => <li>Name:
     {queryBody.empFirstName}, {queryBody.empLastName}</li>)}

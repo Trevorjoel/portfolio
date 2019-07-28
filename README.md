@@ -23,7 +23,8 @@ Learning to build an application in this stack, Mostly focusing on front end, Re
 
 Async programming.
 
-# npm run dev
+# 'npm run dev'  - Be sure to start the mysql DB
+- This might be causing proxy errors
 
 From the root dir or check the package.json files for more options.
 

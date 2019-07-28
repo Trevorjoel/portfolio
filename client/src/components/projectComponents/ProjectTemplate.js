@@ -12,7 +12,7 @@ class ProjectTemplate extends Component{
     
     render(){
         return(
-            <div>
+            <div className="project-inner-wrapper">
                 <Image className="project-modal-img" src={cardplaceholder} fluid />
              <p>
                  This is the template to start individual project components.

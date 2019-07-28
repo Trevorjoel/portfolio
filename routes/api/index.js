@@ -2,6 +2,7 @@ import express from 'express';
 const router = express.Router();
 const mysql = require('mysql');
 import DB from '../../config/keys.js';
+
 // Returns a message if the server is running
 router.get('/api/hello', (req, res) => {
     res.send({ express: 'Express back-end, up and running!',

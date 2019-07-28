@@ -24,7 +24,7 @@ class App extends Component {
                 <Introduction />
                 <Projects />
             <ContactForm/>
-           {/* <TestArea/>*/}
+          <TestArea/>
                 
                 <Footer/>
             </div>

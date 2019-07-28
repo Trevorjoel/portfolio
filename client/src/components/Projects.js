@@ -2,7 +2,7 @@ import React from 'react';
 import {Card,  Row, Col, Container} from 'react-bootstrap';
 import placeholder from '../images/index.svg';
 import { Modal, Button, ModalHeader,  ModalFooter } from 'reactstrap';
-import ProjectTemplate from './projectComponents/ProjectTemplate';
+import ProjectTable from './projectComponents/ProjectTable';
 import ProjectTemplateTest from './projectComponents/ProjectTemplateTest';
 import github from "../images/github_PNG2.png";
 /*
@@ -71,16 +71,15 @@ class Projects extends React.Component {
                         <Card className="project-card" >
                             <Card.Img variant="top" src={placeholder} />
                             <Card.Body>
-                                <Card.Title>Project 1</Card.Title>
+                                <Card.Title>Employee CRUD application</Card.Title>
                                 <Card.Text>
-                                    Project 1  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod<br/>tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,<br/>
-                                    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo<br/>consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+                                   A small application to view employees in an organisation. Simple CRUD operations in an SQL database.
                                 </Card.Text>
                                 
                                     <Button  className=""  color="success" size="md" onClick={this.toggle1}>{this.props.buttonLabel}Check it out!</Button>
                                 <Modal isOpen={this.state.modal1} toggle1={this.toggle1} className="single-project-modal">
-                                    <ModalHeader toggle={this.toggle1}>Project 1</ModalHeader>
-                                    <ProjectTemplate/>
+                                    <ModalHeader toggle={this.toggle1}>CRUD employees</ModalHeader>
+                                    <ProjectTable/>
                                     <ModalFooter>
                                         
                                         <Button color="secondary" onClick={this.toggle1}>Close</Button>
@@ -125,7 +124,7 @@ class Projects extends React.Component {
                                 <Button  className=""  color="success" size="md" onClick={this.toggle3}>{this.props.buttonLabel}Check it out!</Button>
                                 <Modal isOpen={this.state.modal3} toggle3={this.toggle3} className="single-project-modal">
                                     <ModalHeader toggle={this.toggle3}>Project 3</ModalHeader>
-                                    <ProjectTemplate/>
+                                    <ProjectTemplateTest/>
                                     <ModalFooter>
                     
                                         <Button color="secondary" onClick={this.toggle3}>Close</Button>
