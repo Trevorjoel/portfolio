@@ -1,10 +1,10 @@
 import React from 'react';
 import {Card,  Row, Col, Container} from 'react-bootstrap';
+import placeholder1 from '../images/Employees-together286x180.jpg';
 import placeholder from '../images/index.svg';
 import { Modal, Button, ModalHeader,  ModalFooter } from 'reactstrap';
 import ProjectTable from './projectComponents/ProjectTable';
 import ProjectTemplateTest from './projectComponents/ProjectTemplateTest';
-import github from "../images/github_PNG2.png";
 /*
 * Notes: This file creates modal cards for each project... Should not be more than 6 projects at a time.
 *  Steps:  1. add new modal to state, Bind the toggle to this
@@ -69,7 +69,7 @@ class Projects extends React.Component {
                     <Col xs="12" sm="6" md="6" lg="4">
                         
                         <Card className="project-card" >
-                            <Card.Img variant="top" src={placeholder} />
+                            <Card.Img variant="top" src={placeholder1} />
                             <Card.Body>
                                 <Card.Title>Employee CRUD application</Card.Title>
                                 <Card.Text>

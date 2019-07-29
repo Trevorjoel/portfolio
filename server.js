@@ -9,7 +9,10 @@ app.listen(port, () => console.log(`LISTENING on port ${port}`));
 // Use middleware
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+
+//Import routes
 app.use(router);
+
 
 
 

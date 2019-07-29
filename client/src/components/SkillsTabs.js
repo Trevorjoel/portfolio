@@ -29,21 +29,21 @@ class SkillsTabs extends React.Component {
                             className={classnames({ active: this.state.activeTab === '1' })}
                             onClick={() => { this.toggle('1'); }}
                         >
-                            <h4 className="tab-title">Front-end</h4>
+                            <h2 className="tab-title">Front-end</h2>
                         </NavLink>
                     </NavItem>
                     <NavItem>
                         <NavLink
                             className={classnames({ active: this.state.activeTab === '2' })}
                             onClick={() => { this.toggle('2'); }}>
-                            <h4 className="tab-title">Back-end</h4>
+                            <h2 className="tab-title">Back-end</h2>
                         </NavLink>
                     </NavItem>
                     <NavItem>
                         <NavLink
                             className={classnames({ active: this.state.activeTab === '3' })}
                             onClick={() => { this.toggle('3'); }}>
-                            <h4 className="tab-title">Education</h4>
+                            <h2 className="tab-title">Education</h2>
                         </NavLink>
                     </NavItem>
                 </Nav>
@@ -54,7 +54,6 @@ class SkillsTabs extends React.Component {
                             <Col sm="12">
                                 <Card body>
                                     <CardTitle>
-                                        <h3>Front-end</h3>
                                     </CardTitle>
                                     <CardText>
                                         <strong>Responsive design using:</strong>
@@ -79,7 +78,7 @@ class SkillsTabs extends React.Component {
                             <Col sm="12">
                                 <Card body>
                                     <CardTitle>
-                                        <h2>Back-end</h2>
+                                    
                                     </CardTitle>
                                     <CardText><strong>Behind the scenes I can use:</strong>
                                         <br/>PHP
@@ -102,7 +101,7 @@ class SkillsTabs extends React.Component {
                             <Col sm="12">
                                 <Card body>
                                     <CardTitle>
-                                        <h2>Education</h2>
+                                    
                                     </CardTitle>
                                     <CardText>
                                         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod<br/>tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,<br/>

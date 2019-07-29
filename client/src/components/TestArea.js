@@ -2,6 +2,7 @@
 *  This is where I can test new components
 * */
 import React, { Component } from 'react';
+
 class TestArea extends Component{
     state = {
         response: '',
@@ -23,7 +24,6 @@ class TestArea extends Component{
         const response = await fetch('/api/sql');
         const query = await response.json();
         if (response.status !== 200) throw Error(query.message);
-        
         return query;
     };
     
@@ -51,9 +51,11 @@ class TestArea extends Component{
         this.setState({responseToPost: body});
         console.log(body);
     };
+
     render(){
         return(
             <div className="test-area-wrapper">
+                <h2>Area 52 : Testing zone. Do not storm!</h2>
             <p>{this.state.response}</p>
     
             <div className="table">
@@ -77,6 +79,7 @@ class TestArea extends Component{
     />
     <button type="submit">Submit</button>
     </form>
+                <button onSubmit={this.newDb}>Show New Database</button>
     <p>{this.state.responseToPost}</p>
             </div>
         )

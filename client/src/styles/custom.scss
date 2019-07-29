@@ -144,7 +144,7 @@ h1.introduction-head{
   border:solid steelblue;
 }
 .tab-title{
-  font-size: calc(10px + 1vmin);;
+  font-size: calc(13px + 1vmin);
 }
 .nav-tabs {
   border-bottom: 0 solid #dee2e6;
@@ -161,7 +161,13 @@ width:100%;
   display: inline-block;
   margin:100px 0 100px 0;
 }
+.nav-tabs .nav-link.active, .nav-tabs .nav-item.show .nav-link{
+ background-color: #dfdfdf;
 
+}
+.tab-content  .active {
+  background-color: #dfdfdf;
+}
 .project-card{
   background-color: #ffff;
   color: black;
@@ -220,7 +226,7 @@ h5.modal-title{
   text-align: center;
 }
 .project-modal-img{
-  padding: 2em 1em 2em 1em;
+  padding: 4em 1em 6em 2em;
 }
 p.project-modal-text{
 
@@ -229,6 +235,11 @@ p.project-modal-text{
 // PROJECTS
 .project-inner-wrapper {
   padding: 40px 20px 40px 20px;
+}
+
+// Table
+.employee-table{
+  margin: 70px 0 50px 0;
 }
 // MEDIA QUERIES
 
