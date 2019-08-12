@@ -78,7 +78,7 @@ class Projects extends React.Component {
                                 
                                     <Button  className=""  color="success" size="md" onClick={this.toggle1}>{this.props.buttonLabel}Check it out!</Button>
                                 <Modal isOpen={this.state.modal1} toggle1={this.toggle1} className="single-project-modal">
-                                    <ModalHeader toggle={this.toggle1}>CRUD employees</ModalHeader>
+                                    <ModalHeader toggle={this.toggle1}>You have some real <strong title="Noun: euphemistic Crap, excrement.">"CRUD"</strong> employees</ModalHeader>
                                     <ProjectTable/>
                                     <ModalFooter>
                                         

@@ -23,6 +23,7 @@ body {
 }
 .text-on-primary{
   color:$font-color-over-primary;
+  font-size: larger;
 }
 
 code {
@@ -43,7 +44,7 @@ h1.site-title{
   font-size: 2em;
   text-shadow: 2px 2px 8px #000;
   color:$font-color-over-primary;
-  width: fit-content;
+  //width: fit-content;
 }
 .App-link {
   color: #61dafb;
@@ -126,7 +127,7 @@ a.nav-link {
 }
 h1.introduction-head{
   font-size: calc(25px + 2vmin);
-  padding-bottom: 1em;
+
   color:$font-color-over-primary;
   transform: translate(0%, -200%);
 }
@@ -144,13 +145,25 @@ h1.introduction-head{
   border:solid steelblue;
 }
 .tab-title{
-  font-size: calc(13px + 1vmin);
+  font-size: calc(16px + 1vmin);
+  color: black;
 }
+
 .nav-tabs {
   border-bottom: 0 solid #dee2e6;
+  background-color: $primaryColour;
 }
 .card-body{
   text-align: left;
+}
+.tab-title .active{
+color: black;
+}
+.card-text{
+  font-size: larger;
+}
+.skill-icons{
+  margin: 14px 0 40px 0;
 }
 button.skills-button{
 width:100%;
@@ -162,9 +175,10 @@ width:100%;
   margin:100px 0 100px 0;
 }
 .nav-tabs .nav-link.active, .nav-tabs .nav-item.show .nav-link{
- background-color: #dfdfdf;
+ background-color: #f2f2f2;
 
 }
+
 .tab-content  .active {
   background-color: #dfdfdf;
 }
@@ -175,6 +189,7 @@ width:100%;
 }
 h1.projects-title{
   color: $font-color-over-primary;
+  margin:40px;
 }
 
 // CONTACT FORM
@@ -185,12 +200,21 @@ h1.projects-title{
   border: 1px solid #149e4b;
   border-radius: 4px;
   color:$font-color-over-primary;
-
+  font-size: large;
   margin-top: 100px;
   margin-bottom: 100px;
 }
 .form-wrapper:hover{
   box-shadow: 1px 1px 20px #149e4b;
+}
+.form-text-left{
+  text-align: left;
+}
+.contact-button{
+  margin: 20px;
+}
+.form-group{
+  margin-bottom: 2em;
 }
 // TEST AREA
 .test-area-wrapper{
@@ -226,7 +250,9 @@ h5.modal-title{
   text-align: center;
 }
 .project-modal-img{
-  padding: 4em 1em 6em 2em;
+  padding:1px;
+  border: $primaryColour solid 1px;
+  margin: 0 0 100px 0;
 }
 p.project-modal-text{
 
@@ -234,7 +260,7 @@ p.project-modal-text{
 
 // PROJECTS
 .project-inner-wrapper {
-  padding: 40px 20px 40px 20px;
+  padding: 0 20px 40px 20px;
 }
 
 // Table

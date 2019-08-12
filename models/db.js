@@ -1,12 +1,12 @@
 // DB Connection
 const mysql = require('mysql');
-import DB from '../config/keys';
+import Conf from '../config/keys';
 let connection = mysql.createConnection({
-    host     : DB.HOST,
-    user     : DB.USER,
-    password : DB.PASSWORD,
-    database : DB.DATABASE,
-    port:      DB.PORT
+    host     : Conf.HOST,
+    user     : Conf.USER,
+    password : Conf.PASSWORD,
+    database : Conf.DATABASE,
+    port:      Conf.PORT
 });
 
 connection.connect((err) =>{

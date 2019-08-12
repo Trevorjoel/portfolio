@@ -2,6 +2,7 @@
 *  This is where I can test new components
 * */
 import React, { Component } from 'react';
+import { Alert } from 'reactstrap';
 
 class TestArea extends Component{
     state = {
@@ -55,7 +56,11 @@ class TestArea extends Component{
     render(){
         return(
             <div className="test-area-wrapper">
-                <h2>Area 52 : Testing zone. Do not storm!</h2>
+                <Alert color="danger">
+                    <h2 >Area 52 <br/> Testing zone. <br/>Do not storm!</h2>
+                </Alert>
+                
+                
             <p>{this.state.response}</p>
     
             <div className="table">
@@ -73,6 +78,8 @@ class TestArea extends Component{
     <strong>Test post:</strong>
     </p>
     <input
+        name="g-recaptcha-response"
+        id="g-recaptcha-response"
     type="text"
     value={this.state.post}
     onChange={e => this.setState({post: e.target.value})}

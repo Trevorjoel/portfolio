@@ -18,20 +18,17 @@ class ContactForm extends Component {
                     <Col xs="0" sm="8" md="8" lg="8">
                         <div className="form-wrapper">
                             <h1 className="projects-title">Contact me</h1>
+                            <div className="form-text-left">
                             <AvForm onValidSubmit={this.handleValidSubmit} onInvalidSubmit={this.handleInvalidSubmit}>
                                 <FormGroup>
-                                    <Label for="email">Email</Label>
-                                    <AvField name="email" label="Email Address" type="email" required placeholder="Your email"  id="email"/>
-                                    
+                                    <AvField name="email" label="Email address: " type="email" required placeholder="Your email"  id="email"/>
                                 </FormGroup>
-                                <AvField name="message" label="message" type="text" required placeholder="Your message"  id="message"/>
-                                <FormGroup>
-                                    <Label for="exampleText">Text Area</Label>
-                                    
-                                </FormGroup>
+                                <AvField name="message" label="Message: " type="text" required placeholder="Your message"  id="message"/>
+                              
                                 
-                                <Button>Submit</Button>
+                                <Button className="contact-button">Submit</Button>
                             </AvForm>
+                            </div>
                             <Modal isOpen={this.state.email !== false} toggle={this.closeModal}>
                                 <ModalHeader toggle={this.closeModal}>Form is {modalError} valid!</ModalHeader>
                                 <ModalBody>
@@ -65,16 +62,21 @@ class ContactForm extends Component {
     
     handleValidSubmit(event, values) {
        
-        this.setState({email: values.email, message: values.message, result: 'Your submission went through. I will contact you soon.'});
-        
+        this.setState({email: values.email,
+            message: values.message,
+            result: 'Your submission went through. I will contact you soon.'
+        });
+        console.log(values.email + values.message );
     }
     
     handleInvalidSubmit(event, errors, values) {
         
-            this.setState({email: values.email, error: true, message: values.message, result: 'Something went wrong with your submission.'});
-       
+            this.setState({email: values.email,
+                error: true,
+                message: values.message,
+                result: 'Something went wrong with your submission.'
+            });
     }
-    
     closeModal() {
         this.setState({email: false, error: false});
     }

@@ -15,8 +15,8 @@ class Header  extends Component {
                 <Parallax bgImage={require('../images/P1090888-resize1.JPG')} className="App-header"  strength={500}>
                     <div style={{ height: 400 }}>
                 <h1 id="top"  style={insideStyles} className="site-title">
-                    TREVOR
-                    FULL STACK
+                   TREVOR
+                    GARRITY
                   
                 </h1>
                     </div>
