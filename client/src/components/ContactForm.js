@@ -6,6 +6,7 @@ import { AvForm, AvField } from 'availity-reactstrap-validation';
 
 
 
+
 class ContactForm extends Component {
     render(){
         const modalError = this.state.error ? 'not' : '';
