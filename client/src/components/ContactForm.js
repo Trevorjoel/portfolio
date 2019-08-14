@@ -22,11 +22,12 @@ class ContactForm extends Component {
                             <div className="form-text-left">
                             <AvForm onValidSubmit={this.handleValidSubmit} onInvalidSubmit={this.handleInvalidSubmit}>
                                 <FormGroup>
+                                    <AvField name="name" label="Name " type="text" required placeholder="Your name"  id="name"/>
                                     <AvField name="email" label="Email address: " type="email" required placeholder="Your email"  id="email"/>
-                                </FormGroup>
-                                <AvField name="message" label="Message: " type="text" required placeholder="Your message"  id="message"/>
-                              
                                 
+                                <AvField name="message" label="Message: " type="text" required placeholder="Your message"  id="message"/>
+
+                                </FormGroup>
                                 <Button className="contact-button">Submit</Button>
                             </AvForm>
                             </div>
@@ -34,8 +35,9 @@ class ContactForm extends Component {
                                 <ModalHeader toggle={this.closeModal}>Form is {modalError} valid!</ModalHeader>
                                 <ModalBody>
                                     <p>{this.state.result}</p><br/>
+                                    Your Name: <strong> {this.state.name}</strong><br/>
                                     Your email: <strong> {this.state.email}</strong><br/>
-                                    Your message: <p>{this.state.message}</p>
+                                    Your message: <br/><p>{this.state.message}</p>
                                 </ModalBody>
                                 <ModalFooter>
                                     <Button color="primary" onClick={this.closeModal}>Ok, got it!</Button>
@@ -55,24 +57,41 @@ class ContactForm extends Component {
         this.handleValidSubmit = this.handleValidSubmit.bind(this);
         this.handleInvalidSubmit = this.handleInvalidSubmit.bind(this);
         this.closeModal = this.closeModal.bind(this);
-        this.state = {email: false,
-                        message:'',
-                        result: ''
+        this.state = {
+            email: false,
+            message:'',
+            result: ''
         };
     }
     
     handleValidSubmit(event, values) {
        
-        this.setState({email: values.email,
+        this.setState({
+            name: values.name,
+            email: values.email,
             message: values.message,
             result: 'Your submission went through. I will contact you soon.'
         });
         console.log(values.email + values.message );
+        
+        const response = fetch('/send', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                name: values.name,
+                email: values.email,
+                message: values.message}),
+        });
     }
     
     handleInvalidSubmit(event, errors, values) {
         
-            this.setState({email: values.email,
+            this.setState({
+                name: values.name,
+                email: values.email,
                 error: true,
                 message: values.message,
                 result: 'Something went wrong with your submission.'
