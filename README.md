@@ -9,7 +9,7 @@ EXPRESS
 
 MYSQL
 
-REACT-STRAP
+react-strap & react-bootstrap (be careful these are sometimes used in the same components)
 
 PLUS: Other packages as in the package.json files.
 
