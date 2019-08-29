@@ -1,10 +1,10 @@
 /*
 *  This is where I can test new components
 * */
-import React, { Component } from 'react';
-import { Alert } from 'reactstrap';
+import React, {Component} from 'react';
+import {Alert} from 'reactstrap';
 
-class TestArea extends Component{
+class TestArea extends Component {
     state = {
         response: '',
         post: '',
@@ -20,6 +20,7 @@ class TestArea extends Component{
             .then(res => this.setState({queryBody: res.database1}))
             .catch(err => console.log(err));
     }
+    
     queryDB = async () => {
         
         const response = await fetch('/api/sql');
@@ -52,42 +53,49 @@ class TestArea extends Component{
         this.setState({responseToPost: body});
         console.log(body);
     };
-
-    render(){
-        return(
+    
+    render() {
+        return (
             <div className="test-area-wrapper">
                 <Alert color="danger">
-                    <h2 >Area 52 <br/> Testing zone. <br/>Do not storm!</h2>
+                    <h2>Area 52 <br/> Testing zone. <br/>Do not storm!</h2>
                 </Alert>
                 
                 
-            <p>{this.state.response}</p>
-    
-            <div className="table">
-            <p>Database: </p>
-    <ul>
-    {this.state.queryBody.map(queryBody => <li>Name:
-    {queryBody.empFirstName}, {queryBody.empLastName}</li>)}
-    </ul>
-    </div>
-
-    <form onSubmit={this.handleSubmit}>
-
-
-    <p>
-    <strong>Test post:</strong>
-    </p>
-    <input
-        name="g-recaptcha-response"
-        id="g-recaptcha-response"
-    type="text"
-    value={this.state.post}
-    onChange={e => this.setState({post: e.target.value})}
-    />
-    <button type="submit">Submit</button>
-    </form>
-                <button onSubmit={this.newDb}>Show New Database</button>
-    <p>{this.state.responseToPost}</p>
+                <p>{this.state.response}</p>
+                
+                <div className="table">
+                    
+                    <p>Database: </p>
+                    <ul>
+                        {
+                            this.state.queryBody.map(queryBody =>
+                                <li>
+                                    Name: {queryBody.empFirstName}, {queryBody.empLastName}
+                                </li>
+                            )
+                        }
+                    
+                    </ul>
+                </div>
+                
+                <form onSubmit={this.handleSubmit}>
+                    
+                    
+                    <p>
+                        <strong>Test post:</strong>
+                    </p>
+                    <input
+                        name="g-recaptcha-response"
+                        id="g-recaptcha-response"
+                        type="text"
+                        value={this.state.post}
+                        onChange={e => this.setState({post: e.target.value})}
+                    />
+                    <button type="submit">Submit</button>
+                </form>
+                
+                <p>{this.state.responseToPost}</p>
             </div>
         )
     }

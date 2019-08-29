@@ -1,4 +1,4 @@
-import {Button, Form, FormGroup, Label, Input,Modal, ModalHeader, ModalBody, ModalFooter  } from 'reactstrap';
+import {Button, FormGroup ,Modal, ModalHeader, ModalBody, ModalFooter  } from 'reactstrap';
 import React from "react";
 import { Component } from 'react';
 import { Col, Container, Row} from "react-bootstrap";
@@ -74,17 +74,22 @@ class ContactForm extends Component {
         });
         console.log(values.email + values.message );
         
-        const response = fetch('/send', {
+        const response = fetch('/api/send', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
             },
+            // Maybe write an error for the fetch
             body: JSON.stringify({
                 name: values.name,
                 email: values.email,
                 message: values.message}),
-        });
+        })
+            .catch(
+                err => console.log(err)
+            );
+        
     }
     
     handleInvalidSubmit(event, errors, values) {

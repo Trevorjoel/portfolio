@@ -1,7 +1,7 @@
 /* eslint react/no-multi-comp: 0, react/prop-types: 0 */
 
 import React from 'react';
-import { Button, Modal, ModalHeader,  ModalFooter } from 'reactstrap';
+import { Button, Modal,  ModalFooter } from 'reactstrap';
 import SkillsTabs from './SkillsTabs';
 class SkillsModal extends React.Component {
     constructor(props) {

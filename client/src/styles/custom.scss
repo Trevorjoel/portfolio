@@ -6,6 +6,7 @@ html{
 .App {
   text-align: center;
 overflow: inherit;
+  background-color: #1d2129;
 
 
 }
@@ -24,6 +25,7 @@ body {
 .text-on-primary{
   color:$font-color-over-primary;
   font-size: larger;
+  text-shadow: $text-shadow;
 }
 
 code {
@@ -42,7 +44,7 @@ code {
 
 h1.site-title{
   font-size: 2em;
-  text-shadow: 2px 2px 8px #000;
+  text-shadow: $text-shadow;
   color:$font-color-over-primary;
   //width: fit-content;
 }
@@ -65,6 +67,7 @@ h1.site-title{
   width: 100%;
   box-shadow: 0 .5rem 1rem rgba(0,0,0,.15);
   z-index: 1;
+  text-shadow: $text-shadow;
 
 }
 // Font of nav bar
@@ -127,6 +130,7 @@ a.nav-link {
 }
 h1.introduction-head{
   font-size: calc(25px + 2vmin);
+  text-shadow: $text-shadow;
 
   color:$font-color-over-primary;
   transform: translate(0%, -200%);
@@ -159,16 +163,23 @@ h1.introduction-head{
 .tab-title .active{
 color: black;
 }
+.card-title{
+  color:$font-color-over-primary;
+}
 .card-text{
   font-size: larger;
+  color:$font-color-over-primary;
 }
 .skill-icons{
   margin: 14px 0 40px 0;
+  height: 12vmin;
+  width: 12vmin;
+
 }
 button.skills-button{
 width:100%;
   text-align: center;
-  background-color: #9E1467;
+  background-color: #b24267;
 }
 .button-wrapper{
   display: inline-block;
@@ -178,14 +189,18 @@ width:100%;
  background-color: #f2f2f2;
 
 }
+.rounded-circle{
+  box-shadow: 2px 2px 25px #14293c;
+}
 
 .tab-content  .active {
   background-color: #dfdfdf;
 }
 .project-card{
-  background-color: #ffff;
+  background-color: $primaryColour;
   color: black;
   margin-bottom: 30px;
+  text-shadow: $text-shadow;
 }
 h1.projects-title{
   color: $font-color-over-primary;
@@ -243,7 +258,7 @@ a.footer-links:hover{
 
 .modal-dialog.single-project-modal{
   max-width: 80%;
-text-align: center;
+text-align: left;
 }
 h5.modal-title{
   margin-left: auto;
@@ -252,7 +267,7 @@ h5.modal-title{
 .project-modal-img{
   padding:1px;
   border: $primaryColour solid 1px;
-  margin: 0 0 100px 0;
+  margin: 0 0 30px 0;
 }
 p.project-modal-text{
 
@@ -260,12 +275,33 @@ p.project-modal-text{
 
 // PROJECTS
 .project-inner-wrapper {
-  padding: 0 20px 40px 20px;
+  padding: 0px 20px 40px 20px;
 }
 
 // Table
 .employee-table{
   margin: 70px 0 50px 0;
+}
+.align-left{
+  text-align: left;
+}
+
+// Table
+
+.item-enter {
+  opacity: 0;
+}
+.item-enter-active {
+  transform: scaleX(1) translateY(-100px) translateX(-100px);
+  transition: all 700ms ease-in-out
+}
+.item-exit {
+  opacity: 1;
+}
+.item-exit-active {
+  opacity: 1;
+  transform: scaleX(.001) translateY(100px) translateX(40px);
+  transition: all 800ms ease-in-out
 }
 // MEDIA QUERIES
 

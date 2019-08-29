@@ -17,12 +17,12 @@ class Footer extends Component{
                         <Col md="8">
                             <h5 className="">More info:</h5>
    
-                                    <a target="_blank" title="Check out my code" className="footer-links" href="https://github.com/Trevorjoel"> <img alt="Github icon" className="App-logo footer-icons" src={github}/></a>
+                                    <a target="_blank" rel="noopener noreferrer" title="Check out my code" className="footer-links" href="https://github.com/Trevorjoel"> <img alt="Github icon" className="App-logo footer-icons" src={github}/></a>
                                
                                 
-                                    <a target="_blank" title="Linkedin profile" className="footer-links" href="https://www.linkedin.com/in/trevor-garrity-07214b160/"> <img alt="linkedin icon" className="App-logo footer-icons" src={linkedin}/></a>
+                                    <a target="_blank" rel="noopener noreferrer" title="Linkedin profile" className="footer-links" href="https://www.linkedin.com/in/trevor-garrity-07214b160/"> <img alt="linkedin icon" className="App-logo footer-icons" src={linkedin}/></a>
     
-                            <a target="_blank" title="My blog site!" className="footer-links" href="https://www.fullstack-adventure.com"> <img alt="Trevor Joel icon" className="App-logo " src={logo}/></a>
+                            <a target="_blank" rel="noopener noreferrer" title="My blog site!" className="footer-links" href="https://www.fullstack-adventure.com"> <img alt="Trevor Joel icon" className="App-logo " src={logo}/></a>
                             
                         </Col>
                     </Row>

@@ -78,7 +78,7 @@ class Projects extends React.Component {
                                 
                                     <Button  className=""  color="success" size="md" onClick={this.toggle1}>{this.props.buttonLabel}Check it out!</Button>
                                 <Modal isOpen={this.state.modal1} toggle1={this.toggle1} className="single-project-modal">
-                                    <ModalHeader toggle={this.toggle1}>You have some real <strong title="Noun: euphemistic Crap, excrement.">"CRUD"</strong> employees</ModalHeader>
+                                    <ModalHeader toggle={this.toggle1}> </ModalHeader>
                                     <ProjectTable/>
                                     <ModalFooter>
                                         
@@ -94,12 +94,12 @@ class Projects extends React.Component {
                             <Card.Body>
                                 <Card.Title>Project 2</Card.Title>
                                 <Card.Text>
-                                    Project 1  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod<br/>tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,<br/>
-                                    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo<br/>consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+                                    Project 1  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod<br/>tempor incididunt ut labore et dolore magna aliqua. <br/>
+                                    
                                 </Card.Text>
             
                                 <Button  className=""  color="success" size="md" onClick={this.toggle2}>{this.props.buttonLabel}Check it out!</Button>
-                                <Modal isOpen={this.state.modal2} toggle1={this.toggle2} className="single-project-modal">
+                                <Modal isOpen={this.state.modal2} toggle2={this.toggle2} className="single-project-modal">
                                     <ModalHeader toggle={this.toggle2}>Project 2</ModalHeader>
                                     <ProjectTemplateTest/>
                                     <ModalFooter>
@@ -117,8 +117,8 @@ class Projects extends React.Component {
                             <Card.Body>
                                 <Card.Title>Project 3</Card.Title>
                                 <Card.Text>
-                                    Project 1  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod<br/>tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,<br/>
-                                    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo<br/>consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+                                    Project 1  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod<br/>tempor incididunt ut labore et dolore magna aliqua.<br/>
+                                  
                                 </Card.Text>
             
                                 <Button  className=""  color="success" size="md" onClick={this.toggle3}>{this.props.buttonLabel}Check it out!</Button>

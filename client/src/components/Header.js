@@ -17,6 +17,7 @@ class Header  extends Component {
                 <h1 id="top"  style={insideStyles} className="site-title">
                    TREVOR
                     GARRITY
+                    WEB DEVELOPER
                   
                 </h1>
                     </div>

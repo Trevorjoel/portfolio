@@ -1,5 +1,6 @@
 import React from 'react';
 import { TabContent, TabPane, Nav, NavItem, NavLink, Card, CardTitle, CardText, Row, Col } from 'reactstrap';
+// noinspection NpmUsedModulesInstalled
 import classnames from 'classnames';
 
 import Container from "react-bootstrap/Container";
@@ -89,7 +90,7 @@ class SkillsTabs extends React.Component {
                                                     <Image className="skill-icons" src={htmlIcon} rounded fluid/>
                                                 </Col>
                                                 <Col xs={6} md={6}>
-                                                    <Image className="skill-icons" src={cssIcon} roundedCircle fluid/>
+                                                    <Image className="skill-icons" src={cssIcon} rounded fluid/>
                                                 </Col>
                                                 <Col xs={6} md={6}>
                                                     <Image className="skill-icons" src={JSIcon} rounded fluid/>
@@ -105,7 +106,7 @@ class SkillsTabs extends React.Component {
                                                     <Image className="skill-icons" src={reactIcon} rounded fluid/>
                                                 </Col>
                                                 <Col xs={6} md={6}>
-                                                    <Image className="skill-icons" src={bootstrapIcon} roundedCircle fluid/>
+                                                    <Image className="skill-icons" src={bootstrapIcon} rounded fluid/>
                                                 </Col>
                                                 <Col xs={6} md={6}>
                                                     <Image className="skill-icons" src={foundationIcon} rounded fluid/>
@@ -141,7 +142,7 @@ class SkillsTabs extends React.Component {
                                                 <Image className="skill-icons" src={nodeIcon} rounded fluid/>
                                             </Col>
                                             <Col xs={6} md={6}>
-                                                <Image className="skill-icons" src={expressIcon} roundedCircle fluid/>
+                                                <Image className="skill-icons" src={expressIcon} fluid/>
                                             </Col>
                                             <Col xs={6} md={6}>
                                                 <Image className="skill-icons" src={JSIcon} rounded fluid/>
