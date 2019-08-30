@@ -303,6 +303,10 @@ p.project-modal-text{
   transform: scaleX(.001) translateY(100px) translateX(40px);
   transition: all 800ms ease-in-out
 }
+
+a.sort-table {
+  cursor: pointer;
+}
 // MEDIA QUERIES
 
 // My face image on the header needs a margin at the top and the 'welcome texr needs a top margin on small screen sideways

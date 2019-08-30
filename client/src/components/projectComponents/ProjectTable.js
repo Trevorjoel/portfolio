@@ -10,7 +10,9 @@ class ProjectTable extends Component {
         super(props);
        
         this.state = {
-            queryBody: []
+            queryBody: [],
+            toggleFirstName: false,
+            toggleID: false
         };
     }
     
@@ -56,12 +58,83 @@ class ProjectTable extends Component {
                     const body = await results.json()
                         
                         .then(res => this.setState({queryBody: res.database2})) // Why doesn't it like <setState> ?
-
                 }
                 } title="Remove" color="danger">Remove</Button>
             );
         }
         
+    };
+    handleSortByUniqueId = (e) => {
+        if (this.state.toggleID === false) {
+            this.setState({toggleID : true});
+            this.setState(this.state.queryBody.sort(function (a, b) {
+                return b.empEmployeeID - a.empEmployeeID;
+            }));
+        }else{
+            this.setState({toggleID : false});
+            this.setState(this.state.queryBody.sort(function (a, b) {
+                return a.empEmployeeID - b.empEmployeeID;
+            }));
+        }
+        /*this.setState(this.state.queryBody.reverse());
+        console.log(this.state.queryBody)*/
+    };
+   
+    handleSortByFirstName = () => {
+   const originalState = this.state.queryBody;
+   console.log(originalState);
+    if (this.state.toggleFirstName === false){
+        console.log(`Setting state 1`);
+        this.setState({toggleFirstName : true});
+        this.setState(
+            this.state.queryBody.sort(function (a, b) {
+                const firsNameA = a.empFirstName.toUpperCase();
+                const firstNameB = b.empFirstName.toUpperCase();
+                console.log();
+                if (firsNameA < firstNameB) {
+                    
+                    return -1;
+                }
+                if (firsNameA > firstNameB) {
+                   
+                    return 1;
+                }
+                // names must be equal
+                return 0;
+            }
+        ));
+        
+    }else{
+        console.log('setting state 2');
+        
+        this.setState({toggleFirstName : false});
+        this.setState(
+            this.state.queryBody.sort(function (a, b) {
+                    const firsNameA = a.empFirstName.toUpperCase();
+                    const firstNameB = b.empFirstName.toUpperCase();
+                    console.log();
+                    if (firstNameB < firsNameA) {
+                    
+                        return -1;
+                    }
+                    if (firstNameB > firsNameA) {
+                    
+                        return 1;
+                    }
+                    // names must be equal
+                    return 0;
+                }
+            ));
+    }
+    
+    };
+    
+    handleSortByLastName = (e) => {
+    
+    };
+    handleSortByDepartmentId = (e) => {
+        
+        console.log('Sort by id');
     };
     
     render() {
@@ -77,13 +150,21 @@ class ProjectTable extends Component {
                 <strong>List of company employees.</strong>
                 
                 <Table className="employee-table" striped bordered dark hover responsive>
-                    
                     <thead>
                     <tr>
-                        <th>ID</th>
-                        <th>First Name</th>
-                        <th>Last Name</th>
-                        <th>Department ID</th>
+                        <th>
+                            <a id="sort-by-id" onClick={this.handleSortByUniqueId} ref="" onMouseOver="" className="sort-table" title="Reverse the id's"> ID</a>
+                        </th>
+                        <th>
+                            <a id="sort-by-last-name" onClick={this.handleSortByLastName} ref=""  onMouseOver="" className="sort-table" title="Sort alphabetically">Last Name</a>
+                        </th>
+                        <th>
+                            <a id="sort-by-first-name" onClick={this.handleSortByFirstName} ref="" onMouseOver="" className="sort-table" title="Sort alphabetically">First Name</a>
+                        </th>
+                       
+                        <th>
+                            <a id="sort-by-dept-id"  onClick={this.handleSortByDepartmentId} ref="" onMouseOver="" className="sort-table" title="Sort by id">Department ID</a>
+                        </th>
                         <th>Remove</th>
                     </tr>
                     </thead>
