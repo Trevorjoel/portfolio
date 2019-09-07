@@ -1,3 +1,8 @@
+/*
+Main file for the employee table project
+
+*/
+
 import React, {Component} from 'react';
 import Image from 'react-bootstrap/Image'
 import employeesImg from '../../images/Employees-together1087x250.jpg';
@@ -8,23 +13,25 @@ import {CSSTransition, TransitionGroup,} from 'react-transition-group';
 class ProjectTable extends Component {
     constructor(props) {
         super(props);
-       
         this.state = {
             queryBody: [],
             toggleFirstName: false,
-            toggleID: false
+            toggleLastName: false,
+            toggleEmployeeID: false,
+            toggleDeptID:false
         };
     }
     
+   
+    // Set the queryBody state upon mounting
     componentDidMount() {
-        
         this.queryDB()
             .then(res => this.setState({queryBody: res.database1}))
             .catch(err => console.log(err));
     }
     
+    // Request api
     queryDB = async () => {
-        
         const response = await fetch('/api/sql');
         const query = await response.json();
         if (response.status !== 200) throw Error(query.message);
@@ -32,109 +39,30 @@ class ProjectTable extends Component {
         return query;
     };
     
-    noDelete = function (empID) {
-        if (empID <= 3) {
-            return (
-                <div title="Can't sack them all!">X</div>
-            );
-        } else {
-            // todo: finish delete by ID
-            return (
-                <Button name={empID} onClick={async () => {
-                    console.log('Button clicked');
-                    const results = await fetch('/api/sql', {
-                        method: 'DELETE',
-                        headers:
-                            {
-                                'Accept': 'application/json',
-                                'Content-Type': 'application/json',
-                            },
-                        body: JSON.stringify(
-                            {
-                                id: empID
-                            }
-                        )
-                    });
-                    const body = await results.json()
-                        
-                        .then(res => this.setState({queryBody: res.database2})) // Why doesn't it like <setState> ?
-                }
-                } title="Remove" color="danger">Remove</Button>
-            );
-        }
-        
-    };
-    handleSortByUniqueId = (e) => {
-        if (this.state.toggleID === false) {
-            this.setState({toggleID : true});
-            this.setState(this.state.queryBody.sort(function (a, b) {
-                return b.empEmployeeID - a.empEmployeeID;
-            }));
-        }else{
-            this.setState({toggleID : false});
-            this.setState(this.state.queryBody.sort(function (a, b) {
-                return a.empEmployeeID - b.empEmployeeID;
-            }));
-        }
-        /*this.setState(this.state.queryBody.reverse());
-        console.log(this.state.queryBody)*/
-    };
-   
-    handleSortByFirstName = () => {
-   const originalState = this.state.queryBody;
-   console.log(originalState);
-    if (this.state.toggleFirstName === false){
-        console.log(`Setting state 1`);
-        this.setState({toggleFirstName : true});
-        this.setState(
-            this.state.queryBody.sort(function (a, b) {
-                const firsNameA = a.empFirstName.toUpperCase();
-                const firstNameB = b.empFirstName.toUpperCase();
-                console.log();
-                if (firsNameA < firstNameB) {
-                    
-                    return -1;
-                }
-                if (firsNameA > firstNameB) {
-                   
-                    return 1;
-                }
-                // names must be equal
-                return 0;
+    // Create and render delete buttons for the database rows
+    toDelete = function (empID) {
+        // Ensure not all entries can be deleted
+       
+            return <Button name={empID} onClick={async () => {
+                console.log('Button clicked');
+                const results = await fetch('/api/sql', {
+                    method: 'DELETE',
+                    headers:
+                        {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json',
+                        },
+                    body: JSON.stringify(
+                        {
+                            id: empID
+                        }
+                    )
+                });
+                const body = await results.json()
+                // Set state
+                    .then(res => this.setState({queryBody: res.database2})) // todo: This causes the list to refresh to default to sb structure
             }
-        ));
-        
-    }else{
-        console.log('setting state 2');
-        
-        this.setState({toggleFirstName : false});
-        this.setState(
-            this.state.queryBody.sort(function (a, b) {
-                    const firsNameA = a.empFirstName.toUpperCase();
-                    const firstNameB = b.empFirstName.toUpperCase();
-                    console.log();
-                    if (firstNameB < firsNameA) {
-                    
-                        return -1;
-                    }
-                    if (firstNameB > firsNameA) {
-                    
-                        return 1;
-                    }
-                    // names must be equal
-                    return 0;
-                }
-            ));
-    }
-    
-    };
-    
-    handleSortByLastName = (e) => {
-    
-    };
-    handleSortByDepartmentId = (e) => {
-        
-        console.log('Sort by id');
+            } title="Remove" color="danger">Remove</Button>;
     };
     
     render() {
@@ -144,26 +72,42 @@ class ProjectTable extends Component {
                 
                 <h3>You have some CRUD employees!</h3><br/>
                 <p className="card-text">Here's a little example of the basic CRUD operations.
-                    <br/>Create Read update, delete and sort employees in a database.</p>
-                
-                
+                    <br/>Create Read update, delete and sort employees in a database.
+                </p>
                 <strong>List of company employees.</strong>
-                
                 <Table className="employee-table" striped bordered dark hover responsive>
                     <thead>
                     <tr>
                         <th>
-                            <a id="sort-by-id" onClick={this.handleSortByUniqueId} ref="" onMouseOver="" className="sort-table" title="Reverse the id's"> ID</a>
+                            <Button id={"uniqueID"}
+                                    onClick={() =>
+                                        this.handleSortById(this.state.toggleEmployeeID, 'employeeID')}
+                                        value="employeeID"
+                                        className="sort-table"
+                                        title="Reverse the id's"> ID
+                            </Button>
                         </th>
                         <th>
-                            <a id="sort-by-last-name" onClick={this.handleSortByLastName} ref=""  onMouseOver="" className="sort-table" title="Sort alphabetically">Last Name</a>
+                            <Button id="sort-by-last-name"
+                                    onClick={() => this.handleSortByTxt('lastName')}
+                                    ref=""  onMouseOver=""
+                                    className="sort-table"
+                                    title="Sort alphabetically">Last Name
+                            </Button>
                         </th>
                         <th>
-                            <a id="sort-by-first-name" onClick={this.handleSortByFirstName} ref="" onMouseOver="" className="sort-table" title="Sort alphabetically">First Name</a>
+                            <Button  id="sort-by-first-name"
+                                     onClick={() => this.handleSortByTxt('firstName')}
+                                     ref="" onMouseOver="" className="sort-table" title="Sort alphabetically"
+                                     value="first-name"
+                            >First Name
+                            </Button>
                         </th>
                        
                         <th>
-                            <a id="sort-by-dept-id"  onClick={this.handleSortByDepartmentId} ref="" onMouseOver="" className="sort-table" title="Sort by id">Department ID</a>
+                            <Button  id="sort-by-dept-id"  onClick={() => this.handleSortById(this.state.toggleDeptID, 'departmentID')}
+                                     ref="" onMouseOver=""
+                                     className="sort-table" title="Sort by id">Department ID</Button>
                         </th>
                         <th>Remove</th>
                     </tr>
@@ -171,14 +115,15 @@ class ProjectTable extends Component {
                     <tbody>
                     <TransitionGroup component={null}>
                         {
-                            this.state.queryBody.map((queryBody =>
-                                    
+                            // Map the JSON data and render table
+                            this.state.queryBody.map((queryBody, index) =>
+                            
                                     <CSSTransition
                                         key={'CSS-' + queryBody.empEmployeeID.toString()}
                                         timeout={800}
                                         classNames='item'
                                     >
-                                        <tr key={'row-' + queryBody.empEmployeeID.toString()} className="">
+                                        <tr key={'row-' + queryBody.empEmployeeID.toString()} className={index}>
                                             <th key={queryBody.empEmployeeID.toString() + '-head'} scope="row">
                                                 {queryBody.empEmployeeID}
                                             </th>
@@ -192,29 +137,22 @@ class ProjectTable extends Component {
                                                 {queryBody.empDepartmentID}
                                             </td>
                                             <td key={queryBody.empEmployeeID.toString() + '-emp-id'}>
-                                                {this.noDelete(queryBody.empEmployeeID)}
+                                                {this.toDelete(queryBody.empEmployeeID, index)}
                                             </td>
                                         </tr>
                                     </CSSTransition>
-                            ))
-                        }
-                    
+                            )}
                     </TransitionGroup>
                     </tbody>
                 </Table>
-                
                 <Container>
                     
                     <p>
-                        
                         <strong>Add new employees to the database.</strong>
                     </p>
                     <Row>
-                        
                         <Col>
                             <Form action="" method="get">
-                                
-                                
                                 <FormGroup className="">
                                     <Label for="firstName" className="mr-sm-2 align-left">First Name: </Label><br/>
                                     <Input type="text" name="firstName" id="firstName" placeholder="Trevor"/>
@@ -245,8 +183,157 @@ class ProjectTable extends Component {
                    href="https://github.com/Trevorjoel">
                     <img alt="Github icon" className="App-logo footer-icons" src={github}/></a>
             </div>
-        )
-    }
-}
+        )}
+    
+    // Sorts the list by text
+    handleSortByTxt = (el) =>{
+        // Takes a param from the function to determine which list to sort by
+        
+        if (el === 'firstName'){
+            // Determine the toggle state of the list
+            
+            switch (this.state.toggleFirstName) {
+                case false:
+                    this.setState(
+                        this.state.queryBody.sort(function (a, b) {
+                            
+                                const firsNameA = a.empFirstName.toUpperCase();
+                                const firstNameB = b.empFirstName.toUpperCase();
+                                
+                                if (firsNameA < firstNameB) {return -1; }
+                                if (firsNameA > firstNameB) {return 1;}
+                                // names must be equal
+                                return 0;
+                            }
+                        ));
+                    break;
+                
+                case true:
+                    this.setState(
+                        this.state.queryBody.sort(function (a, b) {
+                                
+                                const firsNameA = a.empFirstName.toUpperCase();
+                                const firstNameB = b.empFirstName.toUpperCase();
+                                
+                                if (firstNameB < firsNameA) {return -1; }
+                                
+                                if (firstNameB > firsNameA) {return 1;}
+                                // names must be equal
+                                return 0;
+                            }
+                        ));
+                    break;
+                    
+                default: console.log('Default');
+            }
+            
+            // Change toggle state
+            this.toggle(el);
+            
+        }else if (el === 'lastName'){
+            
+            switch (this.state.toggleLastName) {
+                
+                case false:
+                    this.setState(
+                        this.state.queryBody.sort(function (a, b) {
+                                const lastNameA = a.empLastName.toUpperCase();
+                                const lastNameB = b.empLastName.toUpperCase();
+                                
+                                if (lastNameA < lastNameB) {return -1;}
+                                if (lastNameA > lastNameB) {return 1;}
+                                // names must be equal
+                                return 0;
+                            }
+                        ));
+                    break;
+                
+                case true:
+                    this.setState(
+                        this.state.queryBody.sort(function (a, b) {
+                                
+                                const lastNameA = a.empLastName.toUpperCase();
+                                const lastNameB = b.empLastName.toUpperCase();
+                                
+                                if (lastNameB < lastNameA) {return -1;}
+                                
+                                if (lastNameB > lastNameA) {return 1;}
+                                // names must be equal
+                                return 0;
+                            }
+                        ));
+                    break;
+                    
+                default:
+                    console.log("default last name");
+            }
+        }
+        this.toggle(el);
+    };
+    
+    // Toggle the correct value
+    toggle = function(name) {
+        switch (name) {
+            case 'firstName': this.setState({toggleFirstName: !this.state.toggleFirstName});
+                break;
+            case 'lastName': this.setState({toggleLastName: !this.state.toggleLastName});
+                break;
+            case 'employeeID':  this.setState({toggleEmployeeID: !this.state.toggleEmployeeID});
+                break;
+            case 'departmentID' : this.setState({toggleDeptID: !this.state.toggleDeptID});
+                break;
+            default:
+                console.log('Unknown argument passed to switch');
+            
+        }
+        
+    };
+    
+    // Sorts the JSON array by numbers, the parameter is the toggle state of the element in the JSON obj
+    handleSortById = (tog, s) => {
+        // Select the values to sort by
+        if(s === 'departmentID') {
+            // Check for state of toggle + Do sort
+            switch (this.state.toggleDeptID) {
+                case false:
+                    console.log('B');
+                    this.setState(this.state.queryBody.sort(function (a, b) {
+                        return b.empDepartmentID - a.empDepartmentID;
+                    }));
+                    break;
+                case true :
+                    console.log('C');
+                    this.setState(this.state.queryBody.sort(function (a, b) {
+                        return a.empDepartmentID - b.empDepartmentID;
+                    }));
+                    break;
+                default:
+                    console.log('Default');
+            }
+            console.log('C2');
+            // Reverse toggle value
+            this.toggle(s);
+        }else if(s ===  'employeeID'){
+            switch (tog) {
+                case false:console.log('D');
+                    this.setState(this.state.queryBody.sort(function (a, b) {
+                        return b.empEmployeeID - a.empEmployeeID;
+                    }));
+                    break;
+                
+                case true :
+                    console.log('E');
+                    this.setState(this.state.queryBody.sort(function (a, b) {
+                        return a.empEmployeeID - b.empEmployeeID;
+                    }));
+                    break;
+                default:
+                    console.log('Default');
+            }
+            console.log('E2');
+            this.toggle(s);
+        }
 
+    };
+}
 export default ProjectTable;

@@ -45,8 +45,10 @@ class TestArea extends Component {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({post: this.state.post}),
-            
+            body: JSON.stringify({
+                post: this.state.post,
+                anotherValue: 'dont forget you can <script></script>add values here'}),
+           
         });
         
         const body = await response.text();
@@ -86,9 +88,8 @@ class TestArea extends Component {
                         <strong>Test post:</strong>
                     </p>
                     <input
-                        name="g-recaptcha-response"
-                        id="g-recaptcha-response"
                         type="text"
+                        name="email"
                         value={this.state.post}
                         onChange={e => this.setState({post: e.target.value})}
                     />
