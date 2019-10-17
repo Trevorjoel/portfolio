@@ -15,7 +15,28 @@ router.get('/api/hello', (req, res) => {
 // Using controllers for the main sql routes
 router.route('/api/sql')
    .get(appController.connectAndShow)
-    .delete(appController.deleteByID);
+    .delete(appController.deleteByID)
+    .post(appController.populateTable);
+
+router.route('/api/add')
+    .post([check('firstName' ,'Message text')
+            .isAlpha()
+            .not().isEmpty()
+            .trim()
+            .escape(),
+        check('lastName', 'failed')
+            .isAlpha()
+            .not().isEmpty()
+            .trim()
+            .escape(),
+        check('departmentID', 'Failed')
+            .not().isEmpty()
+            .isNumeric()
+            .trim()
+            .escape()
+        ],
+        
+        appController.addEmployee);
 
 // Handle the contact form email
 router.route('/api/send')

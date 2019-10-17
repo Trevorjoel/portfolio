@@ -4,7 +4,7 @@ import { Component } from 'react';
 import { Col, Container, Row} from "react-bootstrap";
 import { AvForm, AvField } from 'availity-reactstrap-validation';
 
-
+// todo: Check conventions for naming each Class/Component etc...
 
 
 class ContactForm extends Component {
@@ -73,7 +73,6 @@ class ContactForm extends Component {
             result: 'Your submission went through. I will contact you soon.'
         });
         console.log(values.email + values.message );
-        
         const response = fetch('/api/send', {
             method: 'POST',
             headers: {

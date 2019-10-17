@@ -7,8 +7,9 @@ html{
   text-align: center;
 overflow: inherit;
   background-color: #1d2129;
-
-
+}
+.centre-font{
+  text-align: center;
 }
 body {
   margin: 0;
@@ -24,7 +25,7 @@ body {
 }
 .text-on-primary{
   color:$font-color-over-primary;
-  font-size: larger;
+  font-size: 1.5em;
   text-shadow: $text-shadow;
 }
 
@@ -170,6 +171,9 @@ color: black;
   font-size: larger;
   color:$font-color-over-primary;
 }
+.modal-text{
+  color: $font-color-over-white;
+}
 .skill-icons{
   margin: 14px 0 40px 0;
   height: 12vmin;
@@ -275,7 +279,7 @@ p.project-modal-text{
 
 // PROJECTS
 .project-inner-wrapper {
-  padding: 0px 20px 40px 20px;
+  padding: 0 20px 40px 20px;
 }
 
 // Table
@@ -307,6 +311,15 @@ p.project-modal-text{
 a.sort-table {
   cursor: pointer;
 }
+
+// ADD EMPLOYEE FORM
+
+.add-employee-form{
+  margin-right: 25%;
+  margin-left: 25%;
+}
+
+
 // MEDIA QUERIES
 
 // My face image on the header needs a margin at the top and the 'welcome texr needs a top margin on small screen sideways

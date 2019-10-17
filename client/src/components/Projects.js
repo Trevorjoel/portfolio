@@ -68,7 +68,7 @@ class Projects extends React.Component {
                 <Row>
                     <Col xs="12" sm="6" md="6" lg="4">
                         
-                        <Card className="project-card" >
+                        <Card className="project-card " >
                             <Card.Img variant="top" src={placeholder1} />
                             <Card.Body>
                                 <Card.Title>Employee CRUD application</Card.Title>
