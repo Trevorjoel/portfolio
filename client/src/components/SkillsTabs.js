@@ -82,7 +82,7 @@ class SkillsTabs extends React.Component {
                                     <CardTitle>
                                     </CardTitle>
                                     <CardText>
-                                        <p>On the front-end I employ the usual suspects: </p>
+                                        <p className="modal-text">On the front-end I employ the usual suspects: </p>
                                         <br/>
                                         <Container>
                                             <Row>
@@ -99,7 +99,7 @@ class SkillsTabs extends React.Component {
                                                     <Image className="skill-icons" src={PSIcon} rounded fluid/>
                                                 </Col>
                                             </Row>
-                                            <p>I love these front-end frameworks right now: </p>
+                                            <p className="modal-text">I love these front-end frameworks right now: </p>
                                             <Row>
                                                
                                                 <Col xs={6} md={6}>
@@ -116,11 +116,12 @@ class SkillsTabs extends React.Component {
                                                 </Col>
                                             </Row>
                                         </Container>
-                                        <p>In addition to all this I have experience with: </p>
+                                        <p className="modal-text">In addition to all this I have experience with:
                                         <br/>Design & planning
                                         <br/>Style guides
                                         <br/>Wire-framing & mock-ups
                                         <br/>And much more.
+                                        </p>
                                     </CardText>
                         
                                 </Card>
@@ -134,7 +135,7 @@ class SkillsTabs extends React.Component {
                                     <CardTitle>
                                     </CardTitle>
                                     <CardText>
-                                    <p>Main focus on the back end : </p>
+                                    <p className="modal-text">Main focus on the back end : </p>
                                     <br/>
                                     <Container>
                                         <Row>
@@ -148,7 +149,7 @@ class SkillsTabs extends React.Component {
                                                 <Image className="skill-icons" src={JSIcon} rounded fluid/>
                                             </Col>
                                         </Row>
-                                        <p>Had a bit of fun with these in the past: </p>
+                                        <p className="modal-text">Had a bit of fun with these in the past: </p>
                                         <Row>
             
                                             <Col xs={6} md={6}>

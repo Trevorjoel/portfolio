@@ -61,7 +61,7 @@ exports.deleteByID = async function (req, res) {
         
         function (error, updated) {
             if (error) throw error;
-           res.send({database2: updated}) /// This causes a bug, lists that have been sorted are rearranged back to initial state
+           res.send({database2: updated}) // todo: This causes a bug, lists that have been sorted are rearranged back to initial state
         })
 };
 
@@ -95,7 +95,9 @@ exports.addEmployee = async (req, res) => {
         // No need to send back user messages ATM as it's only malicious users who disable the front end validation/verification (I have more important things to do)
     
     const errors = validationResult(req);
-    if (!errors.isEmpty() ) {
+    
+    // Catch the express-validator errors & ensure that the bad guys don't enter large entries to the database (causing  ER_DATA_TOO_LONG from SQL)
+    if (!errors.isEmpty() || req.body.firstName.length > 15 || req.body.lastName.length > 15) {
         console.log('Somebody disabled the front-end validation and attempted to enter nasites into the  fields! Not cool man, not cool!');
         
         // Send back table data

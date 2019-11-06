@@ -41,7 +41,7 @@ class ProjectTable extends Component {
     handleDepartmentIDChange(event) {
         this.setState({departmentID: event.target.value});
     }
-
+    F
     
     handleAddEmployee =  async (event) => {
         // Can't see any difference by prevent default being on/off
@@ -54,6 +54,8 @@ class ProjectTable extends Component {
             && this.state.departmentID !== ''
             && isNaN(this.state.firstName)
             && isNaN(this.state.lastName)
+            && this.state.firstName.length > 1
+            && this.state.lastName.length > 1 ////
             && this.state.lastName.match(/^[a-zA-Z()]+$/)
             && this.state.firstName.match(/^[a-zA-Z()]+$/)
         ){
@@ -69,9 +71,9 @@ class ProjectTable extends Component {
                     lastName: this.state.lastName,
                     departmentID: this.state.departmentID
                 })});
-    
+            
             const body = await response.json()
-          
+            
             // Set state
                 .then(response =>
                     this.setState({
@@ -82,11 +84,11 @@ class ProjectTable extends Component {
                     })
                 );
             // todo: Return a success message to user
-            this.success();
+            //  this.success();
             // Reset the form fields
             this.form && this.form.reset();
-      } // else Do nothing and let the html form validation work
-      
+        } // else Do nothing and let the html form validation work
+        
     };
     //
     // Request api
@@ -100,35 +102,11 @@ class ProjectTable extends Component {
     
     populateTable = function (){
         // Check if the DB is empty
-      if (this.state.queryBody.length === 0 ){
-          // Show the button to populate table if clicked then query db
-          return <Button onClick={async () => {
-             const results = await fetch('/api/sql', {
-                  method: 'POST',
-                  headers:
-                      {
-                          'Accept': 'application/json',
-                          'Content-Type': 'application/json',
-                      },
-                  body: JSON.stringify(
-                      {
-                      })
-              });
-             const body = await results.json()
-                 .then(results =>
-                     this.setState({queryBody: results.database2}) // keep an eye on the values
-                 )
-          }
-          } color="success" block>Populate the table</Button>
-      }
-    };
-    // Create and render delete buttons for the database rows
-    toDelete = function (empID) {
-       
-            return <Button name={empID} onClick={async () => {
-                console.log('Button clicked');
+        if (this.state.queryBody.length === 0 ){
+            // Show the button to populate table if clicked then query db
+            return <Button onClick={async () => {
                 const results = await fetch('/api/sql', {
-                    method: 'DELETE',
+                    method: 'POST',
                     headers:
                         {
                             'Accept': 'application/json',
@@ -136,15 +114,40 @@ class ProjectTable extends Component {
                         },
                     body: JSON.stringify(
                         {
-                            id: empID
-                        })});
-                
+                        })
+                });
                 const body = await results.json()
-                // Set state
-                    .then(res =>
-                        this.setState({queryBody: res.database2}))}
+                    .then(results =>
+                        this.setState({queryBody: results.database2}) // keep an eye on the values
+                    )
+            }
+            } color="success" block>Populate the table</Button>
+        }
+    };
+    // Create and render delete buttons for the database rows
+    toDelete = function (empID) {
+        
+        return <Button name={empID} onClick={async () => {
+            console.log('Button clicked');
+            const results = await fetch('/api/sql', {
+                method: 'DELETE',
+                headers:
+                    {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
+                    },
+                body: JSON.stringify(
+                    {
+                        id: empID
+                    })});
             
-            } title="Remove" color="danger">Remove</Button>;
+            const body = await results.json()
+            // Set state
+                .then(res =>
+                    this.setState({queryBody: res.database2}))}
+            
+        }
+                       title="Remove" color="danger">Remove</Button>;
         
     };
     
@@ -165,15 +168,15 @@ class ProjectTable extends Component {
                         <th>
                             <Button id={"uniqueID"}
                                     onClick={() =>
-                                        this.handleSortById('employeeID')}
-                                        value="employeeID"
-                                        className="sort-table"
-                                        title="Reverse the id's"> ID
+                                        this.handleIntegerSort('employeeID')}
+                                    value="employeeID"
+                                    className="sort-table"
+                                    title="Reverse the id's"> ID
                             </Button>
                         </th>
                         <th>
                             <Button id="sort-by-last-name"
-                                    onClick={() => this.handleSortByTxt('lastName')}
+                                    onClick={() => this.handleTextSort('lastName')}
                                     ref=""  onMouseOver=""
                                     className="sort-table"
                                     title="Sort alphabetically">Last Name
@@ -181,15 +184,15 @@ class ProjectTable extends Component {
                         </th>
                         <th>
                             <Button  id="sort-by-first-name"
-                                     onClick={() => this.handleSortByTxt('firstName')}
+                                     onClick={() => this.handleTextSort('firstName')}
                                      ref="" onMouseOver="" className="sort-table" title="Sort alphabetically"
                                      value="first-name"
                             >First Name
                             </Button>
                         </th>
-                       
+                        
                         <th>
-                            <Button  id="sort-by-dept-id"  onClick={() => this.handleSortById('departmentID')}
+                            <Button  id="sort-by-dept-id"  onClick={() => this.handleIntegerSort('departmentID')}
                                      ref="" onMouseOver=""
                                      className="sort-table" title="Sort by id">Department ID</Button>
                         </th>
@@ -200,38 +203,38 @@ class ProjectTable extends Component {
                     <TransitionGroup component={null}>
                         {
                             // Map the JSON data and render table
-                        
-                            this.state.queryBody.map((queryBody, index) =>
                             
-                                    <CSSTransition
-                                        key={'CSS-' + queryBody.empEmployeeID.toString()}
-                                        timeout={800}
-                                        classNames='item'
-                                    >
-                                        <tr key={'row-' + queryBody.empEmployeeID.toString()} className={index}>
-                                            <th key={queryBody.empEmployeeID.toString() + '-head'} scope="row">
-                                                {queryBody.empEmployeeID}
-                                            </th>
-                                            <td key={queryBody.empEmployeeID.toString() + '-emp-lastname'}>
-                                                {queryBody.empLastName}
-                                            </td>
-                                            <td key={queryBody.empEmployeeID.toString() + '-emp-firstname'}>
-                                                {queryBody.empFirstName}
-                                            </td>
-                                            <td key={queryBody.empEmployeeID.toString() + '-emp-dept-id'}>
-                                                {queryBody.empDepartmentID}
-                                            </td>
-                                            <td key={queryBody.empEmployeeID.toString() + '-emp-id'}>
-                                                {this.toDelete(queryBody.empEmployeeID, this.responseSort)}
-                                            </td>
-                                        </tr>
-                                        
-                                    </CSSTransition>
+                            this.state.queryBody.map((queryBody, index) =>
+                                
+                                <CSSTransition
+                                    key={'CSS-' + queryBody.empEmployeeID.toString()}
+                                    timeout={800}
+                                    classNames='item'
+                                >
+                                    <tr key={'row-' + queryBody.empEmployeeID.toString()} className={index}>
+                                        <th key={queryBody.empEmployeeID.toString() + '-head'} scope="row">
+                                            {queryBody.empEmployeeID}
+                                        </th>
+                                        <td key={queryBody.empEmployeeID.toString() + '-emp-lastname'}>
+                                            {queryBody.empLastName}
+                                        </td>
+                                        <td key={queryBody.empEmployeeID.toString() + '-emp-firstname'}>
+                                            {queryBody.empFirstName}
+                                        </td>
+                                        <td key={queryBody.empEmployeeID.toString() + '-emp-dept-id'}>
+                                            {queryBody.empDepartmentID}
+                                        </td>
+                                        <td key={queryBody.empEmployeeID.toString() + '-emp-id'}>
+                                            {this.toDelete(queryBody.empEmployeeID, this.responseSort)}
+                                        </td>
+                                    </tr>
+                                
+                                </CSSTransition>
                             )}
                     </TransitionGroup>
                     </tbody>
                     {console.log(this.state.queryBody)}
-                    
+                
                 </Table>
                 <Container>
                     <p>
@@ -249,10 +252,10 @@ class ProjectTable extends Component {
                                              placeholder="Trevor"
                                              onChange={this.handleFirstNameChange}
                                              errorMessage="Invalid first name" validate={{
-                                            required: {value: true, errorMessage: 'Please enter a first name'},
-                                            pattern: {value: '/^[a-zA-Z()]+$/', errorMessage: 'Your name must be composed only with letters '},
-                                            minLength: {value: 2, errorMessage: 'Your name must be between 2 and 16 characters'},
-                                            maxLength: {value: 16, errorMessage: 'Your name must be between 2 and 16 characters'}}}
+                                        required: {value: true, errorMessage: 'Please enter a first name'},
+                                        pattern: {value: '/^[a-zA-Z()]+$/', errorMessage: 'Your name must be composed only with letters '},
+                                        minLength: {value: 2, errorMessage: 'Your name must be between 2 and 15 characters'},
+                                        maxLength: {value: 15, errorMessage: 'Your name must be between 2 and 15 characters'}}}
                                     />
                                 </FormGroup>
                                 
@@ -267,10 +270,10 @@ class ProjectTable extends Component {
                                               validate={{
                                                   required: {value: true, errorMessage: 'Please enter last name'},
                                                   pattern: {value: '/^[a-zA-Z()]+$/', errorMessage: 'Your name must be composed only with letters '},
-                                                  minLength: {value: 2, errorMessage: 'Your name must be between 2 and 16 characters'},
-                                                  maxLength: {value: 16, errorMessage: 'Your name must be between 2 and 16 characters'}
+                                                  minLength: {value: 2, errorMessage: 'Your name must be between 2 and 15 characters'},
+                                                  maxLength: {value: 15, errorMessage: 'Your name must be between 2 and 15 characters'}
                                               }}
-                                              
+                                    
                                     />
                                 </FormGroup>
                                 <FormGroup className="">
@@ -282,7 +285,7 @@ class ProjectTable extends Component {
                                         <AvRadio label="Management" value="3" onChange={this.handleDepartmentIDChange} />
                                         <AvRadio label="Garbage eater" value="4" onChange={this.handleDepartmentIDChange} />
                                     </AvRadioGroup>
-                                    
+                                
                                 </FormGroup>
                                 <br/>
                                 <Button color="primary" value="submit" type="submit">Enter new employee</Button>
@@ -299,7 +302,7 @@ class ProjectTable extends Component {
         )}
     
     // Sorts the list by text
-    handleSortByTxt = (el) =>{
+    handleTextSort = (el) =>{
         // Takes an argument from the function call to determine which list to sort by
         
         if (el === 'firstName'){
@@ -309,7 +312,7 @@ class ProjectTable extends Component {
                 case false:
                     this.setState(
                         this.state.queryBody.sort(function (a, b) {
-                            
+                                
                                 const firsNameA = a.empFirstName.toUpperCase();
                                 const firstNameB = b.empFirstName.toUpperCase();
                                 
@@ -336,7 +339,7 @@ class ProjectTable extends Component {
                             }
                         ));
                     break;
-                    
+                
                 default: console.log('Default');
             }
             
@@ -376,7 +379,7 @@ class ProjectTable extends Component {
                             }
                         ));
                     break;
-                    
+                
                 default:
                     console.log("default last name");
             }
@@ -419,10 +422,13 @@ class ProjectTable extends Component {
     };
     
     // Sorts the JSON array by numbers, the parameter is the toggle state of the element in the JSON obj
-    handleSortById = (s) => {
+    handleIntegerSort = (s) => {
         // Select the values to sort by
         if(s === 'departmentID') {
             // Check for state of toggle + Do sort
+            
+            
+            
             switch (this.state.toggleDeptID) {
                 case false:
                     console.log('B');
@@ -462,7 +468,7 @@ class ProjectTable extends Component {
             console.log('E2');
             this.toggle(s);
         }
-
+        
     };
     // Set the queryBody state upon mounting
     componentDidMount() {
@@ -481,18 +487,18 @@ class ProjectTable extends Component {
         switch (st) {
             case (!st.toggleLastName === true):
                 s = 'lastName';
-                this.handleSortByTxt(s);
+                this.handleTextSort(s);
                 break;
             case (st.toggleFirstName === true):
                 s = 'firstName';
-                this.handleSortByTxt(s);
+                this.handleTextSort(s);
                 break;
             case (st.toggleEmployeeID === true):
                 s = 'employeeID';
                 break;
             case  (st.toggleDeptID === true):
                 s = 'departmentID';
-                this.handleSortById(s);
+                this.handleIntegerSort(s);
                 break;
             
             default: console.log('not found');
