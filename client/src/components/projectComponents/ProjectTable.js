@@ -32,23 +32,23 @@ class ProjectTable extends Component {
         this.handleDepartmentIDChange = this.handleDepartmentIDChange.bind(this);
     }
     
+    // Handle form field changes
     handleFirstNameChange(event) {
         this.setState({firstName: event.target.value});
-    }
+    };
     handleLastNameChange(event) {
         this.setState({lastName: event.target.value});
-    }
+    };
     handleDepartmentIDChange(event) {
         this.setState({departmentID: event.target.value});
-    }
-    F
+    };
     
+    // Handle adding to the DB
     handleAddEmployee =  async (event) => {
         // Can't see any difference by prevent default being on/off
         //event.preventDefault();
         
-        
-        // Check the form fields have been filled and are valid
+        // Extra front-end check of the form fields have been filled and are valid
         if(this.state.firstName !== ''
             && this.state.lastName !== ''
             && this.state.departmentID !== ''
@@ -84,9 +84,10 @@ class ProjectTable extends Component {
                     })
                 );
             // todo: Return a success message to user
-            //  this.success();
+
             // Reset the form fields
             this.form && this.form.reset();
+            
         } // else Do nothing and let the html form validation work
         
     };
@@ -100,10 +101,11 @@ class ProjectTable extends Component {
         return query;
     };
     
+    // Feature to populate the table/db when it is empty
     populateTable = function (){
         // Check if the DB is empty
         if (this.state.queryBody.length === 0 ){
-            // Show the button to populate table if clicked then query db
+            // Render the button that populates db if empty
             return <Button onClick={async () => {
                 const results = await fetch('/api/sql', {
                     method: 'POST',
@@ -252,10 +254,10 @@ class ProjectTable extends Component {
                                              placeholder="Trevor"
                                              onChange={this.handleFirstNameChange}
                                              errorMessage="Invalid first name" validate={{
-                                        required: {value: true, errorMessage: 'Please enter a first name'},
-                                        pattern: {value: '/^[a-zA-Z()]+$/', errorMessage: 'Your name must be composed only with letters '},
-                                        minLength: {value: 2, errorMessage: 'Your name must be between 2 and 15 characters'},
-                                        maxLength: {value: 15, errorMessage: 'Your name must be between 2 and 15 characters'}}}
+                                                required: {value: true, errorMessage: 'Please enter a first name'},
+                                                pattern: {value: '/^[a-zA-Z()]+$/', errorMessage: 'Your name must be composed only with letters '},
+                                                minLength: {value: 2, errorMessage: 'Your name must be between 2 and 15 characters'},
+                                                maxLength: {value: 15, errorMessage: 'Your name must be between 2 and 15 characters'}}}
                                     />
                                 </FormGroup>
                                 
@@ -278,8 +280,11 @@ class ProjectTable extends Component {
                                 </FormGroup>
                                 <FormGroup className="">
                                     <Label className="align-left" for="departmentID">Department ID: </Label><br/>
-                                    <AvRadioGroup inline  //required
-                                                  errorMessage="Pick a department." value={this.state.departmentID} type="select" name="select" id="departmentID" validate={{max: {value: 4}}}  >
+                                    <AvRadioGroup inline  required
+                                                  errorMessage="Pick a department."
+                                                  value={this.state.departmentID}
+                                                  type="select" name="select" id="departmentID"
+                                                  validate={{max: {value: 4}}}  >
                                         <AvRadio label="Developer" value="1" onChange={this.handleDepartmentIDChange} />
                                         <AvRadio label="Accounts" value="2" onChange={this.handleDepartmentIDChange} />
                                         <AvRadio label="Management" value="3" onChange={this.handleDepartmentIDChange} />
@@ -295,13 +300,19 @@ class ProjectTable extends Component {
                     </Row>
                 </Container>
                 <hr/>
-                <a target="_blank" rel="noopener noreferrer" title="See the code" className="footer-links"
+                <a target="_blank"
+                   rel="noopener noreferrer"
+                   title="See the code"
+                   className="footer-links"
                    href="https://github.com/Trevorjoel/portfolio/blob/master/client/src/components/projectComponents/ProjectTable.js">
-                    <img alt="Github icon" className="App-logo footer-icons" src={github}/></a>
+                    <img alt="Github icon"
+                         className="App-logo footer-icons"
+                         src={github}/>
+                </a>
             </div>
         )}
     
-    // Sorts the list by text
+    // Sorts the list by alphanumeric
     handleTextSort = (el) =>{
         // Takes an argument from the function call to determine which list to sort by
         
@@ -425,10 +436,9 @@ class ProjectTable extends Component {
     handleIntegerSort = (s) => {
         // Select the values to sort by
         if(s === 'departmentID') {
+            
             // Check for state of toggle + Do sort
-            
-            
-            
+
             switch (this.state.toggleDeptID) {
                 case false:
                     console.log('B');

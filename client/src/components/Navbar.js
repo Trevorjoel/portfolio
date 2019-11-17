@@ -1,6 +1,7 @@
 import logo from '../images/Sign96x96.png';
 import React, { Component } from 'react';
 import { Link} from "react-scroll";
+import { NavLink as RRNavLink } from 'react-router-dom';
 import {
     Collapse,
     Navbar,
@@ -10,6 +11,7 @@ import {
     NavItem,
     NavLink
 } from 'reactstrap';
+import Home from "./reactRoutes/Home";
 
 
 class NavBar extends Component {
@@ -35,15 +37,15 @@ class NavBar extends Component {
             <div className="shadow">
                 <Navbar light expand="md" >
                     <Link
-                        activeClass="active"
+                        
                         to="top"
                         spy={true}
                         smooth={true}
                         offset={-5000}
                         duration= {1000}
                     >
-                        <NavbarBrand href="/" title="Back to top"><img alt="Trevor logo" className="App-logo" src={logo}/>Trevor
-                            Joel</NavbarBrand>
+                        <NavLink tactiveClassName="" tag={RRNavLink} exact to="/" >     <NavbarBrand href="/" title="Back to top"><img alt="Trevor logo" className="App-logo" src={logo}/>Trevor
+                            Joel</NavbarBrand></NavLink>
                     </Link>
                    
                     <NavbarToggler onClick={this.toggle}/>
@@ -51,50 +53,54 @@ class NavBar extends Component {
                         <Nav className="ml-auto" navbar>
                             <NavItem>
                                 <Link
-                                    activeClass="active"
+                                   
+                                    activeClass=""
                                     to="introduction"
                                     spy={true}
                                     smooth={true}
                                     offset={-200}
                                     duration= {500}
                                 >
-                                <NavLink href="/components/">Introduction</NavLink>
+                                <NavLink activeClassName="" tag={RRNavLink} exact to="/"   href="/">Introduction</NavLink>
                                 </Link>
                             </NavItem>
                             <NavItem>
                                 <Link
-                                    activeClass="active"
+                                   
+                                    activeClass=""
                                     to="skills"
                                     spy={true}
                                     smooth={true}
                                     offset={-120}
                                     duration= {500}
                                 >
-                                    <NavLink href="/components/">Skills</NavLink>
+                                    <NavLink activeClassName="" tag={RRNavLink} exact to="/" href="/">Skills</NavLink>
                                 </Link>
                             </NavItem>
                             <NavItem>
                                 <Link
-                                    activeClass="active"
+                                    exact
+                                    activeClass=""
                                     to="projects"
                                     spy={true}
                                     smooth={true}
                                     offset={-120}
                                     duration= {500}
                                 >
-                                    <NavLink href="/components/">Projects</NavLink>
+                                    <NavLink activeClassName="" tag={RRNavLink} href="/" exact to="/" >Projects</NavLink>
                                 </Link>
                             </NavItem>
                             <NavItem>
                                 <Link
-                                    activeClass="active"
+                                    exact
+                                    activeClass=""
                                     to="contacts"
                                     spy={true}
                                     smooth={true}
                                     offset={-70}
                                     duration= {500}
                                 >
-                                    <NavLink href="/components/">Contact</NavLink>
+                                    <NavLink activeClassName="" tag={RRNavLink}  href="/" exact to="/" >Contact</NavLink>
                                 </Link>
                             </NavItem>
                             

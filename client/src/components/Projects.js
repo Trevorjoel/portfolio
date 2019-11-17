@@ -2,9 +2,12 @@ import React from 'react';
 import {Card,  Row, Col, Container} from 'react-bootstrap';
 import placeholder1 from '../images/Employees-together286x180.jpg';
 import placeholder from '../images/index.svg';
+import apSetup from '../images/Americover-aquaponics-1.jpg'
 import { Modal, Button, ModalHeader,  ModalFooter } from 'reactstrap';
 import ProjectTable from './projectComponents/ProjectTable';
 import ProjectTemplateTest from './projectComponents/ProjectTemplateTest';
+import {NavLink} from "react-router-dom";
+import Sensors from "./reactRoutes/Sensors";
 /*
 * Notes: This file creates modal cards for each project... Should not be more than 6 projects at a time.
 *  Steps:  1. add new modal to state, Bind the toggle to this
@@ -90,15 +93,15 @@ class Projects extends React.Component {
                     </Col>
                     <Col xs="12" sm="6" md="6" lg="4">
                         <Card className="project-card" >
-                            <Card.Img variant="top" src={placeholder} />
+                            <Card.Img variant="top" src={apSetup} />
                             <Card.Body>
-                                <Card.Title>Project 2</Card.Title>
+                                <Card.Title>IOT probe simulator</Card.Title>
                                 <Card.Text>
-                                    Project 1  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod<br/>tempor incididunt ut labore et dolore magna aliqua. <br/>
+                                    This program simulates the data that would be taken from water quality monitoring probes in an aquaponics system. <br/>
                                     
                                 </Card.Text>
-            
-                                <Button  className=""  color="success" size="md" onClick={this.toggle2}>{this.props.buttonLabel}Check it out!</Button>
+    
+                                <NavLink  to="/sensors">  <Button  className=""  color="success" size="md" >Check it out!</Button></NavLink>
                                 <Modal isOpen={this.state.modal2} toggle2={this.toggle2} className="single-project-modal">
                                     <ModalHeader toggle={this.toggle2}>Project 2</ModalHeader>
                                     <ProjectTemplateTest/>
