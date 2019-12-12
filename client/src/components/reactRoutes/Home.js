@@ -1,9 +1,9 @@
-import NavBar from "../Navbar";
+
 import Header from "../Header";
 import Introduction from "../Introduction";
 import Projects from "../Projects";
 import ContactForm from "../ContactForm";
-import TestArea from "../TestArea";
+
 import React, {Component} from "react";
 
 class Home extends Component {
@@ -18,8 +18,8 @@ class Home extends Component {
                 <Introduction />
                 <Projects />
                 <ContactForm/>
-                <TestArea/>
-                
+                {/*<TestArea/>
+                */}
           
             
             </div>

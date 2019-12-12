@@ -2,12 +2,11 @@ import React from 'react';
 import {Card,  Row, Col, Container} from 'react-bootstrap';
 import placeholder1 from '../images/Employees-together286x180.jpg';
 import placeholder from '../images/index.svg';
-import apSetup from '../images/Americover-aquaponics-1.jpg'
+import apSetup from '../images/chift-pist.jpg'
 import { Modal, Button, ModalHeader,  ModalFooter } from 'reactstrap';
 import ProjectTable from './projectComponents/ProjectTable';
 import ProjectTemplateTest from './projectComponents/ProjectTemplateTest';
 import {NavLink} from "react-router-dom";
-import Sensors from "./reactRoutes/Sensors";
 /*
 * Notes: This file creates modal cards for each project... Should not be more than 6 projects at a time.
 *  Steps:  1. add new modal to state, Bind the toggle to this
@@ -65,11 +64,15 @@ class Projects extends React.Component {
     
     render() {
         return (
-            <Container >
+            <div>
+             
                 <h1 id="projects" className="projects-title">Latest Projects</h1>
-                <br />
+                <p className="projects-paragraph">These are my latest projects built to showcase some of the skills that may be useful to you.</p>
+            <Container className="projects-container">
+              
+              
                 <Row>
-                    <Col xs="12" sm="6" md="6" lg="4">
+                    <Col xs="12" sm="12" md="6" lg="4">
                         
                         <Card className="project-card " >
                             <Card.Img variant="top" src={placeholder1} />
@@ -79,7 +82,7 @@ class Projects extends React.Component {
                                    A small application to view employees in an organisation. Simple CRUD operations in an SQL database.
                                 </Card.Text>
                                 
-                                    <Button  className=""  color="success" size="md" onClick={this.toggle1}>{this.props.buttonLabel}Check it out!</Button>
+                                    <Button  className="button-projects"   size="md" onClick={this.toggle1}>{this.props.buttonLabel}Have a play!!</Button>
                                 <Modal isOpen={this.state.modal1} toggle1={this.toggle1} className="single-project-modal">
                                     <ModalHeader toggle={this.toggle1}> </ModalHeader>
                                     <ProjectTable/>
@@ -91,7 +94,7 @@ class Projects extends React.Component {
                             </Card.Body>
                         </Card>
                     </Col>
-                    <Col xs="12" sm="6" md="6" lg="4">
+                    <Col xs="12" sm="12" md="6" lg="4">
                         <Card className="project-card" >
                             <Card.Img variant="top" src={apSetup} />
                             <Card.Body>
@@ -101,7 +104,8 @@ class Projects extends React.Component {
                                     
                                 </Card.Text>
     
-                                <NavLink  to="/sensors">  <Button  className=""  color="success" size="md" >Check it out!</Button></NavLink>
+                                <NavLink  to="/sensors">  <Button  className="button-projects"   size="md" >Interactive !</Button>
+                                </NavLink>
                                 <Modal isOpen={this.state.modal2} toggle2={this.toggle2} className="single-project-modal">
                                     <ModalHeader toggle={this.toggle2}>Project 2</ModalHeader>
                                     <ProjectTemplateTest/>
@@ -114,7 +118,7 @@ class Projects extends React.Component {
                         </Card>
                      
                     </Col>
-                    <Col xs="12" sm="6" md="6" lg="4">
+                    <Col xs="12" sm="12" md="6" lg="4">
                         <Card className="project-card" >
                             <Card.Img variant="top" src={placeholder} />
                             <Card.Body>
@@ -124,7 +128,7 @@ class Projects extends React.Component {
                                   
                                 </Card.Text>
             
-                                <Button  className=""  color="success" size="md" onClick={this.toggle3}>{this.props.buttonLabel}Check it out!</Button>
+                                <Button className="button-projects" size="md" onClick={this.toggle3}>{this.props.buttonLabel}Check it out!</Button>
                                 <Modal isOpen={this.state.modal3} toggle3={this.toggle3} className="single-project-modal">
                                     <ModalHeader toggle={this.toggle3}>Project 3</ModalHeader>
                                     <ProjectTemplateTest/>
@@ -138,6 +142,7 @@ class Projects extends React.Component {
                     </Col>
                 </Row>
             </Container>
+            </div>
         );
     }
 }

@@ -3,7 +3,7 @@ import { Parallax } from 'react-parallax';
 const insideStyles = {
     padding: 0,
     position: "absolute",
-    top: "50%",
+    top: "36%",
     left: "50%",
     transform: "translate(-50%,-50%)"
 };
@@ -12,15 +12,16 @@ class Header  extends Component {
     
     render() {
         return (
-                <Parallax bgImage={require('../images/P1090888-resize1.JPG')} className="App-header"  strength={500}>
+                <Parallax bgImage={require('../images/kyle-sung-oQuP_XBjOMY-unsplash1.jpg')} className="App-header"  strength={500}>
                     <div style={{ height: 400 }}>
                 <h1 id="top"  style={insideStyles} className="site-title">
-                   TREVOR
-                    GARRITY
-                    WEB DEVELOPER
+                    PORTFOLIO<br/>
+                    Trevor Garrity
                   
                 </h1>
+                    
                     </div>
+                    <p>Full-Stack Web Development and Tech Solutions</p>
                 </Parallax>
           
         );

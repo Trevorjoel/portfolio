@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import './styles/custom.scss';
-import { BrowserRouter, Route} from "react-router-dom";
+import { BrowserRouter, Route, Switch} from "react-router-dom";
 import Sensors from './components/reactRoutes/Sensors';
 import Home from "./components/reactRoutes/Home";
 import NavBar from "./components/Navbar";
 import Footer from "./components/Footer";
+import Page404 from "./components/projectComponents/404";
 // todo: Create 404 page
 class App extends Component {
     render() {
@@ -14,8 +15,11 @@ class App extends Component {
                 
                 <BrowserRouter>
                     <NavBar />
+                    <Switch>
                     <Route path="/" component={Home} exact />
                     <Route path="/sensors" component={Sensors} />
+                        <Route component={Page404} />
+                    </Switch>
                 </BrowserRouter>
                 <Footer/>
                 

@@ -4,8 +4,6 @@ Main file for the employee table project
 */
 
 import React, {Component} from 'react';
-import Image from 'react-bootstrap/Image'
-import employeesImg from '../../images/Employees-together1087x250.jpg';
 import github from "../../images/github_PNG2.png";
 import {Button, Col, Container, FormGroup, Label, Row, Table} from 'reactstrap';
 import {CSSTransition, TransitionGroup,} from 'react-transition-group';
@@ -24,7 +22,8 @@ class ProjectTable extends Component {
             toggleDeptID:false,
             firstName:'',
             lastName: '',
-            departmentID:''
+            departmentID:'',
+            rotateMessage: true
         };
         this.handleAddEmployee = this.handleAddEmployee.bind(this);
         this.handleFirstNameChange = this.handleFirstNameChange.bind(this);
@@ -44,7 +43,7 @@ class ProjectTable extends Component {
     };
     
     // Handle adding to the DB
-    handleAddEmployee =  async (event) => {
+    handleAddEmployee =  async () => {
         // Can't see any difference by prevent default being on/off
         //event.preventDefault();
         
@@ -153,17 +152,50 @@ class ProjectTable extends Component {
         
     };
     
+     AlertMessage =  () => {
+     
+    };
+  
+   ScreenAlertComponent = () => {
+       // window.onresize = displayWindowSize;
+       // window.onload = displayWindowSize;
+       // function displayWindowSize() {
+       //     // let   myWidth = window.innerWidth;
+       //     // let  myHeight = window.innerHeight;
+       //     // your size calculation code here
+       //     //document.getElementById("screen").innerHTML = myWidth + "x" + myHeight;
+       //
+       // }
+       window.addEventListener("resize", () =>{
+           this.setState({
+               rotateMessage: false
+           })
+       });
+
+           if (window.innerWidth < 560 && this.state.rotateMessage === true) {
+               return <div className="rotate-device-advice"><p className="rotate-device-paragraph">Try rotating your device for a better view.<hr/>
+                   <Button className="rotate-device-x btn-group" onClick={ () =>{
+                       this.setState({ rotateMessage: false })
+                   }}> Close </Button></p></div>
+        
+           }
+
+       
+   };
     render() {
         return (
             <div className="project-inner-wrapper centre-font">
-                <Image className="project-modal-img img-rounded" src={employeesImg} fluid/>
                 
-                <h3>Some CRUD fun!</h3><br/>
-                <p className="card-text modal-text">
-                    Create, read, update, delete and sort the employees in a database.
+                <h1 className="form-title">Employee database</h1><br/>
+                
+                <p id="screen" className="form-paragraph">
+                    A little bit of full-stack JavaScript fun.<br/>
+                    Create, read, delete and sort the employees in a database.
                 </p>
-                <strong>List of company employees.</strong>
                 
+                
+                <h4 className="form-paragraph">List of company employees.</h4>
+                {this.ScreenAlertComponent()}
                 <Table className="employee-table" striped bordered dark hover responsive>
                     <thead>
                     <tr>
@@ -201,6 +233,7 @@ class ProjectTable extends Component {
                         <th>{this.populateTable()}</th>
                     </tr>
                     </thead>
+                    
                     <tbody>
                     <TransitionGroup component={null}>
                         {
@@ -234,16 +267,19 @@ class ProjectTable extends Component {
                                 </CSSTransition>
                             )}
                     </TransitionGroup>
+                    
                     </tbody>
-                    {console.log(this.state.queryBody)}
+                  
                 
                 </Table>
+              
                 <Container>
-                    <p>
-                        <strong>Add new employees to the database.</strong>
-                    </p>
+                   
                     <Row className="add-employee-form">
-                        <Col>
+                        <p className="form-paragraph">
+                            <h4>Add employees to the database.</h4>
+                        </p>
+                        <Col sm={12} md={12} lg={12}>
                             <AvForm onSubmit={this.handleAddEmployee}  ref={c => (this.form = c)}>
                                 <FormGroup className="">
                                     <Label for="firstName" className="mr-sm-2 align-left">First Name: </Label><br/>
@@ -251,7 +287,7 @@ class ProjectTable extends Component {
                                              type="text"
                                              name="firstName"
                                              id="firstName"
-                                             placeholder="Trevor"
+                                             placeholder="First name"
                                              onChange={this.handleFirstNameChange}
                                              errorMessage="Invalid first name" validate={{
                                                 required: {value: true, errorMessage: 'Please enter a first name'},
@@ -267,7 +303,7 @@ class ProjectTable extends Component {
                                               type="lastName"
                                               name="lastName"
                                               id="lastName"
-                                              placeholder="Garrity"
+                                              placeholder="Last name"
                                               onChange={this.handleLastNameChange}
                                               validate={{
                                                   required: {value: true, errorMessage: 'Please enter last name'},
@@ -279,16 +315,18 @@ class ProjectTable extends Component {
                                     />
                                 </FormGroup>
                                 <FormGroup className="">
-                                    <Label className="align-left" for="departmentID">Department ID: </Label><br/>
-                                    <AvRadioGroup inline  required
+                                    <Label className="align-left" for="departmentID">Department: </Label><br/>
+                                    <AvRadioGroup  inline  required
                                                   errorMessage="Pick a department."
                                                   value={this.state.departmentID}
                                                   type="select" name="select" id="departmentID"
                                                   validate={{max: {value: 4}}}  >
+                                        <div className="radio-group">
                                         <AvRadio label="Developer" value="1" onChange={this.handleDepartmentIDChange} />
                                         <AvRadio label="Accounts" value="2" onChange={this.handleDepartmentIDChange} />
                                         <AvRadio label="Management" value="3" onChange={this.handleDepartmentIDChange} />
                                         <AvRadio label="Garbage eater" value="4" onChange={this.handleDepartmentIDChange} />
+                                        </div>
                                     </AvRadioGroup>
                                 
                                 </FormGroup>
@@ -309,6 +347,7 @@ class ProjectTable extends Component {
                          className="App-logo footer-icons"
                          src={github}/>
                 </a>
+                <p>Code for this project.</p>
             </div>
         )}
     
@@ -517,4 +556,5 @@ class ProjectTable extends Component {
     };
     
 }
+
 export default ProjectTable;

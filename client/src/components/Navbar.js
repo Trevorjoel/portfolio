@@ -11,8 +11,21 @@ import {
     NavItem,
     NavLink
 } from 'reactstrap';
-import Home from "./reactRoutes/Home";
 
+
+
+/* When the user scrolls down, hide the navbar. When the user scrolls up, show the navbar */
+
+let prevScrollpos = window.pageYOffset;
+window.onscroll = function() {
+    const currentScrollPos = window.pageYOffset;
+    if (prevScrollpos > currentScrollPos) {
+        document.getElementById("navbar").style.top = "0";
+    } else {
+        document.getElementById("navbar").style.top = "-100%";
+    }
+    prevScrollpos = currentScrollPos;
+};
 
 class NavBar extends Component {
     constructor(props) {
@@ -35,7 +48,7 @@ class NavBar extends Component {
        
         return (
             <div className="shadow">
-                <Navbar light expand="md" >
+                <Navbar id="navbar" light expand="md" >
                     <Link
                         
                         to="top"
@@ -44,8 +57,9 @@ class NavBar extends Component {
                         offset={-5000}
                         duration= {1000}
                     >
-                        <NavLink tactiveClassName="" tag={RRNavLink} exact to="/" >     <NavbarBrand href="/" title="Back to top"><img alt="Trevor logo" className="App-logo" src={logo}/>Trevor
-                            Joel</NavbarBrand></NavLink>
+                        <NavLink tactiveClassName="" tag={RRNavLink} exact to="/" >
+                            <NavbarBrand href="/" title="Back to top"><img alt="Trevor logo" className="App-logo" src={logo}/></NavbarBrand>
+                        </NavLink>
                     </Link>
                    
                     <NavbarToggler onClick={this.toggle}/>

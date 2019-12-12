@@ -77,51 +77,54 @@ class SkillsTabs extends React.Component {
             
                     <TabPane tabId="1">
                         <Row>
-                            <Col sm="12">
+                            <Col sm="12" md="12" lg="12">
                                 <Card body>
                                     <CardTitle>
                                     </CardTitle>
                                     <CardText>
-                                        <p className="modal-text">On the front-end I employ the usual suspects: </p>
                                         <br/>
                                         <Container>
+                         
                                             <Row>
-                                                <Col xs={6} md={6}>
+                                                <Col xs={3} md={3} lg={3}>
                                                     <Image className="skill-icons" src={htmlIcon} rounded fluid/>
+                                                    <p className="modal-text">HTML</p>
                                                 </Col>
-                                                <Col xs={6} md={6}>
+                                                <Col xs={3} md={3} lg={3}>
                                                     <Image className="skill-icons" src={cssIcon} rounded fluid/>
+                                                    <p className="modal-text">CSS</p>
                                                 </Col>
-                                                <Col xs={6} md={6}>
+                                                <Col xs={3} md={3} lg={3}>
                                                     <Image className="skill-icons" src={JSIcon} rounded fluid/>
+                                                    <p className="modal-text">JavaScript</p>
                                                 </Col>
-                                                <Col xs={6} md={6}>
+                                                <Col xs={3} md={3} lg={3}>
                                                     <Image className="skill-icons" src={PSIcon} rounded fluid/>
+                                                    <p className="modal-text">PhotoShop</p>
                                                 </Col>
                                             </Row>
-                                            <p className="modal-text">I love these front-end frameworks right now: </p>
+                                         
                                             <Row>
                                                
-                                                <Col xs={6} md={6}>
+                                                <Col xs={3} md={3}>
                                                     <Image className="skill-icons" src={reactIcon} rounded fluid/>
+                                                    <p className="modal-text">React</p>
                                                 </Col>
-                                                <Col xs={6} md={6}>
+                                                <Col xs={3} md={3}>
                                                     <Image className="skill-icons" src={bootstrapIcon} rounded fluid/>
+                                                    <p className="modal-text">Bootstrap</p>
                                                 </Col>
-                                                <Col xs={6} md={6}>
+                                                <Col xs={3} md={3}>
                                                     <Image className="skill-icons" src={foundationIcon} rounded fluid/>
+                                                    <p className="modal-text">Foundation</p>
                                                 </Col>
-                                                <Col xs={6} md={6}>
+                                                <Col xs={3} md={3}>
                                                     <Image className="skill-icons" src={sassIcon} rounded fluid/>
+                                                    <p className="modal-text">Sass</p>
                                                 </Col>
                                             </Row>
                                         </Container>
-                                        <p className="modal-text">In addition to all this I have experience with:
-                                        <br/>Design & planning
-                                        <br/>Style guides
-                                        <br/>Wire-framing & mock-ups
-                                        <br/>And much more.
-                                        </p>
+                                    
                                     </CardText>
                         
                                 </Card>
@@ -135,40 +138,41 @@ class SkillsTabs extends React.Component {
                                     <CardTitle>
                                     </CardTitle>
                                     <CardText>
-                                    <p className="modal-text">Main focus on the back end : </p>
+                                 
                                     <br/>
                                     <Container>
                                         <Row>
-                                            <Col xs={6} md={6}>
+                                            <Col xs={3} md={3}>
                                                 <Image className="skill-icons" src={nodeIcon} rounded fluid/>
+                                                <p className="modal-text">Node</p>
                                             </Col>
-                                            <Col xs={6} md={6}>
+                                            <Col xs={3} md={3}>
                                                 <Image className="skill-icons" src={expressIcon} fluid/>
+                                                <p className="modal-text">Express</p>
                                             </Col>
-                                            <Col xs={6} md={6}>
-                                                <Image className="skill-icons" src={JSIcon} rounded fluid/>
-                                            </Col>
-                                        </Row>
-                                        <p className="modal-text">Had a bit of fun with these in the past: </p>
-                                        <Row>
-            
-                                            <Col xs={6} md={6}>
+                                            <Col xs={3} md={3}>
                                                 <Image className="skill-icons" src={PHPIcon} rounded fluid/>
+                                                <p className="modal-text">PHP</p>
                                             </Col>
-                                            <Col xs={6} md={6}>
+                                            <Col xs={3} md={3}>
                                                 <Image className="skill-icons" src={MYSQLIcon} rounded fluid/>
+                                                <p className="modal-text">MYSQL</p>
                                             </Col>
-                                            <Col xs={6} md={6}>
+                                            <Col xs={3} md={3}>
                                                 <Image className="skill-icons" src={PYIcon} rounded fluid/>
+                                                <p className="modal-text">Python</p>
                                             </Col>
-                                            <Col xs={6} md={6}>
+                                            <Col xs={3} md={3}>
                                                 <Image className="skill-icons" src={apacheIcon} rounded fluid/>
+                                                <p className="modal-text">Apache</p>
                                             </Col>
-                                            <Col xs={6} md={6}>
+                                            <Col xs={3} md={3}>
                                                 <Image className="skill-icons" src={CIcon} rounded fluid/>
+                                                <p className="modal-text">Sass</p>
                                             </Col>
-                                            <Col xs={6} md={6}>
+                                            <Col xs={3} md={3}>
                                                 <Image className="skill-icons" src={javaIcon} rounded fluid/>
+                                                <p className="modal-text">C#</p>
                                             </Col>
                                         </Row>
                                     </Container>
@@ -188,16 +192,16 @@ class SkillsTabs extends React.Component {
                                         <Container>
                                             <Row>
                                                 <Col xs={12} md={12}>
-                                                    <Image src={pyCert}  fluid />
+                                                    <Image className="certificates" src={pyCert}  fluid />
                                                 </Col>
                                                 <Col xs={12} md={12}>
-                                                    <Image src={WPCert}  fluid />
+                                                    <Image className="certificates" src={WPCert}  fluid />
                                                 </Col>
                                                 <Col xs={12} md={12}>
-                                                    <Image src={WPPlugCert} fluid />
+                                                    <Image className="certificates" src={WPPlugCert} fluid />
                                                 </Col>
                                                 <Col xs={12} md={12}>
-                                                    <Image src={WebDesCert} fluid />
+                                                    <Image className="certificates" src={WebDesCert} fluid />
                                                 </Col>
                                             </Row>
                                         </Container>

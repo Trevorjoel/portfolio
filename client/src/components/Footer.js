@@ -14,7 +14,7 @@ class Footer extends Component{
                             <h5 className="title">Thanks for visiting</h5>
                            <p>This was created with the node stack, React, express, connected to a MYSQL database. I'm up to the task of developing modern dynamic web applications.</p>
                         </Col>
-                        <Col md="8">
+                        <Col md="8" className="more-info-container">
                             <h5 className="">More info:</h5>
    
                                     <a target="_blank" rel="noopener noreferrer" title="Check out my code" className="footer-links" href="https://github.com/Trevorjoel"> <img alt="Github icon" className="App-logo footer-icons" src={github}/></a>

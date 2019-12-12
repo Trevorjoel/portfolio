@@ -11,14 +11,12 @@ class ContactForm extends Component {
     render(){
         const modalError = this.state.error ? 'not' : '';
         return(
-            <Container>
+            <Container className="form-container">
                 <Row id="contacts">
-                    <Col xs="12" sm="2" md="2" lg="2">
-                    
-                    </Col>
-                    <Col xs="0" sm="8" md="8" lg="8">
+                    <Col xs="12" sm="12" md="12" lg="12">
                         <div className="form-wrapper">
-                            <h1 className="projects-title">Contact me</h1>
+                            <h1 className="form-title">Contact me</h1>
+                            <p className="form-paragraph">Some text</p>
                             <div className="form-text-left">
                             <AvForm onValidSubmit={this.handleValidSubmit} onInvalidSubmit={this.handleInvalidSubmit}>
                                 <FormGroup>
@@ -28,7 +26,7 @@ class ContactForm extends Component {
                                 <AvField name="message" label="Message: " type="text" required placeholder="Your message"  id="message"/>
 
                                 </FormGroup>
-                                <Button className="contact-button">Submit</Button>
+                                <Button className="button-projects">Submit</Button>
                             </AvForm>
                             </div>
                             <Modal isOpen={this.state.email !== false} toggle={this.closeModal}>
@@ -45,8 +43,7 @@ class ContactForm extends Component {
                             </Modal>
                         </div>
                     </Col>
-                    <Col xs="0" sm="2" md="2" lg="2">
-                    </Col>
+                   
                 </Row>
             </Container>
         )

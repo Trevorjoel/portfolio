@@ -24,7 +24,9 @@ class SkillsModal extends React.Component {
             <div>
                 <div  id="skills" className="button-wrapper">
                 <Button block className="skills-button"  color="success" size="lg" onClick={this.toggle}>{this.props.buttonLabel}    Skills & Experience</Button>
+                
                 </div>
+              
                 <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
                     
                   

@@ -17,10 +17,9 @@ render(){
     };
     
     const railStyle = {
-        position: 'absolute',
-        width: '100%',
-        height: 10,
-        marginTop: 35,
+        position: 'relative',
+        height: '400px',
+        marginLeft: '45%',
         borderRadius: 5,
         backgroundColor: '#2C4870',
         
@@ -28,7 +27,7 @@ render(){
     };
 
     return(
-        <div>
+        <div style={{ height: 520, width: '100%' }}>
            
             <Slider
                 vertical={false}

@@ -1,7 +1,7 @@
 import React, {Component } from 'react';
-import TempSlider from "./TempSlider";
-import PhSlider from "./PhSlider"
-import Nh3Slider from "./AmmoniaSlider";
+import TempSliderVertical from "./TempSliderVertical";
+import PhSliderVertical from "./PhSliderVertical";
+import Nh3SliderVertical from "./Nh3SliderVertical";
 const defaultTemp = [11.5];
 const defaultPh = [7.25];
 const defaultNh3 = [0.05];
@@ -113,34 +113,30 @@ class SlidersContainer extends Component {
         
         switch (true) {
             case   nh3 <= 0.20  :
-                return <div >
-                    <div className="green-alert"><h5>
-    
-                       OPTIMAL
-    
-                        NH<sub>3</sub>
-                        &nbsp;</h5>
-                    </div>
-                    Keep your NH<sub>3</sub>
-                        &nbsp; Levels below 0.2 PPM.
-                        Please see <a href="#"> our wiki.</a>
-                
+                return <div className="">
+                    <div
+                        className="green-alert"><h5>OPTIMAL NH<sub>3</sub>
+                        &nbsp; LEVEL</h5> </div>
+                    <p className="alert"> Keep your Nh3 levels as close to zero as possible. Also maintain a lower water temperature.
+                        Please see <a href="#"> our wiki.</a></p>
                 </div>;
             case nh3 > 0.20 && nh3 <= 0.4 : //
                 return <div className="">
-                    <div className="yellow-alert"><h5>HIGH   NH<sub>3</sub>
-                        &nbsp;  - WARNING</h5> </div>
+                    <div
+                        className="yellow-alert"><h5>HIGH NH<sub>3</sub>
+                        &nbsp; - WARNING</h5> </div>
                     <p className="alert"> At high levels fish may become prone to ammonia poisoning. Action should be taken to reduce the ammonia content of your water.
                         Please see <a href="#"> our wiki.</a></p>
                 </div>;
             case nh3 > 0.4 : //
                 return <div className="">
-                    <div className="red-alert"><h5>HIGH   NH<sub>3</sub>
-                        &nbsp;  - CRITICAL</h5>
+                    <div className="red-alert"><h5>HIGH NH<sub>3</sub>
+                        &nbsp;- CRITICAL</h5>
                     </div>
                     <p className="alert">
                         &nbsp; At critically high levels of NH<sub>3</sub>
-                        &nbsp; Your fish are at high risk of ammonia poisoning. Immediate action should be taken to reduce the ammonia content of your water.  More info is in <a href="#"> our wiki.</a></p>
+                        &nbsp; Your fish are at high risk of ammonia poisoning.
+                        Immediate action should be taken to reduce the ammonia content of your water.  More info is in <a href="#"> our wiki.</a></p>
                 </div>;
             default:
                 return <div className="">
@@ -184,66 +180,54 @@ class SlidersContainer extends Component {
     
         return (
             
-            <div className="grid-container sensors-container ">
+            <div className=" sensors-container">
                 
                 <Headline/>
                 
-                <div className="grid-item1">
-             
-                    <p >TEMP<br/></p><p>{this.state.tempUpdate[0.].toPrecision(3)} &#8451;</p>
+                <div className="flex-grid-thirds">
+                    <div className="sensor-col ">
+                    <div className="reading-box"><h4 >TEMP<br/></h4><h5>{this.state.tempUpdate[0.].toPrecision(3)} &#8451;</h5>
+                    </div>
+                    <TempSliderVertical
+                        values={this.state.tempValue}
+                        update={this.state.tempUpdate}
+                        defaultValues={defaultTemp}
+                        onUpdate={this.onTempUpdate}
+                        onChange={this.onTempChange}
+                    />
+                    {this.tempAlert(this.state.tempUpdate[0]) }
                 </div>
-                
-               <div className="grid-item2">
-                <TempSlider
-                    values={this.state.tempValue}
-                    update={this.state.tempUpdate}
-                    defaultValues={defaultTemp}
-                    onUpdate={this.onTempUpdate}
-                    onChange={this.onTempChange}
-                />
+             
+               <div className="sensor-col">
+                   <div className="reading-box">
+                   <h4 >pH<br/></h4><h5>{this.state.phUpdate[0.].toPrecision(3)}</h5>
+                   </div>
+                   <PhSliderVertical
+                       values={this.state.phValue}
+                       update={this.state.phUpdate}
+                       defaultValues={defaultPh}
+                       onUpdate={this.onPhUpdate}
+                       onChange={this.onPhChange}
+                   />
+                   {this.phAlert(this.state.phUpdate[0]) }
                </div>
               
-                <div className="grid-item3">
-                
-                    <p >pH<br/></p><p>{this.state.phUpdate[0.].toPrecision(3)}</p>
-                </div>
-                <div className="grid-item4">
-                <PhSlider
-                    values={this.state.phValue}
-                    update={this.state.phUpdate}
-                    defaultValues={defaultPh}
-                    onUpdate={this.onPhUpdate}
-                    onChange={this.onPhChange}
-                />
-                </div >
-               
-               <div className="grid-item5">
-               
-                   <p >
-                       
-                           <div className="eqnum">&nbsp;</div>
-                           
-                               NH<sub>3</sub>
-                       &nbsp;</p>
-                      <p>{this.state.nh3Update[0.].toPrecision(3)}</p>
-               </div>
-                <div className="grid-item6">
-                <Nh3Slider
-                    values={this.state.nh3Update}
-                    update={this.state.nh3Update}
-                    defaultValues={defaultNh3}
-                    onUpdate={this.onNh3Update}
-                    onChange={this.onNh3Change}
-                />
-                </div>
-                <div className="grid-item7">
-                {this.tempAlert(this.state.tempUpdate[0]) }
-                </div>
-                <div className="grid-item8">
-                    {this.phAlert(this.state.phUpdate[0]) }
-                </div>
-                <div className="grid-item9">
+                <div className="sensor-col">
+                    <div className="reading-box">
+                    <h4 >
+                        NH<sub>3</sub>
+                        &nbsp;</h4>
+                    <h5>{this.state.nh3Update[0.].toPrecision(3)}</h5>
+                    </div>
+                    <Nh3SliderVertical
+                        values={this.state.nh3Update}
+                        update={this.state.nh3Update}
+                        defaultValues={defaultNh3}
+                        onUpdate={this.onNh3Update}
+                        onChange={this.onNh3Change}
+                    />
                     {this.nh3Alert(this.state.nh3Update[0]) }
+                </div>
                 </div>
             </div>
             
@@ -253,7 +237,7 @@ class SlidersContainer extends Component {
 
 
 const Headline = () => {
-    return <div className="grid-item"><h1 className="sensors-heading">Aquaponics probe simulator</h1>
+    return <div className="probe-intro"><h1 className="probe-title">Aquaponics probe simulator</h1>
 
         <p>This is built as a part of a wider<a target="_blank" href="https://fullstack-adventure.com/"> Internet Of Things project..</a>
         </p><p>In summary, aquaponics is a system of growing edible plants and fish by way of cycling the water from fish-tank to hydroponic style garden bed and back.</p><p>
@@ -261,12 +245,8 @@ const Headline = () => {
             setup by way of logging into a progressive web application.</p><p>This project requires input data of various probes in order to program and test the logic of the application.
         </p><p>These sliders simulate the probes readings in order for me to go ahead and code the application.
         </p>
-        </div>;
+    </div>
+
 };
-const Description = () => {
-    
-    return <div className="grid-item7">
-        <div>TEMP OK</div>
-    </div>;
-};
+
 export default SlidersContainer;

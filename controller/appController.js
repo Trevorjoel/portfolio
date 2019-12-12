@@ -51,7 +51,7 @@ exports.connectAndShow = async function (req, res) {
             );
         });
 };
-
+//
 // Handles requests to delete a single entry by the id
 exports.deleteByID = async function (req, res) {
     console.log('Delete middleware running...');

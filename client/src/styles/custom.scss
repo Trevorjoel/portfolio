@@ -6,7 +6,7 @@ html{
 .App {
   text-align: center;
 overflow: inherit;
-  background-color: #1d2129;
+  background-color: #ffffff;
 }
 .centre-font{
   text-align: center;
@@ -26,7 +26,7 @@ body {
 .text-on-primary{
   color:$font-color-over-primary;
   font-size: 1.5em;
-  text-shadow: $text-shadow;
+  //text-shadow: $text-shadow;
 }
 
 code {
@@ -36,18 +36,36 @@ code {
 // NAV-BAR
 .App-logo {
   pointer-events: none;
-  height: 8vmin;
-
+  height: 6vmin;
+//background-color: #f2f2f2;
+  //border-radius: 10px;
+}
+#navbar{
+  top: 0;
+  transition: top 0.4s ; /* Transition effect when sliding down (and up) */
+}
+.navbar-toggler{
+background-color: $primary-match-1;
+  color: white;
 }
 .navbar-brand:hover{
-  animation: App-logo-spin infinite 2.5s cubic-bezier(.46,-0.56,.27,1.55);
+  //background-color: black;
+ animation: App-logo-spin infinite 2.5s cubic-bezier(.46,-0.56,.27,1.55);
 }
+li.nav-item:hover{
+  font-size: 1.2em;
+}
+.navbar-light .navbar-nav .nav-link:hover{
+  color: $primary-match-1;
 
+}
 h1.site-title{
-  font-size: 2em;
+  font-size: 4.6em;
   text-shadow: $text-shadow;
-  color:$font-color-over-primary;
-  //width: fit-content;
+  color:aliceblue;
+  font-family: 'Nunito', sans-serif;
+position: relative;
+  transform: translate(-50%, -110%);
 }
 .App-link {
   color: #61dafb;
@@ -66,15 +84,16 @@ h1.site-title{
   position: fixed;
   top: 0;
   width: 100%;
-  box-shadow: 0 .5rem 1rem rgba(0,0,0,.15);
-  z-index: 1;
-  text-shadow: $text-shadow;
+  box-shadow: 0px -2.5px 16px $primary-match-5;
+  z-index: 10;
+  //text-shadow: $text-shadow;
 
 }
 // Font of nav bar
 .navbar-light .navbar-nav .nav-link  {
-  color: $font-color-over-primary;
+  color: #fff;
   font-size: 1.2em;
+  font-family: "Roboto", sans-serif;
 }
 .navbar-light .navbar-brand{
   color: $font-color-over-primary;
@@ -93,18 +112,18 @@ a.nav-link {
 // HEADER
 .App-header {
 
-  background-color: #009eb5;
+  background-color: $primaryColour;
   background-repeat: no-repeat;
   background-position: center;
  min-height:  841px;
   max-height: 841px;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  //align-items: center;
   justify-content: center;
   font-size: $font-transform;
   color: white;
-
+  font-family: 'Roboto', sans-serif;
 
 }
 .react-parallax-bgimage{
@@ -118,33 +137,58 @@ a.nav-link {
 // Introduction
 .img-parent{
  height:auto;
-  max-width:100%;
-  padding: 25px 25px 0 25px;
-  min-height: 82vh;
-  max-height:82vh;
- transform:translate(0%, -34%);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  //max-width:50%;
+  padding: 5% 0 0 0;
+// min-height: 82vh;
+  //margin-bottom: 14vh;
+  //max-height:50vh;
+ transform:translate(0%, -26%);
+ // display: flex;
+  //flex-direction: column;
+  //align-items: flex-start;
+//  justify-content: start;
 
+}
+.ing-thumbnail{
+  max-width: fit-content;
 }
 h1.introduction-head{
-  font-size: calc(25px + 2vmin);
-  text-shadow: $text-shadow;
-
-  color:$font-color-over-primary;
-  transform: translate(0%, -200%);
+  font-size: calc(30px + 5vmin);
+  text-shadow: 3px 0 4px $primaryColour;
+  color: #fff;
+  transform: translate(0%, -100%);
+  font-family: 'Dancing Script', cursive;
+}
+.intro-image-col{
+  margin-bottom: 0;
+  background: $primaryColour;
 }
 .contain-intro{
-  background-color: $primaryColour;
+  background-color: $form-grey;
   max-width: inherit;
-  padding: 0 4em 0 4em;
+  padding: 0 0 0 0;
 }
-.intro-text-row{
-  margin-bottom:6em;
+.intro-paragraph{
+  text-align: center;
 }
 
+.intro-paragraph-lower{
+ // transform:translate(0%, -40%);
+  text-align: center;
+  padding:0 40px 0 40px;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+.intro-text-wrapper{
+  padding: 40px 40px 0 40px;
+  margin-top: 20px;
+  font-size: calc(5px + 1vw);
+}
+.intro-text-wrapper-lower{
+  padding: 20px;
+  margin-top: 0;
+  font-size: calc(5px + 1vw);
+}
 .skills-col{
   background-color: #b2b2b5;
   border:solid steelblue;
@@ -155,44 +199,90 @@ h1.introduction-head{
 }
 
 .nav-tabs {
-  border-bottom: 0 solid #dee2e6;
-  background-color: $primaryColour;
+  //border-bottom: 0 solid #dee2e6;
+  background-color: $form-grey;
 }
 .card-body{
   text-align: left;
+  background-color: $primary-match-4;
 }
 .tab-title .active{
 color: black;
 }
 .card-title{
-  color:$font-color-over-primary;
+  color:black;
+  font-weight:bolder;
+
 }
 .card-text{
   font-size: larger;
-  color:$font-color-over-primary;
+  color:black;
 }
 .modal-text{
   color: $font-color-over-white;
+  text-align: center;
+  //margin: fill;
+  font-size: 2.5vw;
+ // min-width: 34px;
+}
+
+p.modal-content{
+  //text-align: center;
 }
 .skill-icons{
-  margin: 14px 0 40px 0;
-  height: 12vmin;
-  width: 12vmin;
+  margin-bottom: 10px;
+  height: 14vmin;
+  width: 14vmin;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+.icon-paragraph{
 
+}
+
+.certificates{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.modal-footer{
+  background-color: $form-grey;
+}
+.nav-item:hover{
+  cursor: pointer;
 }
 button.skills-button{
 width:100%;
   text-align: center;
-  background-color: #b24267;
+  background-color: $primary-match-2;
+  border: $primary-match-3;
+}
+button.skills-button:hover{
+  font-size: 2em;
+}
+.button-projects{
+  background-color: $primary-match-2;
+  border: $primary-match-2;
+}
+.button-projects:hover{
+  background-color: #28A745;
+  border: $primary-match-1;
+  font-size: 1.1em;
+  //width: 8em;
+  //height: 4em;
+  box-shadow: 1px 1px 10px $primaryColour;
 }
 .button-wrapper{
   display: inline-block;
-  margin:100px 0 100px 0;
-}
-.nav-tabs .nav-link.active, .nav-tabs .nav-item.show .nav-link{
- background-color: #f2f2f2;
+  margin:26px 0 61px 0;
 
 }
+.nav-tabs .nav-link.active, .nav-tabs .nav-item.show .nav-link{
+ background-color: $primary-match-4;
+}
+
 .rounded-circle{
   box-shadow: 2px 2px 25px #14293c;
 }
@@ -201,35 +291,66 @@ width:100%;
   background-color: #dfdfdf;
 }
 .project-card{
-  background-color: $primaryColour;
+  background-color: ghostwhite;
   color: black;
   margin-bottom: 30px;
-  text-shadow: $text-shadow;
+  //text-shadow: $text-shadow;
+}
+.project-card:hover{
+  box-shadow: 1px 1px 10px $primary-match-1;
 }
 h1.projects-title{
   color: $font-color-over-primary;
   margin:40px;
+  font-size: 3rem;
+  font-family: 'Roboto Slab', serif;
+}
+.projects-container{
+  background: rgb(36,48,94);
+  background: radial-gradient(circle, rgba(36,48,94,1) 0%, rgba(36,48,94,1) 47%, rgba(55,71,133,1) 94%);
+  max-width: 96%;
+  border-radius: 10px;
+padding-left: 30px;
+  padding-right: 30px;
+  padding-top: 30px;
+}
+.projects-paragraph{
+  font-size: larger;
+  margin-bottom: 60px;
+}
+// CONTACT FORM
+.form-container{
+  max-width: 700px;
 }
 
-// CONTACT FORM
-
+.form-title{
+  margin-top: 20px;
+  font-size: 3rem;
+  font-family: 'Roboto Slab', serif;
+}
+.form-paragraph{
+  margin: 10px 0 40px 0;
+}
 .form-wrapper{
-  background-color: $primaryColour;
+  background-color: $form-grey;
   padding:20px;
-  border: 1px solid #149e4b;
+  border: 1px solid #aaa;
   border-radius: 4px;
   color:$font-color-over-primary;
   font-size: large;
-  margin-top: 100px;
-  margin-bottom: 100px;
+  width:100%;
+  font-family: 'Roboto Slab', serif;
+  display: block;
+  margin: 100px auto;
 }
 .form-wrapper:hover{
-  box-shadow: 1px 1px 20px #149e4b;
+  box-shadow: 1px 1px 20px $primaryColour;
 }
 .form-text-left{
   text-align: left;
 }
 .contact-button{
+  background-color: $primary-match-1;
   margin: 20px;
 }
 .form-group{
@@ -244,25 +365,40 @@ h1.projects-title{
 
 .footer-wrapper{
   background-color: $primaryColour;
+  //background: rgb(36,48,94);
   padding:2em;
-  color: $font-color-over-primary;
+  color: $primary-match-4;
 }
 .footer-links{
-  height: 6vmin;
+  padding: 1.5em;
+  margin-bottom:10px;
 }
 .footer-icons{
   margin:10px;
   height: 5vmin;
 }
+.footer-copyright{
+  margin-top: 30px;
+  margin-bottom: 10px;
+}
 a.footer-links:hover{
   margin:10px;
   height: 8vmin;
+  width: 8vmin;
+}
+.more-info-container{
+margin-top: 30px;
 }
 // Single project
 
 .modal-dialog.single-project-modal{
-  max-width: 80%;
+  max-width: 98%;
 text-align: left;
+  font-size: 1.1em;
+}
+.modal-dialog{
+  max-width: 98%;
+
 }
 h5.modal-title{
   margin-left: auto;
@@ -274,22 +410,47 @@ h5.modal-title{
   margin: 0 0 30px 0;
 }
 p.project-modal-text{
-
+  text-align: center;
 }
 
 // PROJECTS
 .project-inner-wrapper {
-  padding: 0 20px 40px 20px;
+  padding: 0 10px 40px 10px;
 }
-
+.btn.btn-danger{
+  font-size: .8em;
+}
 // Table
 .employee-table{
   margin: 70px 0 50px 0;
+  font-size: .8em;
+}
+.sort-table.btn {
+  font-size: .8em;
 }
 .align-left{
   text-align: left;
 }
-
+.rotate-device-advice{
+  background-color: $primary-match-3;
+  padding: 10px 10px 10px 10px;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+ border-radius: 10px;
+font-size: .9em;
+  width:100%
+}
+.rotate-device-x{
+  font-size: small;
+margin: 0;
+}
+.rotate-device-paragraph{
+  margin: 0;
+}
+.rotate-device-advice:hover{
+  cursor: pointer;
+}
 // Table
 
 .item-enter {
@@ -315,10 +476,27 @@ a.sort-table {
 // ADD EMPLOYEE FORM
 
 .add-employee-form{
-  margin-right: 25%;
-  margin-left: 25%;
+border-radius: 5px;
+  background-color: $form-grey;
+  padding: 20px;
+ // text-align:left;
+  max-width: 700px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
 
+// Targets the background in the radio buttons
+.radio-group{
+  padding: 10px;
+  background-color: $form-grey;
+}
+h1.probe-title{
+  margin:10%;
+}
+.img404{
+  margin:10%
+}
 
 // MEDIA QUERIES
 

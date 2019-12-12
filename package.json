@@ -8,8 +8,10 @@
     "client-install": "npm install --prefix client",
     "start": "server.js",
     "server": "nodemon server.js --exec babel-node --",
+    "no-nodemon-server": "server.js --exec babel-node --",
     "client": "npm start --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "front": "concurrently \"npm run server\" \"npm run client\"",
     "test": "echo \"Error: no test specified\" && exit 1",
     "heroku-postbuild": "cd client && npm install && npm run build"
   },
