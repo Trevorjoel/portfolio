@@ -1,52 +1,51 @@
-import   {Component} from 'react'
-import React from 'react'
+import React, {Component} from 'react'
 
 
-import { Slider, Rail, Handles, Tracks, Ticks } from 'react-compound-slider';
+import {Handles, Rail, Slider, Ticks, Tracks} from 'react-compound-slider';
 
 
-class Nh3Slider extends Component {
+class TempSlider extends Component {
     
-    render(){
+    render() {
         const sliderStyle = {  // Give the slider some width
             position: 'relative',
             width: '100%',
             height: 100,
-            display: 'inline-block',
+            display: 'inline-block'
             
         };
         
         const railStyle = {
-            position: 'absolute',
-            width: '100%',
-            height: 10,
-            marginTop: 35,
+            position: 'relative',
+            height: '400px',
+            marginLeft: '45%',
             borderRadius: 5,
-            backgroundColor: '#b69f40',
-           
+            backgroundColor: '#2C4870',
             
             
         };
         
-        return(
-            <div>
-               
+        return (
+            <div style={{height: 520, width: '100%'}}>
+                
                 <Slider
+                    vertical={false}
                     rootStyle={sliderStyle}
-                    domain={[.00, 1]}
-                    step={.001}
-                    mode={2}
+                    domain={[0, 25]}
+                    step={.1}
+                    mode={13}
                     onUpdate={this.props.onUpdate}
                     onChange={this.props.onChange}
                     values={this.props.values}
                 >
+                    
                     <Rail>
-                        {({ getRailProps }) => (
+                        {({getRailProps}) => (
                             <div style={railStyle} {...getRailProps()} />
                         )}
                     </Rail>
                     <Handles>
-                        {({ handles, getHandleProps }) => (
+                        {({handles, getHandleProps}) => (
                             <div className="slider-handles">
                                 {handles.map(handle => (
                                     <Handle
@@ -61,9 +60,9 @@ class Nh3Slider extends Component {
                         )}
                     </Handles>
                     <Tracks right={false}>
-                        {({ tracks, getTrackProps }) => (
+                        {({tracks, getTrackProps}) => (
                             <div className="slider-tracks">
-                                {tracks.map(({ id, source, target }) => (
+                                {tracks.map(({id, source, target}) => (
                                     <Track
                                         key={id}
                                         source={source}
@@ -80,11 +79,12 @@ class Nh3Slider extends Component {
                         }
                     
                     </Tracks>
-                    <Ticks count={12 /* generate approximately 15 ticks within the domain */}>
-                        {({ ticks }) => (
+                    
+                    <Ticks count={5 /* generate approximately 15 ticks within the domain */}>
+                        {({ticks}) => (
                             <div className="slider-ticks">
                                 {ticks.map(tick => (
-                                    <Tick key={tick.id} tick={tick} count={ticks.length} />
+                                    <Tick key={tick.id} tick={tick} count={ticks.length}/>
                                 ))}
                             </div>
                         )}
@@ -96,7 +96,8 @@ class Nh3Slider extends Component {
             </div>
         
         );
-        function Tick({ tick, count }) {
+        
+        function Tick({tick, count}) {
             return (
                 <div>
                     <div
@@ -127,7 +128,7 @@ class Nh3Slider extends Component {
             )
         }
         
-        function Handle({handle: { id, value, percent },getHandleProps }) {
+        function Handle({handle: {id, value, percent}, getHandleProps}) {
             return (
                 <div
                     style={{
@@ -142,12 +143,12 @@ class Nh3Slider extends Component {
                         textAlign: 'center',
                         cursor: 'pointer',
                         borderRadius: '50%',
-                        backgroundColor: '#b69f40',
+                        backgroundColor: '#2C4870',
                         color: '#333',
                     }}
                     {...getHandleProps(id)}
                 >
-                    <div style={{ fontFamily: 'Roboto', fontSize: 13.8, marginTop: -24, color:'white' }}>
+                    <div style={{fontFamily: 'Roboto', fontSize: 13.8, marginTop: -24, color: 'white'}}>
                         {value.toPrecision(3)}
                     </div>
                 </div>
@@ -155,7 +156,7 @@ class Nh3Slider extends Component {
         }
         
         
-        function Track({ source, target, getTrackProps }) {
+        function Track({source, target, getTrackProps}) {
             return (
                 <div
                     style={{
@@ -163,7 +164,7 @@ class Nh3Slider extends Component {
                         height: 10,
                         zIndex: 1,
                         marginTop: 35,
-                        backgroundColor: '#b69f40',
+                        backgroundColor: '#2C4870',
                         borderRadius: 5,
                         cursor: 'pointer',
                         left: `${source.percent}%`,
@@ -177,4 +178,3 @@ class Nh3Slider extends Component {
         
     }
 }
-export default Nh3Slider;

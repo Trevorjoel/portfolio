@@ -1,1 +1,13 @@
-<svg width="1087" height="250" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1087 250" preserveAspectRatio="none"><defs><style type="text/css">#holder_16bef5f400a text { fill:#999;font-weight:normal;font-family:Helvetica, monospace;font-size:54pt } </style></defs><g id="holder_16bef5f400a"><rect width="1087" height="250" fill="#373940"/><g><text x="362" y="150.2">1087x250</text></g></g></svg>
+<svg width="1087" height="250" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1087 250" preserveAspectRatio="none">
+    <defs>
+        <style type="text/css">#holder_16bef5f400a text { fill:#999;font-weight:normal;font-family:Helvetica,
+            monospace;font-size:54pt }
+        </style>
+    </defs>
+    <g id="holder_16bef5f400a">
+        <rect width="1087" height="250" fill="#373940"/>
+        <g>
+            <text x="362" y="150.2">1087x250</text>
+        </g>
+    </g>
+</svg>

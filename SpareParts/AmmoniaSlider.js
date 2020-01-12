@@ -1,18 +1,17 @@
-import   {Component} from 'react'
-import React from 'react'
+import React, {Component} from 'react'
 
 
-import { Slider, Rail, Handles, Tracks, Ticks } from 'react-compound-slider';
+import {Handles, Rail, Slider, Ticks, Tracks} from 'react-compound-slider';
 
 
-class PhSlider extends Component {
+class Nh3Slider extends Component {
     
-    render(){
+    render() {
         const sliderStyle = {  // Give the slider some width
             position: 'relative',
             width: '100%',
             height: 100,
-            display: 'inline-block'
+            display: 'inline-block',
             
         };
         
@@ -22,31 +21,30 @@ class PhSlider extends Component {
             height: 10,
             marginTop: 35,
             borderRadius: 5,
-            backgroundColor: '#493fb6',
+            backgroundColor: '#b69f40',
             
             
         };
         
-        return(
-            <div >
+        return (
+            <div>
                 
                 <Slider
-                    vertical={false}
                     rootStyle={sliderStyle}
-                    domain={[5, 9.5]}
-                    step={.01}
-                    mode={13}
+                    domain={[.00, 1]}
+                    step={.001}
+                    mode={2}
                     onUpdate={this.props.onUpdate}
                     onChange={this.props.onChange}
                     values={this.props.values}
                 >
                     <Rail>
-                        {({ getRailProps }) => (
+                        {({getRailProps}) => (
                             <div style={railStyle} {...getRailProps()} />
                         )}
                     </Rail>
                     <Handles>
-                        {({ handles, getHandleProps }) => (
+                        {({handles, getHandleProps}) => (
                             <div className="slider-handles">
                                 {handles.map(handle => (
                                     <Handle
@@ -61,9 +59,9 @@ class PhSlider extends Component {
                         )}
                     </Handles>
                     <Tracks right={false}>
-                        {({ tracks, getTrackProps }) => (
+                        {({tracks, getTrackProps}) => (
                             <div className="slider-tracks">
-                                {tracks.map(({ id, source, target }) => (
+                                {tracks.map(({id, source, target}) => (
                                     <Track
                                         key={id}
                                         source={source}
@@ -80,11 +78,11 @@ class PhSlider extends Component {
                         }
                     
                     </Tracks>
-                    <Ticks count={10 /* generate approximately 15 ticks within the domain */}>
-                        {({ ticks }) => (
+                    <Ticks count={12 /* generate approximately 15 ticks within the domain */}>
+                        {({ticks}) => (
                             <div className="slider-ticks">
                                 {ticks.map(tick => (
-                                    <Tick key={tick.id} tick={tick} count={ticks.length} />
+                                    <Tick key={tick.id} tick={tick} count={ticks.length}/>
                                 ))}
                             </div>
                         )}
@@ -96,7 +94,8 @@ class PhSlider extends Component {
             </div>
         
         );
-        function Tick({ tick, count }) {
+        
+        function Tick({tick, count}) {
             return (
                 <div>
                     <div
@@ -127,7 +126,7 @@ class PhSlider extends Component {
             )
         }
         
-        function Handle({handle: { id, value, percent },getHandleProps }) {
+        function Handle({handle: {id, value, percent}, getHandleProps}) {
             return (
                 <div
                     style={{
@@ -142,12 +141,12 @@ class PhSlider extends Component {
                         textAlign: 'center',
                         cursor: 'pointer',
                         borderRadius: '50%',
-                        backgroundColor: '#493fb6',
-                        color: '#18330b',
+                        backgroundColor: '#b69f40',
+                        color: '#333',
                     }}
                     {...getHandleProps(id)}
                 >
-                    <div style={{ fontFamily: 'Roboto', fontSize: 13.8, marginTop: -24, color:'white' }}>
+                    <div style={{fontFamily: 'Roboto', fontSize: 13.8, marginTop: -24, color: 'white'}}>
                         {value.toPrecision(3)}
                     </div>
                 </div>
@@ -155,7 +154,7 @@ class PhSlider extends Component {
         }
         
         
-        function Track({ source, target, getTrackProps }) {
+        function Track({source, target, getTrackProps}) {
             return (
                 <div
                     style={{
@@ -163,7 +162,7 @@ class PhSlider extends Component {
                         height: 10,
                         zIndex: 1,
                         marginTop: 35,
-                        backgroundColor: '#493fb6',
+                        backgroundColor: '#b69f40',
                         borderRadius: 5,
                         cursor: 'pointer',
                         left: `${source.percent}%`,
@@ -177,4 +176,3 @@ class PhSlider extends Component {
         
     }
 }
-export default PhSlider;

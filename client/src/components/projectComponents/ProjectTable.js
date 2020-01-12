@@ -4,12 +4,20 @@ Main file for the employee table project
 */
 
 import React, {Component} from 'react';
-import github from "../../images/github_PNG2.png";
-import {Button, Col, Container, FormGroup, Label, Row, Table} from 'reactstrap';
+import github from "../../images/hiclipart.com.png";
+import {Button, Col, Container, Fade, FormGroup, Label, Row, Table} from 'reactstrap';
 import {CSSTransition, TransitionGroup,} from 'react-transition-group';
-import {AvForm, AvField, AvRadioGroup, AvRadio} from 'availity-reactstrap-validation';
+import {AvField, AvForm, AvRadio, AvRadioGroup} from 'availity-reactstrap-validation';
+import ProjectsHeader from "./ProjectsHeader";
 
 class ProjectTable extends Component {
+    
+    // Sorts the list by alphanumeric
+    empFirstName;
+    empLastName;
+    // Sorts the JSON array by numbers, the parameter is the toggle state of the element in the JSON obj
+    empDepartmentID;
+    empEmployeeID;
     
     constructor(props) {
         super(props);
@@ -19,10 +27,10 @@ class ProjectTable extends Component {
             toggleFirstName: false,
             toggleLastName: false,
             toggleEmployeeID: false,
-            toggleDeptID:false,
-            firstName:'',
+            toggleDeptID: false,
+            firstName: '',
             lastName: '',
-            departmentID:'',
+            departmentID: '',
             rotateMessage: true
         };
         this.handleAddEmployee = this.handleAddEmployee.bind(this);
@@ -30,25 +38,28 @@ class ProjectTable extends Component {
         this.handleLastNameChange = this.handleLastNameChange.bind(this);
         this.handleDepartmentIDChange = this.handleDepartmentIDChange.bind(this);
     }
-    
+    //
+
     // Handle form field changes
     handleFirstNameChange(event) {
         this.setState({firstName: event.target.value});
     };
+    
     handleLastNameChange(event) {
         this.setState({lastName: event.target.value});
     };
+
     handleDepartmentIDChange(event) {
         this.setState({departmentID: event.target.value});
     };
     
     // Handle adding to the DB
-    handleAddEmployee =  async () => {
+    handleAddEmployee = async () => {
         // Can't see any difference by prevent default being on/off
         //event.preventDefault();
         
         // Extra front-end check of the form fields have been filled and are valid
-        if(this.state.firstName !== ''
+        if (this.state.firstName !== ''
             && this.state.lastName !== ''
             && this.state.departmentID !== ''
             && isNaN(this.state.firstName)
@@ -57,9 +68,9 @@ class ProjectTable extends Component {
             && this.state.lastName.length > 1 ////
             && this.state.lastName.match(/^[a-zA-Z()]+$/)
             && this.state.firstName.match(/^[a-zA-Z()]+$/)
-        ){
+        ) {
             // Go ahead and process request
-            const response =  await fetch('/api/add', {
+            const response = await fetch('/api/add', {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',
@@ -69,11 +80,12 @@ class ProjectTable extends Component {
                     firstName: this.state.firstName,
                     lastName: this.state.lastName,
                     departmentID: this.state.departmentID
-                })});
+                })
+            });
             
             const body = await response.json()
-            
-            // Set state
+                
+                // Set state
                 .then(response =>
                     this.setState({
                         queryBody: response.database3,
@@ -83,14 +95,14 @@ class ProjectTable extends Component {
                     })
                 );
             // todo: Return a success message to user
-
+            
             // Reset the form fields
             this.form && this.form.reset();
             
         } // else Do nothing and let the html form validation work
         
     };
-    //
+    
     // Request api
     queryDB = async () => {
         const response = await fetch('/api/sql');
@@ -101,9 +113,9 @@ class ProjectTable extends Component {
     };
     
     // Feature to populate the table/db when it is empty
-    populateTable = function (){
+    populateTable = function () {
         // Check if the DB is empty
-        if (this.state.queryBody.length === 0 ){
+        if (this.state.queryBody.length === 0) {
             // Render the button that populates db if empty
             return <Button onClick={async () => {
                 const results = await fetch('/api/sql', {
@@ -114,8 +126,7 @@ class ProjectTable extends Component {
                             'Content-Type': 'application/json',
                         },
                     body: JSON.stringify(
-                        {
-                        })
+                        {})
                 });
                 const body = await results.json()
                     .then(results =>
@@ -125,6 +136,7 @@ class ProjectTable extends Component {
             } color="success" block>Populate the table</Button>
         }
     };
+
     // Create and render delete buttons for the database rows
     toDelete = function (empID) {
         
@@ -140,147 +152,175 @@ class ProjectTable extends Component {
                 body: JSON.stringify(
                     {
                         id: empID
-                    })});
+                    })
+            });
             
             const body = await results.json()
-            // Set state
+                // Set state
                 .then(res =>
-                    this.setState({queryBody: res.database2}))}
-            
+                    this.setState({queryBody: res.database2}))
+        }
+        
         }
                        title="Remove" color="danger">Remove</Button>;
         
     };
-    
-     AlertMessage =  () => {
-     
-    };
-  
-   ScreenAlertComponent = () => {
-       // window.onresize = displayWindowSize;
-       // window.onload = displayWindowSize;
-       // function displayWindowSize() {
-       //     // let   myWidth = window.innerWidth;
-       //     // let  myHeight = window.innerHeight;
-       //     // your size calculation code here
-       //     //document.getElementById("screen").innerHTML = myWidth + "x" + myHeight;
-       //
-       // }
-       window.addEventListener("resize", () =>{
-           this.setState({
-               rotateMessage: false
-           })
-       });
 
-           if (window.innerWidth < 560 && this.state.rotateMessage === true) {
-               return <div className="rotate-device-advice"><p className="rotate-device-paragraph">Try rotating your device for a better view.<hr/>
-                   <Button className="rotate-device-x btn-group" onClick={ () =>{
-                       this.setState({ rotateMessage: false })
-                   }}> Close </Button></p></div>
+    ScreenAlertComponent = () => {
         
-           }
-
-       
-   };
+        window.addEventListener("resize", () => {
+            this.setState({
+                rotateMessage: false
+            })
+        });
+        
+        if (window.innerWidth < 560 && this.state.rotateMessage === true) {
+            return <div className="rotate-device-advice">
+                <p className="rotate-device-paragraph">Try rotating your device for a better view.
+                    <br/>
+                    <Button className="rotate-device-x btn-group" onClick={() => {
+                        this.setState({rotateMessage: false})
+                    }}> Close </Button></p>
+            </div>
+            
+        }
+        
+        
+    };
+    
     render() {
+        let titleStyle = {
+            margin: "0% 0px 100px",
+            textAlign: 'center'
+        };
+        
+        let headerStyle = {
+            margin: '40px 0 200px 0',
+            paddingLeft: '10%',
+            paddingRight: '10%',
+            color: 'white',
+            width: '100%'
+        };
+        const projectName = 'Create Read Delete and Sort.';
+        const projectPurpose = ["Implement a front end interface and back end logic to create, read, update and delete entries in a database. ",
+            "Practice, Node, React, SQL, RESTful API's, JavaScript" +
+            " and have a little fun."];
+        
+        const projectDescription = ["After taking various tutorials on interesting technologies I needed to put the knowledge to work.",
+            "Use the buttons in the table head to sort the table. Delete entries with the red buttons or add new ones with the form."];
+        const projectLearning = ['Mostly a practice exercise, so I would recommend better planning and implementation.', 'Breaking the components and methods up into more reusable modules would be a must for a larger project.', 'I need someone to check over my ' +
+        'back end practices to improve them.'];
+        const link1 = [''];
+        const link2 = ['', ''];
+        const link3 = [''];
+        const link4 = [''];
+        const whatNext = ["This type of project would need to be protected by user verification/login. "];
+        
         return (
             <div className="project-inner-wrapper centre-font">
-                
-                <h1 className="form-title">Employee database</h1><br/>
-                
-                <p id="screen" className="form-paragraph">
-                    A little bit of full-stack JavaScript fun.<br/>
-                    Create, read, delete and sort the employees in a database.
-                </p>
-                
-                
-                <h4 className="form-paragraph">List of company employees.</h4>
                 {this.ScreenAlertComponent()}
-                <Table className="employee-table" striped bordered dark hover responsive>
-                    <thead>
-                    <tr>
-                        <th>
-                            <Button id={"uniqueID"}
-                                    onClick={() =>
-                                        this.handleIntegerSort('employeeID')}
-                                    value="employeeID"
-                                    className="sort-table"
-                                    title="Reverse the id's"> ID
-                            </Button>
-                        </th>
-                        <th>
-                            <Button id="sort-by-last-name"
-                                    onClick={() => this.handleTextSort('lastName')}
-                                    ref=""  onMouseOver=""
-                                    className="sort-table"
-                                    title="Sort alphabetically">Last Name
-                            </Button>
-                        </th>
-                        <th>
-                            <Button  id="sort-by-first-name"
-                                     onClick={() => this.handleTextSort('firstName')}
-                                     ref="" onMouseOver="" className="sort-table" title="Sort alphabetically"
-                                     value="first-name"
-                            >First Name
-                            </Button>
-                        </th>
-                        
-                        <th>
-                            <Button  id="sort-by-dept-id"  onClick={() => this.handleIntegerSort('departmentID')}
-                                     ref="" onMouseOver=""
-                                     className="sort-table" title="Sort by id">Department ID</Button>
-                        </th>
-                        <th>{this.populateTable()}</th>
-                    </tr>
-                    </thead>
-                    
-                    <tbody>
-                    <TransitionGroup component={null}>
-                        {
-                            // Map the JSON data and render table
-                            
-                            this.state.queryBody.map((queryBody, index) =>
-                                
-                                <CSSTransition
-                                    key={'CSS-' + queryBody.empEmployeeID.toString()}
-                                    timeout={800}
-                                    classNames='item'
-                                >
-                                    <tr key={'row-' + queryBody.empEmployeeID.toString()} className={index}>
-                                        <th key={queryBody.empEmployeeID.toString() + '-head'} scope="row">
-                                            {queryBody.empEmployeeID}
-                                        </th>
-                                        <td key={queryBody.empEmployeeID.toString() + '-emp-lastname'}>
-                                            {queryBody.empLastName}
-                                        </td>
-                                        <td key={queryBody.empEmployeeID.toString() + '-emp-firstname'}>
-                                            {queryBody.empFirstName}
-                                        </td>
-                                        <td key={queryBody.empEmployeeID.toString() + '-emp-dept-id'}>
-                                            {queryBody.empDepartmentID}
-                                        </td>
-                                        <td key={queryBody.empEmployeeID.toString() + '-emp-id'}>
-                                            {this.toDelete(queryBody.empEmployeeID, this.responseSort)}
-                                        </td>
-                                    </tr>
-                                
-                                </CSSTransition>
-                            )}
-                    </TransitionGroup>
-                    
-                    </tbody>
-                  
+                <ProjectsHeader
+                    projectName={projectName}
+                    projectPurpose={projectPurpose}
+                    projectDescription={projectDescription}
+                    projectLearning={projectLearning}
+                    whatNext={whatNext}
+                    link1={link1} link2={link2} link3={link3} link4={link4}
+                    headerStyle={headerStyle}
+                    titleStyle={titleStyle}
+                />
                 
-                </Table>
-              
+                <Fade>
+                    <h4 className="form-paragraph">Employees.</h4>
+                    
+                    <Table className="employee-table" striped bordered dark hover responsive>
+                        <thead>
+                        <tr>
+                            <th>
+                                <Button id={"uniqueID"}
+                                        onClick={() =>
+                                            this.handleIntegerSort('employeeID')}
+                                        value="employeeID"
+                                        className="sort-table"
+                                        title="Reverse the id's"> ID
+                                </Button>
+                            </th>
+                            <th>
+                                <Button id="sort-by-first-name"
+                                        onClick={() => this.handleTextSort('firstName')}
+                                        ref="" onMouseOver="" className="sort-table" title="Sort alphabetically"
+                                        value="first-name"
+                                >First Name
+                                </Button>
+                            </th>
+                            <th>
+                                
+                                <Button id="sort-by-last-name"
+                                        onClick={() => this.handleTextSort('lastName')}
+                                        ref="" onMouseOver=""
+                                        className="sort-table"
+                                        title="Sort alphabetically">Last Name
+                                </Button>
+                            </th>
+                            
+                            <th>
+                                <Button id="sort-by-dept-id" onClick={() => this.handleIntegerSort('departmentID')}
+                                        ref="" onMouseOver=""
+                                        className="sort-table" title="Sort by id">Department ID</Button>
+                            </th>
+                            <th>{this.populateTable()}</th>
+                        </tr>
+                        </thead>
+                        
+                        <tbody>
+                        <TransitionGroup component={null}>
+                            {
+                                // Map the JSON data and render table
+                                
+                                this.state.queryBody.map((queryBody, index) =>
+                                    
+                                    <CSSTransition
+                                        key={'CSS-' + queryBody.empEmployeeID.toString()}
+                                        timeout={800}
+                                        classNames='item'
+                                    >
+                                        <tr key={'row-' + queryBody.empEmployeeID.toString()} className={index}>
+                                            
+                                            <th key={queryBody.empEmployeeID.toString() + '-head'} scope="row">
+                                                {queryBody.empEmployeeID}
+                                            </th>
+                                            <td key={queryBody.empEmployeeID.toString() + '-emp-firstname'}>
+                                                {queryBody.empFirstName}
+                                            </td>
+                                            <td key={queryBody.empEmployeeID.toString() + '-emp-lastname'}>
+                                                {queryBody.empLastName}
+                                            </td>
+                                            <td key={queryBody.empEmployeeID.toString() + '-emp-dept-id'}>
+                                                {queryBody.empDepartmentID}
+                                            </td>
+                                            <td key={queryBody.empEmployeeID.toString() + '-emp-id'}>
+                                                {this.toDelete(queryBody.empEmployeeID, this.responseSort)}
+                                            </td>
+                                        
+                                        </tr>
+                                    
+                                    </CSSTransition>
+                                )}
+                        </TransitionGroup>
+                        
+                        </tbody>
+                    
+                    
+                    </Table>
+                </Fade>
                 <Container>
-                   
+                    
                     <Row className="add-employee-form">
                         <p className="form-paragraph">
                             <h4>Add employees to the database.</h4>
                         </p>
                         <Col sm={12} md={12} lg={12}>
-                            <AvForm onSubmit={this.handleAddEmployee}  ref={c => (this.form = c)}>
+                            <AvForm onSubmit={this.handleAddEmployee} ref={c => (this.form = c)}>
                                 <FormGroup className="">
                                     <Label for="firstName" className="mr-sm-2 align-left">First Name: </Label><br/>
                                     <AvField value={this.state.firstName}
@@ -290,42 +330,65 @@ class ProjectTable extends Component {
                                              placeholder="First name"
                                              onChange={this.handleFirstNameChange}
                                              errorMessage="Invalid first name" validate={{
-                                                required: {value: true, errorMessage: 'Please enter a first name'},
-                                                pattern: {value: '/^[a-zA-Z()]+$/', errorMessage: 'Your name must be composed only with letters '},
-                                                minLength: {value: 2, errorMessage: 'Your name must be between 2 and 15 characters'},
-                                                maxLength: {value: 15, errorMessage: 'Your name must be between 2 and 15 characters'}}}
+                                        required: {value: true, errorMessage: 'Please enter a first name'},
+                                        pattern: {
+                                            value: '/^[a-zA-Z()]+$/',
+                                            errorMessage: 'Your name must be composed only with letters '
+                                        },
+                                        minLength: {
+                                            value: 2,
+                                            errorMessage: 'Your name must be between 2 and 15 characters'
+                                        },
+                                        maxLength: {
+                                            value: 15,
+                                            errorMessage: 'Your name must be between 2 and 15 characters'
+                                        }
+                                    }}
                                     />
                                 </FormGroup>
                                 
                                 <FormGroup className="">
-                                    <Label  for="lastName" className="align-left">Last Name:</Label><br/>
-                                    <AvField  value={this.state.lastName}
-                                              type="lastName"
-                                              name="lastName"
-                                              id="lastName"
-                                              placeholder="Last name"
-                                              onChange={this.handleLastNameChange}
-                                              validate={{
-                                                  required: {value: true, errorMessage: 'Please enter last name'},
-                                                  pattern: {value: '/^[a-zA-Z()]+$/', errorMessage: 'Your name must be composed only with letters '},
-                                                  minLength: {value: 2, errorMessage: 'Your name must be between 2 and 15 characters'},
-                                                  maxLength: {value: 15, errorMessage: 'Your name must be between 2 and 15 characters'}
-                                              }}
+                                    <Label for="lastName" className="align-left">Last Name:</Label><br/>
+                                    <AvField value={this.state.lastName}
+                                             type="lastName"
+                                             name="lastName"
+                                             id="lastName"
+                                             placeholder="Last name"
+                                             onChange={this.handleLastNameChange}
+                                             validate={{
+                                                 required: {value: true, errorMessage: 'Please enter last name'},
+                                                 pattern: {
+                                                     value: '/^[a-zA-Z()]+$/',
+                                                     errorMessage: 'Your name must be composed only with letters '
+                                                 },
+                                                 minLength: {
+                                                     value: 2,
+                                                     errorMessage: 'Your name must be between 2 and 15 characters'
+                                                 },
+                                                 maxLength: {
+                                                     value: 15,
+                                                     errorMessage: 'Your name must be between 2 and 15 characters'
+                                                 }
+                                             }}
                                     
                                     />
                                 </FormGroup>
                                 <FormGroup className="">
                                     <Label className="align-left" for="departmentID">Department: </Label><br/>
-                                    <AvRadioGroup  inline  required
+                                    <AvRadioGroup inline required
                                                   errorMessage="Pick a department."
                                                   value={this.state.departmentID}
                                                   type="select" name="select" id="departmentID"
-                                                  validate={{max: {value: 4}}}  >
+                                                  validate={{max: {value: 4}}}>
                                         <div className="radio-group">
-                                        <AvRadio label="Developer" value="1" onChange={this.handleDepartmentIDChange} />
-                                        <AvRadio label="Accounts" value="2" onChange={this.handleDepartmentIDChange} />
-                                        <AvRadio label="Management" value="3" onChange={this.handleDepartmentIDChange} />
-                                        <AvRadio label="Garbage eater" value="4" onChange={this.handleDepartmentIDChange} />
+                                            <AvRadio label="Developer" value="1"
+                                                     onChange={this.handleDepartmentIDChange}/>
+                                            <AvRadio label="Accounts" value="2"
+                                                     onChange={this.handleDepartmentIDChange}/>
+                                            <AvRadio label="Management" value="3"
+                                                     onChange={this.handleDepartmentIDChange}/>
+                                            <AvRadio label="Garbage eater" value="4"
+                                                     onChange={this.handleDepartmentIDChange}/>
                                         </div>
                                     </AvRadioGroup>
                                 
@@ -335,27 +398,32 @@ class ProjectTable extends Component {
                             
                             </AvForm>
                         </Col>
+                    
                     </Row>
+                    <div className="project-icons">
+                        <a target="_blank"
+                           rel="noopener noreferrer"
+                           title="See the code"
+                           className="footer-links"
+                           href="https://github.com/Trevorjoel/portfolio/blob/master/client/src/components/projectComponents/ProjectTable.js">
+                            <img alt="Github icon"
+                                 className="App-logo footer-icons"
+                                 src={github}/>
+                        </a>
+                        <p>Code for this project.</p>
+                    </div>
                 </Container>
+                
                 <hr/>
-                <a target="_blank"
-                   rel="noopener noreferrer"
-                   title="See the code"
-                   className="footer-links"
-                   href="https://github.com/Trevorjoel/portfolio/blob/master/client/src/components/projectComponents/ProjectTable.js">
-                    <img alt="Github icon"
-                         className="App-logo footer-icons"
-                         src={github}/>
-                </a>
-                <p>Code for this project.</p>
+            
             </div>
-        )}
+        )
+    }
     
-    // Sorts the list by alphanumeric
-    handleTextSort = (el) =>{
+    handleTextSort = (el) => {
         // Takes an argument from the function call to determine which list to sort by
         
-        if (el === 'firstName'){
+        if (el === 'firstName') {
             
             // Determine the toggle state of the list
             switch (this.state.toggleFirstName) {
@@ -366,8 +434,12 @@ class ProjectTable extends Component {
                                 const firsNameA = a.empFirstName.toUpperCase();
                                 const firstNameB = b.empFirstName.toUpperCase();
                                 
-                                if (firsNameA < firstNameB) {return -1; }
-                                if (firsNameA > firstNameB) {return 1;}
+                                if (firsNameA < firstNameB) {
+                                    return -1;
+                                }
+                                if (firsNameA > firstNameB) {
+                                    return 1;
+                                }
                                 // names must be equal
                                 return 0;
                             }
@@ -381,22 +453,27 @@ class ProjectTable extends Component {
                                 const firsNameA = a.empFirstName.toUpperCase();
                                 const firstNameB = b.empFirstName.toUpperCase();
                                 
-                                if (firstNameB < firsNameA) {return -1; }
+                                if (firstNameB < firsNameA) {
+                                    return -1;
+                                }
                                 
-                                if (firstNameB > firsNameA) {return 1;}
+                                if (firstNameB > firsNameA) {
+                                    return 1;
+                                }
                                 // names must be equal
                                 return 0;
                             }
                         ));
                     break;
                 
-                default: console.log('Default');
+                default:
+                    console.log('Default');
             }
             
             // Change toggle state
             this.toggle(el);
             
-        }else if (el === 'lastName'){
+        } else if (el === 'lastName') {
             
             switch (this.state.toggleLastName) {
                 
@@ -406,8 +483,12 @@ class ProjectTable extends Component {
                                 const lastNameA = a.empLastName.toUpperCase();
                                 const lastNameB = b.empLastName.toUpperCase();
                                 
-                                if (lastNameA < lastNameB) {return -1;}
-                                if (lastNameA > lastNameB) {return 1;}
+                                if (lastNameA < lastNameB) {
+                                    return -1;
+                                }
+                                if (lastNameA > lastNameB) {
+                                    return 1;
+                                }
                                 // names must be equal
                                 return 0;
                             }
@@ -421,9 +502,13 @@ class ProjectTable extends Component {
                                 const lastNameA = a.empLastName.toUpperCase();
                                 const lastNameB = b.empLastName.toUpperCase();
                                 
-                                if (lastNameB < lastNameA) {return -1;}
+                                if (lastNameB < lastNameA) {
+                                    return -1;
+                                }
                                 
-                                if (lastNameB > lastNameA) {return 1;}
+                                if (lastNameB > lastNameA) {
+                                    return 1;
+                                }
                                 // names must be equal
                                 return 0;
                             }
@@ -436,33 +521,41 @@ class ProjectTable extends Component {
         }
         this.toggle(el);
     };
-    
+
     // Toggle the correct value switch off unused toggle values , keeps track of the sort state
-    toggle = function(name) {
+    toggle = function (name) {
         switch (name) {
-            case 'firstName': this.setState({
-                toggleFirstName: !this.state.toggleFirstName,
-                toggleLastName: false,
-                toggleDeptID:false,
-                toggleEmployeeID: false});
+            case 'firstName':
+                this.setState({
+                    toggleFirstName: !this.state.toggleFirstName,
+                    toggleLastName: false,
+                    toggleDeptID: false,
+                    toggleEmployeeID: false
+                });
                 break;
-            case 'lastName': this.setState({
-                toggleLastName: !this.state.toggleLastName,
-                toggleFirstName: false,
-                toggleDeptID:false,
-                toggleEmployeeID: false});
+            case 'lastName':
+                this.setState({
+                    toggleLastName: !this.state.toggleLastName,
+                    toggleFirstName: false,
+                    toggleDeptID: false,
+                    toggleEmployeeID: false
+                });
                 break;
-            case 'employeeID':  this.setState({
-                toggleEmployeeID: !this.state.toggleEmployeeID,
-                toggleLastName: false,
-                toggleDeptID:false,
-                toggleFirstName: false});
+            case 'employeeID':
+                this.setState({
+                    toggleEmployeeID: !this.state.toggleEmployeeID,
+                    toggleLastName: false,
+                    toggleDeptID: false,
+                    toggleFirstName: false
+                });
                 break;
-            case 'departmentID' : this.setState({
-                toggleDeptID: !this.state.toggleDeptID,
-                toggleLastName: false,
-                toggleFirstName:false,
-                toggleEmployeeID: false});
+            case 'departmentID' :
+                this.setState({
+                    toggleDeptID: !this.state.toggleDeptID,
+                    toggleLastName: false,
+                    toggleFirstName: false,
+                    toggleEmployeeID: false
+                });
                 break;
             default:
                 console.log('Unknown argument passed to switch');
@@ -470,14 +563,13 @@ class ProjectTable extends Component {
         }
         
     };
-    
-    // Sorts the JSON array by numbers, the parameter is the toggle state of the element in the JSON obj
+
     handleIntegerSort = (s) => {
         // Select the values to sort by
-        if(s === 'departmentID') {
+        if (s === 'departmentID') {
             
             // Check for state of toggle + Do sort
-
+            
             switch (this.state.toggleDeptID) {
                 case false:
                     console.log('B');
@@ -497,9 +589,10 @@ class ProjectTable extends Component {
             console.log('C2');
             // Reverse toggle value
             this.toggle(s);
-        }else if(s ===  'employeeID'){
+        } else if (s === 'employeeID') {
             switch (this.state.toggleEmployeeID) {
-                case false:console.log('D');
+                case false:
+                    console.log('D');
                     this.setState(this.state.queryBody.sort(function (a, b) {
                         return b.empEmployeeID - a.empEmployeeID;
                     }));
@@ -519,6 +612,7 @@ class ProjectTable extends Component {
         }
         
     };
+    
     // Set the queryBody state upon mounting
     componentDidMount() {
         this.queryDB()
@@ -528,7 +622,8 @@ class ProjectTable extends Component {
             }))
             .catch(err => console.log(err));
     }
-    responseSort(st,th){
+    
+    responseSort(st, th) {
         console.log('Response sort Fn Run');
         console.log(st.toggleEmployeeID);
         console.log(st);
@@ -550,7 +645,8 @@ class ProjectTable extends Component {
                 this.handleIntegerSort(s);
                 break;
             
-            default: console.log('not found');
+            default:
+                console.log('not found');
         }
         th.setState({tempResContainer: st.queryBody})
     };

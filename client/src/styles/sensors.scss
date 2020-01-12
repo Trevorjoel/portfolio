@@ -1,55 +1,22 @@
+.project-template-title {
+  margin: 10% 0 100px 0;
+  text-align: center;
+}
 
+.reading-box {
+  text-align: center;
+  padding: 10px;
+}
 
 .sensors-container {
-  background-color: #0b2934;
+  background-color: #000000;
   color: white;
-  width:100%;
-margin-top: 100px;
-
+  max-width: 100%;
+  margin-top: 100px;
+  text-align: left;
   padding: 4%;
-  font-size:  calc(10px + 1vmin);
+  font-size: calc(10px + 1vmin);
 }
-.sensors-heading{
-  margin-bottom: 40px;
-
-}
-.App-link {
-  color: #09d3ac;
-}
-.grid-container{
-  padding: 100px;
-  display: grid;
-  color: #f2f2f2;
-
-}
-
-.flex-grid {
-  display: flex;
-}
-.flex-grid .sensor-col {
-  flex: 1;
-}
-.flex-grid-thirds {
-  display: flex;
-  justify-content: space-between;
-}
-.flex-grid-thirds .sensor-col {
-  width: 32%;
-}
-
-@media (max-width: 660px) {
-  .flex-grid,
-  .flex-grid-thirds {
-    display: block;
-    .sensor-col {
-      width: 100%;
-      margin: 0 0 10px 0;
-    }
-  }
-}
-
-
-
 
 * {
   box-sizing: border-box;
@@ -58,52 +25,52 @@ margin-top: 100px;
 .flex-grid {
   margin: 0 0 20px 0;
 }
-.sensor-col {
-  //max-width: 32%;
-  padding: 20px;
-  background-color: #1d2129;
-  border-radius: 10px ;
-}
-.probe-intro{
 
-  margin: 40px 0 200px 0;
-  padding-left: 4%;
-  padding-right: 4%;
-
-}
-.reading-box{
-  padding:0 26px 20px 0;
-
+.info-icon {
+  max-width: 48px;
 }
 
+.badge-secondary-override {
+  color: #000;
+  background-color: #fdfdfd;
+  border-radius: 4px;
+  margin-left: 10px;
+  margin-top: 0;
+  padding: 10px 10px 11px 10px;
 
-.grid-item1{
-  grid-column: 1 / span 1;
-  grid-row: 2;
-max-width: 200px;
-  font-size:  calc(10px + 1vmin);
-}
-.grid-item2{
-  grid-column: 2 / span 1;
-  grid-row: 2;
-  max-width: 200px;
-}
-.grid-item3{
-  grid-column: 3 / span 1;
-  grid-row: 2;
-  max-width: 400px;
- // font-size:  calc(10px + 1vmin);
+  border: 1px solid black
 }
 
-.red-alert{
+.status-wrapper {
+  background: whitesmoke;
+  color: black;
+  margin: 13% 0 0 0;
+  border-radius: 5px;
+  padding: 10px 1px 10px 1px;
+  text-align: center;
+}
+
+.red-alert {
   background-color: #c8031f;
+  cursor: pointer;
+  padding: 10px 0 1px 0;
+  margin-bottom: 2px;
 }
-.yellow-alert{
+
+.yellow-alert {
   background-color: #d3b126;
+  cursor: pointer;
+  padding: 10px 0 1px 0;
+  margin-bottom: 2px;
 }
-.green-alert{
+
+.green-alert {
   background-color: #187316;
+  cursor: pointer;
+  padding: 10px 0 1px 0;
+  margin-bottom: 2px;
 }
-p.alert{
-  margin:10px
+
+p.alert {
+  margin: 0;
 }

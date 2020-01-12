@@ -1,30 +1,41 @@
-import React, { Component } from 'react';
-import { Parallax } from 'react-parallax';
-const insideStyles = {
-    padding: 0,
-    position: "absolute",
-    top: "36%",
-    left: "50%",
-    transform: "translate(-50%,-50%)"
-};
-class Header  extends Component {
-  
+import React, {Component} from 'react';
+import {Parallax} from 'react-parallax';
+import {Col, Row} from "reactstrap";
+import Image from "react-bootstrap/Image";
+import portrait from "../images/Artboard8.png";
+
+
+class Header extends Component {
+    
     
     render() {
         return (
-                <Parallax bgImage={require('../images/kyle-sung-oQuP_XBjOMY-unsplash1.jpg')} className="App-header"  strength={500}>
-                    <div style={{ height: 400 }}>
-                <h1 id="top"  style={insideStyles} className="site-title">
-                    PORTFOLIO<br/>
-                    Trevor Garrity
-                  
-                </h1>
+            <Parallax bgImage={require('../images/kyle-sung-oQuP_XBjOMY-unsplash3.jpg')} className="App-header"
+                      strength={500}>
+                
+                <Row>
                     
-                    </div>
-                    <p>Full-Stack Web Development and Tech Solutions</p>
-                </Parallax>
-          
+                    <Col sm={12} md={6} lg={6} xl={6} className="">
+                        <div className="img-parent">
+                            <Image className="" src={portrait} roundedCircle fluid alt="Trevor"/>
+                        </div>
+                        {/*< h1 id="introduction" className="introduction-head">Welcome</h1>*/}
+                    </Col>
+                    
+                    <Col sm={12} md={6} lg={6} xl={5}>
+                        <h1 className="site-title">TREVOR <br/>GARRITY</h1>
+                        
+                        <p className="text-on-primary intro-paragraph">
+                            Full-stack web developer with a flair <br/>for the JavaScript stack.<br/>
+                        
+                        </p>
+                    
+                    </Col>
+                </Row>
+            </Parallax>
+        
         );
     }
 }
+
 export default Header;

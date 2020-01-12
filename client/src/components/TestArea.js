@@ -47,8 +47,9 @@ class TestArea extends Component {
             },
             body: JSON.stringify({
                 post: this.state.post,
-                anotherValue: 'dont forget you can <script></script>add values here'}),
-           
+                anotherValue: 'dont forget you can <script></script>add values here'
+            }),
+            
         });
         
         const body = await response.text();
@@ -103,4 +104,3 @@ class TestArea extends Component {
     
 }
 
-export default TestArea;

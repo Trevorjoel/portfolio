@@ -1,18 +1,19 @@
 // DB Connection
 const mysql = require('mysql');
 import keys from '../config/keys';
+
 let connection = mysql.createConnection({
-    host     : keys.DB.HOST,
-    user     : keys.DB.USER,
-    password : keys.DB.PASSWORD,
-    database : keys.DB.DATABASE,
-    port:      keys.DB.PORT
+    host: keys.DB.HOST,
+    user: keys.DB.USER,
+    password: keys.DB.PASSWORD,
+    database: keys.DB.DATABASE,
+    port: keys.DB.PORT
 });
 
-connection.connect((err) =>{
-    if (err){
+connection.connect((err) => {
+    if (err) {
         console.log(err);
-    }else {
+    } else {
         console.log('connected....')
     }
 });

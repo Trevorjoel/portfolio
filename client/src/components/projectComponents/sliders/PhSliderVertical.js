@@ -1,7 +1,6 @@
-import { Component } from 'react'
+import React, {Component, Fragment} from 'react'
 import Slider from "react-compound-slider/Slider";
-import  { Rail, Handles, Tracks, Ticks } from 'react-compound-slider';
-import React, { Fragment } from 'react'
+import {Handles, Rail, Ticks, Tracks} from 'react-compound-slider';
 import PropTypes from 'prop-types'
 
 
@@ -17,10 +16,11 @@ class PhSliderVertical extends Component {
     render() {
         
         return (
-            <div style={{ height: 520, width: '100%' }}>
+            <div style={{height: 460, width: '100%'}}>
                 
                 <Slider
                     vertical
+                    reversed
                     rootStyle={sliderStyle}
                     domain={[5, 9.5]}
                     step={.01}
@@ -30,10 +30,10 @@ class PhSliderVertical extends Component {
                     values={this.props.values}
                 >
                     <Rail>
-                        {({ getRailProps }) => <SliderRail getRailProps={getRailProps} />}
+                        {({getRailProps}) => <SliderRail getRailProps={getRailProps}/>}
                     </Rail>
                     <Handles>
-                        {({ handles, getHandleProps }) => (
+                        {({handles, getHandleProps}) => (
                             <div className="slider-handles">
                                 {handles.map(handle => (
                                     <Handle
@@ -47,9 +47,9 @@ class PhSliderVertical extends Component {
                         )}
                     </Handles>
                     <Tracks left={false} right={false}>
-                        {({ tracks, getTrackProps }) => (
+                        {({tracks, getTrackProps}) => (
                             <div className="slider-tracks">
-                                {tracks.map(({ id, source, target }) => (
+                                {tracks.map(({id, source, target}) => (
                                     <Track
                                         key={id}
                                         source={source}
@@ -61,10 +61,10 @@ class PhSliderVertical extends Component {
                         )}
                     </Tracks>
                     <Ticks count={5}>
-                        {({ ticks }) => (
+                        {({ticks}) => (
                             <div className="slider-ticks">
                                 {ticks.map(tick => (
-                                    <Tick key={tick.id} tick={tick} />
+                                    <Tick key={tick.id} tick={tick}/>
                                 ))}
                             </div>
                         )}
@@ -76,10 +76,6 @@ class PhSliderVertical extends Component {
 }
 
 export default PhSliderVertical
-
-
-
-
 
 
 // *******************************************************
@@ -105,11 +101,11 @@ const railInnerStyle = {
     backgroundColor: '#493fb6',
 };
 
-export function SliderRail({ getRailProps }) {
+export function SliderRail({getRailProps}) {
     return (
         <Fragment>
             <div style={railOuterStyle} {...getRailProps()} />
-            <div style={railInnerStyle} />
+            <div style={railInnerStyle}/>
         </Fragment>
     )
 }
@@ -123,7 +119,7 @@ SliderRail.propTypes = {
 // *******************************************************
 export function Handle({
                            domain: [min, max],
-                           handle: { id, value, percent },
+                           handle: {id, value, percent},
                            getHandleProps,
                        }) {
     return (
@@ -178,7 +174,7 @@ Handle.propTypes = {
 // *******************************************************
 // TRACK COMPONENT
 // *******************************************************
-export function Track({ source, target, getTrackProps }) {
+export function Track({source, target, getTrackProps}) {
     return (
         <div
             style={{
@@ -214,7 +210,7 @@ Track.propTypes = {
 // *******************************************************
 // TICK COMPONENT
 // *******************************************************
-export function Tick({ tick, format }) {
+export function Tick({tick, format}) {
     return (
         <div>
             <div

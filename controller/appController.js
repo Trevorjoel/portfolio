@@ -3,6 +3,7 @@
 *
 *  */
 import {validationResult} from "express-validator";
+
 const nodemailer = require('nodemailer');
 const sql = require('../models/db');
 const keys = require('../config/keys');
@@ -41,6 +42,7 @@ exports.emailer = function (req) {
 
 // Grab all database entries
 exports.connectAndShow = async function (req, res) {
+    // noinspection JSUnusedLocalSymbols,JSUnusedLocalSymbols,JSUnusedLocalSymbols,JSUnresolvedFunction
     const results = await sql.query(dbModel.selectAllEmployees,
         
         function (error, results) {
@@ -56,43 +58,47 @@ exports.connectAndShow = async function (req, res) {
 exports.deleteByID = async function (req, res) {
     console.log('Delete middleware running...');
     
+    // noinspection JSUnresolvedFunction
     const results = await sql.query(`${dbModel.deleteById}  ${req.body.id}`);
+    // noinspection JSUnresolvedFunction
     const updated = await sql.query(dbModel.selectAllEmployees,
         
         function (error, updated) {
             if (error) throw error;
-           res.send({database2: updated}) // todo: This causes a bug, lists that have been sorted are rearranged back to initial state
+            res.send({database2: updated}) // todo: This causes a bug, lists that have been sorted are rearranged back to initial state
         })
 };
 
 // Testing function for validation methods
 exports.validate = (req, res) => {
-       console.log('Validate func running.');
-        const errors = validationResult(req);
-        if (!errors.isEmpty()) {
-            return res.status(422).json({errors: errors.array()});
-        }
-        res.send(
-            `I received your  request. This is what you sent me:
+    console.log('Validate func running.');
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(422).json({errors: errors.array()});
+    }
+    res.send(
+        `I received your  request. This is what you sent me:
             ${req.body.post} And :  ${req.body.anotherValue}`,);
 };
 
 // Adds a bunch of entries to the database
 exports.populateTable = async (req, res) => {
     console.log('Populate table controller working');
+    // noinspection JSUnresolvedFunction
     const insert = await sql.query(dbModel.populateDb);
+    // noinspection JSUnresolvedFunction
     const read = await sql.query(dbModel.selectAllEmployees,
         
         function (error, read) {
             if (error) throw error;
             res.send({database2: read})
-    })
+        })
 };
 
 exports.addEmployee = async (req, res) => {
     
-        // Prevent malicious attempts at entering unwanted data after disable of front end validation
-        // No need to send back user messages ATM as it's only malicious users who disable the front end validation/verification (I have more important things to do)
+    // Prevent malicious attempts at entering unwanted data after disable of front end validation
+    // No need to send back user messages ATM as it's only malicious users who disable the front end validation/verification (I have more important things to do)
     
     const errors = validationResult(req);
     
@@ -101,23 +107,26 @@ exports.addEmployee = async (req, res) => {
         console.log('Somebody disabled the front-end validation and attempted to enter nasites into the  fields! Not cool man, not cool!');
         
         // Send back table data
+        // noinspection JSUnresolvedFunction
         const readAll = sql.query(dbModel.selectAllEmployees,
             function (error, readAll) {
                 res.send({database3: readAll});
             });
-
-    }else{
-            console.log(req.body.firstName);
-            const insert = await sql.query(`INSERT INTO \`employee\` (\`empLastName\`, \`empFirstName\`, \`empDepartmentID\`, \`empHireDate\`, \`empDateOfBirth\`, \`empAddress\`, \`empTown\`, \`empState\`, \`empPostcode\`, \`empContact\`) VALUES
+        
+    } else {
+        console.log(req.body.firstName);
+        // noinspection JSUnresolvedFunction
+        const insert = await sql.query(`INSERT INTO \`employee\` (\`empLastName\`, \`empFirstName\`, \`empDepartmentID\`, \`empHireDate\`, \`empDateOfBirth\`, \`empAddress\`, \`empTown\`, \`empState\`, \`empPostcode\`, \`empContact\`) VALUES
 ('${req.body.lastName}', '${req.body.firstName}', ${req.body.departmentID}, '2001-03-17', '1964-12-12', '45 Sandy Creek Rd', 'Mapdot', 'NSW', '2999', '0444444444')`,
-                function (error) {
-                    if (error) throw error;
-            
-                });
-    
-            const readAll = sql.query(dbModel.selectAllEmployees,
-                function (error, readAll) {
-                    res.send({database3: readAll});
-                });
-        }
+            function (error) {
+                if (error) throw error;
+                
+            });
+        
+        // noinspection JSUnresolvedFunction
+        const readAll = sql.query(dbModel.selectAllEmployees,
+            function (error, readAll) {
+                res.send({database3: readAll});
+            });
+    }
 };

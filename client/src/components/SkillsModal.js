@@ -1,8 +1,9 @@
 /* eslint react/no-multi-comp: 0, react/prop-types: 0 */
 
 import React from 'react';
-import { Button, Modal,  ModalFooter } from 'reactstrap';
+import {Button, Modal, ModalFooter} from 'reactstrap';
 import SkillsTabs from './SkillsTabs';
+
 class SkillsModal extends React.Component {
     constructor(props) {
         super(props);
@@ -22,15 +23,16 @@ class SkillsModal extends React.Component {
     render() {
         return (
             <div>
-                <div  id="skills" className="button-wrapper">
-                <Button block className="skills-button"  color="success" size="lg" onClick={this.toggle}>{this.props.buttonLabel}    Skills & Experience</Button>
+                <div id="skills" className="button-wrapper">
+                    <Button block className="skills-button" color="success" size="lg"
+                            onClick={this.toggle}>{this.props.buttonLabel} Skills & Experience</Button>
                 
                 </div>
-              
+                
                 <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
                     
-                  
-                        <SkillsTabs />
+                    
+                    <SkillsTabs/>
                     
                     <ModalFooter>
                         

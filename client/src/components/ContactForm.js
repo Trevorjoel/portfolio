@@ -1,33 +1,73 @@
-import {Button, FormGroup ,Modal, ModalHeader, ModalBody, ModalFooter  } from 'reactstrap';
-import React from "react";
-import { Component } from 'react';
-import { Col, Container, Row} from "react-bootstrap";
-import { AvForm, AvField } from 'availity-reactstrap-validation';
+import {Button, FormGroup, Modal, ModalBody, ModalFooter, ModalHeader} from 'reactstrap';
+import React, {Component} from "react";
+import {Col, Container, Row} from "react-bootstrap";
+import {AvField, AvForm} from 'availity-reactstrap-validation';
+import github from "../images/hiclipart.com.png";
+import linkedin from "../images/pngfuel_linked.png";
+import logo from "../images/Sign96x96_white.png";
 
 // todo: Check conventions for naming each Class/Component etc...
 
-
 class ContactForm extends Component {
-    render(){
+    constructor(props) {
+        super(props);
+        
+        this.handleValidSubmit = this.handleValidSubmit.bind(this);
+        this.handleInvalidSubmit = this.handleInvalidSubmit.bind(this);
+        this.closeModal = this.closeModal.bind(this);
+        this.state = {
+            email: false,
+            message: '',
+            result: ''
+        };
+    }
+    
+    render() {
         const modalError = this.state.error ? 'not' : '';
-        return(
-            <Container className="form-container">
-                <Row id="contacts">
-                    <Col xs="12" sm="12" md="12" lg="12">
+        return (
+            <Container id="contacts" className="form-container">
+                <Row>
+                    <Col xs="12" sm="12" md="12" lg="6">
+                        <h1 className="more-info-title">About me</h1>
+                        <Col md="8" className="more-info-container">
+                            <p className="about-paragraph text-on-primary">
+                                Seeking freelance web development projects and full time positions in:<br/><br/></p>
+                            <ul className="">
+                                <p className="about-paragraph text-on-primary">
+                                    <li>Content management systems.</li>
+                                    <li>Search engine optimisation and digital marketing.</li>
+                                    <li>Consultations for selected small businesses.</li>
+                                    <li>Static and dynamic site building.</li>
+                                </p>
+                            </ul>
+                            <p className="about-paragraph text-on-primary">    Contact me for a chat. </p>
+                            
+                            <p className="about-paragraph text-on-primary">
+                                <strong>Email: </strong> trevsstuff@hotmail.com<br/>
+                                <strong>Number: </strong> +7 925 800 6120</p>
+                        
+                        </Col>
+                    </Col>
+                    
+                    <Col xs="12" sm="12" md="12" lg="6">
+                        <h1 className="contact-title">Contact</h1>
                         <div className="form-wrapper">
-                            <h1 className="form-title">Contact me</h1>
-                            <p className="form-paragraph">Some text</p>
+                            
                             <div className="form-text-left">
-                            <AvForm onValidSubmit={this.handleValidSubmit} onInvalidSubmit={this.handleInvalidSubmit}>
-                                <FormGroup>
-                                    <AvField name="name" label="Name " type="text" required placeholder="Your name"  id="name"/>
-                                    <AvField name="email" label="Email address: " type="email" required placeholder="Your email"  id="email"/>
+                                <AvForm onValidSubmit={this.handleValidSubmit}
+                                        onInvalidSubmit={this.handleInvalidSubmit}>
+                                    <FormGroup>
+                                        <AvField name="name" label="Name " type="text" required placeholder="Your name"
+                                                 id="name"/>
+                                        <AvField name="email" label="Email address: " type="email" required
+                                                 placeholder="Your email" id="email"/>
+                                        
+                                        <AvField type="textarea" name="message" label="Message: " required
+                                                 placeholder="Your message" id="message"/>
+                                        <Button className="button-projects" size="lg">Submit</Button>
+                                    </FormGroup>
                                 
-                                <AvField name="message" label="Message: " type="text" required placeholder="Your message"  id="message"/>
-
-                                </FormGroup>
-                                <Button className="button-projects">Submit</Button>
-                            </AvForm>
+                                </AvForm>
                             </div>
                             <Modal isOpen={this.state.email !== false} toggle={this.closeModal}>
                                 <ModalHeader toggle={this.closeModal}>Form is {modalError} valid!</ModalHeader>
@@ -42,34 +82,37 @@ class ContactForm extends Component {
                                 </ModalFooter>
                             </Modal>
                         </div>
+                    
                     </Col>
-                   
+                
                 </Row>
+                <div className="icons-wrapper">
+                    <a target="_blank" rel="noopener noreferrer" title="Check out my code" className="footer-links"
+                       href="https://github.com/Trevorjoel">
+                        <img alt="Github icon" className="App-logo footer-icons" src={github}/>
+                    </a>
+                    <a target="_blank" rel="noopener noreferrer" title="Linkedin profile" className="footer-links"
+                       href="https://www.linkedin.com/in/trevor-garrity-07214b160/">
+                        <img alt="linkedin icon" className="App-logo footer-icons" src={linkedin}/>
+                    </a>
+                    <a target="_blank" rel="noopener noreferrer" title="My blog site!" className="footer-links"
+                       href="https://www.fullstack-adventure.com">
+                        <img alt="Trevor Joel icon" className="App-logo footer-icons" src={logo}/>
+                    </a>
+                </div>
             </Container>
         )
     }
-    constructor(props) {
-        super(props);
-        
-        this.handleValidSubmit = this.handleValidSubmit.bind(this);
-        this.handleInvalidSubmit = this.handleInvalidSubmit.bind(this);
-        this.closeModal = this.closeModal.bind(this);
-        this.state = {
-            email: false,
-            message:'',
-            result: ''
-        };
-    }
     
     handleValidSubmit(event, values) {
-       
+        
         this.setState({
             name: values.name,
             email: values.email,
             message: values.message,
             result: 'Your submission went through. I will contact you soon.'
         });
-        console.log(values.email + values.message );
+        console.log(values.email + values.message);
         const response = fetch('/api/send', {
             method: 'POST',
             headers: {
@@ -80,7 +123,8 @@ class ContactForm extends Component {
             body: JSON.stringify({
                 name: values.name,
                 email: values.email,
-                message: values.message}),
+                message: values.message
+            }),
         })
             .catch(
                 err => console.log(err)
@@ -90,16 +134,18 @@ class ContactForm extends Component {
     
     handleInvalidSubmit(event, errors, values) {
         
-            this.setState({
-                name: values.name,
-                email: values.email,
-                error: true,
-                message: values.message,
-                result: 'Something went wrong with your submission.'
-            });
+        this.setState({
+            name: values.name,
+            email: values.email,
+            error: true,
+            message: values.message,
+            result: 'Something went wrong with your submission.'
+        });
     }
+    
     closeModal() {
         this.setState({email: false, error: false});
     }
 }
+
 export default ContactForm;

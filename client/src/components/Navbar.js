@@ -1,23 +1,14 @@
-import logo from '../images/Sign96x96.png';
-import React, { Component } from 'react';
-import { Link} from "react-scroll";
-import { NavLink as RRNavLink } from 'react-router-dom';
-import {
-    Collapse,
-    Navbar,
-    NavbarToggler,
-    NavbarBrand,
-    Nav,
-    NavItem,
-    NavLink
-} from 'reactstrap';
-
+import logo from '../images/Sign96x96_white.png';
+import React, {Component} from 'react';
+import {Link} from "react-scroll";
+import {NavLink as RRNavLink} from 'react-router-dom';
+import {Collapse, Nav, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink} from 'reactstrap';
 
 
 /* When the user scrolls down, hide the navbar. When the user scrolls up, show the navbar */
 
 let prevScrollpos = window.pageYOffset;
-window.onscroll = function() {
+window.onscroll = function () {
     const currentScrollPos = window.pageYOffset;
     if (prevScrollpos > currentScrollPos) {
         document.getElementById("navbar").style.top = "0";
@@ -45,50 +36,39 @@ class NavBar extends Component {
     }
     
     render() {
-       
+        
         return (
             <div className="shadow">
-                <Navbar id="navbar" light expand="md" >
+                <Navbar id="navbar" light expand="md">
                     <Link
                         
-                        to="top"
+                        to="navbar"
                         spy={true}
                         smooth={true}
                         offset={-5000}
-                        duration= {1000}
+                        duration={1000}
                     >
-                        <NavLink tactiveClassName="" tag={RRNavLink} exact to="/" >
-                            <NavbarBrand href="/" title="Back to top"><img alt="Trevor logo" className="App-logo" src={logo}/></NavbarBrand>
-                        </NavLink>
+                        
+                        <NavbarBrand tactiveClassName="" tag={RRNavLink} exact to="" href="/" title="Back to top"><img
+                            alt="Trevor logo" className="App-logo" src={logo}/></NavbarBrand>
+                    
                     </Link>
-                   
+                    
                     <NavbarToggler onClick={this.toggle}/>
                     <Collapse isOpen={this.state.isOpen} navbar>
-                        <Nav className="ml-auto" navbar>
+                        <Nav className="mr-auto" navbar>
                             <NavItem>
                                 <Link
-                                   
-                                    activeClass=""
-                                    to="introduction"
-                                    spy={true}
-                                    smooth={true}
-                                    offset={-200}
-                                    duration= {500}
-                                >
-                                <NavLink activeClassName="" tag={RRNavLink} exact to="/"   href="/">Introduction</NavLink>
-                                </Link>
-                            </NavItem>
-                            <NavItem>
-                                <Link
-                                   
+                                    
                                     activeClass=""
                                     to="skills"
                                     spy={true}
                                     smooth={true}
                                     offset={-120}
-                                    duration= {500}
+                                    duration={500}
                                 >
-                                    <NavLink activeClassName="" tag={RRNavLink} exact to="/" href="/">Skills</NavLink>
+                                    <NavLink activeClassName="" tag={RRNavLink} exact to="/" href="/">Tools &
+                                        Experience</NavLink>
                                 </Link>
                             </NavItem>
                             <NavItem>
@@ -99,9 +79,9 @@ class NavBar extends Component {
                                     spy={true}
                                     smooth={true}
                                     offset={-120}
-                                    duration= {500}
+                                    duration={500}
                                 >
-                                    <NavLink activeClassName="" tag={RRNavLink} href="/" exact to="/" >Projects</NavLink>
+                                    <NavLink activeClassName="" tag={RRNavLink} href="/" exact to="/">Projects</NavLink>
                                 </Link>
                             </NavItem>
                             <NavItem>
@@ -112,20 +92,20 @@ class NavBar extends Component {
                                     spy={true}
                                     smooth={true}
                                     offset={-70}
-                                    duration= {500}
+                                    duration={500}
                                 >
-                                    <NavLink activeClassName="" tag={RRNavLink}  href="/" exact to="/" >Contact</NavLink>
+                                    <NavLink activeClassName="" tag={RRNavLink} href="/" exact to="/">Contact</NavLink>
                                 </Link>
                             </NavItem>
-                            
+                        
                         </Nav>
                     </Collapse>
                 </Navbar>
             </div>
-            
-            
-            
+        
+        
         );
     }
 }
+
 export default NavBar;

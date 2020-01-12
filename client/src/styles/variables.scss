@@ -2,12 +2,12 @@
 $topbar-responsive-bg: #2c3840;
 $topbar-responsive-animation-type: fade-in; // or use slide-down or none
 $font-color-nav: #e9f3fe;
-$font-color-over-primary: black;//#e9f3fe;
+$font-color-over-primary: black; //#e9f3fe;
 $font-color-over-white: black;
 $white: #f2f2f2;
-$primaryColour: #24305E;// 060b1d;//#d2edff;//#01436f; #203255s
-        //#14679e;
-$primary-match-1 : #A8D0E6;
+$primaryColour: #24305E; // 060b1d;//#d2edff;//#01436f; #203255s
+//#14679e;
+$primary-match-1: #A8D0E6;
 $primary-match-2: #F76C6C;
 $primary-match-3: #F8E9A1;
 $primary-match-4: #fff;
@@ -15,6 +15,9 @@ $primary-match-5: #374785;
 $form-grey: #eee;
 $topbar-responsive-bg: #14679e;
 $topbar-responsive-animation-type: fade-in; // or use slide-down or none
-$scroll-factor : .5;
+$scroll-factor: .5;
 $font-transform: calc(10px + 1vmin);
-$text-shadow:  0px -4px 17px #000;
+$text-shadow: 0px -4px 17px #000;
+$dynamic-font-site-title: calc(30px + 5vmin);
+$dynamic-font-subheading: calc(10px + 4vmin);
+$dynamic-font-subheading-1: calc(4px + 4vmin);
