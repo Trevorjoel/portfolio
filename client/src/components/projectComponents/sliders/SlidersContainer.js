@@ -545,15 +545,15 @@ class SlidersContainer extends Component {
                     </Row>
                 </Container>
                 
-                <ModalFooter>
+       
                     <NavLink activeClassName="" tag={RRNavLink} href="/" exact to="/" >
-                        <Button onClick={()=>{
+                        <Button className="projects-back-btn" onClick={()=>{
                             // This function scrolls to the element defined
                             Functions.goBackToElement("projects");
                         }}>
                             Back</Button>
                     </NavLink>
-                </ModalFooter>
+            
             </div>);
     }
 }

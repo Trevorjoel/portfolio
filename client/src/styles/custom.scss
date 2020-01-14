@@ -425,8 +425,19 @@ h1.projects-title {
   font-family: 'Lato', sans-serif;
 
 }
+.slide{
+  animation: slide 1.5s ease-in forwards;
+}
+@keyframes slide  {
+  0% {
+    transform: translateX(-140%);
+  }
+  100%{
+    transform: translateX(0%);
+  }
+}
 .projects-back-btn{
-  margin: 40px auto;
+  margin: 0 0 60px 90%;
   justify-content: flex-end;
 
 }

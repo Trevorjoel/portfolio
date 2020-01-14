@@ -1,6 +1,6 @@
 import Header from "../Header";
 import ContactForm from "../ContactForm";
-import Gallery from "../Carousel";
+import Gallery from "../ProjectsCarousel";
 import React, {Component} from "react";
 import SkillsTabs from "../SkillsTabs";
 

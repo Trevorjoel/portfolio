@@ -4,7 +4,6 @@
 
 
 // Fix for the problem of back() function taking user to bottom of page. the BrowserRouter did not have an easy solution
-// to go to correct element
 
 exports.goBackToElement =function (element) {
     async function goBack() {

@@ -3,6 +3,7 @@ import React, {Component} from 'react';
 import {Link} from "react-scroll";
 import {NavLink as RRNavLink} from 'react-router-dom';
 import {Collapse, Nav, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink} from 'reactstrap';
+import Image from "react-bootstrap/Image";
 
 
 /* When the user scrolls down, hide the navbar. When the user scrolls up, show the navbar */
@@ -49,17 +50,20 @@ class NavBar extends Component {
                         duration={1000}
                     >
                         
-                        <NavbarBrand tactiveClassName="" tag={RRNavLink} exact to="" href="/" title="Back to top"><img
+                        <NavbarBrand tactiveClassName="" tag={RRNavLink} exact to="" href="/" title="Back to top">
+                            <img data-aos="flip-left"
+
+                                 data-aos-duration="2000"
                             alt="Trevor logo" className="App-logo" src={logo}/></NavbarBrand>
                     
                     </Link>
                     
                     <NavbarToggler onClick={this.toggle}/>
                     <Collapse isOpen={this.state.isOpen} navbar>
-                        <Nav className="mr-auto" navbar>
+                        <Nav   className="mr-auto" navbar>
                             <NavItem>
                                 <Link
-                                    
+                                   
                                     activeClass=""
                                     to="skills"
                                     spy={true}
@@ -67,7 +71,8 @@ class NavBar extends Component {
                                     offset={-120}
                                     duration={500}
                                 >
-                                    <NavLink activeClassName="" tag={RRNavLink} exact to="/" href="/">Tools &
+                                    <NavLink data-aos="flip-up"
+                                             data-aos-delay="500" activeClassName="" tag={RRNavLink} exact to="/" href="/">Tools &
                                         Experience</NavLink>
                                 </Link>
                             </NavItem>
@@ -81,7 +86,8 @@ class NavBar extends Component {
                                     offset={-120}
                                     duration={500}
                                 >
-                                    <NavLink activeClassName="" tag={RRNavLink} href="/" exact to="/">Projects</NavLink>
+                                    <NavLink data-aos="flip-up"
+                                             data-aos-delay="800" activeClassName="" tag={RRNavLink} href="/" exact to="/">Projects</NavLink>
                                 </Link>
                             </NavItem>
                             <NavItem>
@@ -94,7 +100,8 @@ class NavBar extends Component {
                                     offset={-70}
                                     duration={500}
                                 >
-                                    <NavLink activeClassName="" tag={RRNavLink} href="/" exact to="/">Contact</NavLink>
+                                    <NavLink data-aos="flip-up"
+                                             data-aos-delay="1200" activeClassName="" tag={RRNavLink} href="/" exact to="/">Contact</NavLink>
                                 </Link>
                             </NavItem>
                         

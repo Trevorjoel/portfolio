@@ -18,7 +18,13 @@ const CertificationsModal = (props) => {
     
     return (
         <div className="cert-image-wrapper">
-            <Image className="certification-image" src={cert} fluid onClick={toggle}/>
+            <Image
+               
+                data-aos-anchor="#trigger-certs"
+                data-aos="flip-right"
+                data-aos-delay="500"
+                data-aos-duration="3000"
+                className="certification-image" src={cert} fluid onClick={toggle}/>
             <Modal isOpen={modal} modalTransition={{timeout: 700}} backdropTransition={{timeout: 1300}}
                    toggle={toggle} className={className}>
                 <ModalHeader toggle={toggle}>Certifications</ModalHeader>

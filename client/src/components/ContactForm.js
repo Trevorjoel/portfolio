@@ -5,6 +5,7 @@ import {AvField, AvForm} from 'availity-reactstrap-validation';
 import github from "../images/hiclipart.com.png";
 import linkedin from "../images/pngfuel_linked.png";
 import logo from "../images/Sign96x96_white.png";
+import Image from "react-bootstrap/Image";
 
 // todo: Check conventions for naming each Class/Component etc...
 
@@ -27,7 +28,13 @@ class ContactForm extends Component {
         return (
             <Container id="contacts" className="form-container">
                 <Row>
-                    <Col xs="12" sm="12" md="12" lg="6">
+                    <Col xs="12" sm="12" md="12" lg="6"
+                         
+                         data-aos-delay="100"
+                         data-aos-duration="1000"
+                         data-aos="slide-right"
+                         data-aos-anchor="#contacts"
+                    >
                         <h1 className="more-info-title">About me</h1>
                         <Col md="8" className="more-info-container">
                             <p className="about-paragraph text-on-primary">
@@ -49,7 +56,12 @@ class ContactForm extends Component {
                         </Col>
                     </Col>
                     
-                    <Col xs="12" sm="12" md="12" lg="6">
+                    <Col xs="12" sm="12" md="12" lg="6"
+                         id="form-trigger"
+                         data-aos-delay="100"
+                         data-aos-duration="1000"
+                         data-aos="flip-left"
+                         data-aos-anchor="#form-trigger">
                         <h1 className="contact-title">Contact</h1>
                         <div className="form-wrapper">
                             
@@ -68,6 +80,27 @@ class ContactForm extends Component {
                                     </FormGroup>
                                 
                                 </AvForm>
+                                <div
+                                    id="trigger-icons"
+                                    className="icons-wrapper"
+                                    data-aos-anchor="#trigger-icons"
+                                    data-aos="zoom-in-up"
+                                    data-aos-delay="500"
+                                    data-aos-duration="1000"
+                                >
+                                    <a target="_blank" rel="noopener noreferrer" title="Check out my code" className="footer-links"
+                                       href="https://github.com/Trevorjoel">
+                                        <img alt="Github icon" className="App-logo footer-icons" src={github}/>
+                                    </a>
+                                    <a target="_blank" rel="noopener noreferrer" title="Linkedin profile" className="footer-links"
+                                       href="https://www.linkedin.com/in/trevor-garrity-07214b160/">
+                                        <img alt="linkedin icon" className="App-logo footer-icons" src={linkedin}/>
+                                    </a>
+                                    <a target="_blank" rel="noopener noreferrer" title="My blog site!" className="footer-links"
+                                       href="https://www.fullstack-adventure.com">
+                                        <img alt="Trevor Joel icon" className="App-logo footer-icons" src={logo}/>
+                                    </a>
+                                </div>
                             </div>
                             <Modal isOpen={this.state.email !== false} toggle={this.closeModal}>
                                 <ModalHeader toggle={this.closeModal}>Form is {modalError} valid!</ModalHeader>
@@ -86,20 +119,7 @@ class ContactForm extends Component {
                     </Col>
                 
                 </Row>
-                <div className="icons-wrapper">
-                    <a target="_blank" rel="noopener noreferrer" title="Check out my code" className="footer-links"
-                       href="https://github.com/Trevorjoel">
-                        <img alt="Github icon" className="App-logo footer-icons" src={github}/>
-                    </a>
-                    <a target="_blank" rel="noopener noreferrer" title="Linkedin profile" className="footer-links"
-                       href="https://www.linkedin.com/in/trevor-garrity-07214b160/">
-                        <img alt="linkedin icon" className="App-logo footer-icons" src={linkedin}/>
-                    </a>
-                    <a target="_blank" rel="noopener noreferrer" title="My blog site!" className="footer-links"
-                       href="https://www.fullstack-adventure.com">
-                        <img alt="Trevor Joel icon" className="App-logo footer-icons" src={logo}/>
-                    </a>
-                </div>
+               
             </Container>
         )
     }

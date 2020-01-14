@@ -7,6 +7,10 @@ import Home from "./components/reactRoutes/Home";
 import NavBar from "./components/Navbar";
 import Footer from "./components/Footer";
 import Page404 from "./components/projectComponents/404";
+import AOS from 'aos';
+import 'aos/dist/aos.css'; // You can also use <link> for styles
+// ..
+AOS.init();
 // todo: Jazz up the 404 page
 class App extends Component {
     
