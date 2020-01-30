@@ -98,21 +98,14 @@ exports.populateTable = async (req, res) => {
 exports.addEmployee = async (req, res) => {
     
     // Prevent malicious attempts at entering unwanted data after disable of front end validation
-    // No need to send back user messages ATM as it's only malicious users who disable the front end validation/verification (I have more important things to do)
+    // No need to send back user messages
     
     const errors = validationResult(req);
     
     // Catch the express-validator errors & ensure that the bad guys don't enter large entries to the database (causing  ER_DATA_TOO_LONG from SQL)
     if (!errors.isEmpty() || req.body.firstName.length > 15 || req.body.lastName.length > 15) {
-        console.log('Somebody disabled the front-end validation and attempted to enter nasites into the  fields! Not cool man, not cool!');
-        
-        // Send back table data
-        // noinspection JSUnresolvedFunction
-        const readAll = sql.query(dbModel.selectAllEmployees,
-            function (error, readAll) {
-                res.send({database3: readAll});
-            });
-        
+        console.log('Somebody disabled the front-end validation and attempted to enter nasties into the  fields! Not cool man, not cool!');
+  
     } else {
         console.log(req.body.firstName);
         // noinspection JSUnresolvedFunction
@@ -124,9 +117,14 @@ exports.addEmployee = async (req, res) => {
             });
         
         // noinspection JSUnresolvedFunction
-        const readAll = sql.query(dbModel.selectAllEmployees,
-            function (error, readAll) {
-                res.send({database3: readAll});
+        const results = await sql.query(dbModel.selectAllEmployees,
+        
+            function (error, results) {
+            
+                if (error) throw error;
+                res.send(
+                    {database3: results,},
+                );
             });
     }
 };

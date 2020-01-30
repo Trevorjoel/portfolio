@@ -3,10 +3,12 @@
 html {
   overflow-x: unset;
 }
-
+ul {
+  list-style-type: none;
+}
 .App {
   text-align: center;
-  overflow: inherit;
+  overflow: hidden;
   background-color: black;
   padding: 15px;
 }
@@ -64,10 +66,20 @@ code {
 
 .navbar-light .navbar-nav .show > .nav-link, .navbar-light .navbar-nav .active > .nav-link, .navbar-light .navbar-nav .nav-link.show, .navbar-light .navbar-nav .nav-link.active {
   color: #e89e00;
+  //overflow: auto;
+}
+.remove-decoration{
+  text-decoration: none;
+  color: white;
+}
+.remove-decoration:hover{
+  text-decoration: none;
+  color: white;
 }
 
 .navbar-light .navbar-nav .nav-link:hover {
-  color: $primary-match-1;
+  color: #3b6aac;
+  font-size: 1.2em;
 }
 
 h1.site-title {
@@ -171,11 +183,11 @@ a.nav-link {
 }
 
 .about-paragraph {
-  text-align: left;
+  text-align: center;
   padding: 20px;
   max-width: 95%;
   line-height: 1.5;
-  font-size: larger;
+  font-size: smaller;
 }
 
 .tab-title {
@@ -189,8 +201,7 @@ a.nav-link {
 }
 
 .card-body {
-  text-align: left;
-  background-color: $primary-match-4;
+  text-align: center;
 }
 
 .tab-title .active {
@@ -208,8 +219,8 @@ a.nav-link {
   color: black;
   font-size: 20px;
   line-height: 1.5em;
-  max-height: 3.2em;
-  overflow: scroll;
+ // max-height: 3.2em;
+
 }
 
 .modal-text {
@@ -366,9 +377,13 @@ div.alice-carousel {
   background: black;
 
 }
+div.alice-carousel__wrapper{
+  width: 100%;
 
+}
 li.alice-carousel__stage-item {
-  width: 50%;
+  //width: 50%;
+  //padding: 0 100px 0 0;
 }
 
 ul.alice-carousel__dots {
@@ -407,17 +422,47 @@ div.alice-carousel__play-btn-item::before {
 }
 
 .project-card {
-  background-color: ghostwhite;
-  color: black;
-  // max-width: 540px;
-  margin: 10px 0 0 30px;
+  max-width: 90%;
+  margin: 10px 18px 2px 14px;
   //text-shadow: $text-shadow;
+
+}
+.card-body-override{
+background-color:  black;
 }
 
-.project-card:hover {
-  box-shadow: 1px 1px 10px $primary-match-1;
+.hoverWrapper:hover .card-img{
+  box-shadow: 1px 1px 10px $primary-match-2;
+  opacity: 0.2;
+  -webkit-transition: all 300ms ease-in-out;
+  -moz-transition: all 300ms ease-in-out;
+  -o-transition: all 300ms ease-in-out;
+  transition: all 300ms ease-in-out;
+  color: white;
+
+}
+.hoverWrapper:hover #hoverShow1 {
+  display: block;
+  cursor: pointer;
 }
 
+.hoverWrapper #hoverShow1 {
+  display: none;
+  position: absolute;
+  color: white;
+  -webkit-transition: all 300ms ease-in-out;
+  -moz-transition: all 300ms ease-in-out;
+  -o-transition: all 300ms ease-in-out;
+  transition: all 300ms ease-in-out;
+
+}
+.align{
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+  width:100%;
+
+}
 h1.projects-title {
   color: $primary-match-4;
   margin: 150px 0 40px 0;
@@ -451,7 +496,7 @@ h1.experience-title {
 .projects-container {
 
   max-width: 100%;
-  padding: 58px 27px 100px 0;
+  padding: 58px 5px 100px 5px;
 
 }
 
@@ -502,7 +547,7 @@ h1.experience-title {
 }
 
 .form-wrapper:hover {
-  box-shadow: 1px 1px 20px $primaryColour;
+ // box-shadow: 1px 1px 20px $primaryColour;
 }
 
 .form-text-left {
@@ -567,7 +612,7 @@ a.footer-links:hover {
 }
 
 .more-info-container {
-  margin-top: 19px;
+ 
   padding: 84px 1px 0 0;
   max-width: 100%;
 }
@@ -726,11 +771,57 @@ h1.probe-title {
   max-width: 623px;
 
 }
+.dropdown-1{
+  background-color:
+          #000;
+  border-color:
+          #8e2625;
+}
+.dropdown-2{
+  background-color:
+          #000;
+  border-color:
+          #8e2625;
 
+}
+.dropdown-1:hover{
+  background: #c68b0d;
+  box-shadow: 1px 1px 20px $primaryColour;
+}
+
+.dropdown-2:hover{
+  background: #c68b0d;
+  box-shadow: 1px 1px 20px $primaryColour;
+}
+.dropdown-1:focus{
+  background: #8e2625;
+}
+.dropdown-2:focus{
+  background: #8e2625;
+}
+.alert-dark{
+  background-color:
+          #040404;
+  border-color:
+          #000;
+}
+.alert-dark:hover {
+
+}
+.number{
+  color: white;
+}
 // MEDIA QUERIES
+@media only screen and (max-width: 900px) {
+
+  .project-card{
+    margin: 7px 9px 5px 15px;
+    max-width: 90%;
+  }
+}
 @media only screen and (max-width: 780px) {
   .react-parallax-content{
-    margin-top: -120px;
+    margin-top: -60px;
   }
   h1.site-title {
     text-align: center;
@@ -743,7 +834,7 @@ h1.probe-title {
     max-width: 50%;
   }
   .form-container p {
-    text-align: left;
+    text-align: center;
   }
   .form-wrapper {
     padding: 50px 6px 40px 6px;

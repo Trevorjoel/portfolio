@@ -34,19 +34,20 @@ class ProjectSliders extends React.Component {
     
     render() {
         return (
-            <div>
-                <Card className="project-card">
-                    <Card.Img variant="top" src={apSetup}/>
-                    <Card.Body>
-                        <Card.Title>IOT probe simulator</Card.Title>
-                        <Card.Text>
+            <div className="hoverWrapper">
+                <Card className="project-card card-body-override">
+                    <Card.Img className="card-img" variant="top" src={apSetup}/>
+                    <Card.Body  className="align" id="hoverShow1">
+                        <NavLink to="/sensors" className="remove-decoration">
+                        <h2>IOT probe simulator</h2>
+                        <h5>
                             This program simulates the data that would be taken from water quality monitoring probes in
                             an aquaponics system. <br/><br/>
                         
-                        </Card.Text>
+                        </h5>
                         
-                        <NavLink to="/sensors" > <Button className="button-projects" size="md">Interactive !</Button>
-                        </NavLink>
+                       <Button className="button-projects" size="md">Interactive !</Button>
+                    </NavLink>
                        
                         
                     </Card.Body>

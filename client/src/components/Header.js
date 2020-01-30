@@ -17,9 +17,9 @@ class Header extends Component {
                     
                     <Col sm={12} md={6} lg={6} xl={6} className="">
                         <div className="img-parent">
-                            <Image className=""  data-aos="zoom-in-down"
-                                   
-                                   data-aos-duration="2000"
+                            <Image className=""  data-aos="zoom-in-right"
+                                   data-aos-delay="0"
+                                   data-aos-duration="1500"
                                   
                                    src={portrait} roundedCircle fluid alt="Trevor"/>
                         </div>
@@ -29,10 +29,12 @@ class Header extends Component {
                     <Col sm={12} md={6} lg={6} xl={5}>
                        
                         <h1 key='name-text' className="site-title " data-aos="fade-left"
-                            data-aos-duration="3000">TREVOR <br/>GARRITY</h1>
+                            data-aos-delay="00"
+                            data-aos-duration="800">TREVOR <br/>GARRITY</h1>
                      
                         <p data-aos="fade-up"
-                           data-aos-duration="3000"
+                           data-aos-delay="200"
+                           data-aos-duration="800"
                            className="text-on-primary intro-paragraph">
                             Full-stack web developer with a flair <br/>for the JavaScript stack.<br/>
                         

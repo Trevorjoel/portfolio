@@ -4,6 +4,7 @@ import placeholder from '../images/P1090923_edit_1.JPG';
 import {Button, Modal, ModalFooter, ModalHeader} from 'reactstrap';
 import Iframe from '../components/Iframe'
 import ProjectsHeader from "./projectComponents/ProjectsHeader";
+import placeholder1 from "../images/Employee.jpg";
 /*
 * Notes: This file creates modal cards for each project... Should not be more than 6 projects at a time.
 *  Steps:  1. add new modal to state, Bind the toggle to this
@@ -58,17 +59,17 @@ class ProjectBlog extends React.Component {
                 '<iframe src="https://codesandbox.io/embed/q7jmjyplvq?fontsize=14" title="Plotly All Graph Types" allow="geolocation; microphone; camera; midi; vr; accelerometer; gyroscope; payment; ambient-light-sensor; encrypted-media" style="width:100%; height:500px; border:0; border-radius: 4px; overflow:hidden;" sandbox="allow-modals allow-forms allow-popups allow-scripts allow-same-origin"></iframe>'
         };
         return (
-            <div>
-               
-                <Card className="project-card ">
-                    <Card.Img variant="top" src={placeholder}/>
-                    <Card.Body>
-                        <Card.Title>Blog</Card.Title>
-                        <Card.Text>
-                            My WordPress blog<br/><br/>
-                        </Card.Text>
-                        
-                        <Button className="button-projects" to="top" size="md" onClick={this.toggle1}>{this.props.buttonLabel}Have
+            <div className="hoverWrapper">
+                <Card className="card-body-override" >
+                    <Card.Img className="project-card card-img" variant="top" src={placeholder}/>
+                    <Card.Body onClick={this.toggle1} className="align" id="hoverShow1"
+                    >
+                        <h2 >My Blog</h2>
+                        <h5>
+                            My first site build with WordPress.<br/> Containing information about my projects.<br/><br/>
+                        </h5>
+                
+                        <Button className="button-projects" size="md" to="top" >{this.props.buttonLabel}Have
                             a play!!</Button>
                         <Modal isOpen={this.state.modal1} toggle1={this.toggle1} className="single-project-modal">
                             <ModalHeader toggle={this.toggle1}> </ModalHeader>

@@ -31,11 +31,12 @@ const SkillsTabs = () => {
             <Container id="skills" className="skills-tab-container">
                 <h1  className="experience-title">TOOLS & EXPERIENCE</h1>
                 <Row>
-                    <Col xs={12} sm={12} md={12} lg={8} xl={7}>
-                        <h3  id="trigger-left"
-                            data-aos-delay="100"
-                            data-aos-duration="700"
-                            data-aos="slide-right"
+                    <Col xs={12} sm={12} md={12} lg={8} xl={7}
+                         id="trigger-left"
+                         data-aos-delay="100"
+                         data-aos-duration="700"
+                         data-aos="slide-right">
+                        <h3
                             data-aos-anchor="#trigger-left" className="skills-subhead">Technology</h3>
                         
                         <Row  className="icons-wrapper">
@@ -181,13 +182,12 @@ const SkillsTabs = () => {
                         </Row>
                     </Col>
                     <Col  id="trigger-certs" xs={12} sm={12} md={12} lg={4} xl={5}
+                         
+                          data-aos-delay="100"
+                          data-aos-duration="700"
+                          data-aos="slide-left"
                     >
-                        <h3   id="trigger-right"
-                             
-                              data-aos-duration="700"
-                              data-aos="slide-left"
-                              data-aos-anchor="#trigger-right"
-                              className="skills-subhead final-col">Certificates</h3>
+                        <h3  className="skills-subhead"  >Certificates</h3>
                         <CertificationsModal
                            
                             buttonLabel={"Certifications"}

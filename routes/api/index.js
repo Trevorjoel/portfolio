@@ -59,6 +59,5 @@ router.route('/api/world')
         , appController.validate
     );
 
-
 export default router;
 

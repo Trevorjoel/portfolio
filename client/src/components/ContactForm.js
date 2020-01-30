@@ -1,10 +1,15 @@
-import {Button, FormGroup, Modal, ModalBody, ModalFooter, ModalHeader} from 'reactstrap';
+import {Button, FormGroup, Modal, ModalBody, ModalFooter, ModalHeader, Alert} from 'reactstrap';
 import React, {Component} from "react";
 import {Col, Container, Row} from "react-bootstrap";
 import {AvField, AvForm} from 'availity-reactstrap-validation';
 import github from "../images/hiclipart.com.png";
 import linkedin from "../images/pngfuel_linked.png";
 import logo from "../images/Sign96x96_white.png";
+import SiteBuilding from './SiteBuilding'
+import SEOMarketing from './SEOMarketing';
+import Consultations from './Consultations';
+import JnrPositions from './JnrPositions';
+import JoinMyProject from './JoinMyProject';
 import Image from "react-bootstrap/Image";
 
 // todo: Check conventions for naming each Class/Component etc...
@@ -26,43 +31,40 @@ class ContactForm extends Component {
     render() {
         const modalError = this.state.error ? 'not' : '';
         return (
-            <Container id="contacts" className="form-container">
+            <Container className="form-container">
                 <Row>
-                    <Col xs="12" sm="12" md="12" lg="6"
+                    <Col id="info"  xs="12" sm="12" md="12" lg="6"
                          
                          data-aos-delay="100"
                          data-aos-duration="1000"
-                         data-aos="slide-right"
-                         data-aos-anchor="#contacts"
+                         data-aos="fade-down-right"
+                         data-aos-anchor="#info"
                     >
-                        <h1 className="more-info-title">About me</h1>
+                        <h1 className="more-info-title">INFO</h1>
                         <Col md="8" className="more-info-container">
-                            <p className="about-paragraph text-on-primary">
-                                Seeking freelance web development projects and full time positions in:<br/><br/></p>
-                            <ul className="">
-                                <p className="about-paragraph text-on-primary">
-                                    <li>Content management systems.</li>
-                                    <li>Search engine optimisation and digital marketing.</li>
-                                    <li>Consultations for selected small businesses.</li>
-                                    <li>Static and dynamic site building.</li>
-                                </p>
-                            </ul>
-                            <p className="about-paragraph text-on-primary">    Contact me for a chat. </p>
                             
-                            <p className="about-paragraph text-on-primary">
-                                <strong>Email: </strong> trevsstuff@hotmail.com<br/>
-                                <strong>Number: </strong> +7 925 800 6120</p>
-                        
+                           
+                           
+                                <Alert color="dark">
+                                    <Consultations/>
+                                    <SiteBuilding/>
+                                    <SEOMarketing/>
+                                   
+                                    <JnrPositions/>
+                                    <JoinMyProject/>
+                                    
+    
+                                    
+                                </Alert>
                         </Col>
                     </Col>
                     
-                    <Col xs="12" sm="12" md="12" lg="6"
-                         id="form-trigger"
+                    <Col  id="contacts" xs="12" sm="12" md="12" lg="6"
                          data-aos-delay="100"
                          data-aos-duration="1000"
-                         data-aos="flip-left"
-                         data-aos-anchor="#form-trigger">
-                        <h1 className="contact-title">Contact</h1>
+                         data-aos="fade-down-left"
+                         data-aos-anchor="#contacts">
+                        <h1 className="contact-title">CONTACT ME</h1>
                         <div className="form-wrapper">
                             
                             <div className="form-text-left">
@@ -78,30 +80,15 @@ class ContactForm extends Component {
                                                  placeholder="Your message" id="message"/>
                                         <Button className="button-projects" size="lg">Submit</Button>
                                     </FormGroup>
-                                
+                                   
                                 </AvForm>
-                                <div
-                                    id="trigger-icons"
-                                    className="icons-wrapper"
-                                    data-aos-anchor="#trigger-icons"
-                                    data-aos="zoom-in-up"
-                                    data-aos-delay="500"
-                                    data-aos-duration="1000"
-                                >
-                                    <a target="_blank" rel="noopener noreferrer" title="Check out my code" className="footer-links"
-                                       href="https://github.com/Trevorjoel">
-                                        <img alt="Github icon" className="App-logo footer-icons" src={github}/>
-                                    </a>
-                                    <a target="_blank" rel="noopener noreferrer" title="Linkedin profile" className="footer-links"
-                                       href="https://www.linkedin.com/in/trevor-garrity-07214b160/">
-                                        <img alt="linkedin icon" className="App-logo footer-icons" src={linkedin}/>
-                                    </a>
-                                    <a target="_blank" rel="noopener noreferrer" title="My blog site!" className="footer-links"
-                                       href="https://www.fullstack-adventure.com">
-                                        <img alt="Trevor Joel icon" className="App-logo footer-icons" src={logo}/>
-                                    </a>
-                                </div>
+                              
                             </div>
+                         
+                            <p className="about-paragraph text-on-primary">
+                                <strong>Email: </strong> trevsstuff@hotmail.com<br/>
+                                <strong>Number: </strong> +7 925 800 6120<br/>
+                                <strong>Skype: </strong>   <a href="skype:trevsstuff">trevsstuff</a></p>
                             <Modal isOpen={this.state.email !== false} toggle={this.closeModal}>
                                 <ModalHeader toggle={this.closeModal}>Form is {modalError} valid!</ModalHeader>
                                 <ModalBody>
@@ -113,13 +100,39 @@ class ContactForm extends Component {
                                 <ModalFooter>
                                     <Button color="primary" onClick={this.closeModal}>Ok, got it!</Button>
                                 </ModalFooter>
+                                
                             </Modal>
+                           
                         </div>
-                    
+                      
+
                     </Col>
-                
+                    
                 </Row>
-               
+    
+                <div
+                    id="trigger-icons"
+                    className="icons-wrapper"
+                    data-aos-anchor="#trigger-icons"
+                    data-aos="flip-left"
+                    data-aos-delay="500"
+                    data-aos-duration="1000"
+                >
+        
+                    <a target="_blank" rel="noopener noreferrer" title="Check out my code" className="footer-links"
+                       href="https://github.com/Trevorjoel">
+                        <img alt="Github icon" className="App-logo footer-icons" src={github}/>
+                    </a>
+                    <a target="_blank" rel="noopener noreferrer" title="Linkedin profile" className="footer-links"
+                       href="https://www.linkedin.com/in/trevor-garrity-07214b160/">
+                        <img alt="linkedin icon" className="App-logo footer-icons" src={linkedin}/>
+                    </a>
+                    <a target="_blank" rel="noopener noreferrer" title="My blog site!" className="footer-links"
+                       href="https://www.fullstack-adventure.com">
+                        <img alt="Trevor Joel icon" className="App-logo footer-icons" src={logo}/>
+                    </a>
+    
+                </div>
             </Container>
         )
     }

@@ -1,7 +1,7 @@
 import React from "react";
 
 
-//codesandbox.io/s/react-iframe-demo-g3vst codePen =
+// Configurable Iframe component
 function Iframe(props) {
     return (
         <div

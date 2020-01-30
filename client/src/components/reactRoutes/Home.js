@@ -7,7 +7,7 @@ import SkillsTabs from "../SkillsTabs";
 class Home extends Component {
 
   componentDidMount() {
-     // window.scrollTo( 0 ,0)
+  
   }
     
     

@@ -46,7 +46,7 @@ class Gallery extends React.Component {
     
     data-aos="flip-up"
     data-aos-easing="ease-out-cubic"
-    data-aos-duration="2000"
+    data-aos-duration="1000"
      data-aos-anchor="#trigger-top"
     data-aos-anchor-placement="top-center">
                 
@@ -63,7 +63,7 @@ class Gallery extends React.Component {
                         disableAutoPlayOnAction={false}
                         onSlideChange={this.onSlideChange}
                         onSlideChanged={this.onSlideChanged}
-                        buttonsDisabled={false}
+                        buttonsDisabled={true}
 
                     />
 </div>

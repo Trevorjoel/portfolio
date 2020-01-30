@@ -1,11 +1,17 @@
 import React, {Component} from 'react';
+
+
+import ReactNotifications from 'react-notifications-component';
+
+import Alert from '../sliders/Alert';
 import TempSliderVertical from "./TempSliderVertical";
 import PhSliderVertical from "./PhSliderVertical";
 import Nh3SliderVertical from "./Nh3SliderVertical";
 import {Badge, Button, Col, Container, Fade, ModalFooter, NavLink, Row} from 'reactstrap';
 import ProjectsHeader from '../ProjectsHeader'
 import {NavLink as RRNavLink} from "react-router-dom";
-const Functions = require('../../functions/functions');
+import github from "../../../images/hiclipart.com.png";
+const Functions = require('../../../functions/MainController');
 const defaultTemp = [11.5];
 const defaultPh = [7.25];
 const defaultNh3 = [0.05];
@@ -14,15 +20,16 @@ const defaultNh3 = [0.05];
 // todo: Fix the back to projects button
 
 class SlidersContainer extends Component {
+
     state = {
         tempValue: defaultTemp.slice(),
         tempUpdate: defaultTemp.slice(),
-        
+        CaptureValueTemp:defaultTemp.slice(),
         phValue: defaultPh.slice(),
         phUpdate: defaultPh.slice(),
-        
         nh3Value: defaultNh3.slice(),
         nh3Update: defaultNh3.slice(),
+        tempPopupAlert: true,
         hidePh: true,
         hideTemp: true,
         hideNh3: true
@@ -46,27 +53,44 @@ class SlidersContainer extends Component {
         })
     }
     
+
     tempAlert = (temp) => {
+      setInterval(()=>{
+        
+            if (this.state.tempUpdate !== this.state.CaptureValueTemp) {
+                console.log(`Setting CaptureValueTemp : ${this.state.CaptureValueTemp}`);
+                console.log(`From tempUpdate: ${this.state.tempUpdate}`);
+                this.setState({CaptureValueTemp: this.state.tempUpdate,
+                });
+                console.log(` AFTER Setting CaptureValueTemp : ${this.state.CaptureValueTemp}`);
+                console.log(`AFTER From tempUpdate: ${this.state.tempUpdate}`);
+            }
+        },2000);
         
         switch (true) {
             case   temp <= 3  :
-                return <Fade>
-                    
-                    
+           if(this.state.tempUpdate === this.state.CaptureValueTemp && this.state.tempPopupAlert === true){
+               
+               this.setState({tempPopupAlert:false});
+                console.log('returning from switch');
+                return(/*<Alert alertStyle={this.alertStyle}/>*/ console.log('It works')
+                );}
+               
+                return<Fade>
                     <div className="red-alert" onClick={this.toggleTempAlert.bind(this)}>
                         <Row>
                             <Col lg={2}>
                                 <h4><Badge
-                                    className="badge-secondary-override">{this.state.tempUpdate[0.].toPrecision(2)} &#8451; </Badge>
+                                    className="badge-secondary-override">{this.state.tempUpdate[0].toPrecision(2)} &#8451; </Badge>
                                 </h4>
                             </Col>
                             <Col lg={10}>
-                                <h4> LOW TEMPERATURE</h4>
+                                <h4> LOW TEMPERATURE{console.log(this.state.tempUpdate[0])}</h4>
                             </Col>
                         </Row>
                     </div>
-                    
-                    
+              
+               
                     {!this.state.hideTemp &&
                     <Fade>
                         <p className="alert">You have critically low water temperature. At extremely low water
@@ -77,6 +101,9 @@ class SlidersContainer extends Component {
                     }
                 
                 </Fade>;
+           
+                
+                
             case temp > 3 && temp <= 10 : //
                 return <div>
                     
@@ -404,8 +431,8 @@ class SlidersContainer extends Component {
     
     // todo: Break this up into it's own function to use on other projects
     componentDidMount() {
-        window.scrollTo(0, 0);
-        this.tempAlert();
+        //window.scrollTo(0, 0);
+        
     }
     
     onNh3Update = nh3Update => {
@@ -444,7 +471,7 @@ class SlidersContainer extends Component {
             color: 'white',
             width: '100%'
         };
-        
+
         const projectName = 'Aquaponics Probe Simulator';
         const projectPurpose = ["Build a user interface to control the values that would be taken from probes testing water quality in an aquaponics system, namely temperature, " +
         "pH and ammonia.",
@@ -461,7 +488,10 @@ class SlidersContainer extends Component {
         const whatNext = ["The project needs to insert readings into a relational database, for data visualisation, alerts and to continue programming the logic."];
         return (
             <div>
+                <ReactNotifications />
                 <Container className=" sensors-container">
+                    <Alert/>
+                  
                     <ProjectsHeader
                         projectName={projectName}
                         projectPurpose={projectPurpose}
@@ -473,6 +503,7 @@ class SlidersContainer extends Component {
                         titleStyle={titleStyle}
                     />
                     <p className="reading-box">Adjust the sliders to change the values.</p>
+                    
                     <Row>
                         
                         <Col lg={6}>
@@ -536,20 +567,42 @@ class SlidersContainer extends Component {
                                     {this.tempAlert(this.state.tempUpdate[0])}
                                     {this.phAlert(this.state.phUpdate[0])}
                                     {this.nh3Alert(this.state.nh3Update[0])}
-                                
+                                  
                                 </div>
                             
                             </Fade>
+                         
                         </Col>
-                    
+                      
                     </Row>
+                    <div className="project-icons">
+                        <a target="_blank"
+                           rel="noopener noreferrer"
+                           title="See the code"
+                           className="footer-links"
+                           href="https://github.com/Trevorjoel/portfolio/tree/master/client/src/components/projectComponents/sliders">
+                            <img alt="Github icon"
+                                 className="App-logo footer-icons"
+                                 src={github}/>
+                        </a>
+                        <p>Code for this project.</p>
+                    </div>
+                  
                 </Container>
                 
        
                     <NavLink activeClassName="" tag={RRNavLink} href="/" exact to="/" >
                         <Button className="projects-back-btn" onClick={()=>{
                             // This function scrolls to the element defined
-                            Functions.goBackToElement("projects");
+                           
+                                async function goBack() {
+                                    return null
+                                }
+                                goBack().then(()=>{
+                                    let el =  document.getElementById('projects');
+                                    el.scrollIntoView();
+                                });
+                            
                         }}>
                             Back</Button>
                     </NavLink>

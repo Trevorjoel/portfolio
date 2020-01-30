@@ -22,7 +22,7 @@ const CertificationsModal = (props) => {
                
                 data-aos-anchor="#trigger-certs"
                 data-aos="flip-right"
-                data-aos-delay="500"
+                data-aos-delay="00"
                 data-aos-duration="3000"
                 className="certification-image" src={cert} fluid onClick={toggle}/>
             <Modal isOpen={modal} modalTransition={{timeout: 700}} backdropTransition={{timeout: 1300}}
@@ -34,18 +34,6 @@ const CertificationsModal = (props) => {
                             <div>
                                 <CertificationsCarousel/>
                             </div>
-                            {/*<Col xs={12} md={12}>
-                                <Image className="certificates" src={pyCert}  fluid />
-                            </Col>
-                            <Col xs={12} md={12}>
-                                <Image className="certificates" src={WPCert}  fluid />
-                            </Col>
-                            <Col xs={12} md={12}>
-                                <Image className="certificates" src={WPPlugCert} fluid />
-                            </Col>
-                            <Col xs={12} md={12}>
-                                <Image className="certificates" src={WebDesCert} fluid />
-                            </Col>*/}
                         </Row>
                     </Container>
                 </ModalBody>

@@ -24,17 +24,18 @@ class ProjectEmployees extends React.Component {
     
     render() {
         return (
-            <div>
-                <Card className="project-card ">
-                    <Card.Img variant="top" src={placeholder1}/>
-                    <Card.Body>
-                        <Card.Title>Create Read Delete and Sort.</Card.Title>
-                        <Card.Text>
+            <div className="hoverWrapper">
+                <Card className="project-card card-body-override" >
+                    <Card.Img className="card-img" variant="top" src={placeholder1}/>
+                    <Card.Body onClick={this.toggle1} className="align" id="hoverShow1"
+                    >
+                        <h2 >Create Read Delete and Sort.</h2>
+                        <h5>
                             A small application to view employees in an organisation. Simple CRUD operations in an SQL
                             database.<br/><br/>
-                        </Card.Text>
+                        </h5>
                         
-                        <Button className="button-projects" size="md" to="top" onClick={this.toggle1}>{this.props.buttonLabel}Have
+                        <Button className="button-projects" size="md" to="top" >{this.props.buttonLabel}Have
                             a play!!</Button>
                         <Modal isOpen={this.state.modal1} toggle1={this.toggle1} className="single-project-modal">
                             <ModalHeader toggle={this.toggle1}> </ModalHeader>
