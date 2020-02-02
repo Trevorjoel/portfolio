@@ -1,427 +1,365 @@
 import React, {Component} from 'react';
-
-
-import ReactNotifications from 'react-notifications-component';
-
-import Alert from '../sliders/Alert';
+import * as Assets from './assets';
+import {goBackToElement} from "../../../functions/MainController";
+import {NotificationContainer, NotificationManager} from 'react-notifications';
+import 'react-notifications/lib/notifications.css';
 import TempSliderVertical from "./TempSliderVertical";
 import PhSliderVertical from "./PhSliderVertical";
 import Nh3SliderVertical from "./Nh3SliderVertical";
-import {Badge, Button, Col, Container, Fade, ModalFooter, NavLink, Row} from 'reactstrap';
+import { Button, Col, Container, NavLink, Row} from 'reactstrap';
 import ProjectsHeader from '../ProjectsHeader'
 import {NavLink as RRNavLink} from "react-router-dom";
 import github from "../../../images/hiclipart.com.png";
-const Functions = require('../../../functions/MainController');
-const defaultTemp = [11.5];
-const defaultPh = [7.25];
-const defaultNh3 = [0.05];
-
+import StatusBars from "./StatusBars";
+import LinerGraph from './LineGraph';
 
 // todo: Fix the back to projects button
 
 class SlidersContainer extends Component {
 
     state = {
-        tempValue: defaultTemp.slice(),
-        tempUpdate: defaultTemp.slice(),
-        CaptureValueTemp:defaultTemp.slice(),
-        phValue: defaultPh.slice(),
-        phUpdate: defaultPh.slice(),
-        nh3Value: defaultNh3.slice(),
-        nh3Update: defaultNh3.slice(),
-        tempPopupAlert: true,
-        hidePh: true,
-        hideTemp: true,
-        hideNh3: true
+        tempValue: Assets.defaultTemp.slice(),
+        tempUpdate: Assets.defaultTemp.slice(),
+        tempCaptureValue: Assets.defaultTemp.slice(),
+        phCaptureValue: Assets.defaultPh.slice(),
+        nh3CaptureValue: Assets.defaultNh3.slice(),
+        phValue: Assets.defaultPh.slice(),
+        phUpdate: Assets.defaultPh.slice(),
+        nh3Value: Assets.defaultNh3.slice(),
+        nh3Update: Assets.defaultNh3.slice(),
+        tempShowNotification: {tempLowCritical:true, tempLowWarn:true, tempOptimal:true, tempHighWarn:true, tempHighCritical: true},
+        phShowNotification: {phLowCritical:true, phLowWarn:true, phOptimal:true, phHighWarn:true, phHighCritical: true},
+        nh3ShowNotification: {nh3Optimal:true, nh3HighWarn:true, nh3HighCritical: true},
+        tempNotifyCritical: true,
+        tempNotifyWarn: true,
+        tempNotifyOptimal: true,
+        togglePhAdvice: false,
+        toggleTempAdvice: false,
+        toggleNh3Advice: false,
     };
-    
-    toggleTempAlert() {
+ 
+   
+    toggleTempHandler() {
         this.setState({
-            hideTemp: !this.state.hideTemp
+            toggleTempAdvice: !this.state.toggleTempAdvice
         })
     }
     
-    togglePhAlert() {
+    togglePhHandler() {
         this.setState({
-            hidePh: !this.state.hidePh
+            togglePhAdvice: !this.state.togglePhAdvice
         })
     }
     
-    toggleNh3Alert() {
+    toggleNh3Handler() {
         this.setState({
-            hideNh3: !this.state.hideNh3
+            toggleNh3Advice: !this.state.toggleNh3Advice
         })
     }
     
+    createNotification = (type, text, title) => {
+      
+        return () => {
+            switch (type) {
+                case 'info':
+                    NotificationManager.info(<p>Message<br/>
+                        <a href="https://www.w3schools.com">Visit W3Schools.com!</a> </p>,<h2>HELLO</h2>,0);
+                    
+                    break;
+                case 'success':
+                    NotificationManager.success(<p>{text}</p>, <p><bold>{title}</bold></p>, 5000);
+                    break;
+                case 'warning':
+                    NotificationManager.warning(<p>{text}</p>, <p><bold>{title}</bold></p>, 6000);
+                    break;
+                case 'error':
+                    NotificationManager.error(<p>{text}</p>, <p><bold>{title}</bold></p>, 6000);
+                    break;
+            }
+        };
+    };
+  /*  notification = (type) => {
+    
+    }
+    
+   */
 
-    tempAlert = (temp) => {
+    tempStatus = (temp) => {
+ 
+        // Make sure the temperature has settled before allowing a reading
+        // Prevents firing off notifications while the sliders are being used
       setInterval(()=>{
-        
-            if (this.state.tempUpdate !== this.state.CaptureValueTemp) {
-                console.log(`Setting CaptureValueTemp : ${this.state.CaptureValueTemp}`);
-                console.log(`From tempUpdate: ${this.state.tempUpdate}`);
-                this.setState({CaptureValueTemp: this.state.tempUpdate,
-                });
-                console.log(` AFTER Setting CaptureValueTemp : ${this.state.CaptureValueTemp}`);
-                console.log(`AFTER From tempUpdate: ${this.state.tempUpdate}`);
+            if (this.state.tempUpdate !== this.state.tempCaptureValue) {
+                this.setState({tempCaptureValue: this.state.tempUpdate});
             }
         },2000);
-        
+      
         switch (true) {
             case   temp <= 3  :
-           if(this.state.tempUpdate === this.state.CaptureValueTemp && this.state.tempPopupAlert === true){
-               
-               this.setState({tempPopupAlert:false});
-                console.log('returning from switch');
-                return(/*<Alert alertStyle={this.alertStyle}/>*/ console.log('It works')
-                );}
-               
-                return<Fade>
-                    <div className="red-alert" onClick={this.toggleTempAlert.bind(this)}>
-                        <Row>
-                            <Col lg={2}>
-                                <h4><Badge
-                                    className="badge-secondary-override">{this.state.tempUpdate[0].toPrecision(2)} &#8451; </Badge>
-                                </h4>
-                            </Col>
-                            <Col lg={10}>
-                                <h4> LOW TEMPERATURE{console.log(this.state.tempUpdate[0])}</h4>
-                            </Col>
-                        </Row>
-                    </div>
-              
-               
-                    {!this.state.hideTemp &&
-                    <Fade>
-                        <p className="alert">You have critically low water temperature. At extremely low water
-                            temperatures your fish can freeze to death.
-                            Your system is at risk. Take immediate action.
-                            Please see <a href="#"> our wiki.</a></p>
-                    </Fade>
-                    }
-                
-                </Fade>;
+           if(this.state.tempUpdate === this.state.tempCaptureValue && this.state.tempShowNotification.tempLowCritical === true) {
+    console.log(this.state.tempShowNotification.tempHighCritical);
+               (this.createNotification('error', Assets.tempLowCritical, Assets.tempLowTitle))();
+           this.setState({tempShowNotification:{tempLowCritical: false, tempLowWarn: true, tempOptimal: true, tempHighWarn: true, tempHighCritical: true
+               }})
+           }
+           return(<div><StatusBars
+                divStyle={'red-alert'}
+                toggleHandler={this.toggleTempHandler.bind(this)}
+                updatedValue={this.state.tempUpdate[0].toPrecision(2)}
+                symbol={String.fromCharCode(8451)}
+                statusTitle={Assets.tempLowTitle}
+                adviceToggle={this.state.toggleTempAdvice}
+                adviceText={Assets.tempLowCritical}
+                link={'https://portfolio.fullstack-adventure.com'}
+           /></div>);
            
-                
-                
             case temp > 3 && temp <= 10 : //
-                return <div>
-                    
-                    <Fade>
-                        <div className="yellow-alert" onClick={this.toggleTempAlert.bind(this)}>
-                            <Row>
-                                <Col lg={2}>
-                                    <h4><Badge
-                                        className="badge-secondary-override">{this.state.tempUpdate[0.].toPrecision(2)} &#8451; </Badge>
-                                    </h4>
-                                </Col>
-                                <Col lg={10}>
-                                    <h4> LOW TEMPERATURE</h4>
-                                </Col>
-                            </Row>
-                        </div>
-                    </Fade>
-                    {!this.state.hideTemp &&
-                    <Fade>
-                        <p className="alert">You have low water temperature. At low water temperatures your fish stop
-                            feeding and grow very slowly. Action should be taken to increase the water temperature.
-                            Please see <a href="#"> our wiki.</a></p>
-                    </Fade>
-                    }
-                </div>;
+                
+                if(this.state.tempUpdate === this.state.tempCaptureValue && this.state.tempShowNotification.tempLowWarn === true) {
+                    console.log('Runs the alert');
+                    (this.createNotification('warning', Assets.tempLowWarn, Assets.tempLowTitle))();
+                    this.setState({tempShowNotification:{tempLowCritical: true, tempLowWarn: false, tempOptimal: true, tempHighWarn: true,  tempHighCritical: true
+                        }})
+                }
+            
+                return <StatusBars
+                        divStyle={'yellow-alert'}
+                        toggleHandler={this.toggleTempHandler.bind(this)}
+                        updatedValue={this.state.tempUpdate[0].toPrecision(2)}
+                        symbol={String.fromCharCode(8451)}
+                        statusTitle={Assets.tempLowTitle}
+                        adviceToggle={this.state.toggleTempAdvice}
+                        adviceText={Assets.tempLowWarn}
+                        link={'https://portfolio.fullstack-adventure.com'}
+                    />;
+                
             case temp > 10 && temp <= 18 : //
-                return <Fade>
-                    <div className="green-alert" onClick={this.toggleTempAlert.bind(this)}>
-                        <Row>
-                            <Col lg={2}>
-                                <h4><Badge
-                                    className="badge-secondary-override">{this.state.tempUpdate[0.].toPrecision(2)} &#8451; </Badge>
-                                </h4>
-                            </Col>
-                            <Col lg={10}>
-                                <h4>TEMPERATURE OK</h4>
-                            </Col>
-                        </Row>
-                    </div>
-                    {!this.state.hideTemp &&
-                    <Fade>
-                        <p className="alert">Water temperature is optimal for trout. Keep the temperature between 10
-                            and 18 degrees
-                            More info is in <a href="#"> our wiki.</a></p>
-                    </Fade>
-                    }
-                </Fade>;
+    
+                if(this.state.tempUpdate === this.state.tempCaptureValue && this.state.tempShowNotification.tempOptimal === true) {
+                    console.log('Runs the alert');
+                    (this.createNotification('success', Assets.tempOk, Assets.tempOkTitle))();
+                    this.setState({tempShowNotification:{tempLowCritical: true, tempLowWarn: true, tempOptimal: false, tempHighWarn: true,  tempHighCritical: true
+                        }})
+                }
+                
+                return <StatusBars
+                    divStyle={'green-alert'}
+                    toggleHandler={ this.toggleTempHandler.bind(this)}
+                    updatedValue={this.state.tempUpdate[0].toPrecision(2)}
+                    symbol={String.fromCharCode(8451)}
+                    statusTitle={Assets.tempOkTitle}
+                    adviceToggle={this.state.toggleTempAdvice}
+                    adviceText={Assets.tempOk}
+                    link={'https://portfolio.fullstack-adventure.com'}
+                />;
+                
             case temp > 18 && temp <= 23 : //
-                return <div className="">
-                    <Fade>
-                        <div onClick={this.toggleTempAlert.bind(this)} className="yellow-alert">
-                            <Row>
-                                <Col lg={2}>
-                                    <h4><Badge
-                                        className="badge-secondary-override">{this.state.tempUpdate[0.].toPrecision(2)} &#8451; </Badge>
-                                    </h4>
-                                </Col>
-                                <Col lg={10}>
-                                    <h4> HIGH TEMPERATURE</h4>
-                                </Col>
-                            </Row>
-                        </div>
-                        {!this.state.hideTemp &&
-                        <Fade>
-                            <p className="alert">You have high water temperature. At higher water temperatures fish stop
-                                feeding
-                                and are prone to low oxygen and higher ammonia concentrations in the water.
-                                Action should be taken to reduce the water temperature.
-                                Please see <a href="#"> our wiki.</a></p>
-                        </Fade>
-                        }
-                    </Fade></div>;
+                if(this.state.tempUpdate === this.state.tempCaptureValue && this.state.tempShowNotification.tempHighWarn === true) {
+                    console.log('Runs the alert');
+                    (this.createNotification('warning', Assets.tempHighWarn, Assets.tempHighTitle))();
+                    this.setState({tempShowNotification:{tempLowCritical: true, tempLowWarn: true, tempOptimal: true, tempHighWarn: false,  tempHighCritical: true
+                        }})
+                }
+                return <StatusBars
+                    divStyle={'yellow-alert'}
+                    toggleHandler={ this.toggleTempHandler.bind(this)}
+                    updatedValue={this.state.tempUpdate[0].toPrecision(2)}
+                    symbol={String.fromCharCode(8451)}
+                    statusTitle={Assets.tempHighTitle}
+                    adviceToggle={this.state.toggleTempAdvice}
+                    adviceText={Assets.tempHighWarn}
+                    link={'https://portfolio.fullstack-adventure.com'}
+                />;
+            
+
             case temp > 23: //
-                return <Fade>
-                    <div className="">
-                        <div onClick={this.toggleTempAlert.bind(this)} className="red-alert">
-                            <Row>
-                                <Col lg={2}>
-                                    <h4><Badge
-                                        className="badge-secondary-override">{this.state.tempUpdate[0.].toPrecision(2)} &#8451; </Badge>
-                                    </h4>
-                                </Col>
-                                <Col lg={10}>
-                                    <h4> HIGH TEMPERATURE</h4>
-                                </Col>
-                            </Row>
-                        </div>
-                        {!this.state.hideTemp &&
-                        <Fade>
-                            <p className="alert">You have critically high water temperature. At these levels depleted
-                                oxygen and
-                                ammonia concentrations can be fatal to your fish. Your system is at risk. Take immediate
-                                action.
-                                Please see <a href="#"> our wiki.</a></p>
-                        </Fade>
-                        }
-                    </div>
-                </Fade>;
+                if(this.state.tempUpdate === this.state.tempCaptureValue && this.state.tempShowNotification.tempHighCritical === true) {
+                    console.log('Runs the alert');
+                    (this.createNotification('error', Assets.tempHighCritical, Assets.tempHighTitle))();
+                    this.setState({tempShowNotification:{tempLowCritical: true, tempLowWarn: true, tempOptimal: true, tempHighWarn: true,  tempHighCritical: false
+                        }})
+                }
+                return <StatusBars
+                    divStyle={'red-alert'}
+                    toggleHandler={this.toggleTempHandler.bind(this)}
+                    updatedValue={this.state.tempUpdate[0].toPrecision(2)}
+                    symbol={String.fromCharCode(8451)}
+                    statusTitle={Assets.tempHighTitle}
+                    adviceToggle={this.state.toggleTempAdvice}
+                    adviceText={Assets.tempHighCritical}
+                    link={'https://portfolio.fullstack-adventure.com'}
+                />;
             default:
                 return <div className="">
-                    <div className="unknown reading">CANNOT READ DATA</div>
+                    <div className="unknown-reading">CANNOT READ DATA</div>
                 </div>;
         }
     };
     
-    phAlert = (ph) => {
-        
+    phStatus = (ph) => {
+        setInterval(()=>{
+            if (this.state.phUpdate !== this.state.phCaptureValue) {
+                this.setState({phCaptureValue: this.state.phUpdate});
+            }
+        },3000);
         switch (true) {
             case   ph <= 5.5  :
-                return <div>
-                    
-                    <Fade>
-                        <div onClick={this.togglePhAlert.bind(this)} className="red-alert">
-                            <Row>
-                                <Col lg={2}>
-                                    <h4><Badge
-                                        className="badge-secondary-override">pH {this.state.phUpdate[0.].toPrecision(2)}</Badge>
-                                    </h4>
-                                </Col>
-                                <Col lg={10}>
-                                    <h4>LOW pH</h4>
-                                </Col>
-                            </Row>
-                        </div>
-                    </Fade>
-                    {!this.state.hidePh &&
-                    
-                    <Fade><p className="alert">You have critically low pH. At extremely low pH your fish can suffer
-                        fatal acid
-                        burns.
-                        Your system is at risk. Take immediate action.
-                        Please see <a href="#"> our wiki.</a></p>
-                    </Fade>
-                    }
-                </div>;
+                if(this.state.phUpdate === this.state.phCaptureValue && this.state.phShowNotification.phLowCritical === true) {
+                 
+                    (this.createNotification('error', Assets.phLowCritical, Assets.phLowTitle))();
+                    this.setState({phShowNotification:{phLowCritical: false, phLowWarn: true, phOptimal: true, phHighWarn: true, phHighCritical: true
+                        }})
+                }
+                return <StatusBars
+                    divStyle={'red-alert'}
+                    toggleHandler={this.togglePhHandler.bind(this)}
+                    updatedValue={this.state.phUpdate[0.].toPrecision(2)}
+                    symbol={'pH'}
+                    statusTitle={Assets.phLowTitle}
+                    adviceToggle={this.state.togglePhAdvice}
+                    adviceText={Assets.phLowCritical}
+                    link={'https://portfolio.fullstack-adventure.com'}
+                />;
             case ph > 5.5 && ph <= 6.5 : //
-                return <Fade>
-                    <div className="">
-                        <div onClick={this.togglePhAlert.bind(this)} className="yellow-alert">
-                            <Row>
-                                <Col lg={2}>
-                                    <h4><Badge
-                                        className="badge-secondary-override">pH {this.state.phUpdate[0.].toPrecision(2)}</Badge>
-                                    </h4>
-                                </Col>
-                                <Col lg={10}>
-                                    <h4>LOW pH</h4>
-                                </Col>
-                            </Row>
-                        </div>
-                        {!this.state.hidePh &&
-                        <Fade>
-                            <p className="alert">You have low pH levels. At low pH levels your fish may suffer from high
-                                acidity.
-                                Action should be taken to increase the pH levels.
-                                Please see <a href="#"> our wiki.</a></p>
-                        </Fade>
-                        }
-                    </div>
-                </Fade>;
+                if(this.state.phUpdate === this.state.phCaptureValue && this.state.phShowNotification.phLowWarn === true) {
+        
+                    (this.createNotification('warning', Assets.phLowWarn, Assets.phLowTitle))();
+                    this.setState({phShowNotification:{phLowCritical: true, phLowWarn: false, phOptimal: true, phHighWarn: true, phHighCritical: true
+                        }})
+                }
+                return  <StatusBars
+                    divStyle={'yellow-alert'}
+                    toggleHandler={this.togglePhHandler.bind(this)}
+                    updatedValue={this.state.phUpdate[0.].toPrecision(2)}
+                    symbol={'pH'}
+                    statusTitle={Assets.phLowTitle}
+                    adviceToggle={this.state.togglePhAdvice}
+                    adviceText={Assets.phLowWarn}
+                    link={'https://portfolio.fullstack-adventure.com'}
+                />;
             case ph > 6.5 && ph <= 8 : //
-                return <div className="">
-                    <div className="green-alert" onClick={this.togglePhAlert.bind(this)}>
-                        <Row>
-                            <Col lg={2}>
-                                <h4><Badge
-                                    className="badge-secondary-override">pH {this.state.phUpdate[0.].toPrecision(2)}</Badge>
-                                </h4>
-                            </Col>
-                            <Col lg={10}>
-                                <h4>pH OK</h4>
-                            </Col>
-                        </Row>
-                    </div>
-                    
-                    {!this.state.hidePh &&
-                    
-                    <p className="alert">Water pH levels are optimal for trout. Keep the pH level between 6.5 and 8.
-                        More info is in <a href="#"> our wiki.</a></p>
-                        
-                    }
-                </div>;
+    
+                if(this.state.phUpdate === this.state.phCaptureValue && this.state.phShowNotification.phOptimal === true) {
+        
+                    (this.createNotification('success', Assets.phOk, Assets.phOkTitle))();
+                    this.setState({phShowNotification:{phLowCritical: true, phLowWarn: true, phOptimal: false, phHighWarn: true, phHighCritical: true
+                        }})
+                }
+                
+                return   <StatusBars
+                    divStyle={'green-alert'}
+                    toggleHandler={this.togglePhHandler.bind(this)}
+                    updatedValue={this.state.phUpdate[0.].toPrecision(2)}
+                    symbol={'pH'}
+                    statusTitle={Assets.phOkTitle}
+                    adviceToggle={this.state.togglePhAdvice}
+                    adviceText={Assets.phOk}
+                    link={'https://portfolio.fullstack-adventure.com'}
+                />;
             case ph > 8 && ph <= 9 : //
-                return <Fade>
-                    <div className="">
-                        <div onClick={this.togglePhAlert.bind(this)} className="yellow-alert">
-                            <Row>
-                                <Col lg={2}>
-                                    <h4><Badge
-                                        className="badge-secondary-override">pH {this.state.phUpdate[0.].toPrecision(2)}</Badge>
-                                    </h4>
-                                </Col>
-                                <Col lg={10}>
-                                    <h4>HIGH pH</h4>
-                                </Col>
-                            </Row>
-                        </div>
-                        {!this.state.hidePh &&
-                        <Fade>
-                            <p className="alert">You have high pH levels. At higher pH levels your fish may suffer from
-                                alkalinity and be more subject to higher concentrations of ammonia.
-                                Action should be taken to reduce the pH levels.
-                                Please see <a href="#"> our wiki.</a></p>
-                        </Fade>
-                        }
-                    </div>
-                </Fade>;
+                if(this.state.phUpdate === this.state.phCaptureValue && this.state.phShowNotification.phHighWarn === true) {
+        
+                    (this.createNotification('warning', Assets.phHighWarn, Assets.phHighTitle))();
+                    this.setState({phShowNotification:{phLowCritical: true, phLowWarn: true, phOptimal: true, phHighWarn: false, phHighCritical: true
+                        }})
+                }
+                return  <StatusBars
+                    divStyle={'yellow-alert'}
+                    toggleHandler={this.togglePhHandler.bind(this)}
+                    updatedValue={this.state.phUpdate[0.].toPrecision(2)}
+                    symbol={'pH'}
+                    statusTitle={Assets.phHighTitle}
+                    adviceToggle={this.state.togglePhAdvice}
+                    adviceText={Assets.phHighWarn}
+                    link={'https://portfolio.fullstack-adventure.com'}
+                />;
+              
             case ph > 9: //
-                return <div className="">
-                    <Fade>
-                        <div onClick={this.togglePhAlert.bind(this)} className="red-alert">
-                            <Row>
-                                <Col lg={2}>
-                                    <h4><Badge
-                                        className="badge-secondary-override">pH {this.state.phUpdate[0.].toPrecision(2)}</Badge>
-                                    </h4>
-                                </Col>
-                                <Col lg={10}>
-                                    <h4>HIGH pH</h4>
-                                </Col>
-                            </Row>
-                        </div>
-                    </Fade>
-                    {!this.state.hidePh &&
-                    <Fade>
-                        <p className="alert">You have critically low pH. At extremely low pH your fish can suffer
-                            fatal alkaline burns and be more prone to higher concentrations of ammonia.
-                            Your system is at risk. Take immediate action.
-                            Please see <a href="#"> our wiki.</a></p>
-                    </Fade>
-                    }
-                </div>;
+                if(this.state.phUpdate === this.state.phCaptureValue && this.state.phShowNotification.phHighCritical === true) {
+        
+                    (this.createNotification('error', Assets.phHighCritical, Assets.phHighTitle))();
+                    this.setState({phShowNotification:{phLowCritical: true, phLowWarn: true, phOptimal: true, phHighWarn: true, phHighCritical: false
+                        }})
+                }
+                return  <StatusBars
+                    divStyle={'red-alert'}
+                    toggleHandler={this.togglePhHandler.bind(this)}
+                    updatedValue={this.state.phUpdate[0.].toPrecision(2)}
+                    symbol={'pH'}
+                    statusTitle={Assets.phHighTitle}
+                    adviceToggle={this.state.togglePhAdvice}
+                    adviceText={Assets.phHighCritical}
+                    link={'https://portfolio.fullstack-adventure.com'}
+                />;
             default:
                 return <div className="">
                     <div className="unknown reading">CANNOT READ DATA</div>
                 </div>;
         }
+
     };
     
-    nh3Alert = (nh3) => {
-        
+    nh3Status = (nh3) => {
         switch (true) {
             case   nh3 <= 0.20  :
-                return <div className="">
-                    <div className="green-alert" onClick={this.toggleNh3Alert.bind(this)}>
-                        <Row>
-                            <Col lg={2}>
-                                <h4><Badge
-                                    className="badge-secondary-override">{this.state.nh3Update[0.].toPrecision(2)} mg/L</Badge>
-                                </h4>
-                            </Col>
-                            <Col lg={10}>
-                                <h4>NH<sub>3</sub>
-                                    &nbsp; OK</h4>
-                            </Col>
-                        </Row>
-                    </div>
-                    {!this.state.hideNh3 &&
-                    <Fade>
-                        <p className="alert"> Keep your Nh3 levels as close to zero as possible. Also maintain a
-                            lower water temperature.
-                            Please see <a href="#"> our wiki.</a></p>
-                    </Fade>
+                setInterval(()=>{
+                    if (this.state.nh3Update !== this.state.nh3CaptureValue) {
+                        this.setState({nh3CaptureValue: this.state.nh3Update});
                     }
-                </div>;
+                },4000);
+                if(this.state.nh3Update === this.state.nh3CaptureValue && this.state.nh3ShowNotification.nh3Optimal === true) {
+                    console.log(this.state.tempShowNotification.tempHighCritical);
+                    (this.createNotification('success', Assets.nh3Ok, Assets.nh3TitleOk()))();
+                    this.setState({nh3ShowNotification:{ nh3Optimal: false, nh3HighWarn: true, nh3HighCritical: true
+                        }})
+                }
+                return <StatusBars
+                    divStyle={'green-alert'}
+                    toggleHandler={ this.toggleNh3Handler.bind(this)}
+                    updatedValue={this.state.nh3Update[0].toPrecision(2)}
+                    symbol={'mg/L'}
+                    statusTitle={Assets.nh3TitleOk()}
+                    adviceToggle={this.state.toggleNh3Advice}
+                    adviceText={Assets.nh3Ok}
+                    link={'https://portfolio.fullstack-adventure.com'}
+                />;
+           
             case nh3 > 0.20 && nh3 <= 0.4 : //
-                return <Fade>
-                    <div className="">
-                        <div onClick={this.toggleNh3Alert.bind(this)} className="yellow-alert">
-                            <Row>
-                                <Col lg={2}>
-                                    <h4><Badge
-                                        className="badge-secondary-override">{this.state.nh3Update[0.].toPrecision(2)} mg/L</Badge>
-                                    </h4>
-                                </Col>
-                                <Col lg={10}>
-                                    <h4>HIGH NH<sub>3</sub>
-                                        &nbsp;</h4>
-                                </Col>
-                            </Row>
-                        </div>
-                        {!this.state.hideNh3 &&
-                        <Fade>
-                            <p className="alert"> At high levels fish may become prone to ammonia poisoning. Action
-                                should be taken to reduce the ammonia content of your water.
-                                Please see <a href="#"> our wiki.</a></p>
-                        </Fade>
-                        }
-                    </div>
-                </Fade>;
+    
+                if(this.state.nh3Update === this.state.nh3CaptureValue && this.state.nh3ShowNotification.nh3HighWarn === true) {
+                    console.log(this.state.tempShowNotification.tempHighCritical);
+                    (this.createNotification('warning', Assets.nh3Warn, Assets.nh3TitleHigh()))();
+                    this.setState({nh3ShowNotification:{ nh3Optimal: true, nh3HighWarn: false, nh3HighCritical: true
+                        }})
+                }
+                
+                return <StatusBars
+                    divStyle={'yellow-alert'}
+                    toggleHandler={ this.toggleNh3Handler.bind(this)}
+                    updatedValue={this.state.nh3Update[0].toPrecision(2)}
+                    symbol={'mg/L'}
+                    statusTitle={Assets.nh3TitleHigh()}
+                    adviceToggle={this.state.toggleNh3Advice}
+                    adviceText={Assets.nh3Warn}
+                    link={'https://portfolio.fullstack-adventure.com'}
+                />;
             case nh3 > 0.4 : //
-                return <div className="">
-                    <Fade>
-                        <div onClick={this.toggleNh3Alert.bind(this)} className="red-alert">
-                            <Row>
-                                <Col lg={2}>
-                                    <h4><Badge
-                                        className="badge-secondary-override">{this.state.nh3Update[0.].toPrecision(2)} mg/L</Badge>
-                                    </h4>
-                                </Col>
-                                <Col lg={10}>
-                                    <h4>HIGH NH<sub>3</sub>
-                                        &nbsp;</h4>
-                                </Col>
-                            </Row>
-                        </div>
-                    </Fade>
-                    {!this.state.hideNh3 &&
-                    <Fade>
-                        <p className="alert">
-                            &nbsp; At critically high levels of NH<sub>3</sub>
-                            &nbsp; Your fish are at high risk of ammonia poisoning.
-                            Immediate action should be taken to reduce the ammonia content of your water. More info is
-                            in <a
-                            href="#"> our wiki.</a></p>
-                    </Fade>
-                    }
-                </div>;
+                if(this.state.nh3Update === this.state.nh3CaptureValue && this.state.nh3ShowNotification.nh3HighCritical === true) {
+                    console.log(this.state.tempShowNotification.tempHighCritical);
+                    (this.createNotification('error', Assets.nh3Critical, Assets.nh3TitleHigh()))();
+                    this.setState({nh3ShowNotification:{ nh3Optimal: true, nh3HighWarn: true, nh3HighCritical: false
+                        }})
+                }
+                return  <StatusBars
+                    divStyle={'red-alert'}
+                    toggleHandler={ this.toggleNh3Handler.bind(this)}
+                    updatedValue={this.state.nh3Update[0].toPrecision(2)}
+                    symbol={'mg/L'}
+                    statusTitle={Assets.nh3TitleHigh()}
+                    adviceToggle={this.state.toggleNh3Advice}
+                    adviceText={Assets.nh3Critical}
+                    link={'https://portfolio.fullstack-adventure.com'}
+                />;
             default:
                 return <div className="">
                     <div className="unknown reading">CANNOT READ DATA</div>
@@ -432,7 +370,6 @@ class SlidersContainer extends Component {
     // todo: Break this up into it's own function to use on other projects
     componentDidMount() {
         //window.scrollTo(0, 0);
-        
     }
     
     onNh3Update = nh3Update => {
@@ -459,54 +396,29 @@ class SlidersContainer extends Component {
     };
     
     render() {
-        let titleStyle = {
-            margin: "0% 0px 100px",
-            textAlign: 'center'
-        };
         
-        let headerStyle = {
-            margin: '40px 0 200px 0',
-            paddingLeft: '10%',
-            paddingRight: '10%',
-            color: 'white',
-            width: '100%'
-        };
-
-        const projectName = 'Aquaponics Probe Simulator';
-        const projectPurpose = ["Build a user interface to control the values that would be taken from probes testing water quality in an aquaponics system, namely temperature, " +
-        "pH and ammonia.",
-            "This program must simulate data to enable developers to control the values that must be input into the application for testing the programming logic. End users will need to receive " +
-            " warnings and advice based on parameter ranges from the probes."];
-        
-        const projectDescription = ["This is a part of a larger Internet Of Things project."];
-        const projectLearning = ['Using & customising component packages, scoping styles to components, conditionally rendering content. ', 'Better planning and further breaking up into smaller modules is needed' +
-        ' in future work.'];
-        const link1 = [''];
-        const link2 = ['https://fullstack-adventure.com/', 'here.', 'You can read about it '];
-        const link3 = [''];
-        const link4 = [''];
-        const whatNext = ["The project needs to insert readings into a relational database, for data visualisation, alerts and to continue programming the logic."];
         return (
             <div>
-                <ReactNotifications />
+        
                 <Container className=" sensors-container">
-                    <Alert/>
+    
                   
                     <ProjectsHeader
-                        projectName={projectName}
-                        projectPurpose={projectPurpose}
-                        projectDescription={projectDescription}
-                        projectLearning={projectLearning}
-                        whatNext={whatNext}
-                        link1={link1} link2={link2} link3={link3} link4={link4}
-                        headerStyle={headerStyle}
-                        titleStyle={titleStyle}
+                        projectName={Assets.projectName}
+                        projectPurpose={Assets.projectPurpose}
+                        projectDescription={Assets.projectDescription}
+                        projectLearning={Assets.projectLearning}
+                        whatNext={Assets.whatNext}
+                        link1={Assets.link1} link2={Assets.link2} link3={Assets.link3} link4={Assets.link4}
+                        headerStyle={Assets.headerStyle}
+                        titleStyle={Assets.titleStyle}
                     />
-                    <p className="reading-box">Adjust the sliders to change the values.</p>
-                    
+    
                     <Row>
                         
-                        <Col lg={6}>
+                        <Col lg={6}>                    <h4 className="reading-box">Adjust the sliders to modify the probe readings</h4>
+                            <p className="reading-box">Simulates the changes to the water quality</p>
+    
                             <Row>
                                 <Col>
                                     <div className=" ">
@@ -516,7 +428,7 @@ class SlidersContainer extends Component {
                                         <TempSliderVertical
                                             values={this.state.tempValue}
                                             update={this.state.tempUpdate}
-                                            defaultValues={defaultTemp}
+                                            defaultValues={Assets.defaultTemp}
                                             onUpdate={this.onTempUpdate}
                                             onChange={this.onTempChange}
                                         />
@@ -531,17 +443,22 @@ class SlidersContainer extends Component {
                                     <PhSliderVertical
                                         values={this.state.phValue}
                                         update={this.state.phUpdate}
-                                        defaultValues={defaultPh}
+                                        defaultValues={Assets.defaultPh}
                                         onUpdate={this.onPhUpdate}
                                         onChange={this.onPhChange}
                                     />
                                 
                                 </div>
-                            </Col><Col>
+                            </Col>
                                 
+                                <Col>
+    
                                 
                                 <div className="">
+                                    
                                     <div className="reading-box">
+                                        
+    
                                         <p>
                                             NH<sub>3</sub>
                                             &nbsp;</p>
@@ -549,7 +466,7 @@ class SlidersContainer extends Component {
                                     <Nh3SliderVertical
                                         values={this.state.nh3Update}
                                         update={this.state.nh3Update}
-                                        defaultValues={defaultNh3}
+                                        defaultValues={Assets.defaultNh3}
                                         onUpdate={this.onNh3Update}
                                         onChange={this.onNh3Change}
                                     />
@@ -561,19 +478,22 @@ class SlidersContainer extends Component {
                         
                         <Col lg={6}>
                             
-                            <Fade>
+                           
+                                <h4 className="reading-box">Monitor the water quality of your system.</h4>
+                            <p className="reading-box">Find advice on how to fix your systems troubles.</p>
                                 <div className="status-wrapper">
-                                    <h3>Status</h3>
-                                    {this.tempAlert(this.state.tempUpdate[0])}
-                                    {this.phAlert(this.state.phUpdate[0])}
-                                    {this.nh3Alert(this.state.nh3Update[0])}
+                                    <h3>Your System Status</h3>
+                                    {this.tempStatus(this.state.tempUpdate[0])}
+                                    {this.phStatus(this.state.phUpdate[0])}
+                                    {this.nh3Status(this.state.nh3Update[0])}
                                   
                                 </div>
-                            
-                            </Fade>
-                         
+    
+    
+                           
                         </Col>
                       
+                        <LinerGraph/>
                     </Row>
                     <div className="project-icons">
                         <a target="_blank"
@@ -594,20 +514,14 @@ class SlidersContainer extends Component {
                     <NavLink activeClassName="" tag={RRNavLink} href="/" exact to="/" >
                         <Button className="projects-back-btn" onClick={()=>{
                             // This function scrolls to the element defined
-                           
-                                async function goBack() {
-                                    return null
-                                }
-                                goBack().then(()=>{
-                                    let el =  document.getElementById('projects');
-                                    el.scrollIntoView();
-                                });
-                            
+                           goBackToElement('projects');
+                         
                         }}>
                             Back</Button>
                     </NavLink>
-            
-            </div>);
+                <NotificationContainer/>
+            </div>
+           );
     }
 }
 

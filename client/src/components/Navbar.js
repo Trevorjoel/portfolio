@@ -20,7 +20,7 @@ class NavBar extends Component {
         };
     }
     componentDidMount() {
-        /*let position = "navbar";
+        let position = "navbar";
         let prevScrollpos = window.pageYOffset;
         window.onscroll = function () {
             const currentScrollPos = window.pageYOffset;
@@ -30,7 +30,7 @@ class NavBar extends Component {
                 document.getElementById(position).style.top = "-100%";
             }
             prevScrollpos = currentScrollPos;
-        };*/
+        };
     }
     
     toggle() {

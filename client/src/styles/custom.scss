@@ -15,7 +15,7 @@ ul {
 
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+  font-family: akkurta,Inconsolata, monospace, -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
   "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
   sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -33,7 +33,7 @@ body {
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+  font-family: akkurta,Inconsolata,monospace, source-code-pro, Menlo, Monaco, Consolas, "Courier New",
   monospace;
 }
 
@@ -87,7 +87,7 @@ h1.site-title {
   font-weight: bold;
   text-shadow: $text-shadow;
   color: aliceblue;
-  font-family: 'Lato', sans-serif;
+  font-family: akkurta,Inconsolata,monospace, 'Lato', sans-serif;
   position: relative;
   text-align: left;
   padding-left: 20px;
@@ -120,7 +120,7 @@ div.navbar-collapse {
 .navbar-light .navbar-nav .nav-link {
   color: #fff;
   font-size: 1em;
-  font-family: "Roboto", sans-serif;
+  font-family: akkurta,Inconsolata,monospace, "Roboto", sans-serif;
 }
 
 .navbar-light .navbar-brand {
@@ -151,7 +151,7 @@ a.nav-link {
   justify-content: center;
   font-size: $font-transform;
   color: white;
-  font-family: 'Roboto', sans-serif;
+  font-family: akkurta,Inconsolata,monospace, 'Roboto', sans-serif;
   max-height: 100%;
 }
 
@@ -467,7 +467,7 @@ h1.projects-title {
   color: $primary-match-4;
   margin: 150px 0 40px 0;
   font-size: $dynamic-font-subheading;
-  font-family: 'Lato', sans-serif;
+  font-family: akkurta,Inconsolata,monospace, 'Lato', sans-serif;
 
 }
 .slide{
@@ -490,7 +490,7 @@ h1.experience-title {
   margin: 150px 0 150px 0;
   color: $primary-match-4;
   font-size: $dynamic-font-subheading;
-  font-family: 'Lato', sans-serif;
+  font-family: akkurta,Inconsolata,monospace, 'Lato', sans-serif;
 }
 
 .projects-container {
@@ -511,7 +511,7 @@ h1.experience-title {
   color: $primary-match-4;
   margin: 40px 0 0 20px;;
   font-size: $dynamic-font-subheading;
-  font-family: 'Lato', sans-serif;
+  font-family: akkurta,Inconsolata,monospace, 'Lato', sans-serif;
   text-align: left;
 }
 
@@ -519,7 +519,7 @@ h1.experience-title {
   color: $primary-match-4;
   margin: 40px 0 0 20px;
   font-size: $dynamic-font-subheading;
-  font-family: 'Lato', sans-serif;
+  font-family: akkurta,Inconsolata,monospace, 'Lato', sans-serif;
   text-align: left;
 }
 
@@ -531,7 +531,7 @@ h1.experience-title {
 .form-title {
   margin-top: 20px;
   font-size: 3rem;
-  font-family: 'Roboto Slab', serif;
+  font-family: akkurta,Inconsolata,monospace, 'Roboto Slab', serif;
 }
 
 .form-wrapper {

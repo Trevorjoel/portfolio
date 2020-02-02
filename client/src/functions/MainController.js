@@ -18,11 +18,10 @@ export function goBackToElement  (element) {
       let el =  document.getElementById(element);
        el.scrollIntoView();
     });
-};
+}
 
 // Alerts the user that the project/page can be viewed better rotating the device
 export function ScreenAlertComponent () {
-    
     window.addEventListener("resize", () => {
         this.setState({
             rotateMessage: false
@@ -39,4 +38,4 @@ export function ScreenAlertComponent () {
         </div>
         
     }
-};
+}

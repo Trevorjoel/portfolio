@@ -17,14 +17,15 @@
     "react-bootstrap": "^1.0.0-beta.16",
     "react-compound-slider": "^2.5.0",
     "react-dom": "^16.12.0",
-    "react-notifications-component": "^2.2.7",
+    "react-notifications": "^1.4.3",
     "react-parallax": "^2.2.4",
     "react-router": "^4.3.1",
     "react-router-dom": "^5.1.2",
     "react-scripts": "^3.3.0",
     "react-scroll": "^1.7.15",
     "react-transition-group": "^4.3.0",
-    "reactstrap": "^8.3.1"
+    "reactstrap": "^8.3.1",
+    "recharts": "^2.0.0-beta.1"
   },
   "scripts": {
     "start": "react-scripts start",
