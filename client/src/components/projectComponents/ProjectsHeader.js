@@ -1,5 +1,6 @@
 import React, {useState} from "react";
-import {Col, Fade, Row} from "reactstrap";
+import {Col, Container, Fade, Row} from "reactstrap";
+
 /*
 * Sets a header default header format for projects
 * */
@@ -40,8 +41,11 @@ const ProjectsHeader = (props) => {
                             return <p> {element} {props.link4[2]} <a target="_blank" rel="noopener noreferrer" href={props.link4[0]}>{props.link4[1]}</a></p>
                         }
                     )}</p>
+              
             </Col>
+            
             </Row>
+      
         </div>
         <hr/>
     </Fade>

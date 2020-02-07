@@ -27,12 +27,9 @@ class SlidersContainer extends Component {
         phUpdate: Assets.defaultPh.slice(),
         nh3Value: Assets.defaultNh3.slice(),
         nh3Update: Assets.defaultNh3.slice(),
-        tempShowNotification: {tempLowCritical:true, tempLowWarn:true, tempOptimal:true, tempHighWarn:true, tempHighCritical: true},
-        phShowNotification: {phLowCritical:true, phLowWarn:true, phOptimal:true, phHighWarn:true, phHighCritical: true},
-        nh3ShowNotification: {nh3Optimal:true, nh3HighWarn:true, nh3HighCritical: true},
-        tempNotifyCritical: true,
-        tempNotifyWarn: true,
-        tempNotifyOptimal: true,
+        tempShowNotification: {tempLowCritical:true, tempLowWarn:true, tempOptimal:false, tempHighWarn:true, tempHighCritical: true},
+        phShowNotification: {phLowCritical:true, phLowWarn:true, phOptimal:false, phHighWarn:true, phHighCritical: true},
+        nh3ShowNotification: {nh3Optimal:false, nh3HighWarn:true, nh3HighCritical: true},
         togglePhAdvice: false,
         toggleTempAdvice: false,
         toggleNh3Advice: false,
@@ -98,7 +95,7 @@ class SlidersContainer extends Component {
             case   temp <= 3  :
            if(this.state.tempUpdate === this.state.tempCaptureValue && this.state.tempShowNotification.tempLowCritical === true) {
     console.log(this.state.tempShowNotification.tempHighCritical);
-               (this.createNotification('error', Assets.tempLowCritical, Assets.tempLowTitle))();
+               (this.createNotification('error', Assets.tempLowNotifyCritical, Assets.tempLowTitle))();
            this.setState({tempShowNotification:{tempLowCritical: false, tempLowWarn: true, tempOptimal: true, tempHighWarn: true, tempHighCritical: true
                }})
            }
@@ -117,7 +114,7 @@ class SlidersContainer extends Component {
                 
                 if(this.state.tempUpdate === this.state.tempCaptureValue && this.state.tempShowNotification.tempLowWarn === true) {
                     console.log('Runs the alert');
-                    (this.createNotification('warning', Assets.tempLowWarn, Assets.tempLowTitle))();
+                    (this.createNotification('warning', Assets.tempLowNotifyWarn, Assets.tempLowTitle))();
                     this.setState({tempShowNotification:{tempLowCritical: true, tempLowWarn: false, tempOptimal: true, tempHighWarn: true,  tempHighCritical: true
                         }})
                 }
@@ -137,7 +134,7 @@ class SlidersContainer extends Component {
     
                 if(this.state.tempUpdate === this.state.tempCaptureValue && this.state.tempShowNotification.tempOptimal === true) {
                     console.log('Runs the alert');
-                    (this.createNotification('success', Assets.tempOk, Assets.tempOkTitle))();
+                    (this.createNotification('success', Assets.tempOkNotify, Assets.tempOkTitle))();
                     this.setState({tempShowNotification:{tempLowCritical: true, tempLowWarn: true, tempOptimal: false, tempHighWarn: true,  tempHighCritical: true
                         }})
                 }
@@ -156,7 +153,7 @@ class SlidersContainer extends Component {
             case temp > 18 && temp <= 23 : //
                 if(this.state.tempUpdate === this.state.tempCaptureValue && this.state.tempShowNotification.tempHighWarn === true) {
                     console.log('Runs the alert');
-                    (this.createNotification('warning', Assets.tempHighWarn, Assets.tempHighTitle))();
+                    (this.createNotification('warning', Assets.tempHighNotifyWarn, Assets.tempHighTitle))();
                     this.setState({tempShowNotification:{tempLowCritical: true, tempLowWarn: true, tempOptimal: true, tempHighWarn: false,  tempHighCritical: true
                         }})
                 }
@@ -175,7 +172,7 @@ class SlidersContainer extends Component {
             case temp > 23: //
                 if(this.state.tempUpdate === this.state.tempCaptureValue && this.state.tempShowNotification.tempHighCritical === true) {
                     console.log('Runs the alert');
-                    (this.createNotification('error', Assets.tempHighCritical, Assets.tempHighTitle))();
+                    (this.createNotification('error', Assets.tempHighNotifyCritical, Assets.tempHighTitle))();
                     this.setState({tempShowNotification:{tempLowCritical: true, tempLowWarn: true, tempOptimal: true, tempHighWarn: true,  tempHighCritical: false
                         }})
                 }
@@ -206,7 +203,7 @@ class SlidersContainer extends Component {
             case   ph <= 5.5  :
                 if(this.state.phUpdate === this.state.phCaptureValue && this.state.phShowNotification.phLowCritical === true) {
                  
-                    (this.createNotification('error', Assets.phLowCritical, Assets.phLowTitle))();
+                    (this.createNotification('error', Assets.phLowNotifyCritical, Assets.phLowTitle))();
                     this.setState({phShowNotification:{phLowCritical: false, phLowWarn: true, phOptimal: true, phHighWarn: true, phHighCritical: true
                         }})
                 }
@@ -223,7 +220,7 @@ class SlidersContainer extends Component {
             case ph > 5.5 && ph <= 6.5 : //
                 if(this.state.phUpdate === this.state.phCaptureValue && this.state.phShowNotification.phLowWarn === true) {
         
-                    (this.createNotification('warning', Assets.phLowWarn, Assets.phLowTitle))();
+                    (this.createNotification('warning', Assets.phLowNotifyWarn, Assets.phLowTitle))();
                     this.setState({phShowNotification:{phLowCritical: true, phLowWarn: false, phOptimal: true, phHighWarn: true, phHighCritical: true
                         }})
                 }
@@ -259,7 +256,7 @@ class SlidersContainer extends Component {
             case ph > 8 && ph <= 9 : //
                 if(this.state.phUpdate === this.state.phCaptureValue && this.state.phShowNotification.phHighWarn === true) {
         
-                    (this.createNotification('warning', Assets.phHighWarn, Assets.phHighTitle))();
+                    (this.createNotification('warning', Assets.phHighNotifyWarn, Assets.phHighTitle))();
                     this.setState({phShowNotification:{phLowCritical: true, phLowWarn: true, phOptimal: true, phHighWarn: false, phHighCritical: true
                         }})
                 }
@@ -277,7 +274,7 @@ class SlidersContainer extends Component {
             case ph > 9: //
                 if(this.state.phUpdate === this.state.phCaptureValue && this.state.phShowNotification.phHighCritical === true) {
         
-                    (this.createNotification('error', Assets.phHighCritical, Assets.phHighTitle))();
+                    (this.createNotification('error', Assets.phHighNotifyCritical, Assets.phHighTitle))();
                     this.setState({phShowNotification:{phLowCritical: true, phLowWarn: true, phOptimal: true, phHighWarn: true, phHighCritical: false
                         }})
                 }
@@ -328,7 +325,7 @@ class SlidersContainer extends Component {
     
                 if(this.state.nh3Update === this.state.nh3CaptureValue && this.state.nh3ShowNotification.nh3HighWarn === true) {
                     console.log(this.state.tempShowNotification.tempHighCritical);
-                    (this.createNotification('warning', Assets.nh3Warn, Assets.nh3TitleHigh()))();
+                    (this.createNotification('warning', Assets.nh3NotifyWarn, Assets.nh3TitleHigh()))();
                     this.setState({nh3ShowNotification:{ nh3Optimal: true, nh3HighWarn: false, nh3HighCritical: true
                         }})
                 }
@@ -346,7 +343,7 @@ class SlidersContainer extends Component {
             case nh3 > 0.4 : //
                 if(this.state.nh3Update === this.state.nh3CaptureValue && this.state.nh3ShowNotification.nh3HighCritical === true) {
                     console.log(this.state.tempShowNotification.tempHighCritical);
-                    (this.createNotification('error', Assets.nh3Critical, Assets.nh3TitleHigh()))();
+                    (this.createNotification('error', Assets.nh3NotifyCritical, Assets.nh3TitleHigh()))();
                     this.setState({nh3ShowNotification:{ nh3Optimal: true, nh3HighWarn: true, nh3HighCritical: false
                         }})
                 }
@@ -369,7 +366,7 @@ class SlidersContainer extends Component {
     
     // todo: Break this up into it's own function to use on other projects
     componentDidMount() {
-        //window.scrollTo(0, 0);
+        window.scrollTo(0, 0);
     }
     
     onNh3Update = nh3Update => {
@@ -412,12 +409,19 @@ class SlidersContainer extends Component {
                         link1={Assets.link1} link2={Assets.link2} link3={Assets.link3} link4={Assets.link4}
                         headerStyle={Assets.headerStyle}
                         titleStyle={Assets.titleStyle}
+                        embedVideo={Assets.embedVideo}
                     />
-    
+                    <hr/>
+                    <div className='iframe-container'>
+        
+                        <iframe src="https://www.youtube.com/embed/PEal63zv-2M" width="853" height="480"
+                                frameBorder="0"> </iframe> </div>
+                    <hr/>
                     <Row>
-                        
-                        <Col lg={6}>                    <h4 className="reading-box">Adjust the sliders to modify the probe readings</h4>
-                            <p className="reading-box">Simulates the changes to the water quality</p>
+                       
+                        <Col lg={6}>
+                            <h4 className="reading-box">Sliders substitute the probes readings</h4>
+                            <p className="reading-box">Adjust the sliders to simulate changes in water quality readings.</p>
     
                             <Row>
                                 <Col>
@@ -479,10 +483,10 @@ class SlidersContainer extends Component {
                         <Col lg={6}>
                             
                            
-                                <h4 className="reading-box">Monitor the water quality of your system.</h4>
-                            <p className="reading-box">Find advice on how to fix your systems troubles.</p>
+                                <h4 className="reading-box">Monitor & troubleshoot your system.</h4>
+                            <p className="reading-box">Find troubleshooting advice to keep your system safe.</p>
                                 <div className="status-wrapper">
-                                    <h3>Your System Status</h3>
+                                    <h3>System Status & advice</h3>
                                     {this.tempStatus(this.state.tempUpdate[0])}
                                     {this.phStatus(this.state.phUpdate[0])}
                                     {this.nh3Status(this.state.nh3Update[0])}
