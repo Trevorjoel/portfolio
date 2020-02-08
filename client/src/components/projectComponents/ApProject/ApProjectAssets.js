@@ -1,10 +1,10 @@
 /*
-* Folder contains assets related to this projects
+* Folder contains EmployeeTableAssets.js related to this projects
 * */
 // For the project heading:
 import React from "react";
 
-export const projectName = 'Aquaponics Probe Simulator (Prototype)';
+export const projectName = 'Aquaponics System Monitor (Prototype)';
 
 export const projectPurpose = [`Build a user interface prototype for an application that monitors the water quality of an aquaponics system. `,
     'The prototype must include sliders to simulate the values taken from water quality testing probes for development of the application.',

@@ -17,7 +17,9 @@
   padding: 4%;
   font-size: calc(10px + 1vmin);
 }
-
+.readings-container{
+  margin-top: 150px;
+}
 * {
   box-sizing: border-box;
 }
@@ -40,14 +42,35 @@
 
   border: 1px solid black
 }
+.sliders-container{
+  background:
+          #130f1e;
+  padding: 40px;
+  border-radius: 15px;
+  border: 1px solid
+  #550909
+}
+.row-margin{
+  margin-top: 150px;
+  margin-bottom: 150px;
+}
+.fish-image{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 
+  width:220px;
+
+}
 .status-wrapper {
-  background: whitesmoke;
-  color: black;
-  margin: 13% 0 0 0;
+  background: black;
+  color: whitesmoke;
   border-radius: 5px;
-  padding: 10px 1px 10px 1px;
+  padding: 30px 0 0 0px;
   text-align: center;
+  max-width: 650px;
+  margin: auto;
+  border:1px solid #550909
 }
 
 .red-alert {

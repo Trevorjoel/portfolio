@@ -1,13 +1,13 @@
 /*
 Main file for the employee table project
 */
-
+import * as Assets from './employeeTableAssets';
 import React, {Component} from 'react';
-import github from "../../images/hiclipart.com.png";
+import github from "../../../images/hiclipart.com.png";
 import {Button, Col, Container, Fade, FormGroup, Label, Row, Table} from 'reactstrap';
 import {CSSTransition, TransitionGroup,} from 'react-transition-group';
 import {AvField, AvForm, AvRadio, AvRadioGroup} from 'availity-reactstrap-validation';
-import ProjectsHeader from "./ProjectsHeader";
+import ProjectsHeader from "../ProjectsHeader";
 
 import {queryDB,
     handleAddEmployee,
@@ -19,9 +19,9 @@ import {queryDB,
     responseSort,
     handleFirstNameChange,
     handleLastNameChange,
-    handleDepartmentIDChange} from "../../functions/tableController";
+    handleDepartmentIDChange} from "../../../functions/tableController";
 
-import {ScreenAlertComponent} from "../../functions/MainController";
+import {ScreenAlertComponent} from "../../../functions/MainController";
 class ProjectTable extends Component {
     
     // Sorts the list by alphanumeric
@@ -72,45 +72,19 @@ class ProjectTable extends Component {
     
     
     render() {
-        let titleStyle = {
-            margin: "0% 0px 100px",
-            textAlign: 'center'
-        };
-        
-        let headerStyle = {
-            margin: '40px 0 200px 0',
-            paddingLeft: '10%',
-            paddingRight: '10%',
-            color: 'white',
-            width: '100%'
-        };
-        const projectName = 'Create Read Delete and Sort.';
-        const projectPurpose = ["Implement a front end interface and back end logic to create, read, update and delete entries in a database. ",
-            "Practice, Node, React, SQL, RESTful API's, JavaScript" +
-            " and have a little fun."];
-        
-        const projectDescription = ["After taking various tutorials on interesting technologies I needed to put the knowledge to work.",
-            "Use the buttons in the table head to sort the table. Delete entries with the red buttons or add new ones with the form."];
-        const projectLearning = ['Mostly a practice exercise, so I would recommend better planning and implementation.', 'Breaking the components and methods up into more reusable modules would be a must for a larger project.', 'I need someone to check over my ' +
-        'back end practices to improve them.'];
-        const link1 = [''];
-        const link2 = ['', ''];
-        const link3 = [''];
-        const link4 = [''];
-        const whatNext = ["This type of project would need to be protected by user verification/login. "];
-        
+       
         return (
             <div className="project-inner-wrapper centre-font">
-                {this.ScreenAlertComponent()}
+                
                 <ProjectsHeader
-                    projectName={projectName}
-                    projectPurpose={projectPurpose}
-                    projectDescription={projectDescription}
-                    projectLearning={projectLearning}
-                    whatNext={whatNext}
-                    link1={link1} link2={link2} link3={link3} link4={link4}
-                    headerStyle={headerStyle}
-                    titleStyle={titleStyle}
+                    projectName={Assets.projectName}
+                    projectPurpose={Assets.projectPurpose}
+                    projectDescription={Assets.projectDescription}
+                    projectLearning={Assets.projectLearning}
+                    whatNext={Assets.whatNext}
+                    link1={Assets.link1} link2={Assets.link2} link3={Assets.link3} link4={Assets.link4}
+                    headerStyle={Assets.headerStyle}
+                    titleStyle={Assets.titleStyle}
                 />
                 
                 <Fade>

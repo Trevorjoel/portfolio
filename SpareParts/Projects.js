@@ -4,7 +4,7 @@ import placeholder1 from '../client/src/images/Employees-together286x180.jpg';
 import placeholder from '../client/src/images/index.svg';
 import apSetup from '../client/src/images/chift-pist.jpg'
 import {Button, Modal, ModalFooter, ModalHeader} from 'reactstrap';
-import ProjectTable from '../client/src/components/projectComponents/ProjectTable';
+import ProjectTable from '../client/src/components/projectComponents/employeeTable/ProjectTable';
 import ProjectTemplateTest from './ProjectTemplateTest';
 import {NavLink} from "react-router-dom";
 

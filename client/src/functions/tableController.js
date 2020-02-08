@@ -1,31 +1,23 @@
 /*
 * Controller functions for the Table project
-*import * as TableController from '../../functions/tableController';
+*
 * */
 
 import {Button} from "reactstrap";
 import React from "react";
 
-export let testFn = function (message) {
-    console.log(message);
-};
-
 // Handle form field changes
 export const handleFirstNameChange = function(event) {
     this.setState({firstName: event.target.value});
 };
-
 export const handleLastNameChange = function(event) {
     this.setState({lastName: event.target.value});
 };
-
 export const handleDepartmentIDChange = function(event){
     this.setState({departmentID: event.target.value});
 };
-
 // More front end validation
 export const handleAddEmployee = async function () {
-    
     if (this.state.firstName !== ''
         && this.state.lastName !== ''
         && this.state.departmentID !== ''
@@ -51,7 +43,6 @@ export const handleAddEmployee = async function () {
             })
         });
         
-        
         const body = await response.json()
             
             // Set state
@@ -64,18 +55,13 @@ export const handleAddEmployee = async function () {
                     queryBody: response.database3
                 })
             })
-            
             .catch(err => console.log(err));
         // todo: Return a success message to user
-        
         // Reset the form fields
         this.form && this.form.reset();
         
     } // else Do nothing and let the html form validation work
-    
 };
-
-
 // Request api for the table
 export let queryDB = async () => {
     const response = await fetch('/api/sql');
@@ -110,7 +96,6 @@ export const populateTable = function () {
 };
 // Create and render delete buttons for the database rows
 export const handleDelete = function (empID) {
-    
     return <Button name={empID} onClick={async () => {
         console.log('Button clicked');
         const results = await fetch('/api/sql', {
@@ -125,7 +110,6 @@ export const handleDelete = function (empID) {
                     id: empID
                 })
         });
-        
         const body = await results.json()
             // Set state
             .then(res =>
@@ -135,26 +119,20 @@ export const handleDelete = function (empID) {
             console.log('toggle1')
         }})
     }
-    
     }
                    title="Remove" color="danger">Remove</Button>;
-    
 };
 
 export const handleTextSort = function (el) {
     // Takes an argument from the function call to determine which list to sort by
-    
     if (el === 'firstName') {
-        
         // Determine the toggle state of the list
         switch (this.state.toggleFirstName) {
             case false:
                 this.setState(
                     this.state.queryBody.sort(function (a, b) {
-                            
                             const firsNameA = a.empFirstName.toUpperCase();
                             const firstNameB = b.empFirstName.toUpperCase();
-                            
                             if (firsNameA < firstNameB) {
                                 return -1;
                             }
@@ -166,14 +144,11 @@ export const handleTextSort = function (el) {
                         }
                     ));
                 break;
-            
             case true:
                 this.setState(
                     this.state.queryBody.sort(function (a, b) {
-                            
                             const firsNameA = a.empFirstName.toUpperCase();
                             const firstNameB = b.empFirstName.toUpperCase();
-                            
                             if (firstNameB < firsNameA) {
                                 return -1;
                             }
@@ -186,18 +161,13 @@ export const handleTextSort = function (el) {
                         }
                     ));
                 break;
-            
             default:
                 console.log('Default');
         }
-        
         // Change toggle state
         this.toggleStateTracker(el);
-        
     } else if (el === 'lastName') {
-        
         switch (this.state.toggleLastName) {
-            
             case false:
                 this.setState(
                     this.state.queryBody.sort(function (a, b) {
@@ -215,7 +185,6 @@ export const handleTextSort = function (el) {
                         }
                     ));
                 break;
-            
             case true:
                 this.setState(
                     this.state.queryBody.sort(function (a, b) {
@@ -235,7 +204,6 @@ export const handleTextSort = function (el) {
                         }
                     ));
                 break;
-            
             default:
                 console.log("default last name");
         }
@@ -280,9 +248,7 @@ export const toggleStateTracker = function (name) {
             break;
         default:
             console.log('Unknown argument passed to switch');
-        
     }
-    
 };
 export const handleIntegerSort = function (s)  {
     // Select the values to sort by

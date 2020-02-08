@@ -1,9 +1,9 @@
 import React from 'react';
-import '../../styles/sensors.scss';
-import SlidersContainer from "../projectComponents/sliders/SlidersContainer";
+import '../../styles/monitorProject.scss';
+import ApProjectContainer from "../projectComponents/ApProject/ApProjectContainer";
 
 const Sensors = () => {
-    return <div><SlidersContainer  /></div>
+    return <div><ApProjectContainer  /></div>
     
 };
 export default Sensors;
