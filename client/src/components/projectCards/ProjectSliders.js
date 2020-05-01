@@ -1,6 +1,6 @@
 import React from 'react';
 import {Card} from 'react-bootstrap';
-import apSetup from '../images/AQUAPIC.jpg'
+import apSetup from '../../images/AQUAPIC.07450e1f.jpg'
 import {Button} from 'reactstrap';
 import {NavLink} from "react-router-dom";
 

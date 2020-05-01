@@ -1,5 +1,4 @@
 import express from 'express';
-import {sanitizeBody} from "express-validator";
 
 const router = express.Router();
 const appController = require('../../controller/appController');
@@ -44,20 +43,17 @@ router.route('/api/add')
 router.route('/api/send')
     .post(appController.emailer);
 
-// Testing routes and validation handlers
-router.route('/api/world')
-    .post([
-            check('post')
-                .isEmail()
-                .withMessage('Please check your email entry')
-                .normalizeEmail(),
-            check('anotherValue')
-                .not().isEmpty()
-                .trim() // Returns the string stripped of whitespaces from both ends of the string
-                .escape(), // Encodes special characters, with the exception of: * @ - _ + . /
-            sanitizeBody('notifyOnReply').toBoolean()]
-        , appController.validate
-    );
 
+
+// AQUAPONICS API
+
+router.route('/api/ap')
+    .post(appController.addReadings)
+.get(appController.getPreviousTime);
+
+router.route('/api/all')
+    .post(appController.selectAllReadings);
 export default router;
+
+
 

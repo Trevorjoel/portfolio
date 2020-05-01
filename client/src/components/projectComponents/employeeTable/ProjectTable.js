@@ -3,7 +3,7 @@ Main file for the employee table project
 */
 import * as Assets from './employeeTableAssets';
 import React, {Component} from 'react';
-import github from "../../../images/hiclipart.com.png";
+import github from "../../../images/hiclipart.com.718cad62.png";
 import {Button, Col, Container, Fade, FormGroup, Label, Row, Table} from 'reactstrap';
 import {CSSTransition, TransitionGroup,} from 'react-transition-group';
 import {AvField, AvForm, AvRadio, AvRadioGroup} from 'availity-reactstrap-validation';

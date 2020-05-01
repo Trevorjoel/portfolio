@@ -9,12 +9,12 @@ let connection = mysql.createConnection({
     database: keys.DB.DATABASE,
     port: keys.DB.PORT
 });
-
 connection.connect((err) => {
     if (err) {
         console.log(err);
     } else {
-        console.log('connected....')
+        console.log('Connection 1 ...')
     }
 });
+
 module.exports = connection;

@@ -9,7 +9,7 @@ export const projectName = 'Aquaponics System Monitor (Prototype)';
 export const projectPurpose = [`Build a user interface prototype for an application that monitors the water quality of an aquaponics system. `,
     'The prototype must include sliders to simulate the values taken from water quality testing probes for development of the application.',
     "End users will receive notifications and advice based on readings from the probes.",
-"Data from previous readings must be stored and visualised in a way appropriate to the needs of an aquaponics garden owner."];
+    "Data from previous readings must be stored and visualised in a way appropriate to the needs of an aquaponics garden owner."];
 
 export const projectDescription = ["This is a prototype of a larger Internet Of Things project."];
 export const projectLearning = ['Researching, using & customising component packages, scoping styles to components, conditionally rendering content. ',
@@ -89,12 +89,12 @@ export const phOk = 'Congratulations! Water pH levels are optimal for {fish spec
 
 export const phHighTitle = 'HIGH pH';
 export const phHighWarn = 'You have high pH levels. At higher pH levels your fish may suffer from\n' +
-    '                                alkalinity and be more subject to higher concentrations of ammonia.\n' +
+    '                                alkalinity and be old subject to higher concentrations of ammonia.\n' +
     '                                Action should be taken to reduce the pH levels.';
 export const phHighNotifyWarn = 'You have elevated pH levels.';
 
 export const phHighCritical = 'You have critically high pH. At extremely high pH your fish can suffer\n' +
-    '                            fatal alkaline burns and be more prone to higher concentrations of ammonia.\n' +
+    '                            fatal alkaline burns and be old prone to higher concentrations of ammonia.\n' +
     '                            Your system is at risk. Take immediate action.';
 export const phHighNotifyCritical = 'You have critically high pH. TAKE ACTION NOW';
 export function nh3TitleOk() {
@@ -112,3 +112,6 @@ export const nh3Critical = 'At critically high levels of ammonia' +
     '                            Your fish are at high risk of ammonia poisoning.\n' +
     '                            Immediate action should be taken to reduce the ammonia content of your water.';
 export const nh3NotifyCritical = 'You have critically high Ammonia levels. TAKE ACTION NOW.';
+
+export const readingTitle = 'Success';
+export const readingText = 'Reading Entered to database';

@@ -2,20 +2,11 @@
 <project version="4">
   <component name="WebServers">
     <option name="servers">
-      <webServer id="5cb87b64-db9d-470c-ac7f-b3887dafa988" name="portfolio" url="https://146.185.131.102/">
-        <fileTransfer host="146.185.131.102" port="22" rootFolder="/var/www/html/portfolio" accessType="SFTP">
+      <webServer id="19b5dd7c-e67d-4751-88e2-326391bf2eb2" name="rootSFTP" url="http://fullstack-adventure.com">
+        <fileTransfer accessType="SFTP" host="146.185.131.102" port="22" sshConfigId="61e10f6b-121d-4c56-9294-84b15451bbda" sshConfig="portfolio">
           <advancedOptions>
             <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
           </advancedOptions>
-          <option name="port" value="22" />
-        </fileTransfer>
-      </webServer>
-      <webServer id="beb7214b-259b-4bc0-a36f-ba74c8de135a" name="root" url="http://146.185.131.102">
-        <fileTransfer host="146.185.131.102" port="22" accessType="SFTP">
-          <advancedOptions>
-            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
-          </advancedOptions>
-          <option name="port" value="22" />
         </fileTransfer>
       </webServer>
     </option>

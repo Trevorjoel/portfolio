@@ -5,7 +5,7 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Image from "react-bootstrap/Image";
 
-const cert = require('../images/5e0dc033cd39d.png');
+const cert = require('../images/5e0dc033cd39d.e6c36693.png');
 
 
 const CertificationsModal = (props) => {

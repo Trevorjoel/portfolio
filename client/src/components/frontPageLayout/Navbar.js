@@ -1,4 +1,4 @@
-import logo from '../images/Sign96x96_white.png';
+import logo from '../../images/Sign96x96_white.png';
 import React, {Component} from 'react';
 import {Link} from "react-scroll";
 import {NavLink as RRNavLink} from 'react-router-dom';

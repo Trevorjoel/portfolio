@@ -1,8 +1,8 @@
 import React from 'react';
 import {Card,} from 'react-bootstrap';
-import placeholder1 from '../images/Employee.jpg';
+import placeholder1 from '../../images/Employee.3a14fba1.jpg';
 import {Button, Modal, ModalFooter, ModalHeader} from 'reactstrap';
-import ProjectTable from './projectComponents/employeeTable/ProjectTable';
+import ProjectTable from '../projectComponents/employeeTable/ProjectTable';
 
 class ProjectEmployees extends React.Component {
     constructor(props) {

@@ -1,10 +1,10 @@
 import React from 'react';
 import {Card} from 'react-bootstrap';
-import placeholder from '../images/P1090923_edit_1.JPG';
+import placeholder from '../../../images/P1090923_edit_1.97cecfe4.JPG';
 import {Button, Modal, ModalFooter, ModalHeader} from 'reactstrap';
-import Iframe from '../components/Iframe'
-import ProjectsHeader from "./projectComponents/ProjectsHeader";
-import placeholder1 from "../images/Employee.jpg";
+import Iframe from '../../Iframe'
+import ProjectsHeader from "../ProjectsHeader";
+import placeholder1 from "../../../images/Employee.3a14fba1.jpg";
 /*
 * Notes: This file creates modal cards for each project... Should not be more than 6 projects at a time.
 *  Steps:  1. add new modal to state, Bind the toggle to this

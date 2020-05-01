@@ -23,7 +23,7 @@ class TempSlider extends Component {
                     reversed
                     rootStyle={sliderStyle}
                     domain={[0, 25]}
-                    step={1}
+                    step={0.5}
                     mode={13}
                     onUpdate={this.props.onUpdate}
                     onChange={this.props.onChange}

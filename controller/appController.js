@@ -6,6 +6,7 @@ import {validationResult} from "express-validator";
 
 const nodemailer = require('nodemailer');
 const sql = require('../models/db');
+const sqlAquaponics = require('../models/dbAquaponics');
 const keys = require('../config/keys');
 const dbModel = require('../models/appModel');
 // handle the contact form request
@@ -128,3 +129,59 @@ exports.addEmployee = async (req, res) => {
             });
     }
 };
+
+// AQUAPONICS CONTROLLER
+exports.addReadings = async  (req, res) =>{
+    console.log('addReadings RUns');
+    
+    const insert = await sqlAquaponics.query(`INSERT INTO \`readings\` ( \`users_id\`, \`date_time\`, \`temperature\`, \`ph\`, \`nh3\`) VALUES
+       ('${req.body.users_id}', '${req.body.date_time}', '${req.body.temp}', '${req.body.ph}', '${req.body.nh3}')`,
+      
+        function (error) {
+            if (error) throw error;
+            res.send(
+                {added:res.insert}
+            )
+        });
+};
+exports.getPreviousTime = async (req, res) =>{
+    console.log('GetTime Runs');
+    const results = await sqlAquaponics.query(dbModel.getPrevTime,
+        
+        function (error, results) {
+            
+            if (error) throw error;
+            res.send(
+                {time: results,},
+            );
+        });
+};
+exports.selectAllReadings = async function (req, res) {
+    console.log('Select all readings from the backend')
+
+    const results = await sqlAquaponics.query(`SELECT * FROM (
+        SELECT * FROM readings ORDER BY id DESC LIMIT ${req.body.numberOfReadings}) sub ORDER BY id ASC `,
+
+        function (error, results) {
+
+            if (error) throw error;
+            res.send(
+                {database1: results,},
+            );
+        });
+};
+
+/*
+exports.selectPreviousWeeksReadings = async function (req, res) {
+    console.log('Select a weeks readings from the backend')
+    // noinspection JSUnusedLocalSymbols,JSUnusedLocalSymbols,JSUnusedLocalSymbols,JSUnresolvedFunction
+    const results = await sqlAquaponics.query(dbModel.selectAllReadings,
+
+        function (error, results) {
+
+            if (error) throw error;
+            res.send(
+                {database1: results,},
+            );
+        });
+};*/

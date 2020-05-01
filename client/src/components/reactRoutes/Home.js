@@ -1,6 +1,6 @@
-import Header from "../Header";
-import ContactForm from "../ContactForm";
-import Gallery from "../ProjectsCarousel";
+import Header from "../frontPageLayout/Header";
+import ContactForm from "../frontPageLayout/ContactForm";
+import Gallery from "../projectCards/ProjectsCarousel";
 import React, {Component} from "react";
 import SkillsTabs from "../SkillsTabs";
 

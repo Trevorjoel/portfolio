@@ -4,8 +4,8 @@ import './styles/custom.scss';
 import {BrowserRouter, Route, Switch,} from "react-router-dom";
 import Sensors from './components/reactRoutes/Sensors';
 import Home from "./components/reactRoutes/Home";
-import NavBar from "./components/Navbar";
-import Footer from "./components/Footer";
+import NavBar from "./components/frontPageLayout/Navbar";
+import Footer from "./components/frontPageLayout/Footer";
 import Page404 from "./components/projectComponents/404";
 import AOS from 'aos';
 import 'aos/dist/aos.css'; // You can also use <link> for styles

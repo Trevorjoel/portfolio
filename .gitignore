@@ -1,1 +1,6 @@
 /SpareParts/
+/config/
+/node_modules/
+/client/node_modules/
+/client/build/
+/config/

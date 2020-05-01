@@ -1,0 +1,19 @@
+.Wrap{
+    background: #130f1e;
+    padding:20px;
+    max-width:100%;
+   /* width: max-content; */
+    color:whitesmoke;
+    border-radius:15px;
+    border:1px solid #550909;
+    margin-bottom: 40px;
+    text-align: center;
+}
+.Pick{
+margin:10px;
+}
+
+.Title{
+    text-align: center;
+
+}

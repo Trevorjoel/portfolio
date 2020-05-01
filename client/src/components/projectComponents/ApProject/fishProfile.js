@@ -1,5 +1,5 @@
 import React from 'react';
-import github from "../../../images/UIHere.png";
+import github from "../../../images/UIHere.8acef598.png";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 function FishProfile() {

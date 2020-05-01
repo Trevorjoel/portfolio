@@ -2,14 +2,14 @@ import {Button, FormGroup, Modal, ModalBody, ModalFooter, ModalHeader, Alert} fr
 import React, {Component} from "react";
 import {Col, Container, Row} from "react-bootstrap";
 import {AvField, AvForm} from 'availity-reactstrap-validation';
-import github from "../images/hiclipart.com.png";
-import linkedin from "../images/pngfuel_linked.png";
-import logo from "../images/Sign96x96_white.png";
-import SiteBuilding from './SiteBuilding'
-import SEOMarketing from './SEOMarketing';
-import Consultations from './Consultations';
-import JnrPositions from './JnrPositions';
-import JoinMyProject from './JoinMyProject';
+import github from "../../images/hiclipart.com.718cad62.png";
+import linkedin from "../../images/technologies/pngfuel.com.png";
+import logo from "../../images/Sign96x96_white.png";
+import SiteBuilding from '../info/SiteBuilding'
+import SEOMarketing from '../info/SEOMarketing';
+import Consultations from '../info/Consultations';
+import JnrPositions from '../info/JnrPositions';
+import JoinMyProject from '../info/JoinMyProject';
 import Image from "react-bootstrap/Image";
 
 // todo: Check conventions for naming each Class/Component etc...

@@ -1,15 +1,22 @@
-import * as Assets from "../ApProjectAssets";
+import * as Assets from "../Assets/ApProjectAssets";
+import notificationSound from '../Assets/stairs.ac905963.mp3'
 import StatusBars from "../StatusBars";
 import React from "react";
 import {NotificationManager} from "react-notifications";
 
+const playAlert = (sound) =>{
+    let audio = new Audio(sound);
+    const start = () => {
+        audio.play().then(()=> console.log('Audio plays') )
+    };
+    start();
+}
 export const createNotificationController = function(type, text, title) {
+    playAlert(notificationSound);
     return () => {
         switch (type) {
-            case 'info':
-                NotificationManager.info(<p>Message<br/>
-                    <a href="https://www.w3schools.com">Visit W3Schools.com!</a> </p>,<h2>HELLO</h2>,0);
-                
+            case 'info':NotificationManager.info(<p>{text}</p>, <p><bold>{title}</bold></p>, 5000);
+
                 break;
             case 'success':
                 NotificationManager.success(<p>{text}</p>, <p><bold>{title}</bold></p>, 5000);
@@ -25,7 +32,7 @@ export const createNotificationController = function(type, text, title) {
 };
 
 export const tempController = function (temp)  {
-    
+
     // setInterval to make sure the values have settled before allowing a reading
     // Prevents firing off notifications while the sliders are being used
     setInterval(()=>{
@@ -33,7 +40,7 @@ export const tempController = function (temp)  {
             this.setState({tempCaptureValue: this.state.tempUpdate});
         }
     },5000);
-    
+
     switch (true) {
         case   temp <= 3  :
             if(this.state.tempUpdate === this.state.tempCaptureValue && this.state.tempShowNotification.tempLowCritical === true) {
@@ -52,47 +59,47 @@ export const tempController = function (temp)  {
                 adviceText={Assets.tempLowCritical}
                 link={'https://portfolio.fullstack-adventure.com'}
             /></div>);
-        
+
         case temp > 3 && temp <= 10 : //
-            
+
             if(this.state.tempUpdate === this.state.tempCaptureValue && this.state.tempShowNotification.tempLowWarn === true) {
                 console.log('Runs the alert');
                 (this.createNotificationController('warning', Assets.tempLowNotifyWarn, Assets.tempLowTitle))();
                 this.setState({tempShowNotification:{tempLowCritical: true, tempLowWarn: false, tempOptimal: true, tempHighWarn: true,  tempHighCritical: true
                     }})
             }
-            
+
             return <StatusBars
                 divStyle={'yellow-alert'}
                 toggleHandler={this.toggleTempHandler.bind(this)}
-                updatedValue={this.state.tempUpdate[0].toPrecision(2)}
+                updatedValue={this.state.tempUpdate[0].toPrecision(3)}
                 symbol={String.fromCharCode(8451)}
                 statusTitle={Assets.tempLowTitle}
                 adviceToggle={this.state.toggleTempAdvice}
                 adviceText={Assets.tempLowWarn}
                 link={'https://portfolio.fullstack-adventure.com'}
             />;
-        
+
         case temp > 10 && temp <= 18 : //
-            
+
             if(this.state.tempUpdate === this.state.tempCaptureValue && this.state.tempShowNotification.tempOptimal === true) {
                 console.log('Runs the alert');
                 (this.createNotificationController('success', Assets.tempOkNotify, Assets.tempOkTitle))();
                 this.setState({tempShowNotification:{tempLowCritical: true, tempLowWarn: true, tempOptimal: false, tempHighWarn: true,  tempHighCritical: true
                     }})
             }
-            
+
             return <StatusBars
                 divStyle={'green-alert'}
                 toggleHandler={ this.toggleTempHandler.bind(this)}
-                updatedValue={this.state.tempUpdate[0].toPrecision(2)}
+                updatedValue={this.state.tempUpdate[0].toPrecision(3)}
                 symbol={String.fromCharCode(8451)}
                 statusTitle={Assets.tempOkTitle}
                 adviceToggle={this.state.toggleTempAdvice}
                 adviceText={Assets.tempOk}
                 link={'https://portfolio.fullstack-adventure.com'}
             />;
-        
+
         case temp > 18 && temp <= 23 : //
             if(this.state.tempUpdate === this.state.tempCaptureValue && this.state.tempShowNotification.tempHighWarn === true) {
                 console.log('Runs the alert');
@@ -103,15 +110,15 @@ export const tempController = function (temp)  {
             return <StatusBars
                 divStyle={'yellow-alert'}
                 toggleHandler={ this.toggleTempHandler.bind(this)}
-                updatedValue={this.state.tempUpdate[0].toPrecision(2)}
+                updatedValue={this.state.tempUpdate[0].toPrecision(3)}
                 symbol={String.fromCharCode(8451)}
                 statusTitle={Assets.tempHighTitle}
                 adviceToggle={this.state.toggleTempAdvice}
                 adviceText={Assets.tempHighWarn}
                 link={'https://portfolio.fullstack-adventure.com'}
             />;
-        
-        
+
+
         case temp > 23: //
             if(this.state.tempUpdate === this.state.tempCaptureValue && this.state.tempShowNotification.tempHighCritical === true) {
                 console.log('Runs the alert');
@@ -122,7 +129,7 @@ export const tempController = function (temp)  {
             return <StatusBars
                 divStyle={'red-alert'}
                 toggleHandler={this.toggleTempHandler.bind(this)}
-                updatedValue={this.state.tempUpdate[0].toPrecision(2)}
+                updatedValue={this.state.tempUpdate[0].toPrecision(3)}
                 symbol={String.fromCharCode(8451)}
                 statusTitle={Assets.tempHighTitle}
                 adviceToggle={this.state.toggleTempAdvice}
@@ -145,7 +152,7 @@ export const phController = function(ph) {
     switch (true) {
         case   ph <= 5.5  :
             if(this.state.phUpdate === this.state.phCaptureValue && this.state.phShowNotification.phLowCritical === true) {
-                
+
                 (this.createNotificationController('error', Assets.phLowNotifyCritical, Assets.phLowTitle))();
                 this.setState({phShowNotification:{phLowCritical: false, phLowWarn: true, phOptimal: true, phHighWarn: true, phHighCritical: true
                     }})
@@ -162,7 +169,7 @@ export const phController = function(ph) {
             />;
         case ph > 5.5 && ph <= 6.5 : //
             if(this.state.phUpdate === this.state.phCaptureValue && this.state.phShowNotification.phLowWarn === true) {
-                
+
                 (this.createNotificationController('warning', Assets.phLowNotifyWarn, Assets.phLowTitle))();
                 this.setState({phShowNotification:{phLowCritical: true, phLowWarn: false, phOptimal: true, phHighWarn: true, phHighCritical: true
                     }})
@@ -178,14 +185,14 @@ export const phController = function(ph) {
                 link={'https://portfolio.fullstack-adventure.com'}
             />;
         case ph > 6.5 && ph <= 8 : //
-            
+
             if(this.state.phUpdate === this.state.phCaptureValue && this.state.phShowNotification.phOptimal === true) {
-                
+
                 (this.createNotificationController('success', Assets.phOk, Assets.phOkTitle))();
                 this.setState({phShowNotification:{phLowCritical: true, phLowWarn: true, phOptimal: false, phHighWarn: true, phHighCritical: true
                     }})
             }
-            
+
             return   <StatusBars
                 divStyle={'green-alert'}
                 toggleHandler={this.togglePhHandler.bind(this)}
@@ -198,7 +205,7 @@ export const phController = function(ph) {
             />;
         case ph > 8 && ph <= 9 : //
             if(this.state.phUpdate === this.state.phCaptureValue && this.state.phShowNotification.phHighWarn === true) {
-                
+
                 (this.createNotificationController('warning', Assets.phHighNotifyWarn, Assets.phHighTitle))();
                 this.setState({phShowNotification:{phLowCritical: true, phLowWarn: true, phOptimal: true, phHighWarn: false, phHighCritical: true
                     }})
@@ -213,10 +220,10 @@ export const phController = function(ph) {
                 adviceText={Assets.phHighWarn}
                 link={'https://portfolio.fullstack-adventure.com'}
             />;
-        
+
         case ph > 9: //
             if(this.state.phUpdate === this.state.phCaptureValue && this.state.phShowNotification.phHighCritical === true) {
-                
+
                 (this.createNotificationController('error', Assets.phHighNotifyCritical, Assets.phHighTitle))();
                 this.setState({phShowNotification:{phLowCritical: true, phLowWarn: true, phOptimal: true, phHighWarn: true, phHighCritical: false
                     }})
@@ -236,7 +243,7 @@ export const phController = function(ph) {
                 <div className="unknown reading">CANNOT READ DATA</div>
             </div>;
     }
-    
+
 };
 
 export const nh3Controller = function(nh3) {
@@ -263,16 +270,16 @@ export const nh3Controller = function(nh3) {
                 adviceText={Assets.nh3Ok}
                 link={'https://portfolio.fullstack-adventure.com'}
             />;
-        
+
         case nh3 > 0.20 && nh3 <= 0.4 : //
-            
+
             if(this.state.nh3Update === this.state.nh3CaptureValue && this.state.nh3ShowNotification.nh3HighWarn === true) {
                 console.log(this.state.tempShowNotification.tempHighCritical);
                 (this.createNotificationController('warning', Assets.nh3NotifyWarn, Assets.nh3TitleHigh()))();
                 this.setState({nh3ShowNotification:{ nh3Optimal: true, nh3HighWarn: false, nh3HighCritical: true
                     }})
             }
-            
+
             return <StatusBars
                 divStyle={'yellow-alert'}
                 toggleHandler={ this.toggleNh3Handler.bind(this)}
@@ -306,3 +313,98 @@ export const nh3Controller = function(nh3) {
             </div>;
     }
 };
+
+//
+
+export const addReadingsToDB = async function () {
+    (this.createNotificationController('info', Assets.readingText, Assets.readingTitle))();
+    console.log('Enter to DB');
+    const response = await fetch('/api/ap', {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            users_id: 1,
+            date_time: this.state.latestTime,
+            temp: this.state.tempUpdate,
+            ph: this.state.phUpdate,
+            nh3: this.state.nh3Update,
+        })
+    });
+
+    const body = await response.json()
+        .then(() =>{this.getPreviousTime()})
+        .catch(() =>{
+            console.log('There was an error')
+
+        })
+
+};
+
+// Function to get the last time inserted into the database
+export const getPreviousTime = async function () {
+    console.log('getting time');
+    const response = await fetch('/api/ap',{
+        method: 'GET',
+        headers:
+            {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            }
+    });
+
+
+    const query = await response.json();
+    if (response.status !== 200) throw Error(query.message);
+    const today = new Date(query.time[0].date_time);
+  //  console.log(today);
+    today.setHours(today.getHours() - 4); // + 4 for the localhost - 4 for the deployment
+  //  console.log(today);
+    this.setState({
+        latestTime: today.toISOString().slice(0, 19).replace('T', ' ') //
+    });
+    console.log(this.state.latestTime);
+    return query;
+
+};
+
+
+export const selectAllReadings = async function(numberOfReadings){
+console.log(numberOfReadings);
+    const response = await fetch('/api/all', {
+        method: 'POST',
+        headers:
+            {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+       body: JSON.stringify({
+            numberOfReadings: numberOfReadings,
+        })
+    })
+    const query = await response.json();
+
+    if (response.status !== 200) throw Error(query.message);
+    return query;
+}
+
+/*export const selectWeek = async () =>{
+    console.log('selectWeek');
+    const response = await fetch('/api/week', {
+        method: 'Post',
+        headers:
+            {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            }
+    })
+    const query = await response.json();
+
+    if (response.status !== 200) throw Error(query.message);
+    // console.log(query)
+    return query;
+
+
+}*/

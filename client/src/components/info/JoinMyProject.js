@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Collapse, Button, CardBody, Card } from 'reactstrap';
 
 
-import logo from "../images/Sign96x96.png";
+import logo from "../../images/Sign96x96.png";
 
 const JoinMyProject = (props) => {
     const [isOpen, setIsOpen] = useState(false);
