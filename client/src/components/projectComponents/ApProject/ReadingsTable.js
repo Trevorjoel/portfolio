@@ -1,4 +1,4 @@
-import {Button, Col, Container, Fade, FormGroup, Label, Row, Table} from 'reactstrap';
+import {Table} from 'reactstrap';
 import React from "react";
 
 const ReadingTable = (props) =>{

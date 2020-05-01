@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {Col, Container, Fade, Row} from "reactstrap";
+import {Col, Fade, Row} from "reactstrap";
 
 /*
 * Sets a header default header format for projects

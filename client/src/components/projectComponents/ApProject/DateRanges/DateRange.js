@@ -2,7 +2,7 @@ import React from "react";
 import DatePicker from "react-datepicker";
 import classes from './DateRange.module.css';
 import "react-datepicker/dist/react-datepicker.css";
-import { Button, ToggleButtonGroup, Row, Col} from 'react-bootstrap';
+import { ToggleButtonGroup, Row, Col} from 'react-bootstrap';
 import ToggleButton from "react-bootstrap/ToggleButton";
 import {selectAllReadings,
 } from '../ApProjectCtrl/apProjectControllers';

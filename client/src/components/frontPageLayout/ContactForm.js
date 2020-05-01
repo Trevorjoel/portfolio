@@ -10,7 +10,6 @@ import SEOMarketing from '../info/SEOMarketing';
 import Consultations from '../info/Consultations';
 import JnrPositions from '../info/JnrPositions';
 import JoinMyProject from '../info/JoinMyProject';
-import Image from "react-bootstrap/Image";
 
 // todo: Check conventions for naming each Class/Component etc...
 

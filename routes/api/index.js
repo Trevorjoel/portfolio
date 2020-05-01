@@ -52,7 +52,7 @@ router.route('/api/ap')
 .get(appController.getPreviousTime);
 
 router.route('/api/all')
-    .post(appController.selectAllReadings);
+    .post(appController.select_recent_readings);
 export default router;
 
 

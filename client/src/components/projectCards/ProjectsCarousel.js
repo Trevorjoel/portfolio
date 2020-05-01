@@ -4,7 +4,6 @@ import "react-alice-carousel/lib/alice-carousel.css"
 import ProjectEmployees from "./ProjectEmployees";
 import ProjectSliders from "./ProjectSliders";
 import ProjectBlog from "../projectComponents/blog/ProjectBlog";
-import CertificationsModal from "../CertificationsModal";
 
 
 class Gallery extends React.Component {

@@ -390,21 +390,3 @@ console.log(numberOfReadings);
     return query;
 }
 
-/*export const selectWeek = async () =>{
-    console.log('selectWeek');
-    const response = await fetch('/api/week', {
-        method: 'Post',
-        headers:
-            {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-            }
-    })
-    const query = await response.json();
-
-    if (response.status !== 200) throw Error(query.message);
-    // console.log(query)
-    return query;
-
-
-}*/
