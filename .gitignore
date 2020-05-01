@@ -4,4 +4,4 @@
 /client/node_modules/
 /client/build/
 
-/config/
+/config/keys.js
