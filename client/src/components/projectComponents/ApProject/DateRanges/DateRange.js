@@ -4,8 +4,8 @@ import classes from './DateRange.module.css';
 import "react-datepicker/dist/react-datepicker.css";
 import { ToggleButtonGroup, Row, Col} from 'react-bootstrap';
 import ToggleButton from "react-bootstrap/ToggleButton";
-import {selectAllReadings,
-} from '../ApProjectCtrl/apProjectControllers';
+import {selectReadings,
+} from '../ApFunctions/apFunctions';
 class DateRange extends React.Component {
     state = {
         startDate: new Date()
@@ -24,11 +24,11 @@ class DateRange extends React.Component {
                     <Col lg={6}>
                         <p>Previous</p>
                 <ToggleButtonGroup className={classes.Pick} type="radio" name="options" defaultValue={'week'}>
-                    <ToggleButton value={'day'} onClick={()=>this.props.click(selectAllReadings,25)}  color="primary">Day</ToggleButton>
-                    <ToggleButton value={'week'} onClick={()=>this.props.click(selectAllReadings,169)} color="primary">Week</ToggleButton>
-                    <ToggleButton value={'month'} onClick={()=>this.props.click(selectAllReadings,720)} color="primary">Month</ToggleButton>
-                    <ToggleButton value={'year'} onClick={()=>this.props.click(selectAllReadings,8760)} color="primary">Year</ToggleButton>
-                    <ToggleButton value={'all'} onClick={()=>this.props.click(selectAllReadings,676)} color="primary">All Time</ToggleButton>
+                    <ToggleButton value={'day'} onClick={()=>this.props.click(selectReadings,25)} color="primary">Day</ToggleButton>
+                    <ToggleButton value={'week'} onClick={()=>this.props.click(selectReadings,169)} color="primary">Week</ToggleButton>
+                    <ToggleButton value={'month'} onClick={()=>this.props.click(selectReadings,720)} color="primary">Month</ToggleButton>
+                    <ToggleButton value={'year'} onClick={()=>this.props.click(selectReadings,8760)} color="primary">Year</ToggleButton>
+                    <ToggleButton value={'all'} onClick={()=>this.props.click(selectReadings, 1000000)} color="primary">All Time</ToggleButton>
                 </ToggleButtonGroup>
 
                     </Col>

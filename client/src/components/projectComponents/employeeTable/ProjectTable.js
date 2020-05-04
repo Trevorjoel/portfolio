@@ -19,9 +19,9 @@ import {queryDB,
     responseSort,
     handleFirstNameChange,
     handleLastNameChange,
-    handleDepartmentIDChange} from "../../../functions/tableController";
+    handleDepartmentIDChange} from "../../../functions/tableFunctions";
 
-import {ScreenAlertComponent} from "../../../functions/MainController";
+import {ScreenAlertComponent} from "../../../functions/mainFunctions";
 class ProjectTable extends Component {
     
     // Sorts the list by alphanumeric

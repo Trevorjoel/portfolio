@@ -4,7 +4,7 @@
 /*
 
 */
-export const getPrevTime = 'SELECT date_time, id FROM readings ORDER BY id DESC LIMIT 0 , 1 ';
+//export const getPrevTime = 'SELECT date_time, id FROM readings ORDER BY id DESC LIMIT 0 , 1 ';
 export const selectAllEmployees = 'SELECT * FROM qualification.employee'; //DATEADD(hh, DATEDIFF(hh, 0, getdate()), 0)
 export const deleteById = 'DELETE FROM employee where empEmployeeID = ';
 export const populateDb = 'INSERT INTO `employee` (`empEmployeeID`, `empLastName`, `empFirstName`, `empDepartmentID`, `empHireDate`, `empDateOfBirth`, `empAddress`, `empTown`, `empState`, `empPostcode`, `empContact`) VALUES \n' +

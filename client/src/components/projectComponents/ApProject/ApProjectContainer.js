@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import * as Assets from './Assets/ApProjectAssets';
+import classes from './ApProjectContainer.module.css';
 import ReadingsTable from "./ReadingsTable";
 import {tempController,
     phController,
@@ -7,9 +8,9 @@ import {tempController,
     createNotificationController,
     addReadingsToDB,
     getPreviousTime,
-    selectAllReadings,
+    selectReadings,
 
-} from './ApProjectCtrl/apProjectControllers';
+} from './ApFunctions/apFunctions';
 import DateRange from "./DateRanges/DateRange";
 import {NotificationContainer} from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
@@ -26,6 +27,11 @@ import FishProfile from "./fishProfile";
 import TroutInfo from "./advicePages/TroutInfo"
 import TemperatureInfo from "./advicePages/TemperatureInfo";
 import BackBtn from "../ProjectBackBtn";
+
+// todo: New fish has been added to the database. Plan and code a feature to allow the user to select different fish.
+//       For this we need to query the DB, create state to pass into the Components affected. The sliders, date range, apFunctions, the graphics etc...
+
+// Todo: Create the feature for the user to be able to use the date range selector. Component DateRange
 
 class ApProjectContainer extends Component {
     constructor(props) {
@@ -58,7 +64,7 @@ class ApProjectContainer extends Component {
         this.createNotificationController = createNotificationController.bind(this);
         this.addReadingsToDB = addReadingsToDB.bind(this);
         this.getPreviousTime = getPreviousTime.bind(this);
-        this.selectAllReadings = selectAllReadings.bind(this);
+        this.selectAllReadings = selectReadings.bind(this);
         //this.selectWeek = selectWeek.bind(this)
     }
     toggleTempHandler() {
@@ -99,7 +105,7 @@ class ApProjectContainer extends Component {
       //  window.scrollTo(0, 0);
 
 
-        this.mapReadingsSetState(selectAllReadings, 169);
+        this.mapReadingsSetState(selectReadings, 169);
         // own function
         this.getPreviousTime();
       //  this.selectAllReadings()
@@ -149,6 +155,7 @@ class ApProjectContainer extends Component {
                                 allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
                                 allowFullScreen> </iframe> </div>
                     <hr className="divider"/>
+                    <div className={classes.ProjectContainer}>
                     <h2 className="reading-box ">Live System Monitor</h2>
                     <p className="reading-box row-margin">Receive live alerts and monitor your system from your telephone.
                         <br/>Get the advice you need when you need it.</p>
@@ -207,7 +214,8 @@ class ApProjectContainer extends Component {
                             <br/>
                             <h4 className="reading-box">Monitor & troubleshoot your system in real-time</h4>
                             <p className="reading-box">Find targeted advice to keep your system safe.</p>
-                            <div className="status-wrapper">
+                            <div className={classes.StatusWrapper}>
+
                                 <FishProfile/>
                                 {this.tempController(this.state.tempUpdate[0])}
                                 {this.phController(this.state.phUpdate[0])}
@@ -268,10 +276,14 @@ class ApProjectContainer extends Component {
                         </a>
                         <p>Code for this project.</p>
                     </div>
+                    </div>
                 </Container>
+
            <BackBtn/>
+
                 <NotificationContainer/>
             </div>
+
         );
     }
 }

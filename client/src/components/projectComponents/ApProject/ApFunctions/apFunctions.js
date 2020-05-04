@@ -360,7 +360,7 @@ export const getPreviousTime = async function () {
     if (response.status !== 200) throw Error(query.message);
     const today = new Date(query.time[0].date_time);
   //  console.log(today);
-    today.setHours(today.getHours() - 4); // + 4 for the localhost - 4 for the deployment
+    today.setHours(today.getHours() + 4); // + 4 for the localhost - 4 for the deployment
   //  console.log(today);
     this.setState({
         latestTime: today.toISOString().slice(0, 19).replace('T', ' ') //
@@ -371,7 +371,7 @@ export const getPreviousTime = async function () {
 };
 
 
-export const selectAllReadings = async function(numberOfReadings){
+export const selectReadings = async function(numberOfReadings){
 console.log(numberOfReadings);
     const response = await fetch('/api/all', {
         method: 'POST',
@@ -389,4 +389,23 @@ console.log(numberOfReadings);
     if (response.status !== 200) throw Error(query.message);
     return query;
 }
+// Under construction
+/*
+export const selectFishType = async function(numberOfReadings){
+    console.log(numberOfReadings);
+    const response = await fetch('/api/fish', {
+        method: 'POST',
+        headers:
+            {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+        body: JSON.stringify({
+            numberOfReadings: numberOfReadings,
+        })
+    })
+    const query = await response.json();
 
+    if (response.status !== 200) throw Error(query.message);
+    return query;
+}*/

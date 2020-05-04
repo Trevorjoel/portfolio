@@ -1,7 +1,7 @@
 import React from "react";
 import {Button, NavLink} from "reactstrap";
 import {NavLink as RRNavLink} from "react-router-dom";
-import {goBackToElement} from "../../functions/MainController";
+import {goBackToElement} from "../../functions/mainFunctions";
 
 const backBtn = () => (
     <NavLink activeClassName="" tag={RRNavLink} href="/" exact to="/" >

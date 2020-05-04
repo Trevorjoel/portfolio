@@ -4,12 +4,12 @@
 *  */
 import {validationResult} from "express-validator";
 
-const TakeData = require('../models/AquaponicsModel');
 const nodemailer = require('nodemailer');
-const sql = require('../models/db');
-const sqlAquaponics = require('../models/dbAquaponics');
+const sql = require('../model/db');
+
 const keys = require('../config/keys');
-const dbModel = require('../models/appModel');
+const dbModel = require('../model/appModel');
+
 // handle the contact form request
 exports.emailer = function (req) {
     console.log('The mailer controller runs.');
@@ -42,7 +42,7 @@ exports.emailer = function (req) {
     transporter.close();
 };
 
-// Grab all database entries
+// Grab all database entries for the employee table project
 exports.connectAndShow = async function (req, res) {
     // noinspection JSUnusedLocalSymbols,JSUnusedLocalSymbols,JSUnusedLocalSymbols,JSUnresolvedFunction
     const results = await sql.query(dbModel.selectAllEmployees,
@@ -131,39 +131,4 @@ exports.addEmployee = async (req, res) => {
     }
 };
 
-// AQUAPONICS CONTROLLER
-exports.addReadings = async (req, res) => {
-    console.log('addReadings RUns');
-
-    const insert = await sqlAquaponics.query(`INSERT INTO \`readings\` ( \`users_id\`, \`date_time\`, \`temperature\`, \`ph\`, \`nh3\`) VALUES
-       ('${req.body.users_id}', '${req.body.date_time}', '${req.body.temp}', '${req.body.ph}', '${req.body.nh3}')`,
-
-        function (error) {
-            if (error) throw error;
-            res.send(
-                {added: res.insert}
-            )
-        });
-};
-exports.getPreviousTime = async (req, res) => {
-    console.log('GetTime Runs');
-    const results = await sqlAquaponics.query(dbModel.getPrevTime,
-
-        function (error, results) {
-
-            if (error) throw error;
-            res.send(
-                {time: results,},
-            );
-        });
-};
-
-exports.select_recent_readings = (req, res) => {
-    TakeData.selectRecent(req.body.numberOfReadings, (err, data) => {
-        if (err)
-            res.send(err)
-        else
-            res.send({database1: data})
-    })
-}
 

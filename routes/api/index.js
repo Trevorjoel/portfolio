@@ -2,6 +2,7 @@ import express from 'express';
 
 const router = express.Router();
 const appController = require('../../controller/appController');
+const Aquaponics = require('../../controller/aquaponicsController');
 const {check} = require('express-validator');
 const app = express();
 app.use(express.json());
@@ -46,13 +47,17 @@ router.route('/api/send')
 
 
 // AQUAPONICS API
-
+// Todo: Research decent patterns concerning routes eg. user/:id
 router.route('/api/ap')
-    .post(appController.addReadings)
-.get(appController.getPreviousTime);
+    .post(Aquaponics.add_reading)
+    .get(Aquaponics.get_previous_time);
+
+// Under Construction
+/*router.route('/api/fish')
+    .get(Aquaponics.select_fish_parameters)*/
 
 router.route('/api/all')
-    .post(appController.select_recent_readings);
+    .post(Aquaponics.select_recent_readings);
 export default router;
 
 

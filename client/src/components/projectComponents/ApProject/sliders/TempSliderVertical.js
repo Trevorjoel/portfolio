@@ -14,7 +14,9 @@ const sliderStyle = {
 class TempSlider extends Component {
     
     render() {
-        
+
+        // Todo:
+
         return (
             <div style={{height: 460, width: '100%'}}>
                 
