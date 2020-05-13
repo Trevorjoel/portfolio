@@ -32,7 +32,7 @@ import BackBtn from "../ProjectBackBtn";
 import {push} from "echarts/src/component/dataZoom/history";
 
 // todo: New fish has been added to the database. Plan and code a feature to allow the user to select different fish.
-//       For this we need to query the DB, create state to pass into the Components affected. The sliders, date range, apFunctions, the graphics etc...
+//         pattern has been created.
 
 // Todo: Create the feature for the user to be able to use the date range selector. Component DateRange
 
@@ -41,15 +41,20 @@ class ApProjectContainer extends Component {
         super(props);
 
         this.state = {
-            tempValue:[],
-            tempUpdate: [],/*Assets.defaultTemp.slice(),*/
+            // import default
+            tempValue: Assets.defaultTemp.slice(),
+            phValue: [], // follow this pattern
+            nh3Value: Assets.defaultNh3.slice(),
+
+            tempUpdate: Assets.defaultTemp.slice(),
+            phUpdate: Assets.defaultPh.slice(),
+            nh3Update: Assets.defaultNh3.slice(),
+            // Used in the alert feature setTimeOut
             tempCaptureValue: Assets.defaultTemp.slice(),
             phCaptureValue: Assets.defaultPh.slice(),
             nh3CaptureValue: Assets.defaultNh3.slice(),
-            phValue:[], /*Assets.defaultPh.slice(),*/
-            phUpdate:[], /*Assets.defaultPh.slice(),*/
-            nh3Value:[], /*Assets.defaultNh3.slice(),*/
-            nh3Update:[], /*Assets.defaultNh3.slice(),*/
+
+
             tempShowNotification: {tempLowCritical:true, tempLowWarn:true, tempOptimal:false, tempHighWarn:true, tempHighCritical: true},
             phShowNotification: {phLowCritical:true, phLowWarn:true, phOptimal:false, phHighWarn:true, phHighCritical: true},
             nh3ShowNotification: {nh3Optimal:false, nh3HighWarn:true, nh3HighCritical: true},
@@ -110,17 +115,23 @@ class ApProjectContainer extends Component {
         requestFunction(fishId)
             .then( query => {
                     const returnedFishParams = query;
-                    this.setState({fishParams:returnedFishParams })
-                    console.log(this.state.fishParams);
-
+                    this.setState({
+                        fishParams:returnedFishParams,
+                        // Set state here
+                        phValue: [returnedFishParams.ph_target].slice(),
+                        phUpdate: [returnedFishParams.ph_target].slice()
+                    })
+                    console.log(returnedFishParams.ph_target);
+                    console.log(this.state.fishParams.nh3_target);
                     this.state.maxTempScale = this.state.fishParams.temp_high_critical+10;
                     this.state.minTempScale = this.state.fishParams.temp_low_critical-10;
-                }
 
-            )
+            }
+        )
+        console.log(this.state.phValue);
     }
 
-    mapLastReadingsSetState = (requestFunction) =>{
+    /*mapLastReadingsSetState = (requestFunction) =>{
         requestFunction()
             .then( query => {
                     const lastReadings = query.database1.slice();
@@ -161,7 +172,7 @@ class ApProjectContainer extends Component {
 
                 }
             )
-    }
+    }*/
     // todo: pass a function into the DateRange component that changes the state for start/end dates
     componentDidMount() {
 
@@ -174,7 +185,7 @@ class ApProjectContainer extends Component {
       //  this.selectAllReadings()
 
         this.mapFishSetState(selectFishType, this.state.fishId);
-        this.mapLastReadingsSetState(getLastReadings);
+        //this.mapLastReadingsSetState(getLastReadings);
 
     }
 
@@ -239,7 +250,7 @@ class ApProjectContainer extends Component {
                                             minScale={this.state.minTempScale}
                                             values={this.state.tempValue}
                                             update={this.state.tempUpdate}
-                                            defaultValues={Assets.defaultTemp}
+                                           // defaultValues={Assets.defaultTemp}
                                             onUpdate={this.onTempUpdate}
                                             onChange={this.onTempChange}
                                         />
