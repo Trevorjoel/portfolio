@@ -1,9 +1,14 @@
-import React from 'react';
 import github from "../../../images/UIHere.8acef598.png";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import React, { useState } from 'react';
+import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 
 const FishProfile = (props) =>{
+    const [dropdownOpen, setDropdownOpen] = useState(false);
+
+    const toggle = () => setDropdownOpen(prevState => !prevState);
+
     return (<div>
          
     <Row>
@@ -11,8 +16,20 @@ const FishProfile = (props) =>{
             <img alt="Github icon"
                  className="fish-image"
                  src={github}/>
-            <p className="reading-box">{props.fishParams.fish_name}</p>
 
+            <Dropdown isOpen={dropdownOpen} toggle={toggle}>
+                <DropdownToggle caret>
+                    {props.fishParams.fish_name}
+                </DropdownToggle>
+                <DropdownMenu>
+                    <DropdownItem header>Fish</DropdownItem>
+                    <DropdownItem divider />
+                    {/*Loop through fish from DB*/}
+                    <DropdownItem>Silver Perch</DropdownItem>
+
+
+                </DropdownMenu>
+            </Dropdown>
         </Col>
         
        

@@ -60,7 +60,7 @@ class ApProjectContainer extends Component {
             readings:[],
             numberOfReadings:169,
             fishParams:[],
-            fishId:2,
+            fishId:1,
             maxTempScale:'',
             minTempScale:'',
         };
