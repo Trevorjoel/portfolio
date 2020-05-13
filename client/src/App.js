@@ -18,15 +18,15 @@ class App extends Component {
     render() {
         return (
             <div className="App">
-                
+
                 <BrowserRouter>
                     <NavBar/>
-                  
+
                     <Switch>
                         <Route path="/" component={Home}  exact />
                         <Route path="/sensors" component={Sensors}  />
                         <Route component={Page404}  />
-                   
+
                     </Switch>
                 </BrowserRouter>
              

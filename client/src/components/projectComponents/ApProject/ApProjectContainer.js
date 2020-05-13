@@ -9,6 +9,8 @@ import {tempController,
     addReadingsToDB,
     getPreviousTime,
     selectReadings,
+    selectFishType,
+    getLastReadings,
 
 } from './ApFunctions/apFunctions';
 import DateRange from "./DateRanges/DateRange";
@@ -27,6 +29,7 @@ import FishProfile from "./fishProfile";
 import TroutInfo from "./advicePages/TroutInfo"
 import TemperatureInfo from "./advicePages/TemperatureInfo";
 import BackBtn from "../ProjectBackBtn";
+import {push} from "echarts/src/component/dataZoom/history";
 
 // todo: New fish has been added to the database. Plan and code a feature to allow the user to select different fish.
 //       For this we need to query the DB, create state to pass into the Components affected. The sliders, date range, apFunctions, the graphics etc...
@@ -38,15 +41,15 @@ class ApProjectContainer extends Component {
         super(props);
 
         this.state = {
-            tempValue: Assets.defaultTemp.slice(),
-            tempUpdate: Assets.defaultTemp.slice(),
+            tempValue:[],
+            tempUpdate: [],/*Assets.defaultTemp.slice(),*/
             tempCaptureValue: Assets.defaultTemp.slice(),
             phCaptureValue: Assets.defaultPh.slice(),
             nh3CaptureValue: Assets.defaultNh3.slice(),
-            phValue: Assets.defaultPh.slice(),
-            phUpdate: Assets.defaultPh.slice(),
-            nh3Value: Assets.defaultNh3.slice(),
-            nh3Update: Assets.defaultNh3.slice(),
+            phValue:[], /*Assets.defaultPh.slice(),*/
+            phUpdate:[], /*Assets.defaultPh.slice(),*/
+            nh3Value:[], /*Assets.defaultNh3.slice(),*/
+            nh3Update:[], /*Assets.defaultNh3.slice(),*/
             tempShowNotification: {tempLowCritical:true, tempLowWarn:true, tempOptimal:false, tempHighWarn:true, tempHighCritical: true},
             phShowNotification: {phLowCritical:true, phLowWarn:true, phOptimal:false, phHighWarn:true, phHighCritical: true},
             nh3ShowNotification: {nh3Optimal:false, nh3HighWarn:true, nh3HighCritical: true},
@@ -56,6 +59,10 @@ class ApProjectContainer extends Component {
             latestTime: '',
             readings:[],
             numberOfReadings:169,
+            fishParams:[],
+            fishId:2,
+            maxTempScale:'',
+            minTempScale:'',
         };
         // Bind the imported functions
         this.tempController = tempController.bind(this);
@@ -66,6 +73,7 @@ class ApProjectContainer extends Component {
         this.getPreviousTime = getPreviousTime.bind(this);
         this.selectAllReadings = selectReadings.bind(this);
         //this.selectWeek = selectWeek.bind(this)
+
     }
     toggleTempHandler() {
         this.setState({
@@ -94,6 +102,62 @@ class ApProjectContainer extends Component {
                         }
                     );
                     this.setState({readings:updatedReadings})
+                }
+            )
+    }
+
+    mapFishSetState = (requestFunction, fishId) =>{
+        requestFunction(fishId)
+            .then( query => {
+                    const returnedFishParams = query;
+                    this.setState({fishParams:returnedFishParams })
+                    console.log(this.state.fishParams);
+
+                    this.state.maxTempScale = this.state.fishParams.temp_high_critical+10;
+                    this.state.minTempScale = this.state.fishParams.temp_low_critical-10;
+                }
+
+            )
+    }
+
+    mapLastReadingsSetState = (requestFunction) =>{
+        requestFunction()
+            .then( query => {
+                    const lastReadings = query.database1.slice();
+
+                    const lastTemperature = lastReadings.map((reading, index) => {
+
+                        return (
+                            reading.temperature
+                        )
+                    })
+
+                    const lastPh = lastReadings.map((reading, index) => {
+
+                        return (
+                            reading.ph
+                        )
+                    })
+
+                    const lastNh3 = lastReadings.map((reading, index) => {
+
+                        return (
+                            reading.nh3
+                        )
+                    })
+
+                    console.log(lastTemperature);
+                    console.log(lastPh);
+                    console.log(lastNh3);
+
+                    this.setState({tempValue:lastTemperature.slice()})
+                    this.setState({tempUpdate:lastTemperature.slice()})
+
+                    this.setState({phValue:lastPh.slice()})
+                    this.setState({phUpdate:lastPh.slice()})
+
+                    this.setState({nh3Value:lastNh3.slice()})
+                    this.setState({nh3Update:lastNh3.slice()})
 
                 }
             )
@@ -104,12 +168,13 @@ class ApProjectContainer extends Component {
         // When user arrives on the page make sure to arrive at the top of the page
       //  window.scrollTo(0, 0);
 
-
         this.mapReadingsSetState(selectReadings, 169);
         // own function
         this.getPreviousTime();
       //  this.selectAllReadings()
 
+        this.mapFishSetState(selectFishType, this.state.fishId);
+        this.mapLastReadingsSetState(getLastReadings);
 
     }
 
@@ -170,6 +235,8 @@ class ApProjectContainer extends Component {
 
                                         </div>
                                         <TempSliderVertical
+                                            maxScale={this.state.maxTempScale}
+                                            minScale={this.state.minTempScale}
                                             values={this.state.tempValue}
                                             update={this.state.tempUpdate}
                                             defaultValues={Assets.defaultTemp}
@@ -199,7 +266,7 @@ class ApProjectContainer extends Component {
                                                 &nbsp;</p>
                                         </div>
                                         <Nh3SliderVertical
-                                            values={this.state.nh3Update}
+                                            values={this.state.nh3Value}
                                             update={this.state.nh3Update}
                                             defaultValues={Assets.defaultNh3}
                                             onUpdate={this.onNh3Update}
@@ -216,7 +283,7 @@ class ApProjectContainer extends Component {
                             <p className="reading-box">Find targeted advice to keep your system safe.</p>
                             <div className={classes.StatusWrapper}>
 
-                                <FishProfile/>
+                                <FishProfile fishParams={this.state.fishParams}/>
                                 {this.tempController(this.state.tempUpdate[0])}
                                 {this.phController(this.state.phUpdate[0])}
                                 {this.nh3Controller(this.state.nh3Update[0])}
@@ -257,10 +324,10 @@ class ApProjectContainer extends Component {
                     <p className="reading-box row-margin">Get the advice you need when you need it.</p>
                     <Row>
                         <Col lg={6}>
-                            <TroutInfo/>
+                            <TroutInfo fishParams={this.state.fishParams}/>
                         </Col>
                         <Col lg={6}>
-                            <TemperatureInfo/>
+                            <TemperatureInfo fishParams={this.state.fishParams}/>
                         </Col>
                     </Row>
                     <ReadingsTable readings={this.state.readings}/>

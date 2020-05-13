@@ -42,7 +42,7 @@ export const tempController = function (temp)  {
     },5000);
 
     switch (true) {
-        case   temp <= 3  :
+        case   temp <= this.state.fishParams.temp_low_critical  :
             if(this.state.tempUpdate === this.state.tempCaptureValue && this.state.tempShowNotification.tempLowCritical === true) {
                 console.log(this.state.tempShowNotification.tempHighCritical);
                 (this.createNotificationController('error', Assets.tempLowNotifyCritical, Assets.tempLowTitle))();
@@ -60,7 +60,7 @@ export const tempController = function (temp)  {
                 link={'https://portfolio.fullstack-adventure.com'}
             /></div>);
 
-        case temp > 3 && temp <= 10 : //
+        case temp > this.state.fishParams.temp_low_critical && temp <= this.state.fishParams.temp_low_warn : //
 
             if(this.state.tempUpdate === this.state.tempCaptureValue && this.state.tempShowNotification.tempLowWarn === true) {
                 console.log('Runs the alert');
@@ -80,7 +80,7 @@ export const tempController = function (temp)  {
                 link={'https://portfolio.fullstack-adventure.com'}
             />;
 
-        case temp > 10 && temp <= 18 : //
+        case temp > this.state.fishParams.temp_low_warn && temp <= this.state.fishParams.temp_high_warn : //
 
             if(this.state.tempUpdate === this.state.tempCaptureValue && this.state.tempShowNotification.tempOptimal === true) {
                 console.log('Runs the alert');
@@ -100,7 +100,7 @@ export const tempController = function (temp)  {
                 link={'https://portfolio.fullstack-adventure.com'}
             />;
 
-        case temp > 18 && temp <= 23 : //
+        case temp > this.state.fishParams.temp_high_warn && temp <= this.state.fishParams.temp_high_critical : //
             if(this.state.tempUpdate === this.state.tempCaptureValue && this.state.tempShowNotification.tempHighWarn === true) {
                 console.log('Runs the alert');
                 (this.createNotificationController('warning', Assets.tempHighNotifyWarn, Assets.tempHighTitle))();
@@ -119,7 +119,7 @@ export const tempController = function (temp)  {
             />;
 
 
-        case temp > 23: //
+        case temp > this.state.fishParams.temp_high_critical: //
             if(this.state.tempUpdate === this.state.tempCaptureValue && this.state.tempShowNotification.tempHighCritical === true) {
                 console.log('Runs the alert');
                 (this.createNotificationController('error', Assets.tempHighNotifyCritical, Assets.tempHighTitle))();
@@ -150,7 +150,7 @@ export const phController = function(ph) {
         }
     },5000);
     switch (true) {
-        case   ph <= 5.5  :
+        case   ph <= this.state.fishParams.ph_low_critical  :
             if(this.state.phUpdate === this.state.phCaptureValue && this.state.phShowNotification.phLowCritical === true) {
 
                 (this.createNotificationController('error', Assets.phLowNotifyCritical, Assets.phLowTitle))();
@@ -167,7 +167,7 @@ export const phController = function(ph) {
                 adviceText={Assets.phLowCritical}
                 link={'https://portfolio.fullstack-adventure.com'}
             />;
-        case ph > 5.5 && ph <= 6.5 : //
+        case ph > this.state.fishParams.ph_low_critical && ph <= this.state.fishParams.ph_low_warn : //
             if(this.state.phUpdate === this.state.phCaptureValue && this.state.phShowNotification.phLowWarn === true) {
 
                 (this.createNotificationController('warning', Assets.phLowNotifyWarn, Assets.phLowTitle))();
@@ -184,7 +184,7 @@ export const phController = function(ph) {
                 adviceText={Assets.phLowWarn}
                 link={'https://portfolio.fullstack-adventure.com'}
             />;
-        case ph > 6.5 && ph <= 8 : //
+        case ph > this.state.fishParams.ph_low_warn && ph <= this.state.fishParams.ph_high_warn : //
 
             if(this.state.phUpdate === this.state.phCaptureValue && this.state.phShowNotification.phOptimal === true) {
 
@@ -203,7 +203,7 @@ export const phController = function(ph) {
                 adviceText={Assets.phOk}
                 link={'https://portfolio.fullstack-adventure.com'}
             />;
-        case ph > 8 && ph <= 9 : //
+        case ph > this.state.fishParams.ph_high_warn && ph <= this.state.fishParams.ph_high_critical : //
             if(this.state.phUpdate === this.state.phCaptureValue && this.state.phShowNotification.phHighWarn === true) {
 
                 (this.createNotificationController('warning', Assets.phHighNotifyWarn, Assets.phHighTitle))();
@@ -221,7 +221,7 @@ export const phController = function(ph) {
                 link={'https://portfolio.fullstack-adventure.com'}
             />;
 
-        case ph > 9: //
+        case ph > this.state.fishParams.ph_high_critical: //
             if(this.state.phUpdate === this.state.phCaptureValue && this.state.phShowNotification.phHighCritical === true) {
 
                 (this.createNotificationController('error', Assets.phHighNotifyCritical, Assets.phHighTitle))();
@@ -248,7 +248,7 @@ export const phController = function(ph) {
 
 export const nh3Controller = function(nh3) {
     switch (true) {
-        case   nh3 <= 0.20  :
+        case   nh3 <= this.state.fishParams.nh3_warn  :
             setInterval(()=>{
                 if (this.state.nh3Update !== this.state.nh3CaptureValue) {
                     this.setState({nh3CaptureValue: this.state.nh3Update});
@@ -271,7 +271,7 @@ export const nh3Controller = function(nh3) {
                 link={'https://portfolio.fullstack-adventure.com'}
             />;
 
-        case nh3 > 0.20 && nh3 <= 0.4 : //
+        case nh3 > this.state.fishParams.nh3_warn && nh3 <= this.state.fishParams.nh3_critical : //
 
             if(this.state.nh3Update === this.state.nh3CaptureValue && this.state.nh3ShowNotification.nh3HighWarn === true) {
                 console.log(this.state.tempShowNotification.tempHighCritical);
@@ -290,7 +290,7 @@ export const nh3Controller = function(nh3) {
                 adviceText={Assets.nh3Warn}
                 link={'https://portfolio.fullstack-adventure.com'}
             />;
-        case nh3 > 0.4 : //
+        case nh3 > this.state.fishParams.nh3_critical : //
             if(this.state.nh3Update === this.state.nh3CaptureValue && this.state.nh3ShowNotification.nh3HighCritical === true) {
                 console.log(this.state.tempShowNotification.tempHighCritical);
                 (this.createNotificationController('error', Assets.nh3NotifyCritical, Assets.nh3TitleHigh()))();
@@ -353,6 +353,7 @@ export const getPreviousTime = async function () {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
             }
+
     });
 
 
@@ -372,7 +373,7 @@ export const getPreviousTime = async function () {
 
 
 export const selectReadings = async function(numberOfReadings){
-console.log(numberOfReadings);
+
     const response = await fetch('/api/all', {
         method: 'POST',
         headers:
@@ -390,10 +391,11 @@ console.log(numberOfReadings);
     return query;
 }
 // Under construction
-/*
-export const selectFishType = async function(numberOfReadings){
-    console.log(numberOfReadings);
-    const response = await fetch('/api/fish', {
+
+export const selectFishType = async function(fishId){
+    console.log('get fish params');
+
+    const response = await fetch('/api/fish',{
         method: 'POST',
         headers:
             {
@@ -401,11 +403,33 @@ export const selectFishType = async function(numberOfReadings){
                 'Content-Type': 'application/json',
             },
         body: JSON.stringify({
-            numberOfReadings: numberOfReadings,
+            fishId: fishId,
         })
-    })
+
+    });
+
+    const query = await response.json();
+
+    if (response.status !== 200) throw Error(query.message);
+    return query.data;
+}
+
+export const getLastReadings = async function() {
+    console.log('get last readings');
+
+    const response = await fetch('/api/tank',{
+        method: 'GET',
+        headers:
+            {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            }
+
+    });
+
     const query = await response.json();
 
     if (response.status !== 200) throw Error(query.message);
     return query;
-}*/
+}
+

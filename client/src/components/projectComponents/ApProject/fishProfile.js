@@ -2,11 +2,8 @@ import React from 'react';
 import github from "../../../images/UIHere.8acef598.png";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-function FishProfile() {
-    return <Headline />;
-}
-function Headline() {
-    const fish = 'Fish Profile';
+
+const FishProfile = (props) =>{
     return (<div>
          
     <Row>
@@ -14,19 +11,20 @@ function Headline() {
             <img alt="Github icon"
                  className="fish-image"
                  src={github}/>
-            <p className="reading-box">Trout</p>
+            <p className="reading-box">{props.fishParams.fish_name}</p>
+
         </Col>
         
        
         <Col>
-        <p className="reading-box text-left">Ideal temp: 12 Degrees<br/>
-            Ideal Ph: 7.3 <br/>
-            Ideal Ammonia: .0 </p>
+        <p className="reading-box text-left">Ideal temp: {props.fishParams.temp_target} Degrees<br/>
+            Ideal Ph: {props.fishParams.ph_target} <br/>
+            Ideal Ammonia: {props.fishParams.nh3_target} </p>
             
     </Col>
     
     </Row>
-            <p className="reading-box ">See our caring for <a href="#">trout</a> page.</p>
+            <p className="reading-box ">See our caring for <a href="#">{props.fishParams.fish_name}</a> page.</p>
     
     </div>
     

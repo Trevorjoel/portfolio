@@ -36,7 +36,24 @@ exports.add_reading = async (req, res) => {
 
 };
 // Under construction
-/*exports.select_fish_parameters = async (req, res) =>
-{
+exports.select_fish_parameters = (req, res) => {
+    TakeData.selectFishParams(req.body.fishId, (err, data) => {
+        if (err)
+            res.send(err)
+        else
+            res.send({data})
+    })
 
-}*/
+};
+
+exports.select_last_readings = (req, res) => {
+    TakeData.selectLastReadings((err, data) => {
+        if (err)
+            res.send(err)
+        else
+            res.send({database1: data})
+    })
+
+};
+
+

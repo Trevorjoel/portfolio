@@ -37,10 +37,23 @@ TakeData.addReading = (req, result) =>{
             }
         });
 }
-// Under Construction
-/*
-TakeData.selectFishParams = (req, result) =>{
-    sqlAquaponics.query(`SELECT * FROM fish WHERE fish.id = 2`,
+// Select data from table FISH
+
+TakeData.selectFishParams = (number, result) =>{
+
+    sqlAquaponics.query(`SELECT * FROM fish WHERE fish.id = ${number}`,
+        (err, res) => {
+            if (err) {
+                result(err, null);
+            } else {
+                result(null, res[0]);
+            }
+        });
+}
+
+TakeData.selectLastReadings = (result) =>{
+
+    sqlAquaponics.query(`SELECT * FROM readings ORDER BY id DESC LIMIT 1`,
         (err, res) => {
             if (err) {
                 result(err, null);
@@ -49,7 +62,5 @@ TakeData.selectFishParams = (req, result) =>{
             }
         });
 }
-*/
 
-//         SELECT * FROM fish WHERE fish.id = 2
 module.exports = TakeData;
