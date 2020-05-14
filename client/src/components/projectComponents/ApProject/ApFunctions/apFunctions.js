@@ -370,7 +370,7 @@ export const getPreviousTime = async function () {
     return query;
 
 };
-
+//jhg
 
 export const selectReadings = async function(numberOfReadings){
 
