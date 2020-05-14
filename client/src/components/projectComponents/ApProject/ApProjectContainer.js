@@ -42,13 +42,13 @@ class ApProjectContainer extends Component {
 
         this.state = {
             // import default
-            tempValue: Assets.defaultTemp.slice(),
+            tempValue: [],
             phValue: [], // follow this pattern
-            nh3Value: Assets.defaultNh3.slice(),
+            nh3Value: [],
 
-            tempUpdate: Assets.defaultTemp.slice(),
-            phUpdate: Assets.defaultPh.slice(),
-            nh3Update: Assets.defaultNh3.slice(),
+            tempUpdate: [],
+            phUpdate: [],
+            nh3Update: [],
             // Used in the alert feature setTimeOut
             tempCaptureValue: Assets.defaultTemp.slice(),
             phCaptureValue: Assets.defaultPh.slice(),
@@ -66,8 +66,6 @@ class ApProjectContainer extends Component {
             numberOfReadings:169,
             fishParams:[],
             fishId:1,
-            maxTempScale:'',
-            minTempScale:'',
         };
         // Bind the imported functions
         this.tempController = tempController.bind(this);
@@ -118,14 +116,15 @@ class ApProjectContainer extends Component {
                     this.setState({
                         fishParams:returnedFishParams,
                         // Set state here
+                        tempValue: [returnedFishParams.temp_target].slice(),
+                        tempUpdate: [returnedFishParams.temp_target].slice(),
                         phValue: [returnedFishParams.ph_target].slice(),
-                        phUpdate: [returnedFishParams.ph_target].slice()
+                        phUpdate: [returnedFishParams.ph_target].slice(),
+                        nh3Value: [returnedFishParams.nh3_target].slice(),
+                        nh3Update: [returnedFishParams.nh3_target].slice(),
                     })
                     console.log(returnedFishParams.ph_target);
                     console.log(this.state.fishParams.nh3_target);
-                    this.state.maxTempScale = this.state.fishParams.temp_high_critical+10;
-                    this.state.minTempScale = this.state.fishParams.temp_low_critical-10;
-
             }
         )
         console.log(this.state.phValue);
@@ -246,8 +245,6 @@ class ApProjectContainer extends Component {
 
                                         </div>
                                         <TempSliderVertical
-                                            maxScale={this.state.maxTempScale}
-                                            minScale={this.state.minTempScale}
                                             values={this.state.tempValue}
                                             update={this.state.tempUpdate}
                                            // defaultValues={Assets.defaultTemp}
