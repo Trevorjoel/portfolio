@@ -5,7 +5,7 @@ import Col from "react-bootstrap/Col";
 
 const FishProfile = (props) =>{
     return (<div>
-    <div>test local change</div>
+
     <Row>
         <Col>
             <img alt="Github icon"
