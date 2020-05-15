@@ -1,0 +1,77 @@
+Index: client/src/components/projectComponents/ApProject/Fishprofile.js
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import React from 'react';\r\nimport github from \"./Assets/UIHere.8acef598.png\";\r\nimport Row from \"react-bootstrap/Row\";\r\nimport Col from \"react-bootstrap/Col\";\r\nfunction FishProfile() {\r\n    return <TemperatureAdvice />;\r\n}\r\nfunction TemperatureAdvice() {\r\n    return (<div>\r\n            <h4 className=\"reading-box\">System Settings: Trout</h4>\r\n            <Row>\r\n\r\n                <Col lg={6}>\r\n                    <img alt=\"Github icon\"\r\n                         className=\"fish-image\"\r\n                         src={github}/>\r\n\r\n\r\n                </Col>\r\n\r\n\r\n                <Col lg={6}>\r\n                    <p className=\"reading-box text-left\">Ideal temp: 12 Degrees<br/>\r\n                        Ideal Ph: 7.3 <br/>\r\n                        Ideal Ammonia: .0 </p>\r\n\r\n                </Col>\r\n                <Col lg={12}><p className=\"reading-box \">See our caring for <a href=\"#\">trout</a> page.</p></Col>\r\n\r\n            </Row>\r\n\r\n\r\n        </div>\r\n\r\n\r\n    );\r\n}\r\nexport default TemperatureAdvice;
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- client/src/components/projectComponents/ApProject/Fishprofile.js	(revision 483eee27a95aadd7f2c3b817fde7821ab36360b5)
++++ client/src/components/projectComponents/ApProject/Fishprofile.js	(date 1589395687901)
+@@ -1,38 +1,34 @@
+ import React from 'react';
+-import github from "./Assets/UIHere.8acef598.png";
++import github from "../../../images/UIHere.8acef598.png";
+ import Row from "react-bootstrap/Row";
+ import Col from "react-bootstrap/Col";
+-function FishProfile() {
+-    return <TemperatureAdvice />;
+-}
+-function TemperatureAdvice() {
++
++const FishProfile = (props) =>{
+     return (<div>
+-            <h4 className="reading-box">System Settings: Trout</h4>
+-            <Row>
+-
+-                <Col lg={6}>
+-                    <img alt="Github icon"
+-                         className="fish-image"
+-                         src={github}/>
+-
++         
++    <Row>
++        <Col>
++            <img alt="Github icon"
++                 className="fish-image"
++                 src={github}/>
++            <p className="reading-box">{props.fishParams.fish_name}</p>
+ 
+-                </Col>
+-
+-
+-                <Col lg={6}>
+-                    <p className="reading-box text-left">Ideal temp: 12 Degrees<br/>
+-                        Ideal Ph: 7.3 <br/>
+-                        Ideal Ammonia: .0 </p>
+-
+-                </Col>
+-                <Col lg={12}><p className="reading-box ">See our caring for <a href="#">trout</a> page.</p></Col>
+-
+-            </Row>
+-
+-
+-        </div>
+-
+-
++        </Col>
++        
++       
++        <Col>
++        <p className="reading-box text-left">Ideal temp: {props.fishParams.temp_target} Degrees<br/>
++            Ideal Ph: {props.fishParams.ph_target} <br/>
++            Ideal Ammonia: {props.fishParams.nh3_target} </p>
++            
++    </Col>
++    
++    </Row>
++            <p className="reading-box ">See our caring for <a href="#">{props.fishParams.fish_name}</a> page.</p>
++    
++    </div>
++    
++    
+     );
+ }
+-export default TemperatureAdvice;
+\ No newline at end of file
++export default FishProfile;
+\ No newline at end of file
