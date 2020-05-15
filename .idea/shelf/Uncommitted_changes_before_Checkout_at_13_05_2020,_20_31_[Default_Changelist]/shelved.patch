@@ -1,0 +1,278 @@
+Index: client/src/components/projectComponents/ApProject/fishProfile.js
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import React from 'react';\nimport github from \"../../../images/UIHere.8acef598.png\";\nimport Row from \"react-bootstrap/Row\";\nimport Col from \"react-bootstrap/Col\";\nfunction FishProfile() {\n    return <Headline />;\n}\nfunction Headline() {\n    const fish = 'Fish Profile';\n    return (<div>\n         \n    <Row>\n        <Col>\n            <img alt=\"Github icon\"\n                 className=\"fish-image\"\n                 src={github}/>\n            <p className=\"reading-box\">Trout</p>\n        </Col>\n        \n       \n        <Col>\n        <p className=\"reading-box text-left\">Ideal temp: 12 Degrees<br/>\n            Ideal Ph: 7.3 <br/>\n            Ideal Ammonia: .0 </p>\n            \n    </Col>\n    \n    </Row>\n            <p className=\"reading-box \">See our caring for <a href=\"#\">trout</a> page.</p>\n    \n    </div>\n    \n    \n    );\n}\nexport default FishProfile;
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- client/src/components/projectComponents/ApProject/fishProfile.js	(revision b6f6b17e673564be2d8cb5e5e6beb220430e4945)
++++ client/src/components/projectComponents/ApProject/fishProfile.js	(date 1589390948198)
+@@ -1,32 +1,51 @@
+-import React from 'react';
+ import github from "../../../images/UIHere.8acef598.png";
+ import Row from "react-bootstrap/Row";
+ import Col from "react-bootstrap/Col";
+-function FishProfile() {
+-    return <Headline />;
+-}
+-function Headline() {
++import React, { useState } from 'react';
++import { ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
++
++
++function FishProfile(props) {
++    const [dropdownOpen, setDropdownOpen] = useState(false);
++
++    const toggle = () => setDropdownOpen(prevState => !prevState);
++
+     const fish = 'Fish Profile';
++    let selection ="Trout";
++    const changeFish = (fishName)=>{
++
++    }
+     return (<div>
+          
+     <Row>
+         <Col>
++
+             <img alt="Github icon"
+                  className="fish-image"
+                  src={github}/>
+-            <p className="reading-box">Trout</p>
++            <ButtonDropdown size="md" isOpen={dropdownOpen} toggle={toggle} block>
++                <DropdownToggle caret>
++                    {props.fish[0]}
++                </DropdownToggle>
++                <DropdownMenu>
++                    <DropdownItem header>Fish</DropdownItem>
++                    <DropdownItem onClick={() => changeFish('Trout')}>Trout</DropdownItem>
++                    <DropdownItem onClick={() => changeFish('Silver Perch')}>Silver perch</DropdownItem>
++                </DropdownMenu>
++            </ButtonDropdown>
+         </Col>
+-        
++
+        
+         <Col>
+-        <p className="reading-box text-left">Ideal temp: 12 Degrees<br/>
+-            Ideal Ph: 7.3 <br/>
+-            Ideal Ammonia: .0 </p>
++        <p className="reading-box text-left">Ideal temp: {props.fish[3]} Degrees<br/>
++            Ideal Ph: {props.fish[2]} <br/>
++            Ideal Ammonia: {props.fish[1]} </p>
++
+             
+     </Col>
+     
+     </Row>
+-            <p className="reading-box ">See our caring for <a href="#">trout</a> page.</p>
++            <p className="reading-box ">See our caring for <a href="#">{props.fish[0]}</a> page.</p>
+     
+     </div>
+     
+Index: client/src/components/projectComponents/ApProject/ApProjectContainer.module.css
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>.ProjectContainer{\n    font-family: \"Open Sans\";\n    background: #0e0932;\n    padding:20px;\n    max-width:100%;\n    /* width: max-content; */\n    color:whitesmoke;\n    border-radius:15px;\n    border:1px solid #550909;\n    margin-bottom: 40px;\n    text-align: center;\n}\n\n.StatusWrapper{\n    background:\n            whitesmoke;\n    color:\n            black;\n    border-radius: 5px;\n    padding: 30px 0 0 0;\n    text-align: center;\n    max-width: 650px;\n    margin: auto;\n    border: 1px solid\n    #550909;\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- client/src/components/projectComponents/ApProject/ApProjectContainer.module.css	(revision b6f6b17e673564be2d8cb5e5e6beb220430e4945)
++++ client/src/components/projectComponents/ApProject/ApProjectContainer.module.css	(date 1589390948206)
+@@ -1,5 +1,5 @@
+ .ProjectContainer{
+-    font-family: "Open Sans";
++    font-family: "Ubuntu";
+     background: #0e0932;
+     padding:20px;
+     max-width:100%;
+Index: client/src/components/projectComponents/ApProject/StatusBars.js
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import React from 'react';\nimport {Badge, Col, Row} from \"reactstrap\";\nimport Button from \"react-bootstrap/Button\";\n\n\nconst StatusBars = (props) => {\n\n    return (<div > <div\n        className={props.divStyle} onClick={props.toggleHandler}>\n        <Row >\n            <Col lg={2} >\n                <h4>\n                    <Badge\n                    className=\"badge-secondary-override\">\n                    {props.updatedValue}  {props.symbol}\n                    </Badge>\n                </h4>\n            </Col>\n            <Col lg={10}>\n                <h4 >{props.statusTitle}</h4>\n            </Col>\n        </Row>\n    </div>\n     \n        {props.adviceToggle &&\n     <div >\n           <p data-aos=\"fade\"\n              data-aos-delay=\"0\"\n              data-aos-duration=\"1000\" className=\"alert\">{props.adviceText}</p>\n         <p data-aos=\"fade\"\n            data-aos-delay=\"0\"\n            data-aos-duration=\"1000\"> Please see <a href={props.link}> our wiki.</a></p>\n    <br/> <Button>Switch off alerts</Button><br/>\n     </div>\n        }\n        \n    </div>);\n};\n\nexport default StatusBars;
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- client/src/components/projectComponents/ApProject/StatusBars.js	(revision b6f6b17e673564be2d8cb5e5e6beb220430e4945)
++++ client/src/components/projectComponents/ApProject/StatusBars.js	(date 1589390948214)
+@@ -30,7 +30,7 @@
+          <p data-aos="fade"
+             data-aos-delay="0"
+             data-aos-duration="1000"> Please see <a href={props.link}> our wiki.</a></p>
+-    <br/> <Button>Switch off alerts</Button><br/>
++    <br/> <Button>Modify alerts</Button><br/>
+      </div>
+         }
+         
+Index: client/src/components/projectComponents/ApProject/ApProjectContainer.js
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import React, {Component} from 'react';\nimport * as Assets from './Assets/ApProjectAssets';\nimport classes from './ApProjectContainer.module.css';\nimport ReadingsTable from \"./ReadingsTable\";\nimport {tempController,\n    phController,\n    nh3Controller,\n    createNotificationController,\n    addReadingsToDB,\n    getPreviousTime,\n    selectReadings,\n\n} from './ApFunctions/apFunctions';\nimport DateRange from \"./DateRanges/DateRange\";\nimport {NotificationContainer} from 'react-notifications';\nimport 'react-notifications/lib/notifications.css';\nimport TempSliderVertical from \"./sliders/TempSliderVertical\";\nimport PhSliderVertical from \"./sliders/PhSliderVertical\";\nimport Nh3SliderVertical from \"./sliders/Nh3SliderVertical\";\nimport { Button, Col, Container, Row} from 'reactstrap';\nimport ProjectsHeader from '../ProjectsHeader'\nimport github from \"../../../images/hiclipart.com.718cad62.png\";\nimport LinerGraph from './Graphs/LineGraph';\nimport TempPie from \"./Graphs/PieCharts\";\nimport HighLow from \"./Graphs/DailyHigLow\";\nimport FishProfile from \"./fishProfile\";\nimport TroutInfo from \"./advicePages/TroutInfo\"\nimport TemperatureInfo from \"./advicePages/TemperatureInfo\";\nimport BackBtn from \"../ProjectBackBtn\";\n\n// todo: New fish has been added to the database. Plan and code a feature to allow the user to select different fish.\n//       For this we need to query the DB, create state to pass into the Components affected. The sliders, date range, apFunctions, the graphics etc...\n\n// Todo: Create the feature for the user to be able to use the date range selector. Component DateRange\n\nclass ApProjectContainer extends Component {\n    constructor(props) {\n        super(props);\n\n        this.state = {\n            tempValue: Assets.defaultTemp.slice(),\n            tempUpdate: Assets.defaultTemp.slice(),\n            tempCaptureValue: Assets.defaultTemp.slice(),\n            phCaptureValue: Assets.defaultPh.slice(),\n            nh3CaptureValue: Assets.defaultNh3.slice(),\n            phValue: Assets.defaultPh.slice(),\n            phUpdate: Assets.defaultPh.slice(),\n            nh3Value: Assets.defaultNh3.slice(),\n            nh3Update: Assets.defaultNh3.slice(),\n            tempShowNotification: {tempLowCritical:true, tempLowWarn:true, tempOptimal:false, tempHighWarn:true, tempHighCritical: true},\n            phShowNotification: {phLowCritical:true, phLowWarn:true, phOptimal:false, phHighWarn:true, phHighCritical: true},\n            nh3ShowNotification: {nh3Optimal:false, nh3HighWarn:true, nh3HighCritical: true},\n            togglePhAdvice: false,\n            toggleTempAdvice: false,\n            toggleNh3Advice: false,\n            latestTime: '',\n            readings:[],\n            numberOfReadings:169,\n        };\n        // Bind the imported functions\n        this.tempController = tempController.bind(this);\n        this.phController = phController.bind(this);\n        this.nh3Controller = nh3Controller.bind(this);\n        this.createNotificationController = createNotificationController.bind(this);\n        this.addReadingsToDB = addReadingsToDB.bind(this);\n        this.getPreviousTime = getPreviousTime.bind(this);\n        this.selectAllReadings = selectReadings.bind(this);\n        //this.selectWeek = selectWeek.bind(this)\n    }\n    toggleTempHandler() {\n        this.setState({\n            toggleTempAdvice: !this.state.toggleTempAdvice\n        })\n    }\n    togglePhHandler() {\n        this.setState({\n            togglePhAdvice: !this.state.togglePhAdvice\n        })\n    }\n    toggleNh3Handler() {\n        this.setState({\n            toggleNh3Advice: !this.state.toggleNh3Advice\n        })\n    }\n    mapReadingsSetState = (requestFunction, numberOfReadings) =>{\n        requestFunction(numberOfReadings)\n            .then( query => {\n                    const returnedReadings = query.database1.slice();\n                    const updatedReadings = returnedReadings.map(\n                        reading =>{\n                            return{\n                                ...reading\n                            }\n                        }\n                    );\n                    this.setState({readings:updatedReadings})\n\n                }\n            )\n    }\n    // todo: pass a function into the DateRange component that changes the state for start/end dates\n    componentDidMount() {\n\n        // When user arrives on the page make sure to arrive at the top of the page\n      //  window.scrollTo(0, 0);\n\n\n        this.mapReadingsSetState(selectReadings, 169);\n        // own function\n        this.getPreviousTime();\n      //  this.selectAllReadings()\n\n\n    }\n\n    onNh3Update = nh3Update => {\n        this.setState({nh3Update})\n    };\n    onNh3Change = nh3Values => {\n        this.setState({nh3Values})\n    };\n    onPhUpdate = phUpdate => {\n        this.setState({phUpdate})\n    };\n    onPhChange = phValues => {\n        this.setState({phValues})\n    };\n    onTempUpdate = tempUpdate => {\n        this.setState({tempUpdate})\n    };\n    onTempChange = tempValues => {\n        this.setState({tempValues})\n    };\n\n    render() {\n\n        return (\n            <div >\n                <Container className=\" sensors-container\">\n                    <ProjectsHeader\n                        projectName={Assets.projectName}\n                        projectPurpose={Assets.projectPurpose}\n                        projectDescription={Assets.projectDescription}\n                        projectLearning={Assets.projectLearning}\n                        whatNext={Assets.whatNext}\n                        link1={Assets.link1} link2={Assets.link2} link3={Assets.link3} link4={Assets.link4}\n                        headerStyle={Assets.headerStyle}\n                        titleStyle={Assets.titleStyle}\n                        embedVideo={Assets.embedVideo}\n                    />\n                    <div className='iframe-container'>\n\n                        <iframe width=\"1202\" height=\"676\" src=\"https://www.youtube.com/embed/YOv1BIEHRS0\"\n                                frameBorder=\"0\"\n                                allow=\"accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture\"\n                                allowFullScreen> </iframe> </div>\n                    <hr className=\"divider\"/>\n                    <div className={classes.ProjectContainer}>\n                    <h2 className=\"reading-box \">Live System Monitor</h2>\n                    <p className=\"reading-box row-margin\">Receive live alerts and monitor your system from your telephone.\n                        <br/>Get the advice you need when you need it.</p>\n                    <Row >\n                        <Col lg={6}>\n                            <h4 className=\"reading-box\">Substitute probe readings</h4>\n                            <p className=\"reading-box\">Adjust the sliders to simulate changes in water quality readings.</p>\n                            <Row >\n                                <Col>\n                                    <div className=\"sliders-container\">\n                                        <div className=\"reading-box\"><p>TEMP</p>\n\n                                        </div>\n                                        <TempSliderVertical\n                                            values={this.state.tempValue}\n                                            update={this.state.tempUpdate}\n                                            defaultValues={Assets.defaultTemp}\n                                            onUpdate={this.onTempUpdate}\n                                            onChange={this.onTempChange}\n                                        />\n                                    </div>\n                                </Col><Col>\n                                <div className=\"sliders-container \">\n                                    <div className=\"reading-box\">\n                                        <p>pH</p>\n                                    </div>\n                                    <PhSliderVertical\n                                        values={this.state.phValue}\n                                        update={this.state.phUpdate}\n                                        defaultValues={Assets.defaultPh}\n                                        onUpdate={this.onPhUpdate}\n                                        onChange={this.onPhChange}\n                                    />\n                                </div>\n                            </Col>\n                                <Col>\n                                    <div className=\"sliders-container\">\n                                        <div className=\"reading-box\">\n                                            <p>\n                                                NH<sub>3</sub>\n                                                &nbsp;</p>\n                                        </div>\n                                        <Nh3SliderVertical\n                                            values={this.state.nh3Update}\n                                            update={this.state.nh3Update}\n                                            defaultValues={Assets.defaultNh3}\n                                            onUpdate={this.onNh3Update}\n                                            onChange={this.onNh3Change}\n                                        />\n                                    </div>\n                                </Col>\n\n                            </Row>\n                        </Col>\n                        <Col lg={6}>\n                            <br/>\n                            <h4 className=\"reading-box\">Monitor & troubleshoot your system in real-time</h4>\n                            <p className=\"reading-box\">Find targeted advice to keep your system safe.</p>\n                            <div className={classes.StatusWrapper}>\n\n                                <FishProfile/>\n                                {this.tempController(this.state.tempUpdate[0])}\n                                {this.phController(this.state.phUpdate[0])}\n                                {this.nh3Controller(this.state.nh3Update[0])}\n                                <Button color=\"info\" onClick={()=>{\n                                    this.addReadingsToDB();\n                                }} size=\"lg\" block>Enter readings into database.</Button>\n                            </div>\n\n                        </Col>\n\n                    </Row>\n                    <hr className=\"divider\"/>\n                    <div className=\"readings-container \">\n                        <h2 className=\"reading-box \">View historical data</h2>\n                        <p className=\"reading-box row-margin\">Track your previous readings to make better decisions for your systems future.</p><br/>\n                    </div>\n                    <Row className=\"row-margin \">\n\n                        <Col lg={12}>\n                            <DateRange click={this.mapReadingsSetState}/>\n                           <LinerGraph readings={this.state.readings}/>\n                        </Col>\n                        <Col lg={12}><br/>\n                            <p className=\"reading-box\">Temperature readings by category.</p>\n                            <TempPie readings={this.state.readings}/></Col>\n                    </Row><Row className=\"row-margin\">\n                    <Col lg={12}>\n                        <p className=\"reading-box\">Daily highest and lowest temperatures: 7 day period</p>\n                        <HighLow readings={this.state.readings}/>\n                    </Col>\n                    <Col lg={12}>\n\n                    </Col>\n                </Row>\n                    <Row/>\n                    <hr className=\"divider\"/>\n                    <h2 className=\"reading-box \">System Advice pages</h2>\n                    <p className=\"reading-box row-margin\">Get the advice you need when you need it.</p>\n                    <Row>\n                        <Col lg={6}>\n                            <TroutInfo/>\n                        </Col>\n                        <Col lg={6}>\n                            <TemperatureInfo/>\n                        </Col>\n                    </Row>\n                    <ReadingsTable readings={this.state.readings}/>\n                    <div className=\"project-icons\">\n                        <a target=\"_blank\"\n                           rel=\"noopener noreferrer\"\n                           title=\"See the code\"\n                           className=\"footer-links\"\n                           href=\"https://github.com/Trevorjoel/portfolio/tree/master/client/src/components/projectComponents/sliders\">\n                            <img alt=\"Github icon\"\n                                 className=\"App-logo footer-icons\"\n                                 src={github}/>\n                        </a>\n                        <p>Code for this project.</p>\n                    </div>\n                    </div>\n                </Container>\n\n           <BackBtn/>\n\n                <NotificationContainer/>\n            </div>\n\n        );\n    }\n}\n\n\nexport default ApProjectContainer;\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- client/src/components/projectComponents/ApProject/ApProjectContainer.js	(revision b6f6b17e673564be2d8cb5e5e6beb220430e4945)
++++ client/src/components/projectComponents/ApProject/ApProjectContainer.js	(date 1589390948226)
+@@ -32,7 +32,7 @@
+ //       For this we need to query the DB, create state to pass into the Components affected. The sliders, date range, apFunctions, the graphics etc...
+ 
+ // Todo: Create the feature for the user to be able to use the date range selector. Component DateRange
+-
++//
+ class ApProjectContainer extends Component {
+     constructor(props) {
+         super(props);
+@@ -56,6 +56,7 @@
+             latestTime: '',
+             readings:[],
+             numberOfReadings:169,
++            fishParameters: ['Trout',Assets.defaultNh3, Assets.defaultPh, Assets.defaultTemp]
+         };
+         // Bind the imported functions
+         this.tempController = tempController.bind(this);
+@@ -102,7 +103,7 @@
+     componentDidMount() {
+ 
+         // When user arrives on the page make sure to arrive at the top of the page
+-      //  window.scrollTo(0, 0);
++        //window.scrollTo(0, 0);
+ 
+ 
+         this.mapReadingsSetState(selectReadings, 169);
+@@ -216,7 +217,7 @@
+                             <p className="reading-box">Find targeted advice to keep your system safe.</p>
+                             <div className={classes.StatusWrapper}>
+ 
+-                                <FishProfile/>
++                                <FishProfile fish={this.state.fishParameters} />
+                                 {this.tempController(this.state.tempUpdate[0])}
+                                 {this.phController(this.state.phUpdate[0])}
+                                 {this.nh3Controller(this.state.nh3Update[0])}
+Index: server.js
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import express from 'express';\n\nimport router from './routes/api/index';\nimport bodyParser from 'body-parser';\nconst expressValidator = require('express-validator');\nconst app = express();\n\nconst port = process.env.PORT || 5000;\n\napp.listen(port, () => console.log(`LISTENING on port ${port}`));\n\n// Enable Cors\napp.use(function(req, res, next) {\n    res.header(\"Access-Control-Allow-Origin\", \"*\");\n    res.header(\"Access-Control-Allow-Headers\", \"Origin, X-Requested-With, Content-Type, Accept\");\n    next();\n});\n// Use middleware\napp.use(bodyParser.urlencoded({ extended: false }));\napp.use(bodyParser.json());\n//Import routes\napp.use(router);\n\n\n\n\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- server.js	(revision b6f6b17e673564be2d8cb5e5e6beb220430e4945)
++++ server.js	(date 1589390948234)
+@@ -6,7 +6,7 @@
+ const app = express();
+ 
+ const port = process.env.PORT || 5000;
+-
++// Comment
+ app.listen(port, () => console.log(`LISTENING on port ${port}`));
+ 
+ // Enable Cors
+Index: client/src/components/projectComponents/ApProject/Fishprofile.js
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- client/src/components/projectComponents/ApProject/Fishprofile.js	(revision b6f6b17e673564be2d8cb5e5e6beb220430e4945)
++++ client/src/components/projectComponents/ApProject/Fishprofile.js	(revision b6f6b17e673564be2d8cb5e5e6beb220430e4945)
+@@ -1,38 +0,0 @@
+-import React from 'react';
+-import github from "./Assets/UIHere.8acef598.png";
+-import Row from "react-bootstrap/Row";
+-import Col from "react-bootstrap/Col";
+-function FishProfile() {
+-    return <TemperatureAdvice />;
+-}
+-function TemperatureAdvice() {
+-    return (<div>
+-            <h4 className="reading-box">System Settings: Trout</h4>
+-            <Row>
+-
+-                <Col lg={6}>
+-                    <img alt="Github icon"
+-                         className="fish-image"
+-                         src={github}/>
+-
+-
+-                </Col>
+-
+-
+-                <Col lg={6}>
+-                    <p className="reading-box text-left">Ideal temp: 12 Degrees<br/>
+-                        Ideal Ph: 7.3 <br/>
+-                        Ideal Ammonia: .0 </p>
+-
+-                </Col>
+-                <Col lg={12}><p className="reading-box ">See our caring for <a href="#">trout</a> page.</p></Col>
+-
+-            </Row>
+-
+-
+-        </div>
+-
+-
+-    );
+-}
+-export default TemperatureAdvice;
+\ No newline at end of file
+Index: routes/api/index.js
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import express from 'express';\n\nconst router = express.Router();\nconst appController = require('../../controller/appController');\nconst Aquaponics = require('../../controller/aquaponicsController');\nconst {check} = require('express-validator');\nconst app = express();\napp.use(express.json());\n\n// Returns a message if the server is running\nrouter.get('/api/hello', (req, res) => {\n    res.send({\n        express: 'Express back-end, up and running!',\n    });\n});\n\n// Using controllers for the main sql routes\nrouter.route('/api/sql')\n    .get(appController.connectAndShow)\n    .delete(appController.deleteByID)\n    .post(appController.populateTable);\n\nrouter.route('/api/add')\n    .post([check('firstName', 'Message text')\n            .isAlpha()\n            .not().isEmpty()\n            .trim()\n            .escape(),\n            check('lastName', 'failed')\n                .isAlpha()\n                .not().isEmpty()\n                .trim()\n                .escape(),\n            check('departmentID', 'Failed')\n                .not().isEmpty()\n                .isNumeric()\n                .trim()\n                .escape()\n        ],\n        \n        appController.addEmployee);\n\n// Handle the contact form email\nrouter.route('/api/send')\n    .post(appController.emailer);\n\n\n\n// AQUAPONICS API\n// Todo: Research decent patterns concerning routes eg. user/:id\nrouter.route('/api/ap')\n    .post(Aquaponics.add_reading)\n    .get(Aquaponics.get_previous_time);\n\n// Under Construction\n/*router.route('/api/fish')\n    .get(Aquaponics.select_fish_parameters)*/\n\nrouter.route('/api/all')\n    .post(Aquaponics.select_recent_readings);\nexport default router;\n\n\n\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- routes/api/index.js	(revision b6f6b17e673564be2d8cb5e5e6beb220430e4945)
++++ routes/api/index.js	(date 1589390948246)
+@@ -2,7 +2,7 @@
+ 
+ const router = express.Router();
+ const appController = require('../../controller/appController');
+-const Aquaponics = require('../../controller/aquaponicsController');
++const AquaponicsController = require('../../controller/aquaponicsController');
+ const {check} = require('express-validator');
+ const app = express();
+ app.use(express.json());
+@@ -48,16 +48,16 @@
+ 
+ // AQUAPONICS API
+ // Todo: Research decent patterns concerning routes eg. user/:id
+-router.route('/api/ap')
+-    .post(Aquaponics.add_reading)
+-    .get(Aquaponics.get_previous_time);
++router.route('/api/ap/')
++    .post(AquaponicsController.add_reading)
++    .get(AquaponicsController.get_previous_time);
+ 
+ // Under Construction
+ /*router.route('/api/fish')
+     .get(Aquaponics.select_fish_parameters)*/
+ 
+ router.route('/api/all')
+-    .post(Aquaponics.select_recent_readings);
++    .post(AquaponicsController.select_recent_readings);
+ export default router;
+ 
+ 
+Index: client/src/components/reactRoutes/Home.js
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import Header from \"../frontPageLayout/Header\";\nimport ContactForm from \"../frontPageLayout/ContactForm\";\nimport Gallery from \"../projectCards/ProjectsCarousel\";\nimport React, {Component} from \"react\";\nimport SkillsTabs from \"../SkillsTabs\";\n\nclass Home extends Component {\n\n  componentDidMount() {\n  \n  }\n    \n    \n    // Request api\n    queryDB = async () => {\n        const response = await fetch('/api/sql');\n        const query = await response.json();\n        if (response.status !== 200) throw Error(query.message);\n        \n    };\n    \n    \n    render() {\n        return (\n            <div>\n                <Header/>\n                <SkillsTabs/>\n                <Gallery />\n                <ContactForm/>\n                {/*<TestArea/>*/}\n            </div>\n           \n        );\n    }\n}\n\nexport default Home;
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- client/src/components/reactRoutes/Home.js	(revision b6f6b17e673564be2d8cb5e5e6beb220430e4945)
++++ client/src/components/reactRoutes/Home.js	(date 1589390948258)
+@@ -12,12 +12,12 @@
+     
+     
+     // Request api
+-    queryDB = async () => {
++   /* queryDB = async () => {
+         const response = await fetch('/api/sql');
+         const query = await response.json();
+         if (response.status !== 200) throw Error(query.message);
+         
+-    };
++    };*/
+     
+     
+     render() {
