@@ -10,8 +10,7 @@ import {tempController,
     getPreviousTime,
     selectReadings,
     selectFishType,
-    getLastReadings,
-
+    getFish,
 } from './ApFunctions/apFunctions';
 import DateRange from "./DateRanges/DateRange";
 import {NotificationContainer} from 'react-notifications';
@@ -66,6 +65,7 @@ class ApProjectContainer extends Component {
             numberOfReadings:169,
             fishParams:[],
             fishId:1,
+            fish:[],
         };
         // Bind the imported functions
         this.tempController = tempController.bind(this);
@@ -75,6 +75,7 @@ class ApProjectContainer extends Component {
         this.addReadingsToDB = addReadingsToDB.bind(this);
         this.getPreviousTime = getPreviousTime.bind(this);
         this.selectAllReadings = selectReadings.bind(this);
+        this.getFish = getFish.bind(this);
         //this.selectWeek = selectWeek.bind(this)
 
     }
@@ -123,68 +124,31 @@ class ApProjectContainer extends Component {
                         nh3Value: [returnedFishParams.nh3_target].slice(),
                         nh3Update: [returnedFishParams.nh3_target].slice(),
                     })
-                    console.log(returnedFishParams.ph_target);
-                    console.log(this.state.fishParams.nh3_target);
             }
         )
-        console.log(this.state.phValue);
     }
 
-    /*mapLastReadingsSetState = (requestFunction) =>{
+    mapFish = (requestFunction) =>{
         requestFunction()
             .then( query => {
-                    const lastReadings = query.database1.slice();
-
-                    const lastTemperature = lastReadings.map((reading, index) => {
-
-                        return (
-                            reading.temperature
-                        )
-                    })
-
-                    const lastPh = lastReadings.map((reading, index) => {
-
-                        return (
-                            reading.ph
-                        )
-                    })
-
-                    const lastNh3 = lastReadings.map((reading, index) => {
-
-                        return (
-                            reading.nh3
-                        )
-                    })
-
-                    console.log(lastTemperature);
-                    console.log(lastPh);
-                    console.log(lastNh3);
-
-                    this.setState({tempValue:lastTemperature.slice()})
-                    this.setState({tempUpdate:lastTemperature.slice()})
-
-                    this.setState({phValue:lastPh.slice()})
-                    this.setState({phUpdate:lastPh.slice()})
-
-                    this.setState({nh3Value:lastNh3.slice()})
-                    this.setState({nh3Update:lastNh3.slice()})
-
+                    const allFish = query.database1.slice();
+                    this.setState({fish:allFish.slice()})
                 }
             )
-    }*/
+    }
+
     // todo: pass a function into the DateRange component that changes the state for start/end dates
     componentDidMount() {
 
         // When user arrives on the page make sure to arrive at the top of the page
       //  window.scrollTo(0, 0);
-
         this.mapReadingsSetState(selectReadings, 169);
         // own function
         this.getPreviousTime();
       //  this.selectAllReadings()
 
         this.mapFishSetState(selectFishType, this.state.fishId);
-        //this.mapLastReadingsSetState(getLastReadings);
+        this.mapFish(getFish);
 
     }
 
@@ -205,6 +169,10 @@ class ApProjectContainer extends Component {
     };
     onTempChange = tempValues => {
         this.setState({tempValues})
+    };
+
+    onFishChange = fishId => {
+        this.mapFishSetState(selectFishType,fishId)
     };
 
     render() {
@@ -291,7 +259,11 @@ class ApProjectContainer extends Component {
                             <p className="reading-box">Find targeted advice to keep your system safe.</p>
                             <div className={classes.StatusWrapper}>
 
-                                <FishProfile fishParams={this.state.fishParams}/>
+                                <FishProfile
+                                    fish={this.state.fish}
+                                    fishParams={this.state.fishParams}
+                                    onChange={this.onFishChange}
+                                />
                                 {this.tempController(this.state.tempUpdate[0])}
                                 {this.phController(this.state.phUpdate[0])}
                                 {this.nh3Controller(this.state.nh3Update[0])}

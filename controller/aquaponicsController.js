@@ -56,4 +56,14 @@ exports.select_last_readings = (req, res) => {
 
 };
 
+exports.select_fish = (req, res) => {
+    TakeData.selectFish((err, data) => {
+        if (err)
+            res.send(err)
+        else
+            res.send({database1: data})
+    })
+
+};
+
 

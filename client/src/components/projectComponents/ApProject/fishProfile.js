@@ -24,9 +24,15 @@ const FishProfile = (props) =>{
                 <DropdownMenu>
                     <DropdownItem header>Fish</DropdownItem>
                     <DropdownItem divider />
-                    {/*Loop through fish from DB*/}
-                    <DropdownItem>Silver Perch</DropdownItem>
 
+                    {
+                        /*Loop through fish from DB*/
+                        props.fish.map((fish, index) => {
+
+                            return (
+                                <DropdownItem onClick={()=>props.onChange(fish.id)}>{fish.fish_name}</DropdownItem>
+                            )
+                    })}
 
                 </DropdownMenu>
             </Dropdown>
