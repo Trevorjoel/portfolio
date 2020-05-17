@@ -62,6 +62,9 @@ router.route('/api/all')
 router.route('/api/tank')
     .get(Aquaponics.select_last_readings);
 
+router.route('/api/allfish')
+    .get(Aquaponics.select_fish);
+
 export default router;
 
 

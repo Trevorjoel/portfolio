@@ -433,3 +433,22 @@ export const getLastReadings = async function() {
     return query;
 }
 
+export const getFish = async function() {
+    console.log('get all fish');
+
+    const response = await fetch('/api/allfish',{
+        method: 'GET',
+        headers:
+            {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            }
+
+    });
+
+    const query = await response.json();
+
+    if (response.status !== 200) throw Error(query.message);
+    return query;
+}
+

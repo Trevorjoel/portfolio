@@ -63,4 +63,16 @@ TakeData.selectLastReadings = (result) =>{
         });
 }
 
+TakeData.selectFish = (result) =>{
+
+    sqlAquaponics.query(`SELECT * FROM fish ORDER BY id ASC`,
+        (err, res) => {
+            if (err) {
+                result(err, null);
+            } else {
+                result(null, res);
+            }
+        });
+}
+
 module.exports = TakeData;
