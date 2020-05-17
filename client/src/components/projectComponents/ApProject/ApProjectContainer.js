@@ -29,6 +29,7 @@ import FishProfile from "./fishProfile";
 import TroutInfo from "./advicePages/TroutInfo"
 import TemperatureInfo from "./advicePages/TemperatureInfo";
 import BackBtn from "../ProjectBackBtn";
+import AdviceContainer from './advicePages/AdviceContainer';
 import {push} from "echarts/src/component/dataZoom/history";
 
 // todo: New fish has been added to the database. Plan and code a feature to allow the user to select different fish.
@@ -328,14 +329,12 @@ class ApProjectContainer extends Component {
                 </Row>
                     <Row/>
                     <hr className="divider"/>
-                    <h2 className="reading-box ">System Advice pages</h2>
-                    <p className="reading-box row-margin">Get the advice you need when you need it.</p>
+                    <AdviceContainer />
+
                     <Row>
+
                         <Col lg={6}>
-                            <TroutInfo fishParams={this.state.fishParams}/>
-                        </Col>
-                        <Col lg={6}>
-                            <TemperatureInfo fishParams={this.state.fishParams}/>
+
                         </Col>
                     </Row>
                     <ReadingsTable readings={this.state.readings}/>

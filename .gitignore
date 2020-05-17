@@ -4,4 +4,5 @@ portfolio/config/
 /client/node_modules/
 /client/build/
 /config/keys.js
+.idea
 
