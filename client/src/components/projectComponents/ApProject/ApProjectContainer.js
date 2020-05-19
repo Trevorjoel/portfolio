@@ -138,6 +138,22 @@ class ApProjectContainer extends Component {
             )
     }
 
+    mapReadingsRangeSetState = (requestFunction, from, to) =>{
+        requestFunction(from, to)
+            .then( query => {
+                    const returnedReadings = query.database1.slice();
+                    const updatedReadings = returnedReadings.map(
+                        reading =>{
+                            return{
+                                ...reading
+                            }
+                        }
+                    );
+                    this.setState({readings:updatedReadings})
+                }
+            )
+    }
+
     // todo: pass a function into the DateRange component that changes the state for start/end dates
     componentDidMount() {
 
@@ -150,7 +166,6 @@ class ApProjectContainer extends Component {
 
         this.mapFishSetState(selectFishType, this.state.fishId);
         this.mapFish(getFish);
-
     }
 
     onNh3Update = nh3Update => {
@@ -284,7 +299,10 @@ class ApProjectContainer extends Component {
                     <Row className="row-margin ">
 
                         <Col lg={12}>
-                            <DateRange click={this.mapReadingsSetState}/>
+                            <DateRange
+                                click={this.mapReadingsSetState}
+                                onDaySelect={this.mapReadingsRangeSetState}
+                            />
                            <LinerGraph readings={this.state.readings}/>
                         </Col>
                         <Col lg={12}><br/>

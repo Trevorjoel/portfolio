@@ -75,4 +75,16 @@ TakeData.selectFish = (result) =>{
         });
 }
 
+TakeData.selectReadingsRange = (from, to, result) =>{
+
+    sqlAquaponics.query(`SELECT * FROM readings WHERE date_time BETWEEN STR_TO_DATE('${from}', '%Y-%m-%d %H:%i:%s') AND STR_TO_DATE('${to}', '%Y-%m-%d %H:%i:%s') ORDER BY id ASC`,
+        (err, res) => {
+            if (err) {
+                result(err, null);
+            } else {
+                result(null, res);
+            }
+        });
+}
+
 module.exports = TakeData;

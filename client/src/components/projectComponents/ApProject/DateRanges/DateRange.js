@@ -5,16 +5,47 @@ import "react-datepicker/dist/react-datepicker.css";
 import { ToggleButtonGroup, Row, Col} from 'react-bootstrap';
 import ToggleButton from "react-bootstrap/ToggleButton";
 import {selectReadings,
+    getReadingsRange,
 } from '../ApFunctions/apFunctions';
+import moment from 'moment';
 class DateRange extends React.Component {
-    state = {
-        startDate: new Date()
-    };
+    constructor(props) {
+        super(props);
 
-    handleChange = date => {
+        this.state = {
+            startDate: new Date(),
+            endDate: new Date(),
+        };
+    }
+
+    setStartDate = date => {
+
         this.setState({
             startDate: date
         });
+
+        let fromDateStr = moment(date).format('YYYY-MM-DD 00:00:00');
+        let toDateStr = moment(this.state.endDate).format('YYYY-MM-DD 23:59:59');
+
+        if (moment(fromDateStr).isAfter(toDateStr))
+        {
+            toDateStr = moment(fromDateStr).format('YYYY-MM-DD 23:59:59');
+        }
+
+        this.props.onDaySelect(getReadingsRange, fromDateStr, toDateStr);
+
+
+    };
+
+    setEndDate = date => {
+
+        this.setState({
+            endDate: date
+        });
+
+        let fromDateStr = moment(this.state.startDate).format('YYYY-MM-DD 00:00:00');
+        let toDateStr = moment(date).format('YYYY-MM-DD 23:59:59');
+        this.props.onDaySelect(getReadingsRange, fromDateStr, toDateStr);
     };
 //
     render() {
@@ -36,12 +67,21 @@ class DateRange extends React.Component {
                         <p>Range</p>
                     <label>From: <DatePicker
                 selected={this.state.startDate}
-                onChange={this.handleChange}
+                maxDate={new Date()}
+                onChange={this.setStartDate}
+                selectsStart
+                startDate={this.state.startDate}
+                endDate={this.state.endDate}
                 className={classes.Pick}
             /></label>
                 <label>To: <DatePicker
-                    selected={this.state.startDate}
-                    onChange={this.handleChange}
+                    selected={this.state.endDate}
+                    maxDate={new Date()}
+                    onChange={this.setEndDate}
+                    selectsEnd
+                    startDate={this.state.startDate}
+                    endDate={this.state.startDate}
+                    minDate={this.state.startDate}
                 /></label>
 
                     </Col>
