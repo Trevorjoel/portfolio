@@ -66,4 +66,13 @@ exports.select_fish = (req, res) => {
 
 };
 
+exports.select_readings_range = (req, res) => {
+    TakeData.selectReadingsRange(req.body.from, req.body.to, (err, data) => {
+        if (err)
+            res.send(err)
+        else
+            res.send({database1: data})
+    })
+}
+
 

@@ -454,3 +454,26 @@ export const getFish = async function() {
     return query;
 }
 
+export const getReadingsRange = async function(from, to){
+    console.log('get readings range');
+
+    const response = await fetch('/api/range',{
+        method: 'POST',
+        headers:
+            {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+        body: JSON.stringify({
+            from: from,
+            to: to,
+        })
+
+    });
+
+    const query = await response.json();
+
+    if (response.status !== 200) throw Error(query.message);
+    return query;
+}
+
