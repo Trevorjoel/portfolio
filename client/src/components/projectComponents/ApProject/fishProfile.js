@@ -1,10 +1,22 @@
-import github from "../../../images/UIHere.8acef598.png";
+import trout from "../../../images/UIHere.8acef598.png";
+import silverPerch from './Assets/output-onlinepngtools.png';
+import barramundi from './Assets/barra.png';
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import React, { useState } from 'react';
 import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 
 const FishProfile = (props) =>{
+    let fishImage;
+    if(props.fishParams.id === 1){
+        fishImage = trout
+
+    }
+    if (props.fishParams.id === 2)
+        fishImage = silverPerch;
+    if (props.fishParams.id === 3)
+        fishImage = barramundi;
+
     const [dropdownOpen, setDropdownOpen] = useState(false);
 
     const toggle = () => setDropdownOpen(prevState => !prevState);
@@ -15,7 +27,7 @@ const FishProfile = (props) =>{
         <Col>
             <img alt="Github icon"
                  className="fish-image"
-                 src={github}/>
+                 src={fishImage}/>
 
             <Dropdown isOpen={dropdownOpen} toggle={toggle}>
                 <DropdownToggle caret>

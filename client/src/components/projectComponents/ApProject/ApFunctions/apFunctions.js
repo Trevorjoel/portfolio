@@ -354,6 +354,8 @@ export const getPreviousTime = async function () {
                 'Content-Type': 'application/json',
             }
 
+    }).catch(()=>{
+        console.log('Error fetching time')
     });
 
 

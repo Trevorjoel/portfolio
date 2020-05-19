@@ -25,11 +25,9 @@ import LinerGraph from './Graphs/LineGraph';
 import TempPie from "./Graphs/PieCharts";
 import HighLow from "./Graphs/DailyHigLow";
 import FishProfile from "./fishProfile";
-import TroutInfo from "./advicePages/TroutInfo"
-import TemperatureInfo from "./advicePages/TemperatureInfo";
 import BackBtn from "../ProjectBackBtn";
 import AdviceContainer from './advicePages/AdviceContainer';
-import {push} from "echarts/src/component/dataZoom/history";
+import SlidersModal from "./sliders/SlidersModal";
 
 // todo: New fish has been added to the database. Plan and code a feature to allow the user to select different fish.
 //         pattern has been created.
@@ -54,7 +52,9 @@ class ApProjectContainer extends Component {
             phCaptureValue: Assets.defaultPh.slice(),
             nh3CaptureValue: Assets.defaultNh3.slice(),
 
-
+            activeSliders: false, // show & hide sliders
+            activeDescription:false, // Show & hide description
+            setColSize: 12,
             tempShowNotification: {tempLowCritical:true, tempLowWarn:true, tempOptimal:false, tempHighWarn:true, tempHighCritical: true},
             phShowNotification: {phLowCritical:true, phLowWarn:true, phOptimal:false, phHighWarn:true, phHighCritical: true},
             nh3ShowNotification: {nh3Optimal:false, nh3HighWarn:true, nh3HighCritical: true},
@@ -77,6 +77,8 @@ class ApProjectContainer extends Component {
         this.getPreviousTime = getPreviousTime.bind(this);
         this.selectAllReadings = selectReadings.bind(this);
         this.getFish = getFish.bind(this);
+        this.handleToggleDescription = this.handleToggleDescription.bind(this);
+        this.handleToggleSliders = this.handleToggleSliders.bind(this);
         //this.selectWeek = selectWeek.bind(this)
 
     }
@@ -137,6 +139,19 @@ class ApProjectContainer extends Component {
                 }
             )
     }
+    handleToggleSliders(){
+        this.setState({
+            activeSliders: !this.state.activeSliders,
+            setColSize: this.state.setColSize === 12 ? 6 : 12
+        })
+    }
+    handleToggleDescription(){
+     this.setState({
+         activeDescription: !this.state.activeDescription,
+
+     })
+    }
+
 
     // todo: pass a function into the DateRange component that changes the state for start/end dates
     componentDidMount() {
@@ -181,48 +196,61 @@ class ApProjectContainer extends Component {
         return (
             <div >
                 <Container className=" sensors-container">
-                    <ProjectsHeader
-                        projectName={Assets.projectName}
-                        projectPurpose={Assets.projectPurpose}
-                        projectDescription={Assets.projectDescription}
-                        projectLearning={Assets.projectLearning}
-                        whatNext={Assets.whatNext}
-                        link1={Assets.link1} link2={Assets.link2} link3={Assets.link3} link4={Assets.link4}
-                        headerStyle={Assets.headerStyle}
-                        titleStyle={Assets.titleStyle}
-                        embedVideo={Assets.embedVideo}
-                    />
-                    <div className='iframe-container'>
 
-                        <iframe width="1202" height="676" src="https://www.youtube.com/embed/YOv1BIEHRS0"
-                                frameBorder="0"
-                                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                                allowFullScreen> </iframe> </div>
-                    <hr className="divider"/>
+                    {this.state.activeDescription &&
+                        <div>
+                            <ProjectsHeader
+                                projectName={Assets.projectName}
+                                projectPurpose={Assets.projectPurpose}
+                                projectDescription={Assets.projectDescription}
+                                projectLearning={Assets.projectLearning}
+                                whatNext={Assets.whatNext}
+                                link1={Assets.link1} link2={Assets.link2} link3={Assets.link3} link4={Assets.link4}
+                                headerStyle={Assets.headerStyle}
+                                titleStyle={Assets.titleStyle}
+                                embedVideo={Assets.embedVideo}
+                            />
+                            <div className='iframe-container'>
+
+                                <iframe width="1202" height="676" src="https://www.youtube.com/embed/YOv1BIEHRS0"
+                                        frameBorder="0"
+                                        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                                        allowFullScreen> </iframe> </div>
+                            <hr className="divider"/>
+                        </div>
+                    }
+                    <Button size="sm" className={classes.ToggleButton} type="button" onClick={this.handleToggleDescription}>
+                        Development Details!
+                    </Button>
                     <div className={classes.ProjectContainer}>
-                    <h2 className="reading-box ">Live System Monitor</h2>
+
+                        <h1 className="reading-box "><strong>Aquaponics System Monitor</strong> (Prototype)</h1>
                     <p className="reading-box row-margin">Receive live alerts and monitor your system from your telephone.
                         <br/>Get the advice you need when you need it.</p>
+
                     <Row >
-                        <Col lg={6}>
+                        {this.state.activeSliders &&
+                        <Col lg={this.state.setColSize}>
+                            <div><SlidersModal/>
                             <h4 className="reading-box">Substitute probe readings</h4>
-                            <p className="reading-box">Adjust the sliders to simulate changes in water quality readings.</p>
-                            <Row >
-                                <Col>
-                                    <div className="sliders-container">
+                            <p className="reading-box">Adjust the sliders to simulate changes in water quality
+                                readings.</p>
+                            <Row className="row-class">
+                                <Col lg={4} className="sluts">
+                                    <div className={classes.SlidersContainer}>
                                         <div className="reading-box"><p>TEMP</p>
 
                                         </div>
                                         <TempSliderVertical
                                             values={this.state.tempValue}
                                             update={this.state.tempUpdate}
-                                           // defaultValues={Assets.defaultTemp}
+                                            // defaultValues={Assets.defaultTemp}
                                             onUpdate={this.onTempUpdate}
                                             onChange={this.onTempChange}
                                         />
                                     </div>
-                                </Col><Col>
-                                <div className="sliders-container ">
+                                </Col><Col lg={4} >
+                                <div className={classes.SlidersContainer}>
                                     <div className="reading-box">
                                         <p>pH</p>
                                     </div>
@@ -235,8 +263,8 @@ class ApProjectContainer extends Component {
                                     />
                                 </div>
                             </Col>
-                                <Col>
-                                    <div className="sliders-container">
+                                <Col lg={4} >
+                                    <div className={classes.SlidersContainer}>
                                         <div className="reading-box">
                                             <p>
                                                 NH<sub>3</sub>
@@ -253,11 +281,14 @@ class ApProjectContainer extends Component {
                                 </Col>
 
                             </Row>
-                        </Col>
-                        <Col lg={6}>
+
+                            </div></Col>
+                        }
+                        <Col lg={this.state.setColSize}>
+
                             <br/>
-                            <h4 className="reading-box">Monitor & troubleshoot your system in real-time</h4>
-                            <p className="reading-box">Find targeted advice to keep your system safe.</p>
+                            <h4 className="reading-box"><strong>Live Monitor</strong></h4>
+                            <p className="reading-box">See the current status of your system</p>
                             <div className={classes.StatusWrapper}>
 
                                 <FishProfile
@@ -268,9 +299,13 @@ class ApProjectContainer extends Component {
                                 {this.tempController(this.state.tempUpdate[0])}
                                 {this.phController(this.state.phUpdate[0])}
                                 {this.nh3Controller(this.state.nh3Update[0])}
-                                <Button color="info" onClick={()=>{
+                              {/*  <Button color="info" onClick={()=>{
                                     this.addReadingsToDB();
-                                }} size="lg" block>Enter readings into database.</Button>
+                                }} size="lg" block>Enter readings into database.</Button>*/}
+                                {  <Button className={classes.TestButton} onClick={()=>{
+                                    this.handleToggleSliders();
+                                }} size="lg" block><h5>Test the app</h5></Button>}
+
                             </div>
 
                         </Col>
@@ -324,6 +359,7 @@ class ApProjectContainer extends Component {
                     </div>
                     </div>
                 </Container>
+
 
            <BackBtn/>
 
