@@ -46,12 +46,12 @@ exports.select_fish_parameters = (req, res) => {
 
 };
 
-exports.select_last_readings = (req, res) => {
-    TakeData.selectLastReadings((err, data) => {
+exports.select_first_last_readings = (req, res) => {
+    TakeData.selectFirstLastReadings((err, data) => {
         if (err)
             res.send(err)
         else
-            res.send({database1: data})
+            res.send({database1:data})
     })
 
 };
