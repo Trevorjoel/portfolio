@@ -165,6 +165,7 @@ class ApProjectContainer extends Component {
                         }
                     );
                     this.setState({readings:updatedReadings})
+                    console.log(from);
                 }
             )
     }
@@ -174,7 +175,7 @@ class ApProjectContainer extends Component {
 
         // When user arrives on the page make sure to arrive at the top of the page
       //  window.scrollTo(0, 0);
-        this.mapReadingsSetState(selectReadings, 169);
+        //this.mapReadingsSetState(selectReadings, 169);
         // own function
         this.getPreviousTime();
       //  this.selectAllReadings()

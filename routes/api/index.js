@@ -59,8 +59,8 @@ router.route('/api/fish')
 router.route('/api/all')
     .post(Aquaponics.select_recent_readings);
 
-router.route('/api/tank')
-    .get(Aquaponics.select_last_readings);
+router.route('/api/minmax')
+    .get(Aquaponics.select_first_last_readings);
 
 router.route('/api/allfish')
     .get(Aquaponics.select_fish);
