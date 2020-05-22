@@ -3,7 +3,7 @@ import notificationSound from '../Assets/stairs.ac905963.mp3'
 import StatusBars from "../StatusBars";
 import React from "react";
 import {NotificationManager} from "react-notifications";
-
+import StatusAccordion from '../StatusAccordion/StatusAcordion';
 const playAlert = (sound) =>{
     let audio = new Audio(sound);
     const start = () => {
@@ -49,7 +49,8 @@ export const tempController = function (temp)  {
                 this.setState({tempShowNotification:{tempLowCritical: false, tempLowWarn: true, tempOptimal: true, tempHighWarn: true, tempHighCritical: true
                     }})
             }
-            return(<div><StatusBars
+            return(<div><StatusAccordion
+                paramName={Assets.paramNameTemp}
                 divStyle={'red-alert'}
                 toggleHandler={this.toggleTempHandler.bind(this)}
                 updatedValue={this.state.tempUpdate[0].toPrecision(2)}
@@ -65,11 +66,13 @@ export const tempController = function (temp)  {
             if(this.state.tempUpdate === this.state.tempCaptureValue && this.state.tempShowNotification.tempLowWarn === true) {
                 console.log('Runs the alert');
                 (this.createNotificationController('warning', Assets.tempLowNotifyWarn, Assets.tempLowTitle))();
+
                 this.setState({tempShowNotification:{tempLowCritical: true, tempLowWarn: false, tempOptimal: true, tempHighWarn: true,  tempHighCritical: true
                     }})
             }
 
-            return <StatusBars
+            return <StatusAccordion
+                paramName={Assets.paramNameTemp}
                 divStyle={'yellow-alert'}
                 toggleHandler={this.toggleTempHandler.bind(this)}
                 updatedValue={this.state.tempUpdate[0].toPrecision(3)}
@@ -89,7 +92,8 @@ export const tempController = function (temp)  {
                     }})
             }
 
-            return <StatusBars
+            return <StatusAccordion
+                paramName={Assets.paramNameTemp}
                 divStyle={'green-alert'}
                 toggleHandler={ this.toggleTempHandler.bind(this)}
                 updatedValue={this.state.tempUpdate[0].toPrecision(3)}
@@ -107,7 +111,8 @@ export const tempController = function (temp)  {
                 this.setState({tempShowNotification:{tempLowCritical: true, tempLowWarn: true, tempOptimal: true, tempHighWarn: false,  tempHighCritical: true
                     }})
             }
-            return <StatusBars
+            return <StatusAccordion
+                paramName={Assets.paramNameTemp}
                 divStyle={'yellow-alert'}
                 toggleHandler={ this.toggleTempHandler.bind(this)}
                 updatedValue={this.state.tempUpdate[0].toPrecision(3)}
@@ -126,7 +131,8 @@ export const tempController = function (temp)  {
                 this.setState({tempShowNotification:{tempLowCritical: true, tempLowWarn: true, tempOptimal: true, tempHighWarn: true,  tempHighCritical: false
                     }})
             }
-            return <StatusBars
+            return <StatusAccordion
+                paramName={Assets.paramNameTemp}
                 divStyle={'red-alert'}
                 toggleHandler={this.toggleTempHandler.bind(this)}
                 updatedValue={this.state.tempUpdate[0].toPrecision(3)}
@@ -157,7 +163,8 @@ export const phController = function(ph) {
                 this.setState({phShowNotification:{phLowCritical: false, phLowWarn: true, phOptimal: true, phHighWarn: true, phHighCritical: true
                     }})
             }
-            return <StatusBars
+            return <StatusAccordion
+                paramName={Assets.paramNamePh}
                 divStyle={'red-alert'}
                 toggleHandler={this.togglePhHandler.bind(this)}
                 updatedValue={this.state.phUpdate[0.].toPrecision(2)}
@@ -174,7 +181,8 @@ export const phController = function(ph) {
                 this.setState({phShowNotification:{phLowCritical: true, phLowWarn: false, phOptimal: true, phHighWarn: true, phHighCritical: true
                     }})
             }
-            return  <StatusBars
+            return  <StatusAccordion
+                paramName={Assets.paramNamePh}
                 divStyle={'yellow-alert'}
                 toggleHandler={this.togglePhHandler.bind(this)}
                 updatedValue={this.state.phUpdate[0.].toPrecision(2)}
@@ -193,7 +201,8 @@ export const phController = function(ph) {
                     }})
             }
 
-            return   <StatusBars
+            return   <StatusAccordion
+                paramName={Assets.paramNamePh}
                 divStyle={'green-alert'}
                 toggleHandler={this.togglePhHandler.bind(this)}
                 updatedValue={this.state.phUpdate[0.].toPrecision(2)}
@@ -210,7 +219,8 @@ export const phController = function(ph) {
                 this.setState({phShowNotification:{phLowCritical: true, phLowWarn: true, phOptimal: true, phHighWarn: false, phHighCritical: true
                     }})
             }
-            return  <StatusBars
+            return  <StatusAccordion
+                paramName={Assets.paramNamePh}
                 divStyle={'yellow-alert'}
                 toggleHandler={this.togglePhHandler.bind(this)}
                 updatedValue={this.state.phUpdate[0.].toPrecision(2)}
@@ -228,7 +238,8 @@ export const phController = function(ph) {
                 this.setState({phShowNotification:{phLowCritical: true, phLowWarn: true, phOptimal: true, phHighWarn: true, phHighCritical: false
                     }})
             }
-            return  <StatusBars
+            return  <StatusAccordion
+                paramName={Assets.paramNamePh}
                 divStyle={'red-alert'}
                 toggleHandler={this.togglePhHandler.bind(this)}
                 updatedValue={this.state.phUpdate[0.].toPrecision(2)}
@@ -260,12 +271,13 @@ export const nh3Controller = function(nh3) {
                 this.setState({nh3ShowNotification:{ nh3Optimal: false, nh3HighWarn: true, nh3HighCritical: true
                     }})
             }
-            return <StatusBars
+            return <StatusAccordion
+                paramName={Assets.nh3TitleOk()}
                 divStyle={'green-alert'}
                 toggleHandler={ this.toggleNh3Handler.bind(this)}
                 updatedValue={this.state.nh3Update[0].toPrecision(2)}
                 symbol={'mg/L'}
-                statusTitle={Assets.nh3TitleOk()}
+                statusTitle={Assets.phOkTitle}
                 adviceToggle={this.state.toggleNh3Advice}
                 adviceText={Assets.nh3Ok}
                 link={'https://portfolio.fullstack-adventure.com'}
@@ -280,12 +292,13 @@ export const nh3Controller = function(nh3) {
                     }})
             }
 
-            return <StatusBars
+            return <StatusAccordion
+                paramName={Assets.nh3TitleOk()}
                 divStyle={'yellow-alert'}
                 toggleHandler={ this.toggleNh3Handler.bind(this)}
                 updatedValue={this.state.nh3Update[0].toPrecision(2)}
                 symbol={'mg/L'}
-                statusTitle={Assets.nh3TitleHigh()}
+                statusTitle={Assets.phHighTitle}
                 adviceToggle={this.state.toggleNh3Advice}
                 adviceText={Assets.nh3Warn}
                 link={'https://portfolio.fullstack-adventure.com'}
@@ -297,12 +310,13 @@ export const nh3Controller = function(nh3) {
                 this.setState({nh3ShowNotification:{ nh3Optimal: true, nh3HighWarn: true, nh3HighCritical: false
                     }})
             }
-            return  <StatusBars
+            return  <StatusAccordion
+                paramName={Assets.nh3TitleOk()}
                 divStyle={'red-alert'}
                 toggleHandler={ this.toggleNh3Handler.bind(this)}
                 updatedValue={this.state.nh3Update[0].toPrecision(2)}
                 symbol={'mg/L'}
-                statusTitle={Assets.nh3TitleHigh()}
+                statusTitle={Assets.phHighTitle}
                 adviceToggle={this.state.toggleNh3Advice}
                 adviceText={Assets.nh3Critical}
                 link={'https://portfolio.fullstack-adventure.com'}

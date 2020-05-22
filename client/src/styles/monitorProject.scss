@@ -102,24 +102,29 @@
 .red-alert {
   background-color: #c8031f;
   cursor: pointer;
-  padding: 10px 0 1px 0;
   margin-bottom: 2px;
+  padding: 10px 10px 10px 10px;
+  -webkit-box-shadow: 0px 0px 10px 1px #f50000;
+  -moz-box-shadow: 0px 0px 10px 1px #f50000;
+  box-shadow: 0px 0px 10px 1px #f50000;
 }
 
 .yellow-alert {
   background-color: #d3b126;
   cursor: pointer;
-  padding: 10px 0 1px 0;
   margin-bottom: 2px;
+  padding: 6px 6px 6px 6px;
 }
 
 .green-alert {
   background-color: #187316;
   cursor: pointer;
-  padding: 10px 0 1px 0;
+  padding: 6px 6px 6px 6px;
   margin-bottom: 2px;
+
 }
 
+/*
 p.alert {
   margin: 0;
-}
+}*/

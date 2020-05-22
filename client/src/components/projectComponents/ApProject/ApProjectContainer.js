@@ -27,6 +27,7 @@ import HighLow from "./Graphs/DailyHigLow";
 import FishProfile from "./fishProfile";
 import BackBtn from "../ProjectBackBtn";
 import AdviceContainer from './advicePages/AdviceContainer';
+import StatusAccordion from './StatusAccordion/StatusAcordion';
 import SlidersModal from "./sliders/SlidersModal";
 
 // todo: New fish has been added to the database. Plan and code a feature to allow the user to select different fish.
@@ -304,25 +305,31 @@ class ApProjectContainer extends Component {
                             <br/>
                             <h4 className="reading-box"><strong>Live Monitor</strong></h4>
                             <p className="reading-box">See the current status of your system</p>
+                            <h3>YOUR SYSTEM</h3>
                             <div className={classes.StatusWrapper}>
 
                                 <FishProfile
-                                    fish={this.state.fish}
+                                    allFish={this.state.fish}
                                     fishParams={this.state.fishParams}
                                     onChange={this.onFishChange}
                                 />
-                                {this.tempController(this.state.tempUpdate[0])}
-                                {this.phController(this.state.phUpdate[0])}
-                                {this.nh3Controller(this.state.nh3Update[0])}
-                              {/*  <Button color="info" onClick={()=>{
-                                    this.addReadingsToDB();
-                                }} size="lg" block>Enter readings into database.</Button>*/}
-                                {  <Button className={classes.TestButton} onClick={()=>{
-                                    this.handleToggleSliders();
-                                }} size="lg" block><h5>Test the app</h5></Button>}
+
 
                             </div>
 
+                            <div className={classes.BarsWrapper}>
+                                <h5>System Parameters</h5>
+                            {this.tempController(this.state.tempUpdate[0])}
+                            {this.phController(this.state.phUpdate[0])}
+                            {this.nh3Controller(this.state.nh3Update[0])}
+                            {/*  <Button color="info" onClick={()=>{
+                                    this.addReadingsToDB();
+                                }} size="lg" block>Enter readings into database.</Button>*/}
+
+                            </div>
+                            {  <Button className={classes.TestButton} onClick={()=>{
+                                this.handleToggleSliders();
+                            }} size="sm" ><p>Test the app</p></Button>}
                         </Col>
 
                     </Row>

@@ -1,10 +1,10 @@
 .ProjectContainer{
     font-family: Arial, Helvetica, sans-serif;
-    background: whitesmoke;
+    background: #151134;
     padding:20px;
     max-width:100%;
     /* width: max-content; */
-    color:black;
+    color:whitesmoke;
     border-radius:15px;
     border:1px solid #550909;
     margin-bottom: 40px;
@@ -16,13 +16,24 @@
             whitesmoke;
     color:
             black;
-    border-radius: 5px;
+    border-radius: 20px 20px 0 0px;
     padding: 30px 0 0 0;
     text-align: center;
     max-width: 650px;
-    margin: auto;
+    margin: 0px auto;
+
     border: 1px solid
     #550909;
+}
+.BarsWrapper{
+    background: whitesmoke;
+    color: black;
+    border-radius: 0 0 20px 20px;
+    padding: 20px 20px 41px 20px;
+    text-align: center;
+    max-width: 650px;
+    margin: auto;
+    border: 1px solid #550909;
 }
 .ToggleButton{
     background: #1b1e21;
