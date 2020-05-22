@@ -430,10 +430,10 @@ export const selectFishType = async function(fishId){
     return query.data;
 }
 
-export const getLastReadings = async function() {
+export const getFirstLastReadings = async function() {
     console.log('get last readings');
 
-    const response = await fetch('/api/tank',{
+    const response = await fetch('/api/minmax',{
         method: 'GET',
         headers:
             {

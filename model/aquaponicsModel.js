@@ -51,9 +51,11 @@ TakeData.selectFishParams = (number, result) =>{
         });
 }
 
-TakeData.selectLastReadings = (result) =>{
+TakeData.selectFirstLastReadings = (result) =>{
 
-    sqlAquaponics.query(`SELECT * FROM readings ORDER BY id DESC LIMIT 1`,
+    sqlAquaponics.query(`(SELECT * FROM readings ORDER BY id LIMIT 1) 
+                         UNION
+                         (SELECT * FROM readings ORDER BY id DESC LIMIT 1)`,
         (err, res) => {
             if (err) {
                 result(err, null);
