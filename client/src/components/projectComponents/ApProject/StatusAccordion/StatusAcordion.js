@@ -31,18 +31,18 @@ const Accordion = (props) => {
                     onClick={toggleContent}>
                 <Row className={classes.TxtLeft}>
 
-                        <Col lg={3} sm={2} xs={2}>
+                        <Col lg={4} sm={2} xs={2}>
                             <div>
                                 <Badge
                                     className={props.divStyle}>
-                                    {/* &nbsp;*/}{props.paramName}
+                                    {/* &nbsp;*/}{props.paramName} {props.statusTitle}
                                 </Badge>
                             </div>
                         </Col>
-                    <Col lg={3} sm={4} xs={4}>
+                   {/* <Col lg={3} sm={4} xs={4}>
                         {props.statusTitle}
-                    </Col>
-                    <Col lg={3} sm={4} xs={4}>
+                    </Col>*/}
+                    <Col lg={5} sm={4} xs={4}>
                      {props.updatedValue} {props.symbol}
                     </Col>
 

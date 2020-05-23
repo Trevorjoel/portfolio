@@ -4,6 +4,7 @@ import StatusBars from "../StatusBars";
 import React from "react";
 import {NotificationManager} from "react-notifications";
 import StatusAccordion from '../StatusAccordion/StatusAcordion';
+import {nh3TitleHigh} from "../Assets/ApProjectAssets";
 const playAlert = (sound) =>{
     let audio = new Audio(sound);
     const start = () => {
@@ -272,12 +273,12 @@ export const nh3Controller = function(nh3) {
                     }})
             }
             return <StatusAccordion
-                paramName={Assets.nh3TitleOk()}
+                paramName={""}
                 divStyle={'green-alert'}
                 toggleHandler={ this.toggleNh3Handler.bind(this)}
                 updatedValue={this.state.nh3Update[0].toPrecision(2)}
                 symbol={'mg/L'}
-                statusTitle={Assets.phOkTitle}
+                statusTitle={Assets.nh3TitleOk()}
                 adviceToggle={this.state.toggleNh3Advice}
                 adviceText={Assets.nh3Ok}
                 link={'https://portfolio.fullstack-adventure.com'}
@@ -293,12 +294,12 @@ export const nh3Controller = function(nh3) {
             }
 
             return <StatusAccordion
-                paramName={Assets.nh3TitleOk()}
+                paramName={""}
                 divStyle={'yellow-alert'}
                 toggleHandler={ this.toggleNh3Handler.bind(this)}
                 updatedValue={this.state.nh3Update[0].toPrecision(2)}
                 symbol={'mg/L'}
-                statusTitle={Assets.phHighTitle}
+                statusTitle={Assets.nh3TitleHigh()}
                 adviceToggle={this.state.toggleNh3Advice}
                 adviceText={Assets.nh3Warn}
                 link={'https://portfolio.fullstack-adventure.com'}
@@ -311,12 +312,12 @@ export const nh3Controller = function(nh3) {
                     }})
             }
             return  <StatusAccordion
-                paramName={Assets.nh3TitleOk()}
+                paramName={""}
                 divStyle={'red-alert'}
                 toggleHandler={ this.toggleNh3Handler.bind(this)}
                 updatedValue={this.state.nh3Update[0].toPrecision(2)}
                 symbol={'mg/L'}
-                statusTitle={Assets.phHighTitle}
+                statusTitle={nh3TitleHigh()}
                 adviceToggle={this.state.toggleNh3Advice}
                 adviceText={Assets.nh3Critical}
                 link={'https://portfolio.fullstack-adventure.com'}

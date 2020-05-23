@@ -101,9 +101,12 @@ export const phHighCritical = 'You have critically high pH. At extremely high pH
     '                            Your system is at risk. Take immediate action.';
 export const phHighNotifyCritical = 'You have critically high pH. TAKE ACTION NOW';
 export function nh3TitleOk() {
-    return <div>NH<sub>3</sub></div>;
+    return <div>NH<sub>3</sub> OK</div>;
 }
 export function nh3TitleHigh() {
+    return <div>NH<sub>3</sub> HIGH</div>;
+}
+export function nh3Title() {
     return <div>NH<sub>3</sub></div>;
 }
 export const nh3Ok = 'Congratulations! Ammonia levels are optimal for {fish species}.';

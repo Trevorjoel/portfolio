@@ -242,7 +242,7 @@ class ApProjectContainer extends Component {
                     <div className={classes.ProjectContainer}>
 
                         <h1 className="reading-box "><strong>Aquaponics System Monitor</strong> (Prototype)</h1>
-                    <p className="reading-box row-margin">Receive live alerts and monitor your system from your telephone.
+                    <p className="reading-box ">Receive live alerts and monitor your system from your telephone.
                         <br/>Get the advice you need when you need it.</p>
 
                     <Row >
@@ -253,7 +253,7 @@ class ApProjectContainer extends Component {
                             <p className="reading-box">Adjust the sliders to simulate changes in water quality
                                 readings.</p>
                             <Row className="row-class">
-                                <Col lg={4} className="sluts">
+                                <Col lg={4} className="">
                                     <div className={classes.SlidersContainer}>
                                         <div className="reading-box"><p>TEMP</p>
 
@@ -337,7 +337,7 @@ class ApProjectContainer extends Component {
                     <hr className="divider"/>
                     <div className="readings-container ">
                         <h2 className="reading-box ">View historical data</h2>
-                        <p className="reading-box row-margin">Track your previous readings to make better decisions for your systems future.</p><br/>
+                        <p className="reading-box ">Track your previous readings to make better decisions for your systems future.</p><br/>
                     </div>
                     <Row className="row-margin ">
 
@@ -346,14 +346,19 @@ class ApProjectContainer extends Component {
                                 click={this.mapReadingsSetState}
                                 onDaySelect={this.mapReadingsRangeSetState}
                             />
+                           {/* todo: pass in number of days or from date to date*/}
+                            <h5 className="reading-box">Hourly temperature readings</h5>
+                            <p>Over {"number of days"} period</p>
                            <LinerGraph readings={this.state.readings}/>
                         </Col>
                         <Col lg={12}><br/>
-                            <p className="reading-box">Temperature readings by category.</p>
+                            <h5 className="reading-box">Temperature readings by alert category</h5>
+                            <p>Over {"number of days"} period</p>
                             <TempPie readings={this.state.readings}/></Col>
                     </Row><Row className="row-margin">
                     <Col lg={12}>
-                        <p className="reading-box">Daily highest and lowest temperatures: 7 day period</p>
+                        <h5 className="reading-box">Highest, lowest and average daily temperatures</h5>
+                        <p>Over {"number of days"} period</p>
                         <HighLow readings={this.state.readings}/>
                     </Col>
                     <Col lg={12}>
