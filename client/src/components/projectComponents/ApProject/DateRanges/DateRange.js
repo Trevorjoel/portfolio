@@ -26,14 +26,14 @@ class DateRange extends React.Component {
             .then( query => {
                     const returnedDates = query.database1.slice();
                     this.setState({
-                        startDate:new Date(returnedDates[1].date_time),
-                        endDate:new Date(returnedDates[1].date_time),
+                        startDate:new Date(moment(returnedDates[1].date_time).startOf('week').subtract(1, 'week')),
+                        endDate:new Date(moment(returnedDates[1].date_time).endOf('week').subtract(1, 'week')),
                         maxDate:new Date(returnedDates[1].date_time),
                         minDate:new Date(returnedDates[0].date_time),
                     })
 
-                let fromStr = moment(returnedDates[1].date_time).format('YYYY-MM-DD 00:00:00');
-                let toStr = moment(returnedDates[1].date_time).format('YYYY-MM-DD 23:59:59');
+                let fromStr = moment(returnedDates[1].date_time).startOf('week').subtract(1, 'week').format('YYYY-MM-DD 00:00:00');;
+                let toStr = moment(returnedDates[1].date_time).endOf('week').subtract(1, 'week').format('YYYY-MM-DD 23:59:59');
 
                 this.props.onDaySelect(getReadingsRange, fromStr, toStr);
                 }
@@ -72,6 +72,44 @@ class DateRange extends React.Component {
         let toDateStr = moment(date).format('YYYY-MM-DD 23:59:59');
         this.props.onDaySelect(getReadingsRange, fromDateStr, toDateStr);
     };
+
+    setPeriodOfDates = period => {
+        let fromPeriod = moment(this.state.maxDate).format('YYYY-MM-DD 00:00:00');
+        let toPeriod = moment(this.state.maxDate).format('YYYY-MM-DD 23:59:59');
+
+        if (period === 'day')
+        {
+            fromPeriod = moment(this.state.maxDate).subtract(1, 'days').format('YYYY-MM-DD 00:00:00');
+            toPeriod = moment(this.state.maxDate).subtract(1, 'days').format('YYYY-MM-DD 23:59:59');
+        }
+        if (period === 'week')
+        {
+            fromPeriod = moment(this.state.maxDate).startOf('week').subtract(1, 'week').format('YYYY-MM-DD 00:00:00');
+            toPeriod = moment(this.state.maxDate).endOf('week').subtract(1, 'week').format('YYYY-MM-DD 23:59:59');
+        }
+        if (period === 'month')
+        {
+            fromPeriod = moment(this.state.maxDate).startOf('month').subtract(1,'month').format('YYYY-MM-DD 00:00:00');
+            toPeriod = moment(this.state.maxDate).endOf('month').subtract(1, 'month').format('YYYY-MM-DD 23:59:59');
+        }
+        if (period === 'year')
+        {
+            fromPeriod = moment(this.state.maxDate).startOf('year').subtract(1, 'year').format('YYYY-MM-DD 00:00:00');
+            toPeriod = moment(this.state.maxDate).endOf('year').subtract(1, 'year').format('YYYY-MM-DD 23:59:59');
+        }
+        if (period === 'all')
+        {
+            fromPeriod = moment(this.state.minDate).format('YYYY-MM-DD 00:00:00');
+        }
+
+        this.props.onDaySelect(getReadingsRange, fromPeriod, toPeriod);
+
+        this.setState({
+            startDate:new Date(fromPeriod),
+            endDate:new Date(toPeriod),
+        })
+
+    } ;
 //
     render() {
         return (
@@ -79,18 +117,19 @@ class DateRange extends React.Component {
                 <Row>
                     <Col lg={6}>
                         <p>Previous</p>
-                <ToggleButtonGroup className={classes.Pick} type="radio" name="options" defaultValue={'day'}>
-                    <ToggleButton value={'day'} onClick={()=>this.props.click(selectReadings,25)} color="primary">Day</ToggleButton>
-                    <ToggleButton value={'week'} onClick={()=>this.props.click(selectReadings,169)} color="primary">Week</ToggleButton>
-                    <ToggleButton value={'month'} onClick={()=>this.props.click(selectReadings,720)} color="primary">Month</ToggleButton>
-                    <ToggleButton value={'year'} onClick={()=>this.props.click(selectReadings,8760)} color="primary">Year</ToggleButton>
-                    <ToggleButton value={'all'} onClick={()=>this.props.click(selectReadings, 1000000)} color="primary">All Time</ToggleButton>
+                <ToggleButtonGroup className={classes.Pick} type="radio" name="options" defaultValue={'week'}>
+                    <ToggleButton value={'day'} onClick={()=>this.setPeriodOfDates('day')} color="primary">Day</ToggleButton>
+                    <ToggleButton value={'week'} onClick={()=>this.setPeriodOfDates('week')} color="primary">Week</ToggleButton>
+                    <ToggleButton value={'month'} onClick={()=>this.setPeriodOfDates('month')} color="primary">Month</ToggleButton>
+                    <ToggleButton value={'year'} onClick={()=>this.setPeriodOfDates('year')} color="primary">Year</ToggleButton>
+                    <ToggleButton value={'all'} onClick={()=>this.setPeriodOfDates('all')} color="primary">All Time</ToggleButton>
                 </ToggleButtonGroup>
 
                     </Col>
                     <Col lg={6}>
                         <p>Range</p>
                     <label>From: <DatePicker
+                dateFormat="dd/MM/yyyy"
                 selected={this.state.startDate}
                 maxDate={this.state.endDate}
                 minDate={this.state.minDate}
@@ -101,6 +140,7 @@ class DateRange extends React.Component {
                 className={classes.Pick}
             /></label>
                 <label>To: <DatePicker
+                    dateFormat="dd/MM/yyyy"
                     selected={this.state.endDate}
                     maxDate={this.state.maxDate}
                     onChange={this.setEndDate}

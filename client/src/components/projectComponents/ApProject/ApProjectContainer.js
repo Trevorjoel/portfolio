@@ -166,7 +166,6 @@ class ApProjectContainer extends Component {
                         }
                     );
                     this.setState({readings:updatedReadings})
-                    console.log(from);
                 }
             )
     }
@@ -343,7 +342,6 @@ class ApProjectContainer extends Component {
 
                         <Col lg={12}>
                             <DateRange
-                                click={this.mapReadingsSetState}
                                 onDaySelect={this.mapReadingsRangeSetState}
                             />
                            {/* todo: pass in number of days or from date to date*/}
