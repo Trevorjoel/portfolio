@@ -1,9 +1,11 @@
 import React from "react";
 import ReactEcharts from "echarts-for-react";
+import moment from "moment";
+
 
 
 const HighLow = (props)=> {
-    const timeData = [];
+    /*const timeData = [];
     const tempData = [];
 
     // Convert time from the JSON format to user readable
@@ -27,19 +29,48 @@ const HighLow = (props)=> {
         timeData.push(timeConverter(reading.date_time))
         tempData.push(reading.temperature)
 
-    });
+    });*/
 
     let highestNumArray = [];
     let lowestNumArray = [];
     let timeArray =[];
-    let highStore =[];
+    /*let highStore =[];
     let averageStore =[];
-    let lowStore = [];
-let averageArray = [];
+    let lowStore = [];*/
+    let averageArray = [];
+    let readingsOnlyDates = [];
+    let tempDateObj = {};
+
+    props.readings.forEach(
+        (element, index) =>{
+            readingsOnlyDates[index] = [moment(element.date_time).format('ddd DD/MM/YY'), element.temperature];
+        }
+    )
+
+    readingsOnlyDates.forEach(function(item, index){
+        if (tempDateObj[item[0]]) {
+            tempDateObj[item[0]].push(item[1]);
+        } else {
+            tempDateObj[item[0]] = [item[1]]; }
+    });
+
+    let resultDateTemp = Object.keys(tempDateObj).map(function(key){
+        timeArray.push(key);
+        return tempDateObj[key];
+    });
+
+    resultDateTemp.forEach(
+        (element, index) =>{
+            highestNumArray.push(Math.max(...element));
+            lowestNumArray.push(Math.min(...element));
+            averageArray.push((element.reduce((a,b) => a + b, 0) / element.length).toFixed(1))
+        }
+    )
+
 
     // Collect 24hrs of temperature readings & create two arrays,
     // highest readings and lowest readings for each 24hr period
-    tempData.forEach(
+    /*tempData.forEach(
         (element, index) =>{
 
             if(index % 24 === 0 && index !== 0){
@@ -61,7 +92,7 @@ let averageArray = [];
             }
            // console.log(averageArray)
         }
-    )
+    )*/
    const getOption = () => ({
 
         legend: {

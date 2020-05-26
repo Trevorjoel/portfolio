@@ -4,7 +4,7 @@ import classes from './DateRange.module.css';
 import "react-datepicker/dist/react-datepicker.css";
 import { ToggleButtonGroup, Row, Col} from 'react-bootstrap';
 import ToggleButton from "react-bootstrap/ToggleButton";
-import {selectReadings,
+import {
     getReadingsRange,
     getFirstLastReadings,
 } from '../ApFunctions/apFunctions';
@@ -32,7 +32,7 @@ class DateRange extends React.Component {
                         minDate:new Date(returnedDates[0].date_time),
                     })
 
-                let fromStr = moment(returnedDates[1].date_time).startOf('week').subtract(1, 'week').format('YYYY-MM-DD 00:00:00');;
+                let fromStr = moment(returnedDates[1].date_time).startOf('week').subtract(1, 'week').format('YYYY-MM-DD 00:00:00');
                 let toStr = moment(returnedDates[1].date_time).endOf('week').subtract(1, 'week').format('YYYY-MM-DD 23:59:59');
 
                 this.props.onDaySelect(getReadingsRange, fromStr, toStr);

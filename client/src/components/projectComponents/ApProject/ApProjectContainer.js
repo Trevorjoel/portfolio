@@ -29,6 +29,7 @@ import BackBtn from "../ProjectBackBtn";
 import AdviceContainer from './advicePages/AdviceContainer';
 import StatusAccordion from './StatusAccordion/StatusAcordion';
 import SlidersModal from "./sliders/SlidersModal";
+import moment from 'moment';
 
 // todo: New fish has been added to the database. Plan and code a feature to allow the user to select different fish.
 //         pattern has been created.
@@ -68,6 +69,8 @@ class ApProjectContainer extends Component {
             fishParams:[],
             fishId:1,
             fish:[],
+            startPeriod: '',
+            endPeriod: '',
         };
         // Bind the imported functions
         this.tempController = tempController.bind(this);
@@ -165,7 +168,11 @@ class ApProjectContainer extends Component {
                             }
                         }
                     );
-                    this.setState({readings:updatedReadings})
+                    this.setState({
+                        readings:updatedReadings,
+                        startPeriod: moment(from).format('DD-MM-YYYY'),
+                        endPeriod: moment(to).format('DD-MM-YYYY'),
+                    })
                 }
             )
     }
@@ -346,17 +353,23 @@ class ApProjectContainer extends Component {
                             />
                            {/* todo: pass in number of days or from date to date*/}
                             <h5 className="reading-box">Hourly temperature readings</h5>
-                            <p>Over {"number of days"} period</p>
-                           <LinerGraph readings={this.state.readings}/>
+                            <p>from {this.state.startPeriod} to {this.state.endPeriod}</p>
+                           <LinerGraph
+                               fishParams={this.state.fishParams}
+                               readings={this.state.readings}
+                           />
                         </Col>
                         <Col lg={12}><br/>
                             <h5 className="reading-box">Temperature readings by alert category</h5>
-                            <p>Over {"number of days"} period</p>
-                            <TempPie readings={this.state.readings}/></Col>
+                            <p>from {this.state.startPeriod} to {this.state.endPeriod}</p>
+                            <TempPie
+                                fishParams={this.state.fishParams}
+                                readings={this.state.readings}
+                            /></Col>
                     </Row><Row className="row-margin">
                     <Col lg={12}>
                         <h5 className="reading-box">Highest, lowest and average daily temperatures</h5>
-                        <p>Over {"number of days"} period</p>
+                        <p>from {this.state.startPeriod} to {this.state.endPeriod}</p>
                         <HighLow readings={this.state.readings}/>
                     </Col>
                     <Col lg={12}>
