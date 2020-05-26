@@ -14,22 +14,22 @@ let tempData=[];
         //tempData.push(reading.temperature)
       //  console.log('Reading: '+ reading.temperature)
         switch (true) {
-            case reading.temperature <= 3 :
+            case reading.temperature <= props.fishParams.temp_low_critical:
                critLow++
                 break;
-            case reading.temperature > 3 && reading.temperature <= 10:
+            case reading.temperature > props.fishParams.temp_low_critical && reading.temperature <= props.fishParams.temp_low_warn:
         //        console.log('reading low warn')
                 wrnLow++
                 break;
-            case reading.temperature > 10 && reading.temperature <= 18:
+            case reading.temperature > props.fishParams.temp_low_warn && reading.temperature <= props.fishParams.temp_high_warn:
        //         console.log('reading optimal')
                 optimal++
                 break;
-            case reading.temperature > 18 && reading.temperature <= 23:
+            case reading.temperature > props.fishParams.temp_high_warn && reading.temperature <= props.fishParams.temp_high_critical:
        //         console.log('reading high warn')
                 wrnHigh++
                 break;
-            case reading.temperature > 23:
+            case reading.temperature > props.fishParams.temp_high_critical:
       //          console.log('reading high crit')
                 critHigh++
                 break;
@@ -57,13 +57,13 @@ let tempData=[];
             formatter: "{a} <br/>{b} : {c} ({d}%)"
         },
         legend: {
-            orient: "horizontal",
+            orient: "vertical",
             left: "left",
             top: 0,
-            data: ["Critical High", "Warning High", "Optimal", "Warning Low", "Critical Low"],
+
             textStyle: {
                 fontFamily: 'akkurta,Inconsolata, monospace',
-                color: '#ccc'
+                color: '#1a1919'
             }
         },
         series: [
@@ -72,14 +72,15 @@ let tempData=[];
                 type: "pie",
 
                 label: {
-                    position: 'outer',
+                    show: false,
+                    position: 'center',
                     alignTo: 'labelLine',
                     margin: 0
                 },
-                radius: '80%',
-                center: ['50%', '58%'],
+                radius: ['60%', '100%'],
+                center: ['50%', '50%'],
               
-                color: ['red', 'yellow', 'green', "yellow", "red"],
+                color: ['#c8031f', '#d3b126', '#187316', "#d3b126", "#c8031f"],
                 
                 data: [
 
@@ -90,7 +91,7 @@ let tempData=[];
                     },
                     {
                         value: wrnHigh,
-                        name: "Warning High",
+                        name: "Advice High",
                         
                     },
 
@@ -100,7 +101,7 @@ let tempData=[];
                     },
                     {
                         value: wrnLow,
-                        name: "Warning Low"
+                        name: "Advice Low"
                     },
                     {
                         value: critLow,
@@ -109,6 +110,11 @@ let tempData=[];
                 ],
                 itemStyle: {
                     emphasis: {
+                        label: {
+                            show: true,
+                            fontSize: '30',
+                            fontWeight: 'bold'
+                        },
                         shadowBlur: 10,
                         shadowOffsetX: 0,
                         shadowColor: "rgba(0, 0, 0, 0.5)"
@@ -120,7 +126,7 @@ let tempData=[];
 
         return (
             <div className="">
-                <ReactEcharts option={getOption()} style={{ height: 400 , width:'100%', background: 'black'}} />
+                <ReactEcharts option={getOption()} style={{ height: 400 , width:'100%', background: 'white'}} />
             </div>
         );
 

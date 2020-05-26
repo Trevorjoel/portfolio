@@ -36,7 +36,43 @@ exports.add_reading = async (req, res) => {
 
 };
 // Under construction
-/*exports.select_fish_parameters = async (req, res) =>
-{
+exports.select_fish_parameters = (req, res) => {
+    TakeData.selectFishParams(req.body.fishId, (err, data) => {
+        if (err)
+            res.send(err)
+        else
+            res.send({data})
+    })
 
-}*/
+};
+
+exports.select_first_last_readings = (req, res) => {
+    TakeData.selectFirstLastReadings((err, data) => {
+        if (err)
+            res.send(err)
+        else
+            res.send({database1:data})
+    })
+
+};
+
+exports.select_fish = (req, res) => {
+    TakeData.selectFish((err, data) => {
+        if (err)
+            res.send(err)
+        else
+            res.send({database1: data})
+    })
+
+};
+
+exports.select_readings_range = (req, res) => {
+    TakeData.selectReadingsRange(req.body.from, req.body.to, (err, data) => {
+        if (err)
+            res.send(err)
+        else
+            res.send({database1: data})
+    })
+}
+
+

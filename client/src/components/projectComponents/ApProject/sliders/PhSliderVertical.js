@@ -22,7 +22,7 @@ class PhSliderVertical extends Component {
                     vertical
                     reversed
                     rootStyle={sliderStyle}
-                    domain={[5, 9.5]}
+                    domain={[5, 10.5]}
                     step={.01}
                     mode={13}
                     onUpdate={this.props.onUpdate}

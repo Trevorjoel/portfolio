@@ -24,7 +24,7 @@ class TempSlider extends Component {
                     vertical
                     reversed
                     rootStyle={sliderStyle}
-                    domain={[0, 25]}
+                    domain={[0, 35]}
                     step={0.5}
                     mode={13}
                     onUpdate={this.props.onUpdate}

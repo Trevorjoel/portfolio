@@ -1,0 +1,14 @@
+.TxtLeft{
+    text-align: left;
+    padding: 4px 0px 4px 0px;
+    background: #dfdfdf;
+    color: #151134;
+    border-radius: 8px 2px 2px 8px;
+    border-left: 1px solid #0c5460;
+    margin: 1px;
+}
+.InnerMessage{
+    background: #e8e8e8;
+    padding: 7px 11px 11px 11px;
+    font-size: initial;
+}

@@ -1,0 +1,65 @@
+.Container{
+    background: whitesmoke;
+    color: #1b1e21;
+    text-align: left;
+    padding:40px;
+    font-family: Arial, Helvetica, sans-serif;
+    margin-bottom: 200px;
+}
+.Flex{
+    display: flex;
+}
+.SubFlex{
+    display: flex;
+    margin: 5px 20px 5px 20px;
+}
+.Icon{
+    margin-left: auto;
+    margin-top: auto;
+    transition: transform 0.7ms ease;
+}
+.Rotate{
+    transform: rotate(90deg);
+}
+.NoRotate{
+    transform: rotate(0deg);
+}
+.Content{
+    margin-left: auto;
+    transition:  max-height .5s ease;
+    overflow: auto;
+
+}
+.SubContent{
+    margin-left: auto;
+    transition: height .7s ease;
+    overflow: hidden;
+}
+.Rotate{
+    transform: rotate(90deg);
+}
+.Button{
+    border: 0px;
+    background: #eeeeee;
+    width: 100%;
+    text-align: left;
+
+}
+.SubButton{
+    border: 0px;
+    background: #eeeeee;
+    width: 100%;
+    text-align: left;
+
+}
+
+.SubButton:hover,  .active{
+    font-weight: bold;
+    background: #ccc;
+
+}
+.Button:hover,  .active{
+    font-weight: bold;
+    background: #ccc;
+
+}

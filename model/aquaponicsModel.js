@@ -37,10 +37,25 @@ TakeData.addReading = (req, result) =>{
             }
         });
 }
-// Under Construction
-/*
-TakeData.selectFishParams = (req, result) =>{
-    sqlAquaponics.query(`SELECT * FROM fish WHERE fish.id = 2`,
+// Select data from table FISH
+
+TakeData.selectFishParams = (number, result) =>{
+
+    sqlAquaponics.query(`SELECT * FROM fish WHERE fish.id = ${number}`,
+        (err, res) => {
+            if (err) {
+                result(err, null);
+            } else {
+                result(null, res[0]);
+            }
+        });
+}
+
+TakeData.selectFirstLastReadings = (result) =>{
+
+    sqlAquaponics.query(`(SELECT * FROM readings ORDER BY id LIMIT 1) 
+                         UNION
+                         (SELECT * FROM readings ORDER BY id DESC LIMIT 1)`,
         (err, res) => {
             if (err) {
                 result(err, null);
@@ -49,7 +64,29 @@ TakeData.selectFishParams = (req, result) =>{
             }
         });
 }
-*/
 
-//         SELECT * FROM fish WHERE fish.id = 2
+TakeData.selectFish = (result) =>{
+
+    sqlAquaponics.query(`SELECT * FROM fish ORDER BY id ASC`,
+        (err, res) => {
+            if (err) {
+                result(err, null);
+            } else {
+                result(null, res);
+            }
+        });
+}
+
+TakeData.selectReadingsRange = (from, to, result) =>{
+
+    sqlAquaponics.query(`SELECT * FROM readings WHERE date_time BETWEEN STR_TO_DATE('${from}', '%Y-%m-%d %H:%i:%s') AND STR_TO_DATE('${to}', '%Y-%m-%d %H:%i:%s') ORDER BY id ASC`,
+        (err, res) => {
+            if (err) {
+                result(err, null);
+            } else {
+                result(null, res);
+            }
+        });
+}
+
 module.exports = TakeData;

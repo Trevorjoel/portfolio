@@ -1,0 +1,21 @@
+.Body{
+    background: whitesmoke ;
+    color: black;
+    font-family: Arial, Helvetica, sans-serif;
+
+}
+.Content{
+    background: #f5f5f500;
+    color: black;
+
+
+}
+
+.Title{
+color: red;
+}
+
+.Center{
+    max-width: 500px;
+    margin: 1.75rem auto;
+}

@@ -3,7 +3,8 @@ import notificationSound from '../Assets/stairs.ac905963.mp3'
 import StatusBars from "../StatusBars";
 import React from "react";
 import {NotificationManager} from "react-notifications";
-
+import StatusAccordion from '../StatusAccordion/StatusAcordion';
+import {nh3TitleHigh} from "../Assets/ApProjectAssets";
 const playAlert = (sound) =>{
     let audio = new Audio(sound);
     const start = () => {
@@ -42,14 +43,15 @@ export const tempController = function (temp)  {
     },5000);
 
     switch (true) {
-        case   temp <= 3  :
+        case   temp <= this.state.fishParams.temp_low_critical  :
             if(this.state.tempUpdate === this.state.tempCaptureValue && this.state.tempShowNotification.tempLowCritical === true) {
                 console.log(this.state.tempShowNotification.tempHighCritical);
                 (this.createNotificationController('error', Assets.tempLowNotifyCritical, Assets.tempLowTitle))();
                 this.setState({tempShowNotification:{tempLowCritical: false, tempLowWarn: true, tempOptimal: true, tempHighWarn: true, tempHighCritical: true
                     }})
             }
-            return(<div><StatusBars
+            return(<div><StatusAccordion
+                paramName={Assets.paramNameTemp}
                 divStyle={'red-alert'}
                 toggleHandler={this.toggleTempHandler.bind(this)}
                 updatedValue={this.state.tempUpdate[0].toPrecision(2)}
@@ -60,16 +62,18 @@ export const tempController = function (temp)  {
                 link={'https://portfolio.fullstack-adventure.com'}
             /></div>);
 
-        case temp > 3 && temp <= 10 : //
+        case temp > this.state.fishParams.temp_low_critical && temp <= this.state.fishParams.temp_low_warn : //
 
             if(this.state.tempUpdate === this.state.tempCaptureValue && this.state.tempShowNotification.tempLowWarn === true) {
                 console.log('Runs the alert');
                 (this.createNotificationController('warning', Assets.tempLowNotifyWarn, Assets.tempLowTitle))();
+
                 this.setState({tempShowNotification:{tempLowCritical: true, tempLowWarn: false, tempOptimal: true, tempHighWarn: true,  tempHighCritical: true
                     }})
             }
 
-            return <StatusBars
+            return <StatusAccordion
+                paramName={Assets.paramNameTemp}
                 divStyle={'yellow-alert'}
                 toggleHandler={this.toggleTempHandler.bind(this)}
                 updatedValue={this.state.tempUpdate[0].toPrecision(3)}
@@ -80,7 +84,7 @@ export const tempController = function (temp)  {
                 link={'https://portfolio.fullstack-adventure.com'}
             />;
 
-        case temp > 10 && temp <= 18 : //
+        case temp > this.state.fishParams.temp_low_warn && temp <= this.state.fishParams.temp_high_warn : //
 
             if(this.state.tempUpdate === this.state.tempCaptureValue && this.state.tempShowNotification.tempOptimal === true) {
                 console.log('Runs the alert');
@@ -89,7 +93,8 @@ export const tempController = function (temp)  {
                     }})
             }
 
-            return <StatusBars
+            return <StatusAccordion
+                paramName={Assets.paramNameTemp}
                 divStyle={'green-alert'}
                 toggleHandler={ this.toggleTempHandler.bind(this)}
                 updatedValue={this.state.tempUpdate[0].toPrecision(3)}
@@ -100,14 +105,15 @@ export const tempController = function (temp)  {
                 link={'https://portfolio.fullstack-adventure.com'}
             />;
 
-        case temp > 18 && temp <= 23 : //
+        case temp > this.state.fishParams.temp_high_warn && temp <= this.state.fishParams.temp_high_critical : //
             if(this.state.tempUpdate === this.state.tempCaptureValue && this.state.tempShowNotification.tempHighWarn === true) {
                 console.log('Runs the alert');
                 (this.createNotificationController('warning', Assets.tempHighNotifyWarn, Assets.tempHighTitle))();
                 this.setState({tempShowNotification:{tempLowCritical: true, tempLowWarn: true, tempOptimal: true, tempHighWarn: false,  tempHighCritical: true
                     }})
             }
-            return <StatusBars
+            return <StatusAccordion
+                paramName={Assets.paramNameTemp}
                 divStyle={'yellow-alert'}
                 toggleHandler={ this.toggleTempHandler.bind(this)}
                 updatedValue={this.state.tempUpdate[0].toPrecision(3)}
@@ -119,14 +125,15 @@ export const tempController = function (temp)  {
             />;
 
 
-        case temp > 23: //
+        case temp > this.state.fishParams.temp_high_critical: //
             if(this.state.tempUpdate === this.state.tempCaptureValue && this.state.tempShowNotification.tempHighCritical === true) {
                 console.log('Runs the alert');
                 (this.createNotificationController('error', Assets.tempHighNotifyCritical, Assets.tempHighTitle))();
                 this.setState({tempShowNotification:{tempLowCritical: true, tempLowWarn: true, tempOptimal: true, tempHighWarn: true,  tempHighCritical: false
                     }})
             }
-            return <StatusBars
+            return <StatusAccordion
+                paramName={Assets.paramNameTemp}
                 divStyle={'red-alert'}
                 toggleHandler={this.toggleTempHandler.bind(this)}
                 updatedValue={this.state.tempUpdate[0].toPrecision(3)}
@@ -150,14 +157,15 @@ export const phController = function(ph) {
         }
     },5000);
     switch (true) {
-        case   ph <= 5.5  :
+        case   ph <= this.state.fishParams.ph_low_critical  :
             if(this.state.phUpdate === this.state.phCaptureValue && this.state.phShowNotification.phLowCritical === true) {
 
                 (this.createNotificationController('error', Assets.phLowNotifyCritical, Assets.phLowTitle))();
                 this.setState({phShowNotification:{phLowCritical: false, phLowWarn: true, phOptimal: true, phHighWarn: true, phHighCritical: true
                     }})
             }
-            return <StatusBars
+            return <StatusAccordion
+                paramName={Assets.paramNamePh}
                 divStyle={'red-alert'}
                 toggleHandler={this.togglePhHandler.bind(this)}
                 updatedValue={this.state.phUpdate[0.].toPrecision(2)}
@@ -167,14 +175,15 @@ export const phController = function(ph) {
                 adviceText={Assets.phLowCritical}
                 link={'https://portfolio.fullstack-adventure.com'}
             />;
-        case ph > 5.5 && ph <= 6.5 : //
+        case ph > this.state.fishParams.ph_low_critical && ph <= this.state.fishParams.ph_low_warn : //
             if(this.state.phUpdate === this.state.phCaptureValue && this.state.phShowNotification.phLowWarn === true) {
 
                 (this.createNotificationController('warning', Assets.phLowNotifyWarn, Assets.phLowTitle))();
                 this.setState({phShowNotification:{phLowCritical: true, phLowWarn: false, phOptimal: true, phHighWarn: true, phHighCritical: true
                     }})
             }
-            return  <StatusBars
+            return  <StatusAccordion
+                paramName={Assets.paramNamePh}
                 divStyle={'yellow-alert'}
                 toggleHandler={this.togglePhHandler.bind(this)}
                 updatedValue={this.state.phUpdate[0.].toPrecision(2)}
@@ -184,7 +193,7 @@ export const phController = function(ph) {
                 adviceText={Assets.phLowWarn}
                 link={'https://portfolio.fullstack-adventure.com'}
             />;
-        case ph > 6.5 && ph <= 8 : //
+        case ph > this.state.fishParams.ph_low_warn && ph <= this.state.fishParams.ph_high_warn : //
 
             if(this.state.phUpdate === this.state.phCaptureValue && this.state.phShowNotification.phOptimal === true) {
 
@@ -193,7 +202,8 @@ export const phController = function(ph) {
                     }})
             }
 
-            return   <StatusBars
+            return   <StatusAccordion
+                paramName={Assets.paramNamePh}
                 divStyle={'green-alert'}
                 toggleHandler={this.togglePhHandler.bind(this)}
                 updatedValue={this.state.phUpdate[0.].toPrecision(2)}
@@ -203,14 +213,15 @@ export const phController = function(ph) {
                 adviceText={Assets.phOk}
                 link={'https://portfolio.fullstack-adventure.com'}
             />;
-        case ph > 8 && ph <= 9 : //
+        case ph > this.state.fishParams.ph_high_warn && ph <= this.state.fishParams.ph_high_critical : //
             if(this.state.phUpdate === this.state.phCaptureValue && this.state.phShowNotification.phHighWarn === true) {
 
                 (this.createNotificationController('warning', Assets.phHighNotifyWarn, Assets.phHighTitle))();
                 this.setState({phShowNotification:{phLowCritical: true, phLowWarn: true, phOptimal: true, phHighWarn: false, phHighCritical: true
                     }})
             }
-            return  <StatusBars
+            return  <StatusAccordion
+                paramName={Assets.paramNamePh}
                 divStyle={'yellow-alert'}
                 toggleHandler={this.togglePhHandler.bind(this)}
                 updatedValue={this.state.phUpdate[0.].toPrecision(2)}
@@ -221,14 +232,15 @@ export const phController = function(ph) {
                 link={'https://portfolio.fullstack-adventure.com'}
             />;
 
-        case ph > 9: //
+        case ph > this.state.fishParams.ph_high_critical: //
             if(this.state.phUpdate === this.state.phCaptureValue && this.state.phShowNotification.phHighCritical === true) {
 
                 (this.createNotificationController('error', Assets.phHighNotifyCritical, Assets.phHighTitle))();
                 this.setState({phShowNotification:{phLowCritical: true, phLowWarn: true, phOptimal: true, phHighWarn: true, phHighCritical: false
                     }})
             }
-            return  <StatusBars
+            return  <StatusAccordion
+                paramName={Assets.paramNamePh}
                 divStyle={'red-alert'}
                 toggleHandler={this.togglePhHandler.bind(this)}
                 updatedValue={this.state.phUpdate[0.].toPrecision(2)}
@@ -248,7 +260,7 @@ export const phController = function(ph) {
 
 export const nh3Controller = function(nh3) {
     switch (true) {
-        case   nh3 <= 0.20  :
+        case   nh3 <= this.state.fishParams.nh3_warn  :
             setInterval(()=>{
                 if (this.state.nh3Update !== this.state.nh3CaptureValue) {
                     this.setState({nh3CaptureValue: this.state.nh3Update});
@@ -260,7 +272,8 @@ export const nh3Controller = function(nh3) {
                 this.setState({nh3ShowNotification:{ nh3Optimal: false, nh3HighWarn: true, nh3HighCritical: true
                     }})
             }
-            return <StatusBars
+            return <StatusAccordion
+                paramName={""}
                 divStyle={'green-alert'}
                 toggleHandler={ this.toggleNh3Handler.bind(this)}
                 updatedValue={this.state.nh3Update[0].toPrecision(2)}
@@ -271,7 +284,7 @@ export const nh3Controller = function(nh3) {
                 link={'https://portfolio.fullstack-adventure.com'}
             />;
 
-        case nh3 > 0.20 && nh3 <= 0.4 : //
+        case nh3 > this.state.fishParams.nh3_warn && nh3 <= this.state.fishParams.nh3_critical : //
 
             if(this.state.nh3Update === this.state.nh3CaptureValue && this.state.nh3ShowNotification.nh3HighWarn === true) {
                 console.log(this.state.tempShowNotification.tempHighCritical);
@@ -280,7 +293,8 @@ export const nh3Controller = function(nh3) {
                     }})
             }
 
-            return <StatusBars
+            return <StatusAccordion
+                paramName={""}
                 divStyle={'yellow-alert'}
                 toggleHandler={ this.toggleNh3Handler.bind(this)}
                 updatedValue={this.state.nh3Update[0].toPrecision(2)}
@@ -290,19 +304,20 @@ export const nh3Controller = function(nh3) {
                 adviceText={Assets.nh3Warn}
                 link={'https://portfolio.fullstack-adventure.com'}
             />;
-        case nh3 > 0.4 : //
+        case nh3 > this.state.fishParams.nh3_critical : //
             if(this.state.nh3Update === this.state.nh3CaptureValue && this.state.nh3ShowNotification.nh3HighCritical === true) {
                 console.log(this.state.tempShowNotification.tempHighCritical);
                 (this.createNotificationController('error', Assets.nh3NotifyCritical, Assets.nh3TitleHigh()))();
                 this.setState({nh3ShowNotification:{ nh3Optimal: true, nh3HighWarn: true, nh3HighCritical: false
                     }})
             }
-            return  <StatusBars
+            return  <StatusAccordion
+                paramName={""}
                 divStyle={'red-alert'}
                 toggleHandler={ this.toggleNh3Handler.bind(this)}
                 updatedValue={this.state.nh3Update[0].toPrecision(2)}
                 symbol={'mg/L'}
-                statusTitle={Assets.nh3TitleHigh()}
+                statusTitle={nh3TitleHigh()}
                 adviceToggle={this.state.toggleNh3Advice}
                 adviceText={Assets.nh3Critical}
                 link={'https://portfolio.fullstack-adventure.com'}
@@ -353,6 +368,9 @@ export const getPreviousTime = async function () {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
             }
+
+    }).catch(()=>{
+        console.log('Error fetching time')
     });
 
 
@@ -369,10 +387,10 @@ export const getPreviousTime = async function () {
     return query;
 
 };
-
+//jhg
 
 export const selectReadings = async function(numberOfReadings){
-console.log(numberOfReadings);
+
     const response = await fetch('/api/all', {
         method: 'POST',
         headers:
@@ -390,10 +408,11 @@ console.log(numberOfReadings);
     return query;
 }
 // Under construction
-/*
-export const selectFishType = async function(numberOfReadings){
-    console.log(numberOfReadings);
-    const response = await fetch('/api/fish', {
+
+export const selectFishType = async function(fishId){
+    console.log('get fish params');
+
+    const response = await fetch('/api/fish',{
         method: 'POST',
         headers:
             {
@@ -401,11 +420,75 @@ export const selectFishType = async function(numberOfReadings){
                 'Content-Type': 'application/json',
             },
         body: JSON.stringify({
-            numberOfReadings: numberOfReadings,
+            fishId: fishId,
         })
-    })
+
+    });
+
+    const query = await response.json();
+
+    if (response.status !== 200) throw Error(query.message);
+    return query.data;
+}
+
+export const getFirstLastReadings = async function() {
+    console.log('get last readings');
+
+    const response = await fetch('/api/minmax',{
+        method: 'GET',
+        headers:
+            {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            }
+
+    });
+
     const query = await response.json();
 
     if (response.status !== 200) throw Error(query.message);
     return query;
-}*/
+}
+
+export const getFish = async function() {
+    console.log('get all fish');
+
+    const response = await fetch('/api/allfish',{
+        method: 'GET',
+        headers:
+            {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            }
+
+    });
+
+    const query = await response.json();
+
+    if (response.status !== 200) throw Error(query.message);
+    return query;
+}
+
+export const getReadingsRange = async function(from, to){
+    console.log('get readings range');
+
+    const response = await fetch('/api/range',{
+        method: 'POST',
+        headers:
+            {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+        body: JSON.stringify({
+            from: from,
+            to: to,
+        })
+
+    });
+
+    const query = await response.json();
+
+    if (response.status !== 200) throw Error(query.message);
+    return query;
+}
+

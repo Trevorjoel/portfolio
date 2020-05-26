@@ -53,11 +53,21 @@ router.route('/api/ap')
     .get(Aquaponics.get_previous_time);
 
 // Under Construction
-/*router.route('/api/fish')
-    .get(Aquaponics.select_fish_parameters)*/
+router.route('/api/fish')
+    .post(Aquaponics.select_fish_parameters);
 
 router.route('/api/all')
     .post(Aquaponics.select_recent_readings);
+
+router.route('/api/minmax')
+    .get(Aquaponics.select_first_last_readings);
+
+router.route('/api/allfish')
+    .get(Aquaponics.select_fish);
+
+router.route('/api/range')
+    .post(Aquaponics.select_readings_range);
+
 export default router;
 
 

@@ -103,36 +103,36 @@ const LineGraph = (props) => {
                   yAxis: '0',
                     itemStyle: {color: 'rgba(253,0,1,0.5)'}
                 }, {
-                    yAxis: '3'
+                    yAxis: props.fishParams.temp_low_critical
                 }], [{
 
-                    yAxis: '23',
+                    yAxis: props.fishParams.temp_high_critical,
                     itemStyle: {color: 'rgba(253,0,1,0.5)'}
 
                 }, {
-                    yAxis: '25'
+                    yAxis: '35'
                 }],
                     [{
 
-                        yAxis: '3',
+                        yAxis: props.fishParams.temp_low_critical,
                         itemStyle: {color: 'rgba(253,253,1,0.5)'}
                     }, {
-                        yAxis: '10'
+                        yAxis: props.fishParams.temp_low_warn
                     }], [{
 
-                    yAxis: '18',
+                    yAxis: props.fishParams.temp_high_warn,
                     itemStyle: {color: 'rgba(253,253,1,0.5)'}
 
                 }, {
-                    yAxis: '23'
+                    yAxis: props.fishParams.temp_high_critical
                 }],
                     [{
 
-                        yAxis: '10',
+                        yAxis: props.fishParams.temp_low_warn,
                         itemStyle: {color: 'rgba(0,127,1,0.4)'}
 
                     }, {
-                        yAxis: '18'
+                        yAxis: props.fishParams.temp_high_warn
                     }]
                 ],
 
