@@ -3,7 +3,6 @@ import ReactEcharts from "echarts-for-react";
 import moment from "moment";
 
 
-
 const HighLow = (props)=> {
     /*const timeData = [];
     const tempData = [];
@@ -38,21 +37,18 @@ const HighLow = (props)=> {
     let averageStore =[];
     let lowStore = [];*/
     let averageArray = [];
-    let readingsOnlyDates = [];
     let tempDateObj = {};
 
     props.readings.forEach(
         (element, index) =>{
-            readingsOnlyDates[index] = [moment(element.date_time).format('ddd DD/MM/YY'), element.temperature];
+
+            if (tempDateObj[moment(element.date_time).format('ddd DD/MM/YY')]) {
+                tempDateObj[moment(element.date_time).format('ddd DD/MM/YY')].push(element.temperature);
+            } else {
+                tempDateObj[moment(element.date_time).format('ddd DD/MM/YY')] = [element.temperature];
+            }
         }
     )
-
-    readingsOnlyDates.forEach(function(item, index){
-        if (tempDateObj[item[0]]) {
-            tempDateObj[item[0]].push(item[1]);
-        } else {
-            tempDateObj[item[0]] = [item[1]]; }
-    });
 
     let resultDateTemp = Object.keys(tempDateObj).map(function(key){
         timeArray.push(key);
