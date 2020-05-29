@@ -62,7 +62,9 @@ const Accordion = (props) => {
                     <p data-aos="fade"
                        data-aos-delay="0"
                        data-aos-duration="1000"> Please see <a href={props.link}> our wiki.</a></p>
-                    <br/> <Button>Modify alerts</Button><br/>
+                    <Button variant="info" size={"sm"}>Modify {
+                        props.paramName === "" ? "nh3" : props.paramName} alerts</Button><br/>
+                    <br/>
                 </div>
             </div>
 

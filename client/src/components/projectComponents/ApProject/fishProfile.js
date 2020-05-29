@@ -66,7 +66,7 @@ const FishProfile = (props) =>{
                     Choose Fish stock
                 </DropdownToggle>
                 <DropdownMenu>
-                    <DropdownItem header>Fish</DropdownItem>
+                    <DropdownItem header><strong>Select Fish</strong></DropdownItem>
                     <DropdownItem divider />
 
                     {
@@ -77,7 +77,11 @@ const FishProfile = (props) =>{
                                 <DropdownItem  onClick={()=>props.onChange(fish.id)}>{fish.fish_name}</DropdownItem>
                             )
                         })}
+                    <DropdownItem divider />
+                    <DropdownItem header><strong>Customise</strong></DropdownItem>
 
+                    <DropdownItem  onClick={()=> console.log('CLICK!')}>Customise {props.fishParams.fish_name} alerts</DropdownItem>
+                    <DropdownItem  onClick={()=> console.log('CLICK!')}>New customised alerts</DropdownItem>
                 </DropdownMenu>
             </Dropdown>
 

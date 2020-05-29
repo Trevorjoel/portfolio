@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, useState} from 'react';
 import * as Assets from './Assets/ApProjectAssets';
 import classes from './ApProjectContainer.module.css';
 import ReadingsTable from "./ReadingsTable";
@@ -27,9 +27,9 @@ import HighLow from "./Graphs/DailyHigLow";
 import FishProfile from "./fishProfile";
 import BackBtn from "../ProjectBackBtn";
 import AdviceContainer from './advicePages/AdviceContainer';
-import StatusAccordion from './StatusAccordion/StatusAcordion';
 import SlidersModal from "./sliders/SlidersModal";
 import moment from 'moment';
+import {Tab, Tabs} from "react-bootstrap";
 
 // todo: New fish has been added to the database. Plan and code a feature to allow the user to select different fish.
 //         pattern has been created.
@@ -37,6 +37,7 @@ import moment from 'moment';
 // Todo: Create the feature for the user to be able to use the date range selector. Component DateRange
 
 class ApProjectContainer extends Component {
+
     constructor(props) {
         super(props);
 
@@ -45,7 +46,6 @@ class ApProjectContainer extends Component {
             tempValue: [],
             phValue: [], // follow this pattern
             nh3Value: [],
-
             tempUpdate: [],
             phUpdate: [],
             nh3Update: [],
@@ -86,6 +86,7 @@ class ApProjectContainer extends Component {
         //this.selectWeek = selectWeek.bind(this)
 
     }
+
     toggleTempHandler() {
         this.setState({
             toggleTempAdvice: !this.state.toggleTempAdvice
@@ -131,8 +132,8 @@ class ApProjectContainer extends Component {
                         nh3Value: [returnedFishParams.nh3_target].slice(),
                         nh3Update: [returnedFishParams.nh3_target].slice(),
                     })
-            }
-        )
+                }
+            )
     }
 
     mapFish = (requestFunction) =>{
@@ -150,10 +151,10 @@ class ApProjectContainer extends Component {
         })
     }
     handleToggleDescription(){
-     this.setState({
-         activeDescription: !this.state.activeDescription,
+        this.setState({
+            activeDescription: !this.state.activeDescription,
 
-     })
+        })
     }
 
 
@@ -181,11 +182,11 @@ class ApProjectContainer extends Component {
     componentDidMount() {
 
         // When user arrives on the page make sure to arrive at the top of the page
-      //  window.scrollTo(0, 0);
+        //  window.scrollTo(0, 0);
         //this.mapReadingsSetState(selectReadings, 169);
         // own function
         this.getPreviousTime();
-      //  this.selectAllReadings()
+        //  this.selectAllReadings()
 
         this.mapFishSetState(selectFishType, this.state.fishId);
         this.mapFish(getFish);
@@ -221,26 +222,26 @@ class ApProjectContainer extends Component {
                 <Container className=" sensors-container">
 
                     {this.state.activeDescription &&
-                        <div>
-                            <ProjectsHeader
-                                projectName={Assets.projectName}
-                                projectPurpose={Assets.projectPurpose}
-                                projectDescription={Assets.projectDescription}
-                                projectLearning={Assets.projectLearning}
-                                whatNext={Assets.whatNext}
-                                link1={Assets.link1} link2={Assets.link2} link3={Assets.link3} link4={Assets.link4}
-                                headerStyle={Assets.headerStyle}
-                                titleStyle={Assets.titleStyle}
-                                embedVideo={Assets.embedVideo}
-                            />
-                            <div className='iframe-container'>
+                    <div>
+                        <ProjectsHeader
+                            projectName={Assets.projectName}
+                            projectPurpose={Assets.projectPurpose}
+                            projectDescription={Assets.projectDescription}
+                            projectLearning={Assets.projectLearning}
+                            whatNext={Assets.whatNext}
+                            link1={Assets.link1} link2={Assets.link2} link3={Assets.link3} link4={Assets.link4}
+                            headerStyle={Assets.headerStyle}
+                            titleStyle={Assets.titleStyle}
+                            embedVideo={Assets.embedVideo}
+                        />
+                        <div className='iframe-container'>
 
-                                <iframe width="1202" height="676" src="https://www.youtube.com/embed/YOv1BIEHRS0"
-                                        frameBorder="0"
-                                        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                                        allowFullScreen> </iframe> </div>
-                            <hr className="divider"/>
-                        </div>
+                            <iframe width="1202" height="676" src="https://www.youtube.com/embed/YOv1BIEHRS0"
+                                    frameBorder="0"
+                                    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                                    allowFullScreen> </iframe> </div>
+                        <hr className="divider"/>
+                    </div>
                     }
                     <Button size="sm" className={classes.ToggleButton} type="button" onClick={this.handleToggleDescription}>
                         Development Details!
@@ -248,162 +249,172 @@ class ApProjectContainer extends Component {
                     <div className={classes.ProjectContainer}>
 
                         <h1 className="reading-box "><strong>Aquaponics System Monitor</strong> (Prototype)</h1>
-                    <p className="reading-box ">Receive live alerts and monitor your system from your telephone.
-                        <br/>Get the advice you need when you need it.</p>
+                        <p className="reading-box ">Receive live alerts and monitor your system from your telephone.
+                            <br/>Get the advice you need when you need it.</p>
 
-                    <Row >
-                        {this.state.activeSliders &&
-                        <Col lg={this.state.setColSize}>
-                            <div><SlidersModal/>
-                            <h4 className="reading-box">Substitute probe readings</h4>
-                            <p className="reading-box">Adjust the sliders to simulate changes in water quality
-                                readings.</p>
-                            <Row className="row-class">
-                                <Col lg={4} className="">
-                                    <div className={classes.SlidersContainer}>
-                                        <div className="reading-box"><p>TEMP</p>
+                        <Row >
+                            {this.state.activeSliders &&
+                            <Col lg={this.state.setColSize}>
+                                <div><SlidersModal/>
+                                    <h4 className="reading-box">Substitute probe readings</h4>
+                                    <p className="reading-box">Adjust the sliders to simulate changes in water quality
+                                        readings.</p>
+                                    <Row className="row-class">
+                                        <Col lg={4} className="">
+                                            <div className={classes.SlidersContainer}>
+                                                <div className="reading-box"><p>TEMP</p>
 
+                                                </div>
+                                                <TempSliderVertical
+                                                    values={this.state.tempValue}
+                                                    update={this.state.tempUpdate}
+                                                    // defaultValues={Assets.defaultTemp}
+                                                    onUpdate={this.onTempUpdate}
+                                                    onChange={this.onTempChange}
+                                                />
+                                            </div>
+                                        </Col><Col lg={4} >
+                                        <div className={classes.SlidersContainer}>
+                                            <div className="reading-box">
+                                                <p>pH</p>
+                                            </div>
+                                            <PhSliderVertical
+                                                values={this.state.phValue}
+                                                update={this.state.phUpdate}
+                                                defaultValues={Assets.defaultPh}
+                                                onUpdate={this.onPhUpdate}
+                                                onChange={this.onPhChange}
+                                            />
                                         </div>
-                                        <TempSliderVertical
-                                            values={this.state.tempValue}
-                                            update={this.state.tempUpdate}
-                                            // defaultValues={Assets.defaultTemp}
-                                            onUpdate={this.onTempUpdate}
-                                            onChange={this.onTempChange}
-                                        />
-                                    </div>
-                                </Col><Col lg={4} >
-                                <div className={classes.SlidersContainer}>
-                                    <div className="reading-box">
-                                        <p>pH</p>
-                                    </div>
-                                    <PhSliderVertical
-                                        values={this.state.phValue}
-                                        update={this.state.phUpdate}
-                                        defaultValues={Assets.defaultPh}
-                                        onUpdate={this.onPhUpdate}
-                                        onChange={this.onPhChange}
+                                    </Col>
+                                        <Col lg={4} >
+                                            <div className={classes.SlidersContainer}>
+                                                <div className="reading-box">
+                                                    <p>
+                                                        NH<sub>3</sub>
+                                                        &nbsp;</p>
+                                                </div>
+                                                <Nh3SliderVertical
+                                                    values={this.state.nh3Value}
+                                                    update={this.state.nh3Update}
+                                                    defaultValues={Assets.defaultNh3}
+                                                    onUpdate={this.onNh3Update}
+                                                    onChange={this.onNh3Change}
+                                                />
+                                            </div>
+                                        </Col>
+
+                                    </Row>
+
+                                </div></Col>
+                            }
+                            <Col lg={this.state.setColSize}>
+
+                                <br/>
+                                <h4 className="reading-box"><strong>Live Monitor</strong></h4>
+                                <p className="reading-box">See the current status of your system</p>
+                                <h3>YOUR SYSTEM</h3>
+                                <div className={classes.StatusWrapper}>
+
+                                    <FishProfile
+                                        allFish={this.state.fish}
+                                        fishParams={this.state.fishParams}
+                                        onChange={this.onFishChange}
                                     />
+
+
                                 </div>
-                            </Col>
-                                <Col lg={4} >
-                                    <div className={classes.SlidersContainer}>
-                                        <div className="reading-box">
-                                            <p>
-                                                NH<sub>3</sub>
-                                                &nbsp;</p>
-                                        </div>
-                                        <Nh3SliderVertical
-                                            values={this.state.nh3Value}
-                                            update={this.state.nh3Update}
-                                            defaultValues={Assets.defaultNh3}
-                                            onUpdate={this.onNh3Update}
-                                            onChange={this.onNh3Change}
-                                        />
-                                    </div>
-                                </Col>
 
-                            </Row>
-
-                            </div></Col>
-                        }
-                        <Col lg={this.state.setColSize}>
-
-                            <br/>
-                            <h4 className="reading-box"><strong>Live Monitor</strong></h4>
-                            <p className="reading-box">See the current status of your system</p>
-                            <h3>YOUR SYSTEM</h3>
-                            <div className={classes.StatusWrapper}>
-
-                                <FishProfile
-                                    allFish={this.state.fish}
-                                    fishParams={this.state.fishParams}
-                                    onChange={this.onFishChange}
-                                />
-
-
-                            </div>
-
-                            <div className={classes.BarsWrapper}>
-                                <h5>System Parameters</h5>
-                            {this.tempController(this.state.tempUpdate[0])}
-                            {this.phController(this.state.phUpdate[0])}
-                            {this.nh3Controller(this.state.nh3Update[0])}
-                            {/*  <Button color="info" onClick={()=>{
+                                <div className={classes.BarsWrapper}>
+                                    <h5>System Parameters</h5>
+                                    {this.tempController(this.state.tempUpdate[0])}
+                                    {this.phController(this.state.phUpdate[0])}
+                                    {this.nh3Controller(this.state.nh3Update[0])}
+                                    {/*  <Button color="info" onClick={()=>{
                                     this.addReadingsToDB();
                                 }} size="lg" block>Enter readings into database.</Button>*/}
 
-                            </div>
-                            {  <Button className={classes.TestButton} onClick={()=>{
-                                this.handleToggleSliders();
-                            }} size="sm" ><p>Test the app</p></Button>}
-                        </Col>
+                                </div>
+                                {  <Button className={classes.TestButton} onClick={()=>{
+                                    this.handleToggleSliders();
+                                }} size="sm" ><p>Test the app</p></Button>}
+                            </Col>
 
-                    </Row>
-                    <hr className="divider"/>
-                    <div className="readings-container ">
-                        <h2 className="reading-box ">View historical data</h2>
-                        <p className="reading-box ">Track your previous readings to make better decisions for your systems future.</p><br/>
-                    </div>
-                    <Row className="row-margin ">
+                        </Row>
+                        <hr className="divider"/>
+                        <div className="readings-container ">
+                            <h2 className="reading-box ">View historical data</h2>
+                            <p className="reading-box ">Track your previous readings to make better decisions for your systems future.</p><br/>
+                        </div>
+                        <DateRange
+                            onDaySelect={this.mapReadingsRangeSetState}
+                        />
+                        <Tabs defaultActiveKey="temp" id="uncontrolled-tab-example">
+                            <Tab eventKey="temp" title="Temperature - History" style={{background: "white", color:"black"}}>
+                                <Row className=" ">
+                                    <Col lg={12}>
+                                        {/* todo: pass in number of days or from date to date*/}
+                                        <h5 className="reading-box">Hourly temperature readings</h5>
+                                        <p>from {this.state.startPeriod} to {this.state.endPeriod}</p>
+                                        <LinerGraph
+                                            fishParams={this.state.fishParams}
+                                            readings={this.state.readings}
+                                        />
+                                    </Col>
+                                    <Col lg={12}><br/>
+                                        <h5 className="reading-box">Temperature readings by alert category</h5>
+                                        <p>from {this.state.startPeriod} to {this.state.endPeriod}</p>
+                                        <TempPie
+                                            fishParams={this.state.fishParams}
+                                            readings={this.state.readings}
+                                        /></Col>
+                                </Row>
+                                <Row className="row-margin">
+                                    <Col lg={12}>
+                                        <h5 className="reading-box">Highest, lowest and average daily temperatures</h5>
+                                        <p>from {this.state.startPeriod} to {this.state.endPeriod}</p>
+                                        <HighLow readings={this.state.readings}/>
+                                    </Col>
 
-                        <Col lg={12}>
-                            <DateRange
-                                onDaySelect={this.mapReadingsRangeSetState}
-                            />
-                           {/* todo: pass in number of days or from date to date*/}
-                            <h5 className="reading-box">Hourly temperature readings</h5>
-                            <p>from {this.state.startPeriod} to {this.state.endPeriod}</p>
-                           <LinerGraph
-                               fishParams={this.state.fishParams}
-                               readings={this.state.readings}
-                           />
-                        </Col>
-                        <Col lg={12}><br/>
-                            <h5 className="reading-box">Temperature readings by alert category</h5>
-                            <p>from {this.state.startPeriod} to {this.state.endPeriod}</p>
-                            <TempPie
-                                fishParams={this.state.fishParams}
-                                readings={this.state.readings}
-                            /></Col>
-                    </Row><Row className="row-margin">
-                    <Col lg={12}>
-                        <h5 className="reading-box">Highest, lowest and average daily temperatures</h5>
-                        <p>from {this.state.startPeriod} to {this.state.endPeriod}</p>
-                        <HighLow readings={this.state.readings}/>
-                    </Col>
-                    <Col lg={12}>
+                                </Row>
+                            </Tab>
+                            <Tab eventKey="ph" title="pH - History">
+                                <h1>Coming soon!</h1>
+                            </Tab>
+                                <Tab eventKey="nh3" title="Nh3 - History">
+                                    <h1>Coming soon!</h1>
 
-                    </Col>
-                </Row>
-                    <Row/>
-                    <hr className="divider"/>
-                    <AdviceContainer />
+                            </Tab>
+                        </Tabs>
 
-                    <Row>
+                        <Row/>
+                        <hr className="divider"/>
+                        <AdviceContainer />
 
-                        <Col lg={6}>
+                        <Row>
 
-                        </Col>
-                    </Row>
-                    <ReadingsTable readings={this.state.readings}/>
-                    <div className="project-icons">
-                        <a target="_blank"
-                           rel="noopener noreferrer"
-                           title="See the code"
-                           className="footer-links"
-                           href="https://github.com/Trevorjoel/portfolio/tree/master/client/src/components/projectComponents/sliders">
-                            <img alt="Github icon"
-                                 className="App-logo footer-icons"
-                                 src={github}/>
-                        </a>
-                        <p>Code for this project.</p>
-                    </div>
+                            <Col lg={6}>
+
+                            </Col>
+                        </Row>
+                        {/*<ReadingsTable readings={this.state.readings}/>*/}
+                        <div className="project-icons">
+                            <a target="_blank"
+                               rel="noopener noreferrer"
+                               title="See the code"
+                               className="footer-links"
+                               href="https://github.com/Trevorjoel/portfolio/tree/master/client/src/components/projectComponents/sliders">
+                                <img alt="Github icon"
+                                     className="App-logo footer-icons"
+                                     src={github}/>
+                            </a>
+                            <p>Code for this project.</p>
+                        </div>
                     </div>
                 </Container>
 
 
-           <BackBtn/>
+                <BackBtn/>
 
                 <NotificationContainer/>
             </div>

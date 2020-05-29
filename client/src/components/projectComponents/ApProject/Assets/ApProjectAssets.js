@@ -107,7 +107,7 @@ export function nh3TitleHigh() {
     return <div>NH<sub>3</sub> HIGH</div>;
 }
 export function nh3Title() {
-    return <div>NH<sub>3</sub></div>;
+    return <p>NH<sub>3</sub></p>;
 }
 export const nh3Ok = 'Congratulations! Ammonia levels are optimal for {fish species}.';
 
