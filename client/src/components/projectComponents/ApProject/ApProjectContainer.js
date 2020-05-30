@@ -30,6 +30,8 @@ import AdviceContainer from './advicePages/AdviceContainer';
 import SlidersModal from "./sliders/SlidersModal";
 import moment from 'moment';
 import {Tab, Tabs} from "react-bootstrap";
+import SettingsContainer from "./Settings/SettingsContainer";
+
 
 // todo: New fish has been added to the database. Plan and code a feature to allow the user to select different fish.
 //         pattern has been created.
@@ -393,8 +395,9 @@ class ApProjectContainer extends Component {
 
                         <Row>
 
-                            <Col lg={6}>
 
+                             <Col lg={12}>
+                               <SettingsContainer readings={this.state}/>
                             </Col>
                         </Row>
                         {/*<ReadingsTable readings={this.state.readings}/>*/}
