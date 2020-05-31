@@ -35,13 +35,15 @@ class SettingsCustom extends React.Component  {
         this.delayData = this.delayData.bind(this);
 
     }
-
+/*
+*  The following handle change pattern is something to remember
+* */
     handleChange(event) {    this.setState({
         [event.target.name] : event.target.value
     });  }
 
     handleSubmit(event) {
-        alert('A name was submitted: ' + this.state.value);
+        alert('Smash this into the BD TempLowCrit: ' + this.state.tempLowCrit);
         event.preventDefault();
     }
 
@@ -90,24 +92,23 @@ delayData(){
                     <p className={classes.Critical}>Low Critical </p>
                     <input cols="3" min="0" max="35" step=".5" type="range" name={'tempLowCrit'} value={this.state.tempLowCrit} onChange={this.handleChange} />
                     <p></p><p><strong>{this.state.tempLowCrit}</strong></p> </label>
-                        {console.log(this.props.readings.fishParams.temp_low_critical)}
                         <label>
                             <p className={classes.Advice}>Low Advice</p>
                             <input cols="3" min="0" max="35" step=".5" type="range" name={'tempLowWarn'}value={this.state.tempLowWarn} onChange={this.handleChange} />
                             <p><strong>{this.state.tempLowWarn}</strong></p> </label>
                         <label>
                             <p className={classes.Optimal}>Target</p>
-                            <input cols="3" min="0" max="35" step=".5" type="range" value={this.state.value} onChange={this.handleChange} />
-                            <p>{this.state.value}</p> </label>
+                            <input cols="3" min="0" max="35" step=".5" type="range" name={'tempTarget'} value={this.state.tempTarget} onChange={this.handleChange} />
+                            <p><strong>{this.state.tempTarget}</strong></p> </label>
                         <label>
                             <p className={classes.Advice}>High Advice</p>
-                            <input cols="3" min="0" max="35" step=".5" type="range" value={this.state.value} onChange={this.handleChange} />
-                            <p>{this.state.value}</p> </label>
+                            <input cols="3" min="0" max="35" step=".5" type="range" name={'tempHighWarn'} value={this.state.tempHighWarn} onChange={this.handleChange} />
+                            <p><strong>{this.state.tempHighWarn}</strong></p> </label>
 
                         <label>
                             <p className={classes.Critical}>High Critical</p>
-                            <input cols="3" min="0" max="35" step=".5" type="range" value={this.state.value} onChange={this.handleChange} />
-                            <p>{this.state.value}</p> </label>
+                            <input cols="3" min="0" max="35" step=".5" type="range" name={'tempHighCrit'} value={this.state.tempHighCrit} onChange={this.handleChange} />
+                            <p><strong>{this.state.tempHighCrit}</strong></p> </label>
                     </Col>
                     <Col lg={4}>
                         <h4>pH</h4>

@@ -36,7 +36,7 @@ import SettingsContainer from "./Settings/SettingsContainer";
 // todo: New fish has been added to the database. Plan and code a feature to allow the user to select different fish.
 //         pattern has been created.
 
-// Todo: Create the feature for the user to be able to use the date range selector. Component DateRange
+// Todo: Create id's to navigate the demo app, example: to the caring for trout pages
 
 class ApProjectContainer extends Component {
 
