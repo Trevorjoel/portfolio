@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 
 
 import {Handles, Rail, Slider, Ticks, Tracks} from 'react-compound-slider';
-
+const values = [3, 10,15, 20];
 
 class TempSlider extends Component {
     
@@ -36,7 +36,7 @@ class TempSlider extends Component {
                     mode={13}
                     onUpdate={this.props.onUpdate}
                     onChange={this.props.onChange}
-                    values={this.props.values}
+                    values={values}
                 >
                     
                     <Rail>
