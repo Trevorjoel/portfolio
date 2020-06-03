@@ -18,12 +18,7 @@ const railStyle = {
     height: 8,
     borderRadius: 4,
     cursor: "pointer",
-    backgroundColor: () =>{
-        const backgrounds = ["red","yellow","green", 'yellow'];
-        backgrounds.map( (color, index)=>{
-            return backgrounds[color]
-        })
-    }
+    backgroundColor:"red"
 };
 
 
@@ -80,7 +75,6 @@ class SettingsTemp extends Component {
                                         source={source}
                                         target={target}
                                         getTrackProps={getTrackProps}
-                                        style={{backgroundColor: backgrounds[0]}}
 
                                     />
                                 ))}
