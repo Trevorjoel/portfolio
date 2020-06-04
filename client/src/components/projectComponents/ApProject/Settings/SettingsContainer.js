@@ -28,18 +28,6 @@ class SettingsCustom extends React.Component  {
         };
         this.delayData = this.delayData.bind(this);
     }
-/*
-*  The following handle change pattern is something to remember
-* */
-    handleChange(event) {    this.setState({
-        [event.target.name] : event.target.value
-    });  }
-
-    handleSubmit(event) {
-        alert('Smash this into the BD TempLowCrit: ' + this.state.tempLowCrit);
-        event.preventDefault();
-    }
-
 
  componentDidMount(){
 
@@ -49,13 +37,14 @@ class SettingsCustom extends React.Component  {
     }
 
 delayData(){
-            setTimeout(() => {
+console.log('CLick')
+            setInterval(() => {
 
                 if (this.props.readings.fishParams.temp_low_critical === undefined) {
 
                     console.log('Undefined');
                 } else if(isNumeric(this.props.readings.fishParams.temp_low_critical)) {
-
+                    console.log('Setting State');
                     this.setState({
                         tempLowCrit: this.props.readings.fishParams.temp_low_critical,
                         tempLowWarn: this.props.readings.fishParams.temp_low_warn,
@@ -74,13 +63,13 @@ delayData(){
 
         return (
             <div className={classes.Container}>
-                <h2 >Change Alert Settings</h2>
                 <h3>Change Alerts for {this.state.fishName}</h3>
-                <h3>Temperature</h3>
+           <br/>
 <SettingsTemp lowCrit={this.state.tempLowCrit}
               lowWarn={this.state.tempLowWarn}
               highWarn={this.state.tempHighWarn}
               highCrit={this.state.tempHighCrit}
+              reset={()=>{this.delayData()}}
 
 />
 

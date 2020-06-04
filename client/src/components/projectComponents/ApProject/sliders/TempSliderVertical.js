@@ -72,6 +72,7 @@ class TempSlider extends Component {
                         )}
                     </Ticks>
                 </Slider>
+
             </div>
         )
     }

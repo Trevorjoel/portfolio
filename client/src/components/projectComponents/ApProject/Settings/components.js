@@ -92,15 +92,15 @@ Handle.propTypes = {
 // *******************************************************
 // TRACK COMPONENT
 // *******************************************************
-export function Track({ source, target, getTrackProps }) {
-
+export function Track({ source, target, getTrackProps, index }) {
+const color = ["yellow", "green", "yellow"];
     return (
         <div
             style={{
                 position: "absolute",
                 height: 8,
                 zIndex: 1,
-                backgroundColor: "red",
+                backgroundColor: color[index] ,
                 borderRadius: 4,
                 cursor: "pointer",
                 left: `${source.percent}%`,
