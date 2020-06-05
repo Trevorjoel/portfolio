@@ -33,16 +33,13 @@ export class Handle extends Component {
                             marginTop: "-30px"
                         }}
                     > <div style={{ fontFamily: 'Roboto', fontSize: 14, marginTop: -25, background: 'black', color:'white', padding: '10px' }}>
-                       Param: 'Something' {value}
+                       Temp: {value}
                     </div>
-                        <div className="tooltip">
-                            <span className="tooltiptext">Value: {value}</span>
-
-                        </div>
 
                     </div>
                 ) : null}
                 <div
+                    name="temp-settings-slider"
                     role="slider"
                     aria-valuemin={min}
                     aria-valuemax={max}

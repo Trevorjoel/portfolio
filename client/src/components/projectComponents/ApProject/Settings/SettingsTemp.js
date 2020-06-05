@@ -4,7 +4,8 @@ import { Slider, Rail, Handles, Tracks, Ticks } from "react-compound-slider";
 import { Handle, Track, Tick } from "./components";
 import Button from "react-bootstrap/Button";
 import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col"; // example render components - source below
+import Col from "react-bootstrap/Col";
+import classes from './SettingsContainer.module.css';
 // todo: Note there's a lot that needs fixing with regards  to passing state from the ApProjectContainer.js
 const sliderStyle = {
     position: "relative",
@@ -23,108 +24,84 @@ const railStyle = {
 
 
 const domain = [0 , 100];
-const defaultValues = [0, 0, 0, 0];
+const defaultValues = [3, 10, 18, 23];
 
 class SettingsTemp extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            values: defaultValues.slice(),
-            update: defaultValues.slice(),
-        }
-        this.reset = this.reset.bind(this);
-    }
 
-
-    onUpdate = update => {
-        this.setState({ update })
-    }
-
-    onChange = values => {
-        this.setState({ values })
-    }
-
-    reset = () => {
-      console.log('Resetting values from DB')
-
-    }
     render(props) {
 
-        return (
-            <Row>
-                <Col lg={12}>
-                    <h4>Temperature</h4><h6>VAL: {this.state.values[0]} VAL: {this.state.values[1]} VAL: {this.state.values[2]} VAL: {this.state.values[3]}</h6>
-            <div style={{ margin: "30px 10%" , height: 60, width: "80%" }}>
-                <Slider
-                    mode={2}
-                    step={.5}
-                    domain={[this.props.lowCrit - 5, this.props.highCrit + 5]}
-                    rootStyle={sliderStyle}
-                    onUpdate={this.onUpdate}
-                    onChange={this.onChange}
-                    values={[this.props.lowCrit, this.props.lowWarn,this.props.highWarn,this.props.highCrit ]}
-                    reset={this.reset}
-                >
-                    <Rail>
-                        {({ getRailProps }) => (
-                            <div style={railStyle} {...getRailProps()} />
-                        )}
-                    </Rail>
-                    <Handles>
-                        {({ handles, getHandleProps }) => (
-                            <div className="slider-handles">
-                                {handles.map(handle => (
-                                    <Handle
-                                        key={handle.id}
-                                        handle={handle}
-                                        getHandleProps={getHandleProps}
-                                        domain={domain}
-                                    />
-                                ))}
-                            </div>
-                        )}
-                    </Handles>
-                    <Tracks left={false} right={false}>
-                        {({ tracks, getTrackProps }) => (
+        return <Row style={{textAlign: "center", background:"#d9d9d9 none repeat scroll 0% 0%", borderRadius: "50px", color:"black"}}>
 
-
-                            <div className="slider-tracks">
-                                {
-
-                                    tracks.map(({ id, source, target }, index ) => (
-
-                                    <Track
-                                        key={id}
-                                        source={source}
-                                        target={target}
-                                        getTrackProps={getTrackProps}
-                                        index={index}
-
-                                    />
-                                ))}
-                            </div>
-                        )}
-                    </Tracks>
-                    <Ticks count={10}>
-                        {({ ticks }) => (
-                            <div className="slider-ticks">
-                                {ticks.map(tick => (
-                                    <Tick key={tick.id} tick={tick} count={ticks.length} />
-                                ))}
-                            </div>
-                        )}
-                    </Ticks>
-                </Slider>
-
-            </div>
-
-
-                    <Button style={{margin: "20px 0%"}} >Enter</Button>
-                    <Button style={{margin: "0px 0%"}} onClick={this.reset}>Reset</Button>
-
+            <Col lg={2} style={{textAlign: "center", background:"#2f3c2f14 none repeat scroll 0% 0%", borderRadius:"50px"}}>
+                <h3 style={{textAlign: "center", marginTop: "10px"}}>Temperature</h3>
+                <Button variant="secondary" style={{margin: "10px 2%"}} onClick={this.props.reset}>Reset</Button>
+                <Button style={{margin: "10px 2%"}} >Enter</Button>
+                <p><h6>Set: {this.props.update[0]} | {this.props.update[1]} | {this.props.update[2]} | {this.props.update[3]}</h6></p>
             </Col>
-            </Row>
-        );
+                <Col lg={10}>
+
+        <div style={{ margin: "20px 8%" , height: 60, width: "85%" }}>
+            <Slider
+                mode={2}
+                step={.5}
+                domain={[this.props.values[0] - 5 ,this.props.values[3] + 5]}  // this.props.values[0] - 5 ,this.props.values[3] + 5] this causes a crash sometimes due to the API call
+                rootStyle={sliderStyle}
+                onUpdate={this.props.onUpdate}
+                onChange={this.props.onChange}
+                values={this.props.values}
+
+            >
+                {console.log(this.props.values)}
+                <Rail>
+                    {({ getRailProps }) => <div style={railStyle} {...getRailProps()} />}
+                </Rail>
+                <Handles>
+
+                    {({ handles, getHandleProps }) => <div className="slider-handles">
+
+                            {handles.map(handle => (
+
+                                <Handle
+                                    key={handle.id}
+                                    handle={handle}
+                                    getHandleProps={getHandleProps}
+                                    domain={domain}
+                                />
+
+                            ))}
+                        </div>}
+
+                </Handles>
+                <Tracks left={false} right={false}>
+                    {({ tracks, getTrackProps }) => <div className="slider-tracks">
+                            {
+
+                                tracks.map(({ id, source, target }, index ) => (
+
+                                <Track
+                                    key={id}
+                                    source={source}
+                                    target={target}
+                                    getTrackProps={getTrackProps}
+                                    index={index}
+
+                                />
+                            ))}
+                        </div>}
+                </Tracks>
+                <Ticks count={10}>
+                    {({ ticks }) => <div className="slider-ticks">
+                            {ticks.map(tick => (
+                                <Tick key={tick.id} tick={tick} count={ticks.length} />
+                            ))}
+                        </div>}
+                </Ticks>
+            </Slider>
+
+        </div>
+
+        </Col>
+        </Row>;
     }
 }
 

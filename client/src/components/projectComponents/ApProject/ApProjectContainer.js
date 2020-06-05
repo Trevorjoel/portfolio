@@ -1,16 +1,16 @@
-import React, {Component, useState} from 'react';
+import React, {Component} from 'react';
 import * as Assets from './Assets/ApProjectAssets';
 import classes from './ApProjectContainer.module.css';
-import ReadingsTable from "./ReadingsTable";
-import {tempController,
-    phController,
-    nh3Controller,
-    createNotificationController,
+import {
     addReadingsToDB,
-    getPreviousTime,
-    selectReadings,
-    selectFishType,
+    createNotificationController,
     getFish,
+    getPreviousTime,
+    nh3Controller,
+    phController,
+    selectFishType,
+    selectReadings,
+    tempController,
 } from './ApFunctions/apFunctions';
 import DateRange from "./DateRanges/DateRange";
 import {NotificationContainer} from 'react-notifications';
@@ -18,7 +18,7 @@ import 'react-notifications/lib/notifications.css';
 import TempSliderVertical from "./sliders/TempSliderVertical";
 import PhSliderVertical from "./sliders/PhSliderVertical";
 import Nh3SliderVertical from "./sliders/Nh3SliderVertical";
-import { Button, Col, Container, Row} from 'reactstrap';
+import {Button, Col, Container, Row} from 'reactstrap';
 import ProjectsHeader from '../ProjectsHeader'
 import github from "../../../images/hiclipart.com.718cad62.png";
 import LinerGraph from './Graphs/LineGraph';
@@ -30,8 +30,8 @@ import AdviceContainer from './advicePages/AdviceContainer';
 import SlidersModal from "./sliders/SlidersModal";
 import moment from 'moment';
 import {Tab, Tabs} from "react-bootstrap";
-import SettingsContainer from "./Settings/SettingsContainer";
-
+import SettingsTemp from "./Settings/SettingsTemp";
+import settings_classes from './Settings/SettingsContainer.module.css';
 
 // todo: New fish has been added to the database. Plan and code a feature to allow the user to select different fish.
 //         pattern has been created.
@@ -51,26 +51,39 @@ class ApProjectContainer extends Component {
             tempUpdate: [],
             phUpdate: [],
             nh3Update: [],
+            tempSettingsUpdate: [],
+            tempSettingsValue: [0, 0, 0, 0], // 0 0 0 0 Prevents error in the settings component domain fields
             // Used in the alert feature setTimeOut
             tempCaptureValue: Assets.defaultTemp.slice(),
             phCaptureValue: Assets.defaultPh.slice(),
             nh3CaptureValue: Assets.defaultNh3.slice(),
-
             activeSliders: false, // show & hide sliders
-            activeDescription:false, // Show & hide description
+            activeDescription: false, // Show & hide description
             setColSize: 12,
-            tempShowNotification: {tempLowCritical:true, tempLowWarn:true, tempOptimal:false, tempHighWarn:true, tempHighCritical: true},
-            phShowNotification: {phLowCritical:true, phLowWarn:true, phOptimal:false, phHighWarn:true, phHighCritical: true},
-            nh3ShowNotification: {nh3Optimal:false, nh3HighWarn:true, nh3HighCritical: true},
+            tempShowNotification: {
+                tempLowCritical: true,
+                tempLowWarn: true,
+                tempOptimal: false,
+                tempHighWarn: true,
+                tempHighCritical: true
+            },
+            phShowNotification: {
+                phLowCritical: true,
+                phLowWarn: true,
+                phOptimal: false,
+                phHighWarn: true,
+                phHighCritical: true
+            },
+            nh3ShowNotification: {nh3Optimal: false, nh3HighWarn: true, nh3HighCritical: true},
             togglePhAdvice: false,
             toggleTempAdvice: false,
             toggleNh3Advice: false,
             latestTime: '',
-            readings:[],
-            numberOfReadings:169,
-            fishParams:[],
-            fishId:1,
-            fish:[],
+            readings: [],
+            numberOfReadings: 169,
+            fishParams: [],
+            fishId: 1,
+            fish: [],
             startPeriod: '',
             endPeriod: '',
         };
@@ -86,47 +99,74 @@ class ApProjectContainer extends Component {
         this.handleToggleDescription = this.handleToggleDescription.bind(this);
         this.handleToggleSliders = this.handleToggleSliders.bind(this);
         //this.selectWeek = selectWeek.bind(this)
+        this.resetSettings = this.resetSettings.bind(this);
 
     }
+    resetSettings = () => {
+        console.log('Clicked')
+        this.setState({
+            tempSettingsValue: [this.state.fishParams.temp_low_critical,
+                this.state.fishParams.temp_low_warn,
+                this.state.fishParams.temp_high_warn,
+                this.state.fishParams.temp_high_critical].slice(),
+            tempSettingsUpdate: [this.state.fishParams.temp_low_critical,
+                this.state.fishParams.temp_low_warn,
+                this.state.fishParams.temp_high_warn,
+                this.state.fishParams.temp_high_critical].slice(),
+        })
+      this.forceUpdate();
+    }
+
 
     toggleTempHandler() {
         this.setState({
             toggleTempAdvice: !this.state.toggleTempAdvice
         })
     }
+
     togglePhHandler() {
         this.setState({
             togglePhAdvice: !this.state.togglePhAdvice
         })
     }
+
     toggleNh3Handler() {
         this.setState({
             toggleNh3Advice: !this.state.toggleNh3Advice
         })
     }
-    mapReadingsSetState = (requestFunction, numberOfReadings) =>{
+
+    mapReadingsSetState = (requestFunction, numberOfReadings) => {
         requestFunction(numberOfReadings)
-            .then( query => {
+            .then(query => {
                     const returnedReadings = query.database1.slice();
                     const updatedReadings = returnedReadings.map(
-                        reading =>{
-                            return{
+                        reading => {
+                            return {
                                 ...reading
                             }
                         }
                     );
-                    this.setState({readings:updatedReadings})
+                    this.setState({readings: updatedReadings})
                 }
             )
     }
 
-    mapFishSetState = (requestFunction, fishId) =>{
+    mapFishSetState = (requestFunction, fishId) => {
         requestFunction(fishId)
-            .then( query => {
+            .then(query => {
                     const returnedFishParams = query;
                     this.setState({
-                        fishParams:returnedFishParams,
+                        fishParams: returnedFishParams,
                         // Set state here
+                        tempSettingsValue: [returnedFishParams.temp_low_critical,
+                            returnedFishParams.temp_low_warn,
+                            returnedFishParams.temp_high_warn,
+                            returnedFishParams.temp_high_critical].slice(),
+                        tempSettingsUpdate: [returnedFishParams.temp_low_critical,
+                            returnedFishParams.temp_low_warn,
+                            returnedFishParams.temp_high_warn,
+                            returnedFishParams.temp_high_critical].slice(),
                         tempValue: [returnedFishParams.temp_target].slice(),
                         tempUpdate: [returnedFishParams.temp_target].slice(),
                         phValue: [returnedFishParams.ph_target].slice(),
@@ -138,41 +178,42 @@ class ApProjectContainer extends Component {
             )
     }
 
-    mapFish = (requestFunction) =>{
+    mapFish = (requestFunction) => {
         requestFunction()
-            .then( query => {
+            .then(query => {
                     const allFish = query.database1.slice();
-                    this.setState({fish:allFish.slice()})
+                    this.setState({fish: allFish.slice()})
                 }
             )
     }
-    handleToggleSliders(){
+
+    handleToggleSliders() {
         this.setState({
             activeSliders: !this.state.activeSliders,
             setColSize: this.state.setColSize === 12 ? 6 : 12
         })
     }
-    handleToggleDescription(){
+
+    handleToggleDescription() {
         this.setState({
             activeDescription: !this.state.activeDescription,
 
         })
     }
 
-
-    mapReadingsRangeSetState = (requestFunction, from, to) =>{
+    mapReadingsRangeSetState = (requestFunction, from, to) => {
         requestFunction(from, to)
-            .then( query => {
+            .then(query => {
                     const returnedReadings = query.database1.slice();
                     const updatedReadings = returnedReadings.map(
-                        reading =>{
-                            return{
+                        reading => {
+                            return {
                                 ...reading
                             }
                         }
                     );
                     this.setState({
-                        readings:updatedReadings,
+                        readings: updatedReadings,
                         startPeriod: moment(from).format('DD-MM-YYYY'),
                         endPeriod: moment(to).format('DD-MM-YYYY'),
                     })
@@ -212,15 +253,20 @@ class ApProjectContainer extends Component {
     onTempChange = tempValues => {
         this.setState({tempValues})
     };
+    onTempSettingsUpdate = tempSettingsUpdate => {
+        this.setState({tempSettingsUpdate})
+    };
+    onTempSettingsChange = tempSettingsValues => {
+        this.setState({tempSettingsValues})
+    };
 
     onFishChange = fishId => {
-        this.mapFishSetState(selectFishType,fishId)
+        this.mapFishSetState(selectFishType, fishId)
     };
 
     render() {
-
         return (
-            <div >
+            <div>
                 <Container className=" sensors-container">
 
                     {this.state.activeDescription &&
@@ -241,11 +287,13 @@ class ApProjectContainer extends Component {
                             <iframe width="1202" height="676" src="https://www.youtube.com/embed/YOv1BIEHRS0"
                                     frameBorder="0"
                                     allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                                    allowFullScreen> </iframe> </div>
+                                    allowFullScreen></iframe>
+                        </div>
                         <hr className="divider"/>
                     </div>
                     }
-                    <Button size="sm" className={classes.ToggleButton} type="button" onClick={this.handleToggleDescription}>
+                    <Button size="sm" className={classes.ToggleButton} type="button"
+                            onClick={this.handleToggleDescription}>
                         Development Details!
                     </Button>
                     <div className={classes.ProjectContainer}>
@@ -254,7 +302,7 @@ class ApProjectContainer extends Component {
                         <p className="reading-box ">Receive live alerts and monitor your system from your telephone.
                             <br/>Get the advice you need when you need it.</p>
 
-                        <Row >
+                        <Row>
                             {this.state.activeSliders &&
                             <Col lg={this.state.setColSize}>
                                 <div><SlidersModal/>
@@ -275,7 +323,7 @@ class ApProjectContainer extends Component {
                                                     onChange={this.onTempChange}
                                                 />
                                             </div>
-                                        </Col><Col lg={4} >
+                                        </Col><Col lg={4}>
                                         <div className={classes.SlidersContainer}>
                                             <div className="reading-box">
                                                 <p>pH</p>
@@ -289,7 +337,7 @@ class ApProjectContainer extends Component {
                                             />
                                         </div>
                                     </Col>
-                                        <Col lg={4} >
+                                        <Col lg={4}>
                                             <div className={classes.SlidersContainer}>
                                                 <div className="reading-box">
                                                     <p>
@@ -305,10 +353,9 @@ class ApProjectContainer extends Component {
                                                 />
                                             </div>
                                         </Col>
-
                                     </Row>
-
-                                </div></Col>
+                                </div>
+                            </Col>
                             }
                             <Col lg={this.state.setColSize}>
 
@@ -323,8 +370,6 @@ class ApProjectContainer extends Component {
                                         fishParams={this.state.fishParams}
                                         onChange={this.onFishChange}
                                     />
-
-
                                 </div>
 
                                 <div className={classes.BarsWrapper}>
@@ -332,27 +377,29 @@ class ApProjectContainer extends Component {
                                     {this.tempController(this.state.tempUpdate[0])}
                                     {this.phController(this.state.phUpdate[0])}
                                     {this.nh3Controller(this.state.nh3Update[0])}
-                                    {/*  <Button color="info" onClick={()=>{
+                                    {/* ENTER READING INTO DB
+                                     <Button color="info" onClick={()=>{
                                     this.addReadingsToDB();
                                 }} size="lg" block>Enter readings into database.</Button>*/}
 
                                 </div>
-                                {  <Button className={classes.TestButton} onClick={()=>{
+                                {<Button className={classes.TestButton} onClick={() => {
                                     this.handleToggleSliders();
-                                }} size="sm" ><p>Test the app</p></Button>}
+                                }} size="sm"><p>Test the app</p></Button>}
                             </Col>
-
                         </Row>
                         <hr className="divider"/>
                         <div className="readings-container ">
                             <h2 className="reading-box ">View historical data</h2>
-                            <p className="reading-box ">Track your previous readings to make better decisions for your systems future.</p><br/>
+                            <p className="reading-box ">Track your previous readings to make better decisions for your
+                                systems future.</p><br/>
                         </div>
                         <DateRange
                             onDaySelect={this.mapReadingsRangeSetState}
                         />
                         <Tabs defaultActiveKey="temp" id="uncontrolled-tab-example">
-                            <Tab eventKey="temp" title="Temperature - History" style={{background: "white", color:"black"}}>
+                            <Tab eventKey="temp" title="Temperature - History"
+                                 style={{background: "white", color: "black"}}>
                                 <Row className=" ">
                                     <Col lg={12}>
                                         {/* todo: pass in number of days or from date to date*/}
@@ -369,7 +416,8 @@ class ApProjectContainer extends Component {
                                         <TempPie
                                             fishParams={this.state.fishParams}
                                             readings={this.state.readings}
-                                        /></Col>
+                                        />
+                                    </Col>
                                 </Row>
                                 <Row className="row-margin">
                                     <Col lg={12}>
@@ -377,30 +425,33 @@ class ApProjectContainer extends Component {
                                         <p>from {this.state.startPeriod} to {this.state.endPeriod}</p>
                                         <HighLow readings={this.state.readings}/>
                                     </Col>
-
                                 </Row>
                             </Tab>
                             <Tab eventKey="ph" title="pH - History">
                                 <h1>Coming soon!</h1>
                             </Tab>
-                                <Tab eventKey="nh3" title="Nh3 - History">
-                                    <h1>Coming soon!</h1>
-
+                            <Tab eventKey="nh3" title="Nh3 - History">
+                                <h1>Coming soon!</h1>
                             </Tab>
                         </Tabs>
-
                         <Row/>
                         <hr className="divider"/>
-                        <AdviceContainer />
-
-                        <Row>
-
-
-                             <Col lg={12}>
-                               <SettingsContainer readings={this.state}/>
+                        <AdviceContainer/>
+                        <Row className={settings_classes.Container}>
+                            <Col lg={12}>
+                                <div><h3>Change Alerts for {this.state.fishParams.fish_name}</h3>
+                                    <br/>
+                                    <SettingsTemp
+                                        onUpdate={this.onTempSettingsUpdate}
+                                        onChange={this.onTempSettingsChange}
+                                        values={this.state.tempSettingsValue}
+                                        update={this.state.tempSettingsUpdate}
+                                        reset={this.resetSettings}
+                                    />
+                                </div>
                             </Col>
                         </Row>
-                        {/*<ReadingsTable readings={this.state.readings}/>*/}
+
                         <div className="project-icons">
                             <a target="_blank"
                                rel="noopener noreferrer"
@@ -415,10 +466,7 @@ class ApProjectContainer extends Component {
                         </div>
                     </div>
                 </Container>
-
-
                 <BackBtn/>
-
                 <NotificationContainer/>
             </div>
 

@@ -9,10 +9,7 @@ import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap
 // Test
 const FishProfile = (props) =>{
     let fishImage;
-    if(props.fishParams.id === 1){
-        fishImage = trout
-
-    }
+    if(props.fishParams.id === 1) fishImage = trout
     if (props.fishParams.id === 2)
         fishImage = silverPerch;
     if (props.fishParams.id === 3)
