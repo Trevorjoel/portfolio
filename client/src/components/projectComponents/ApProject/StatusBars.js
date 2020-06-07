@@ -13,7 +13,6 @@ const StatusBars = (props) => {
                 <div>
                     <Badge
                         className={props.divStyle}>
-                        {/* &nbsp;*/}{/*{props.statusTitle}*/}
                         OK
                     </Badge>
 

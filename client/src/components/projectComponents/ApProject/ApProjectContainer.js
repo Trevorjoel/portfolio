@@ -59,7 +59,7 @@ class ApProjectContainer extends Component {
             nh3CaptureValue: Assets.defaultNh3.slice(),
             activeSliders: false, // show & hide sliders
             activeDescription: false, // Show & hide description
-            setColSize: 12,
+            setButtonText: "TEST IT",
             tempShowNotification: {
                 tempLowCritical: true,
                 tempLowWarn: true,
@@ -191,7 +191,7 @@ class ApProjectContainer extends Component {
     handleToggleSliders() {
         this.setState({
             activeSliders: !this.state.activeSliders,
-            setColSize: this.state.setColSize === 12 ? 6 : 12
+            setButtonText: this.state.setButtonText === "TEST IT" ? "CLOSE TEST" : "TEST IT"
         })
     }
 
@@ -234,6 +234,27 @@ class ApProjectContainer extends Component {
 
         this.mapFishSetState(selectFishType, this.state.fishId);
         this.mapFish(getFish);
+
+        window.onscroll = function() {myFunction()};
+
+        let header = document.getElementById("sticky-el");
+        let container = document.getElementById("sticky-end");
+        let sticky = header.offsetTop;
+        let stickyBottom = container.offsetTop;
+
+        function myFunction() {
+            if (window.pageYOffset > sticky && window.pageYOffset < stickyBottom ) {
+                console.log('Adding element')
+                header.classList.add(classes.StickyElement);
+            } else {
+                header.classList.remove(classes.StickyElement);
+                console.log('Removing element')
+            }
+       /*  if(window.pageYOffset > container){
+                header.classList.remove(classes.StickyElement);
+                console.log('Removing element')
+            }*/
+        }
     }
 
     onNh3Update = nh3Update => {
@@ -266,8 +287,10 @@ class ApProjectContainer extends Component {
     };
 
     render() {
+
         return (
             <div>
+
                 <Container className=" sensors-container">
 
                     {this.state.activeDescription &&
@@ -286,9 +309,9 @@ class ApProjectContainer extends Component {
                         <div className='iframe-container'>
 
                             <iframe width="1202" height="676" src="https://www.youtube.com/embed/YOv1BIEHRS0"
-                                    frameBorder="0"
-                                    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                                    allowFullScreen></iframe>
+    frameBorder="0"
+    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+    allowFullScreen/>
                         </div>
                         <hr className="divider"/>
                     </div>
@@ -301,14 +324,13 @@ class ApProjectContainer extends Component {
 
                         <h1 className="reading-box "><strong>Aquaponics System Monitor</strong> (Prototype)</h1>
 
-
                         <Row>
-
                             <Col lg={12}>
 
                                 <br/>
                                 <h4 className=""><strong>Live Monitor</strong></h4>
-                                <p className="reading-box">See the current status of your system and get notifications to your phone if there are problems</p>
+                                <p className="reading-box">See the current status of your system and get notifications
+                                    to your phone if there are problems</p>
                                 <div className={classes.StatusWrapper}>
 
                                     <FishProfile
@@ -318,7 +340,8 @@ class ApProjectContainer extends Component {
                                     />
                                 </div>
 
-                                <div className={classes.BarsWrapper} title="Live readings from your system & information to help">
+                                <div className={classes.BarsWrapper}
+                                     title="Live readings from your system & information to help">
                                     <h4>System Parameters</h4>
                                     {this.tempController(this.state.tempUpdate[0])}
                                     {this.phController(this.state.phUpdate[0])}
@@ -329,7 +352,7 @@ class ApProjectContainer extends Component {
                                 }} size="lg" block>Enter readings into database.</Button>*/}
                                     {this.state.activeSliders &&
                                     <div className={classes.SlidersWrap}>
-                                        <Row >
+                                        <Row>
                                             <h4 className={classes.h5}>Substitute probe readings</h4>
 
                                         </Row><Row>
@@ -379,62 +402,68 @@ class ApProjectContainer extends Component {
 
 
                                     </Row><SlidersModal/></div>}
-                                    {<Button title="See the system working" className={classes.TestButton} onClick={() => {
-                                        this.handleToggleSliders();
-                                    }} size="sm">TEST IT!</Button>}
+                                    {<Button title="See the system working" className={classes.TestButton}
+                                             onClick={() => {
+                                                 this.handleToggleSliders();
+                                             }} size="sm">{this.state.setButtonText}</Button>}
                                 </div>
 
                             </Col>
                         </Row>
                         <hr className="divider"/>
-                        <div className={classes.HistoryContainer}>
+                        <div >
                             <h2 className="reading-box ">View historical data</h2>
                             <p className="reading-box ">Track your previous readings to make better decisions for your
                                 systems future.</p><br/>
+                                <div   className={classes.StickyContainer}>{/*Container */}
+                            <div id="sticky-el">{/*Element to make sticky*/}
+                                <DateRange
+                                    onDaySelect={this.mapReadingsRangeSetState}
+                                />
+                            </div>{/*End of sticky element*/}
+                            <Tabs  defaultActiveKey="temp" id="uncontrolled-tab-example">
+                                <Tab eventKey="temp" title="Temperature - History"
+                                     style={{background: "white", color: "black"}}>
+                                    <Row className=" "  >
+                                        <Col lg={12}>
 
-                        <DateRange
-                            onDaySelect={this.mapReadingsRangeSetState}
-                        />
-                        <Tabs defaultActiveKey="temp" id="uncontrolled-tab-example">
-                            <Tab eventKey="temp" title="Temperature - History"
-                                 style={{background: "white", color: "black"}}>
-                                <Row className=" ">
-                                    <Col lg={12}>
-                                        {/* todo: pass in number of days or from date to date*/}
-                                        <h5 className="reading-box">Hourly temperature readings</h5>
-                                        <p>from {this.state.startPeriod} to {this.state.endPeriod}</p>
-                                        <LinerGraph
-                                            fishParams={this.state.fishParams}
-                                            readings={this.state.readings}
-                                        />
-                                    </Col>
-                                    <Col lg={12}><br/>
-                                        <h5 className="reading-box">Temperature readings by alert category</h5>
-                                        <p>from {this.state.startPeriod} to {this.state.endPeriod}</p>
-                                        <TempPie
-                                            fishParams={this.state.fishParams}
-                                            readings={this.state.readings}
-                                        />
-                                    </Col>
-                                </Row>
-                                <Row className="row-margin">
-                                    <Col lg={12}>
-                                        <h5 className="reading-box">Highest, lowest and average daily temperatures</h5>
-                                        <p>from {this.state.startPeriod} to {this.state.endPeriod}</p>
-                                        <HighLow readings={this.state.readings}/>
-                                    </Col>
-                                </Row>
-                            </Tab>
-                            <Tab eventKey="ph" title="pH - History">
-                                <h1>Coming soon!</h1>
-                            </Tab>
-                            <Tab eventKey="nh3" title="Nh3 - History">
-                                <h1>Coming soon!</h1>
-                            </Tab>
-                        </Tabs>
-                        <Row/>
+                                            <h5  className="reading-box">Hourly temperature readings</h5>
+                                            <p>from {this.state.startPeriod} to {this.state.endPeriod}</p>
+                                            <LinerGraph
+                                                fishParams={this.state.fishParams}
+                                                readings={this.state.readings}
+                                            />
+                                        </Col>
+                                        <Col lg={12}><br/>
+                                            <h5 className="reading-box">Temperature readings by alert category</h5>
+                                            <p>from {this.state.startPeriod} to {this.state.endPeriod}</p>
+                                            <TempPie
+                                                fishParams={this.state.fishParams}
+                                                readings={this.state.readings}
+                                            />
+                                        </Col>
+                                    </Row>
+                                    <Row className="row-margin">
+                                        <Col lg={12}>
+                                            <h5 className="reading-box">Highest, lowest and average daily
+                                                temperatures</h5>
+                                            <p>from {this.state.startPeriod} to {this.state.endPeriod}</p>
+                                            <HighLow readings={this.state.readings}/>
+                                        </Col>
+                                    </Row>
+                                </Tab>
+                                <Tab eventKey="ph" title="pH - History">
+                                    <h1>Coming soon!</h1>
+                                </Tab>
+                                <Tab eventKey="nh3" title="Nh3 - History">
+                                    <h1>Coming soon!</h1>
+                                </Tab>
+                            </Tabs>
+                            <Row/>
+                            <div id="sticky-end"></div>
                         </div>
-                        <hr className="divider"/>
+{/* End of sticky container*/}                        </div>
+                        <hr  className="divider"/>
                         <AdviceContainer/>
                         <Row className={settings_classes.Container}>
                             <Col lg={12}>
@@ -468,7 +497,7 @@ class ApProjectContainer extends Component {
                 <BackBtn/>
                 <NotificationContainer/>
                 <p>“At one time in the world there were woods that no one owned”
-                   <br/> ― Cormac McCarthy, Child of God </p>
+                    <br/> ― Cormac McCarthy, Child of God </p>
             </div>
 
         );

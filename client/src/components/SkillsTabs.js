@@ -20,9 +20,6 @@ const CIcon = require('../images/technologies/c-logo-icon-18.resized.png');
 const javaIcon = require('../images/technologies/java-icon-png-15.jpg.resized.png');
 const WP = require('../images/technologies/wordpress.png');
 
-/*
-*  todo:
-* */
 
 const SkillsTabs = () => {
     

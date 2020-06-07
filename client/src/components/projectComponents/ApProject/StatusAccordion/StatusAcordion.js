@@ -31,7 +31,7 @@ const Accordion = (props) => {
                     onClick={toggleContent}>
                 <Row className={classes.TxtLeft}>
 
-                        <Col lg={4} sm={2} xs={2}>
+                        <Col lg={4} sm={4} xs={4}>
                             <div>
                                 <Badge
                                     className={props.divStyle}>
@@ -42,12 +42,12 @@ const Accordion = (props) => {
                    {/* <Col lg={3} sm={4} xs={4}>
                         {props.statusTitle}
                     </Col>*/}
-                    <Col lg={5} sm={4} xs={4}>
+                    <Col lg={4} sm={4} xs={4}>
                      {props.updatedValue} {props.symbol}
                     </Col>
 
 
-                        <Col lg={3} sm={2} xs={2} style={{textAlign:"right"}}>
+                        <Col lg={4} sm={4} xs={4} style={{textAlign:"right"}}>
                             <Chevron className={[classes.Icon, `${setRotate}`].join(' ') }  fill={'#777'} height="20px"/>
                         </Col>
 
