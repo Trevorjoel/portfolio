@@ -124,10 +124,9 @@ class DateRange extends React.Component {
 
 
         return (
-            <div id="range-select" className={classes.Wrap}>
+            <div  className={classes.Wrap}>
                 <Row>
-                    <Col lg={2}><h4>View</h4></Col>
-                    <Col lg={5}>
+                    <Col lg={6} md={6} sm={6}>
 
 <Dropdown showDay={()=>this.setPeriodOfDates('day')}
           showWeek={()=>this.setPeriodOfDates('week')}
@@ -147,9 +146,9 @@ class DateRange extends React.Component {
 
 
                     </Col>
-                    <Col lg={5}>
+                    <Col lg={6} md={6} sm={6}>
 
-                    <label>Ranges<DatePicker
+                 <DatePicker
                 dateFormat="dd/MM/yyyy"
                 selected={this.state.startDate}
                 maxDate={this.state.endDate}
@@ -159,8 +158,9 @@ class DateRange extends React.Component {
                 startDate={this.state.startDate}
                 endDate={this.state.endDate}
                 className={classes.Fields}
-            /></label>
-                <label> - <DatePicker
+            />
+
+                <DatePicker
                     dateFormat="dd/MM/yyyy"
                     selected={this.state.endDate}
                     maxDate={this.state.maxDate}
@@ -170,9 +170,10 @@ class DateRange extends React.Component {
                     endDate={this.state.endDate}
                     minDate={this.state.startDate}
                     className={classes.Fields}
-                /></label>
+                />
+                        </Col>
 
-                    </Col>
+
                 </Row>
             </div>
         );

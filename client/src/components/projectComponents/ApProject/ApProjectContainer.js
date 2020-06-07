@@ -236,18 +236,21 @@ class ApProjectContainer extends Component {
         this.mapFish(getFish);
 
         window.onscroll = function() {myFunction()};
-
+        let container =document.getElementById("sticky-cont");
+        let stickyTrigger =document.getElementById("sticky-trigger");
         let header = document.getElementById("sticky-el");
-        let container = document.getElementById("sticky-end");
-        let sticky = header.offsetTop;
-        let stickyBottom = container.offsetTop;
+        let end = document.getElementById("sticky-end");
+        let sticky = stickyTrigger.offsetTop;
+        let stickyBottom = end.offsetTop;
 
         function myFunction() {
             if (window.pageYOffset > sticky && window.pageYOffset < stickyBottom ) {
                 console.log('Adding element')
                 header.classList.add(classes.StickyElement);
+                container.classList.add(classes.AddHeight);
             } else {
                 header.classList.remove(classes.StickyElement);
+                container.classList.remove(classes.AddHeight);
                 console.log('Removing element')
             }
        /*  if(window.pageYOffset > container){
@@ -415,16 +418,16 @@ class ApProjectContainer extends Component {
                             <h2 className="reading-box ">View historical data</h2>
                             <p className="reading-box ">Track your previous readings to make better decisions for your
                                 systems future.</p><br/>
-                                <div   className={classes.StickyContainer}>{/*Container */}
+                                <div id="sticky-cont"  className={classes.StickyContainer}>{/*Container */}
                             <div id="sticky-el">{/*Element to make sticky*/}
                                 <DateRange
                                     onDaySelect={this.mapReadingsRangeSetState}
-                                />
+                                /><div id="sticky-trigger"></div>
                             </div>{/*End of sticky element*/}
                             <Tabs  defaultActiveKey="temp" id="uncontrolled-tab-example">
                                 <Tab eventKey="temp" title="Temperature - History"
                                      style={{background: "white", color: "black"}}>
-                                    <Row className=" "  >
+                                    <Row >
                                         <Col lg={12}>
 
                                             <h5  className="reading-box">Hourly temperature readings</h5>

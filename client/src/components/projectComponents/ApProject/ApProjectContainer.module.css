@@ -58,22 +58,20 @@ margin: 0px 45%;
 
 }
 .StickyContainer{
-    padding: 10px 16px;
-  /*  display: grid;
-    justify-content: space-around;
-    align-items: flex-start;
 
-    border: 2px dashed rgba(114, 186, 94, 0.35);
-    height: 400px;
-    background: rgba(114, 186, 94, 0.05);*/
+
 }
 .StickyElement{
     position: fixed;
     top: 20px;
-    width: 87%;
+   width: 87%;
     z-index: 100;
     transition: top 2s;
+
 }
 .StickyElement + .StickyContainer {
-    padding-top: 202px;
+   /* margin-top: 1000px;*/
+}
+.AddHeight{
+    padding-top: 102px;
 }
