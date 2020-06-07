@@ -7,12 +7,12 @@ const Dropdown = (props) => {
     const toggle = () => setOpen(!dropdownOpen);
 
     return (
-        <ButtonDropdown isOpen={dropdownOpen} toggle={toggle}>
+        <ButtonDropdown isOpen={dropdownOpen} toggle={toggle} defaultValue={"week"}>
             <DropdownToggle color="primary"  caret>
-                Recent Readings
+                View
             </DropdownToggle>
             <DropdownMenu>
-                <DropdownItem header>Header</DropdownItem>
+                <DropdownItem header>Previous:</DropdownItem>
                 <DropdownItem value={'day'} onClick={props.showDay}>Day</DropdownItem>
                 <DropdownItem value={'week'} onClick={props.showWeek}>Week</DropdownItem>
                 <DropdownItem value={'month'} onClick={props.showMonth}>Month</DropdownItem>

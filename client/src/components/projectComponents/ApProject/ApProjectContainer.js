@@ -253,10 +253,7 @@ class ApProjectContainer extends Component {
                 container.classList.remove(classes.AddHeight);
                 console.log('Removing element')
             }
-       /*  if(window.pageYOffset > container){
-                header.classList.remove(classes.StickyElement);
-                console.log('Removing element')
-            }*/
+
         }
     }
 
@@ -349,10 +346,7 @@ class ApProjectContainer extends Component {
                                     {this.tempController(this.state.tempUpdate[0])}
                                     {this.phController(this.state.phUpdate[0])}
                                     {this.nh3Controller(this.state.nh3Update[0])}
-                                    {/* ENTER READING INTO DB
-                                     <Button color="info" onClick={()=>{
-                                    this.addReadingsToDB();
-                                }} size="lg" block>Enter readings into database.</Button>*/}
+
                                     {this.state.activeSliders &&
                                     <div className={classes.SlidersWrap}>
                                         <Row>
@@ -404,7 +398,13 @@ class ApProjectContainer extends Component {
                                     </Col>
 
 
-                                    </Row><SlidersModal/></div>}
+
+                                    </Row>
+                                        <Button color="info" onClick={()=>{
+                                            this.addReadingsToDB();
+                                        }} size="md" block>Enter readings into database.</Button>
+
+                                        <SlidersModal/></div>}
                                     {<Button title="See the system working" className={classes.TestButton}
                                              onClick={() => {
                                                  this.handleToggleSliders();
