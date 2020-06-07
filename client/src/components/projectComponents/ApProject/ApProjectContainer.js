@@ -102,6 +102,7 @@ class ApProjectContainer extends Component {
         this.resetSettings = this.resetSettings.bind(this);
 
     }
+
     resetSettings = () => {
         console.log('Clicked')
         this.setState({
@@ -114,7 +115,7 @@ class ApProjectContainer extends Component {
                 this.state.fishParams.temp_high_warn,
                 this.state.fishParams.temp_high_critical].slice(),
         })
-      this.forceUpdate();
+        this.forceUpdate();
     }
 
 
@@ -299,20 +300,42 @@ class ApProjectContainer extends Component {
                     <div className={classes.ProjectContainer}>
 
                         <h1 className="reading-box "><strong>Aquaponics System Monitor</strong> (Prototype)</h1>
-                        <p className="reading-box ">Receive live alerts and monitor your system from your telephone.
-                            <br/>Get the advice you need when you need it.</p>
+
 
                         <Row>
-                            {this.state.activeSliders &&
-                            <Col lg={this.state.setColSize}>
-                                <div><SlidersModal/>
-                                    <h4 className="reading-box">Substitute probe readings</h4>
-                                    <p className="reading-box">Adjust the sliders to simulate changes in water quality
-                                        readings.</p>
-                                    <Row className="row-class">
-                                        <Col lg={4} className="">
+
+                            <Col lg={12}>
+
+                                <br/>
+                                <h4 className=""><strong>Live Monitor</strong></h4>
+                                <p className="reading-box">See the current status of your system and get notifications to your phone if there are problems</p>
+                                <div className={classes.StatusWrapper}>
+
+                                    <FishProfile
+                                        allFish={this.state.fish}
+                                        fishParams={this.state.fishParams}
+                                        onChange={this.onFishChange}
+                                    />
+                                </div>
+
+                                <div className={classes.BarsWrapper} title="Live readings from your system & information to help">
+                                    <h4>System Parameters</h4>
+                                    {this.tempController(this.state.tempUpdate[0])}
+                                    {this.phController(this.state.phUpdate[0])}
+                                    {this.nh3Controller(this.state.nh3Update[0])}
+                                    {/* ENTER READING INTO DB
+                                     <Button color="info" onClick={()=>{
+                                    this.addReadingsToDB();
+                                }} size="lg" block>Enter readings into database.</Button>*/}
+                                    {this.state.activeSliders &&
+                                    <div className={classes.SlidersWrap}>
+                                        <Row >
+                                            <h4 className={classes.h5}>Substitute probe readings</h4>
+
+                                        </Row><Row>
+                                        <Col lg={4} md={4} sm={4} xs={4}>
                                             <div className={classes.SlidersContainer}>
-                                                <div className="reading-box"><p>TEMP</p>
+                                                <div className=""><p>TEMP</p>
 
                                                 </div>
                                                 <TempSliderVertical
@@ -323,9 +346,9 @@ class ApProjectContainer extends Component {
                                                     onChange={this.onTempChange}
                                                 />
                                             </div>
-                                        </Col><Col lg={4}>
+                                        </Col><Col lg={4} md={4} sm={4} xs={4}>
                                         <div className={classes.SlidersContainer}>
-                                            <div className="reading-box">
+                                            <div className="">
                                                 <p>pH</p>
                                             </div>
                                             <PhSliderVertical
@@ -336,64 +359,39 @@ class ApProjectContainer extends Component {
                                                 onChange={this.onPhChange}
                                             />
                                         </div>
-                                    </Col>
-                                        <Col lg={4}>
-                                            <div className={classes.SlidersContainer}>
-                                                <div className="reading-box">
-                                                    <p>
-                                                        NH<sub>3</sub>
-                                                        &nbsp;</p>
-                                                </div>
-                                                <Nh3SliderVertical
-                                                    values={this.state.nh3Value}
-                                                    update={this.state.nh3Update}
-                                                    defaultValues={Assets.defaultNh3}
-                                                    onUpdate={this.onNh3Update}
-                                                    onChange={this.onNh3Change}
-                                                />
+                                    </Col><Col lg={4} md={4} sm={4} xs={4}>
+                                        <div className={classes.SlidersContainer}>
+                                            <div className="">
+                                                <p>
+                                                    NH<sub>3</sub>
+                                                    &nbsp;</p>
                                             </div>
-                                        </Col>
-                                    </Row>
-                                </div>
-                            </Col>
-                            }
-                            <Col lg={this.state.setColSize}>
+                                            <Nh3SliderVertical
+                                                values={this.state.nh3Value}
+                                                update={this.state.nh3Update}
+                                                defaultValues={Assets.defaultNh3}
+                                                onUpdate={this.onNh3Update}
+                                                onChange={this.onNh3Change}
+                                            />
+                                        </div>
 
-                                <br/>
-                                <h4 className="reading-box"><strong>Live Monitor</strong></h4>
-                                <p className="reading-box">See the current status of your system</p>
-                                <h3>YOUR SYSTEM</h3>
-                                <div className={classes.StatusWrapper}>
+                                    </Col>
 
-                                    <FishProfile
-                                        allFish={this.state.fish}
-                                        fishParams={this.state.fishParams}
-                                        onChange={this.onFishChange}
-                                    />
+
+                                    </Row><SlidersModal/></div>}
+                                    {<Button title="See the system working" className={classes.TestButton} onClick={() => {
+                                        this.handleToggleSliders();
+                                    }} size="sm">TEST IT!</Button>}
                                 </div>
 
-                                <div className={classes.BarsWrapper}>
-                                    <h5>System Parameters</h5>
-                                    {this.tempController(this.state.tempUpdate[0])}
-                                    {this.phController(this.state.phUpdate[0])}
-                                    {this.nh3Controller(this.state.nh3Update[0])}
-                                    {/* ENTER READING INTO DB
-                                     <Button color="info" onClick={()=>{
-                                    this.addReadingsToDB();
-                                }} size="lg" block>Enter readings into database.</Button>*/}
-
-                                </div>
-                                {<Button className={classes.TestButton} onClick={() => {
-                                    this.handleToggleSliders();
-                                }} size="sm"><p>Test the app</p></Button>}
                             </Col>
                         </Row>
                         <hr className="divider"/>
-                        <div className="readings-container ">
+                        <div className={classes.HistoryContainer}>
                             <h2 className="reading-box ">View historical data</h2>
                             <p className="reading-box ">Track your previous readings to make better decisions for your
                                 systems future.</p><br/>
-                        </div>
+
                         <DateRange
                             onDaySelect={this.mapReadingsRangeSetState}
                         />
@@ -435,6 +433,7 @@ class ApProjectContainer extends Component {
                             </Tab>
                         </Tabs>
                         <Row/>
+                        </div>
                         <hr className="divider"/>
                         <AdviceContainer/>
                         <Row className={settings_classes.Container}>
@@ -468,6 +467,8 @@ class ApProjectContainer extends Component {
                 </Container>
                 <BackBtn/>
                 <NotificationContainer/>
+                <p>“At one time in the world there were woods that no one owned”
+                   <br/> ― Cormac McCarthy, Child of God </p>
             </div>
 
         );

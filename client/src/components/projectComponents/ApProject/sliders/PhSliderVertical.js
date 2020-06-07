@@ -7,7 +7,7 @@ import PropTypes from 'prop-types'
 const sliderStyle = {
     position: 'relative',
     height: '400px',
-    marginLeft: '45%',
+    marginLeft: '',
     touchAction: 'none',
 };
 
@@ -16,7 +16,7 @@ class PhSliderVertical extends Component {
     render() {
         
         return (
-            <div style={{height: 460, width: '100%'}}>
+            <div style={{height: 460, width: ''}}>
                 
                 <Slider
                     vertical

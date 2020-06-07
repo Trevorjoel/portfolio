@@ -2,7 +2,7 @@
 
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import "./tooltip.css";
+import classes from './SettingsContainer.module.css';
 
 // *******************************************************
 // HANDLE COMPONENT
@@ -30,10 +30,11 @@ export class Handle extends Component {
                             left: `${percent}%`,
                             position: "absolute",
                             marginLeft: "-11px",
-                            marginTop: "-30px"
+                            marginTop: "-30px",
+                            minWidth: "50px"
                         }}
-                    > <div style={{ fontFamily: 'Roboto', fontSize: 14, marginTop: -25, background: 'black', color:'white', padding: '10px' }}>
-                       Temp: {value}
+                    > <div className={classes.ToolTip}>
+                    <strong>{value}</strong>
                     </div>
 
                     </div>

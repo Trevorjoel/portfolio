@@ -1,5 +1,5 @@
 import React from 'react';
-import '../../styles/monitorProject.scss';
+import '../projectComponents/ApProject/monitorProject.scss';
 import ApProjectContainer from "../projectComponents/ApProject/ApProjectContainer";
 
 const Sensors = () => {

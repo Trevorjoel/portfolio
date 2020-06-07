@@ -1,13 +1,20 @@
 .Container {
     background: whitesmoke;
     color: #1b1e21;
-    text-align: left;
     padding: 40px;
     font-family: Arial, Helvetica, sans-serif;
     margin-bottom: 200px;
     margin-left: auto;
-    margin-right:auto;
+    margin-right: auto;
     text-align: center;
+    border-radius: 10px;
+}
+
+.Container .Wrap {
+    text-align: center;
+    background: #d9d9d9 none repeat scroll 0% 0%;
+    border-radius: 50px;
+    color: black;
 }
 
 
@@ -33,4 +40,18 @@
 .Optimal {
 
     background: #9c9;
+}
+
+
+.ToolTip {
+    font-family: Roboto;
+    font-size: 16px;
+    margin-top: -25px;
+    background: #060000b3;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: rgba(0, 0, 0, 0.4) 1px 1px 1px 1px;
+    border:1px solid black;
+    min-width: 50px;
 }

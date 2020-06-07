@@ -7,7 +7,7 @@ import PropTypes from 'prop-types'
 const sliderStyle = {
     position: 'relative',
     height: '400px',
-    marginLeft: '45%',
+    marginLeft: '',
     touchAction: 'none',
 };
 
@@ -16,7 +16,7 @@ class Nh3SliderVertical extends Component {
     render() {
         
         return (
-            <div style={{height: 460, width: '100%'}}>
+            <div style={{height: 460, width: ''}}>
                 
                 <Slider
                     reversed
@@ -154,6 +154,7 @@ export function Handle({
                     borderRadius: '50%',
                     boxShadow: '1px 1px 1px 1px rgba(0, 0, 0, 0.3)',
                     backgroundColor: '#ffc400',
+
                 }}
             />
         </Fragment>

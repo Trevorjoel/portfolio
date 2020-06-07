@@ -7,8 +7,9 @@ import PropTypes from 'prop-types'
 const sliderStyle = {
     position: 'relative',
     height: '400px',
-    marginLeft: '45%',
+    marginLeft: '',
     touchAction: 'none',
+
 };
 
 class TempSlider extends Component {
@@ -18,7 +19,7 @@ class TempSlider extends Component {
         // Todo:
 
         return (
-            <div style={{height: 460, width: '100%'}}>
+            <div style={{height: 460, width: ''}}>
                 
                 <Slider
                     vertical

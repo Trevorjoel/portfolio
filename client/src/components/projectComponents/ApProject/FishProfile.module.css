@@ -1,9 +1,9 @@
 .Container{
-    padding:20px;
+    padding:0px 10px 10px 10px;
     border-radius:8px;
 }
 
-.Container h4{
+.Container h4 h3{
     text-transform: capitalize;
     text-align: center;
 }

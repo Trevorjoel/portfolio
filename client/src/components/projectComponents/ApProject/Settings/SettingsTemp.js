@@ -10,7 +10,7 @@ import classes from './SettingsContainer.module.css';
 const sliderStyle = {
     position: "relative",
     width: "100%",
-    marginTop: 60
+    marginTop: 70
 };
 
 const railStyle = {
@@ -30,13 +30,13 @@ class SettingsTemp extends Component {
 
     render(props) {
 
-        return <Row style={{textAlign: "center", background:"#d9d9d9 none repeat scroll 0% 0%", borderRadius: "50px", color:"black"}}>
+        return <Row className={classes.Wrap} >
 
             <Col lg={2} style={{textAlign: "center", background:"#2f3c2f14 none repeat scroll 0% 0%", borderRadius:"50px"}}>
-                <h3 style={{textAlign: "center", marginTop: "10px"}}>Temperature</h3>
+                <h3 style={{textAlign: "center", marginTop: "10px"}}>Temp</h3>
                 <Button variant="secondary" style={{margin: "10px 2%"}} onClick={this.props.reset}>Reset</Button>
                 <Button style={{margin: "10px 2%"}} >Enter</Button>
-                <p><h6>Set: {this.props.update[0]} | {this.props.update[1]} | {this.props.update[2]} | {this.props.update[3]}</h6></p>
+                <p><h6> {this.props.update[0]} | {this.props.update[1]} | {this.props.update[2]} | {this.props.update[3]}</h6></p>
             </Col>
                 <Col lg={10}>
 

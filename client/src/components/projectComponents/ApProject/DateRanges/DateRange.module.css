@@ -1,18 +1,26 @@
 .Wrap{
     background: whitesmoke;
-    padding:20px;
+    padding:10px;
     max-width:100%;
    /* width: max-content; */
     color:black;
     border-radius:15px;
     border:1px solid #550909;
     margin-bottom: 40px;
-    text-align: center;
+    position: -webkit-sticky; /* Safari & IE */
+    position:sticky;
+    top:0;
+    width:100%;
+    z-index:100;
 }
 .Pick{
-margin:10px;
-}
 
+
+}
+.Fields{
+    width: 140px;
+    margin:0px 10px 0 10px;
+}
 .Title{
     text-align: center;
 
