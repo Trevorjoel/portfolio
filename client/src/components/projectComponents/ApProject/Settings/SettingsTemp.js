@@ -62,10 +62,10 @@ class SettingsTemp extends Component {
                         rootStyle={sliderStyle}
                         onUpdate={this.props.onUpdate}
                         onChange={this.props.onChange}
-                        values={this.props.values}
+                        values={this.props.update}
 
                     >
-                        {console.log(this.props.values)}
+                        {console.log(this.props.update)}
                         <Rail>
                             {({getRailProps}) => <div style={railStyle} {...getRailProps()} />}
                         </Rail>
