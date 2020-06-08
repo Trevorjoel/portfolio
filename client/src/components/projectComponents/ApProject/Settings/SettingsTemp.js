@@ -36,7 +36,7 @@ class SettingsTemp extends Component {
                 <h3 style={{textAlign: "center", marginTop: "10px"}}>Temp</h3>
                 <Button variant="secondary" style={{margin: "10px 2%"}} onClick={this.props.reset}>Reset</Button>
                 <Button style={{margin: "10px 2%"}} >Enter</Button>
-                <p><h6> {this.props.updates[0]} | {this.props.updates[1]} | {this.props.updates[2]} | {this.props.updates[3]}</h6></p>
+                <p><h6> {this.props.update[0]} | {this.props.update[1]} | {this.props.update[2]} | {this.props.update[3]}</h6></p>
             </Col>
                 <Col lg={10}>
 
@@ -46,12 +46,12 @@ class SettingsTemp extends Component {
                 step={.5}
                 domain={[this.props.values[0] - 5 ,this.props.values[3] + 5]}  // this.props.values[0] - 5 ,this.props.values[3] + 5] this causes a crash sometimes due to the API call
                 rootStyle={sliderStyle}
-                //onUpdate={this.props.onUpdate}
+                onUpdate={this.props.onUpdate}
                 onChange={this.props.onChange}
-                values={this.props.updates}
+                values={this.props.values}
 
             >
-                {console.log(this.props.updates)}
+                {console.log(this.props.values)}
                 <Rail>
                     {({ getRailProps }) => <div style={railStyle} {...getRailProps()} />}
                 </Rail>
