@@ -57,21 +57,8 @@
 margin: 0px 45%;
 
 }
-.StickyContainer{
+.HistoryContainer{
+    align-items: flex-start;
+    justify-content: space-around;
 
-
-}
-.StickyElement{
-    position: fixed;
-    top: 20px;
-   width: 87%;
-    z-index: 100;
-    transition: top 2s;
-
-}
-.StickyElement + .StickyContainer {
-   /* margin-top: 1000px;*/
-}
-.AddHeight{
-    padding-top: 102px;
 }
