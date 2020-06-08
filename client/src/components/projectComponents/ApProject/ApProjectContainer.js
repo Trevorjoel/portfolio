@@ -81,7 +81,7 @@ class ApProjectContainer extends Component {
             latestTime: '',
             readings: [],
             numberOfReadings: 169,
-            fishParams: [],
+            fishParams: null,
             fishId: 1,
             fish: [],
             startPeriod: '',
@@ -100,22 +100,23 @@ class ApProjectContainer extends Component {
         this.handleToggleSliders = this.handleToggleSliders.bind(this);
         //this.selectWeek = selectWeek.bind(this)
         this.resetSettings = this.resetSettings.bind(this);
+        this.handleScroll = this.handleScroll.bind(this);
 
     }
 
     resetSettings = () => {
         console.log('Clicked')
         this.setState({
-            tempSettingsValue: [this.state.fishParams.temp_low_critical,
+            /*tempSettingsValue: [this.state.fishParams.temp_low_critical,
                 this.state.fishParams.temp_low_warn,
                 this.state.fishParams.temp_high_warn,
-                this.state.fishParams.temp_high_critical].slice(),
+                this.state.fishParams.temp_high_critical].slice(),*/
             tempSettingsUpdate: [this.state.fishParams.temp_low_critical,
                 this.state.fishParams.temp_low_warn,
                 this.state.fishParams.temp_high_warn,
                 this.state.fishParams.temp_high_critical].slice(),
         })
-        this.forceUpdate();
+        //this.forceUpdate();
     }
 
 
@@ -235,9 +236,11 @@ class ApProjectContainer extends Component {
         this.mapFishSetState(selectFishType, this.state.fishId);
         this.mapFish(getFish);
 
-        window.onscroll = function() {myFunction()};
+        window.addEventListener('scroll', this.handleScroll);
+
+        /*window.onscroll = function() {myFunction()};
         let container =document.getElementById("sticky-cont");
-        let stickyTrigger =document.getElementById("sticky-trigger");
+        let stickyTrigger = document.getElementById("sticky-trigger");
         let header = document.getElementById("sticky-el");
         let end = document.getElementById("sticky-end");
         let sticky = stickyTrigger.offsetTop;
@@ -254,6 +257,25 @@ class ApProjectContainer extends Component {
                 console.log('Removing element')
             }
 
+        }*/
+    }
+
+    handleScroll= event => {
+        let container =document.getElementById("sticky-cont");
+        let stickyTrigger = document.getElementById("sticky-trigger");
+        let header = document.getElementById("sticky-el");
+        let end = document.getElementById("sticky-end");
+        let sticky = stickyTrigger.offsetTop;
+        let stickyBottom = end.offsetTop;
+
+        if (window.pageYOffset > sticky && window.pageYOffset < stickyBottom ) {
+            console.log('Adding element')
+            header.classList.add(classes.StickyElement);
+            container.classList.add(classes.AddHeight);
+        } else {
+            header.classList.remove(classes.StickyElement);
+            container.classList.remove(classes.AddHeight);
+            console.log('Removing element')
         }
     }
 
@@ -275,11 +297,11 @@ class ApProjectContainer extends Component {
     onTempChange = tempValues => {
         this.setState({tempValues})
     };
-    onTempSettingsUpdate = tempSettingsUpdate => {
+    /*onTempSettingsUpdate = tempSettingsUpdate => {
         this.setState({tempSettingsUpdate})
-    };
-    onTempSettingsChange = tempSettingsValues => {
-        this.setState({tempSettingsValues})
+    };*/
+    onTempSettingsChange = tempSettingsUpdate => {
+        this.setState({tempSettingsUpdate})
     };
 
     onFishChange = fishId => {
@@ -287,6 +309,12 @@ class ApProjectContainer extends Component {
     };
 
     render() {
+
+        const { fishParams } = this.state;
+
+        if (fishParams === null) {
+            return null;
+        }
 
         return (
             <div>
@@ -473,24 +501,10 @@ class ApProjectContainer extends Component {
                                 <div><h3>Change Alerts for {this.state.fishParams.fish_name}</h3>
                                     <br/>
                                     <SettingsTemp
-                                        onUpdate={this.onTempSettingsUpdate}
+                                        //onUpdate={this.onTempSettingsUpdate}
                                         onChange={this.onTempSettingsChange}
                                         values={this.state.tempSettingsValue}
-                                        update={this.state.tempSettingsUpdate}
-                                        reset={this.resetSettings}
-                                    />
-                                    <SettingsTemp
-                                        onUpdate={this.onTempSettingsUpdate}
-                                        onChange={this.onTempSettingsChange}
-                                        values={this.state.tempSettingsValue}
-                                        update={this.state.tempSettingsUpdate}
-                                        reset={this.resetSettings}
-                                    />
-                                    <SettingsTemp
-                                        onUpdate={this.onTempSettingsUpdate}
-                                        onChange={this.onTempSettingsChange}
-                                        values={this.state.tempSettingsValue}
-                                        update={this.state.tempSettingsUpdate}
+                                        updates={this.state.tempSettingsUpdate}
                                         reset={this.resetSettings}
                                     />
                                 </div>
