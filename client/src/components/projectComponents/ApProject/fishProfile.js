@@ -24,13 +24,13 @@ const FishProfile = (props) =>{
             <div >
                {/* <Row>
                     <Col>*/}
-                <h3 style={{textTransform:"capitalize"}} >{props.fishParams.fish_name}</h3>
-                    <img title="Fish stock" alt="Github icon"
+                <h4>{props.fishParams.fish_name}</h4>
+                    <img alt="Github icon"
                          className={classes.FishImage}
                          src={fishImage}/>
                   {/*  </Col>  <Col>
                     */}<br/><h4>Target ranges:</h4>
-                    <div title="Optimal ranges for stocked fish" className={classes.OptimalWrapper}>
+                    <div className={classes.OptimalWrapper}>
 
                         <p style={{textAlign:"center"}} className="reading-box ">
                            <Row>
@@ -49,10 +49,16 @@ const FishProfile = (props) =>{
                     </div>
                 {/*</Col>
                 </Row>*/}
-                <p className="reading-box" title="Information about stocked fish">See our caring for <a style={{textTransform:"capitalize"}} href="#">{props.fishParams.fish_name}</a> page.</p>
+                <p className="reading-box ">See our caring for <a href="#">{props.fishParams.fish_name}</a> page.</p>
+
+                <br/>
+
+
+
+
 
             </div>
-            <Dropdown title="Change stocked fish" isOpen={dropdownOpen} toggle={toggle}>
+            <Dropdown title="Change fish" isOpen={dropdownOpen} toggle={toggle}>
                 <DropdownToggle caret>
                     Choose Fish stock
                 </DropdownToggle>
@@ -69,10 +75,10 @@ const FishProfile = (props) =>{
                             )
                         })}
                     <DropdownItem divider />
-                    <DropdownItem header><strong>Customise Alert levels</strong></DropdownItem>
+                    <DropdownItem header><strong>Customise</strong></DropdownItem>
 
                     <DropdownItem  onClick={()=> console.log('CLICK!')}>Customise {props.fishParams.fish_name} alerts</DropdownItem>
-                    <DropdownItem  onClick={()=> console.log('CLICK!')}>Set new parameters</DropdownItem>
+                    <DropdownItem  onClick={()=> console.log('CLICK!')}>New customised alerts</DropdownItem>
                 </DropdownMenu>
             </Dropdown>
 
