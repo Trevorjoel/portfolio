@@ -479,6 +479,20 @@ class ApProjectContainer extends Component {
                                         update={this.state.tempSettingsUpdate}
                                         reset={this.resetSettings}
                                     />
+                                    <SettingsTemp
+                                        onUpdate={this.onTempSettingsUpdate}
+                                        onChange={this.onTempSettingsChange}
+                                        values={this.state.tempSettingsValue}
+                                        update={this.state.tempSettingsUpdate}
+                                        reset={this.resetSettings}
+                                    />
+                                    <SettingsTemp
+                                        onUpdate={this.onTempSettingsUpdate}
+                                        onChange={this.onTempSettingsChange}
+                                        values={this.state.tempSettingsValue}
+                                        update={this.state.tempSettingsUpdate}
+                                        reset={this.resetSettings}
+                                    />
                                 </div>
                             </Col>
                         </Row>
