@@ -5,7 +5,7 @@ const Dropdown = (props) => {
     const [dropdownOpen, setOpen] = useState(false);
 
     const toggle = () => setOpen(!dropdownOpen);
-
+// reset
     return (
         <ButtonDropdown isOpen={dropdownOpen} toggle={toggle} defaultValue={"week"}>
             <DropdownToggle color="primary"  caret>
