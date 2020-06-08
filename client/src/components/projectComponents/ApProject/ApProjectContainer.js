@@ -81,7 +81,7 @@ class ApProjectContainer extends Component {
             latestTime: '',
             readings: [],
             numberOfReadings: 169,
-            fishParams: [],
+            fishParams: null,
             fishId: 1,
             fish: [],
             startPeriod: '',
@@ -100,6 +100,7 @@ class ApProjectContainer extends Component {
         this.handleToggleSliders = this.handleToggleSliders.bind(this);
         //this.selectWeek = selectWeek.bind(this)
         this.resetSettings = this.resetSettings.bind(this);
+        this.handleScroll = this.handleScroll.bind(this);
 
     }
 
@@ -235,9 +236,11 @@ class ApProjectContainer extends Component {
         this.mapFishSetState(selectFishType, this.state.fishId);
         this.mapFish(getFish);
 
-        window.onscroll = function() {myFunction()};
+        window.addEventListener('scroll', this.handleScroll);
+
+        /*window.onscroll = function() {myFunction()};
         let container =document.getElementById("sticky-cont");
-        let stickyTrigger =document.getElementById("sticky-trigger");
+        let stickyTrigger = document.getElementById("sticky-trigger");
         let header = document.getElementById("sticky-el");
         let end = document.getElementById("sticky-end");
         let sticky = stickyTrigger.offsetTop;
@@ -254,6 +257,25 @@ class ApProjectContainer extends Component {
                 console.log('Removing element')
             }
 
+        }*/
+    }
+
+    handleScroll= event => {
+        let container =document.getElementById("sticky-cont");
+        let stickyTrigger = document.getElementById("sticky-trigger");
+        let header = document.getElementById("sticky-el");
+        let end = document.getElementById("sticky-end");
+        let sticky = stickyTrigger.offsetTop;
+        let stickyBottom = end.offsetTop;
+
+        if (window.pageYOffset > sticky && window.pageYOffset < stickyBottom ) {
+            console.log('Adding element')
+            header.classList.add(classes.StickyElement);
+            container.classList.add(classes.AddHeight);
+        } else {
+            header.classList.remove(classes.StickyElement);
+            container.classList.remove(classes.AddHeight);
+            console.log('Removing element')
         }
     }
 
@@ -288,6 +310,12 @@ class ApProjectContainer extends Component {
 
     render() {
 
+        const { fishParams } = this.state;
+
+        if (fishParams === null) {
+            return null;
+        }
+
         return (
             <div>
 
@@ -309,9 +337,9 @@ class ApProjectContainer extends Component {
                         <div className='iframe-container'>
 
                             <iframe width="1202" height="676" src="https://www.youtube.com/embed/YOv1BIEHRS0"
-    frameBorder="0"
-    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-    allowFullScreen/>
+                                    frameBorder="0"
+                                    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                                    allowFullScreen/>
                         </div>
                         <hr className="divider"/>
                     </div>
@@ -418,54 +446,54 @@ class ApProjectContainer extends Component {
                             <h2 className="reading-box ">View historical data</h2>
                             <p className="reading-box ">Track your previous readings to make better decisions for your
                                 systems future.</p><br/>
-                                <div id="sticky-cont"  className={classes.StickyContainer}>{/*Container */}
-                            <div id="sticky-el">{/*Element to make sticky*/}
-                                <DateRange
-                                    onDaySelect={this.mapReadingsRangeSetState}
-                                /><div id="sticky-trigger"></div>
-                            </div>{/*End of sticky element*/}
-                            <Tabs  defaultActiveKey="temp" id="uncontrolled-tab-example">
-                                <Tab eventKey="temp" title="Temperature - History"
-                                     style={{background: "white", color: "black"}}>
-                                    <Row >
-                                        <Col lg={12}>
+                            <div id="sticky-cont"  className={classes.StickyContainer}>{/*Container */}
+                                <div id="sticky-el">{/*Element to make sticky*/}
+                                    <DateRange
+                                        onDaySelect={this.mapReadingsRangeSetState}
+                                    /><div id="sticky-trigger"></div>
+                                </div>{/*End of sticky element*/}
+                                <Tabs  defaultActiveKey="temp" id="uncontrolled-tab-example">
+                                    <Tab eventKey="temp" title="Temperature - History"
+                                         style={{background: "white", color: "black"}}>
+                                        <Row >
+                                            <Col lg={12}>
 
-                                            <h5  className="reading-box">Hourly temperature readings</h5>
-                                            <p>from {this.state.startPeriod} to {this.state.endPeriod}</p>
-                                            <LinerGraph
-                                                fishParams={this.state.fishParams}
-                                                readings={this.state.readings}
-                                            />
-                                        </Col>
-                                        <Col lg={12}><br/>
-                                            <h5 className="reading-box">Temperature readings by alert category</h5>
-                                            <p>from {this.state.startPeriod} to {this.state.endPeriod}</p>
-                                            <TempPie
-                                                fishParams={this.state.fishParams}
-                                                readings={this.state.readings}
-                                            />
-                                        </Col>
-                                    </Row>
-                                    <Row className="row-margin">
-                                        <Col lg={12}>
-                                            <h5 className="reading-box">Highest, lowest and average daily
-                                                temperatures</h5>
-                                            <p>from {this.state.startPeriod} to {this.state.endPeriod}</p>
-                                            <HighLow readings={this.state.readings}/>
-                                        </Col>
-                                    </Row>
-                                </Tab>
-                                <Tab eventKey="ph" title="pH - History">
-                                    <h1>Coming soon!</h1>
-                                </Tab>
-                                <Tab eventKey="nh3" title="Nh3 - History">
-                                    <h1>Coming soon!</h1>
-                                </Tab>
-                            </Tabs>
-                            <Row/>
-                            <div id="sticky-end"></div>
-                        </div>
-{/* End of sticky container*/}                        </div>
+                                                <h5  className="reading-box">Hourly temperature readings</h5>
+                                                <p>from {this.state.startPeriod} to {this.state.endPeriod}</p>
+                                                <LinerGraph
+                                                    fishParams={this.state.fishParams}
+                                                    readings={this.state.readings}
+                                                />
+                                            </Col>
+                                            <Col lg={12}><br/>
+                                                <h5 className="reading-box">Temperature readings by alert category</h5>
+                                                <p>from {this.state.startPeriod} to {this.state.endPeriod}</p>
+                                                <TempPie
+                                                    fishParams={this.state.fishParams}
+                                                    readings={this.state.readings}
+                                                />
+                                            </Col>
+                                        </Row>
+                                        <Row className="row-margin">
+                                            <Col lg={12}>
+                                                <h5 className="reading-box">Highest, lowest and average daily
+                                                    temperatures</h5>
+                                                <p>from {this.state.startPeriod} to {this.state.endPeriod}</p>
+                                                <HighLow readings={this.state.readings}/>
+                                            </Col>
+                                        </Row>
+                                    </Tab>
+                                    <Tab eventKey="ph" title="pH - History">
+                                        <h1>Coming soon!</h1>
+                                    </Tab>
+                                    <Tab eventKey="nh3" title="Nh3 - History">
+                                        <h1>Coming soon!</h1>
+                                    </Tab>
+                                </Tabs>
+                                <Row/>
+                                <div id="sticky-end"></div>
+                            </div>
+                            {/* End of sticky container*/}                        </div>
                         <hr  className="divider"/>
                         <AdviceContainer/>
                         <Row className={settings_classes.Container}>
@@ -523,3 +551,4 @@ class ApProjectContainer extends Component {
 
 
 export default ApProjectContainer;
+
