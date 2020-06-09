@@ -100,7 +100,7 @@ class ApProjectContainer extends Component {
         this.handleToggleSliders = this.handleToggleSliders.bind(this);
         //this.selectWeek = selectWeek.bind(this)
         this.resetSettings = this.resetSettings.bind(this);
-        this.handleScroll = this.handleScroll.bind(this);
+        //this.handleScroll = this.handleScroll.bind(this);
 
     }
 
@@ -232,15 +232,17 @@ class ApProjectContainer extends Component {
 
         this.mapFishSetState(selectFishType, this.state.fishId);
         this.mapFish(getFish);
-        window.addEventListener('scroll', this.handleScroll);
+       // window.addEventListener('scroll', this.handleScroll);
 
     }
-
-    handleScroll= (event) => {
+ // todo: You should be using ref callbacks, never normal DOM traversal, to get access to nodes in componentDidMount.
+  //  https://reactjs.org/docs/refs-and-the-dom.html
+    /*handleScroll= (event) => {
+        let stickyTrigger;
         let container =document.getElementById("sticky-cont");
         let header = document.getElementById("sticky-el");
 
-        let stickyTrigger = document.getElementById("sticky-trigger");
+         stickyTrigger = document.getElementById("sticky-trigger");
         let end = document.getElementById("sticky-end");
             let sticky = stickyTrigger.offsetTop;
             let stickyBottom = end.offsetTop;
@@ -258,7 +260,7 @@ console.log(`Page Offset: ${window.pageYOffset} Sticky(Trigger div): ${sticky} S
                 console.log('Removing element')
             }
     }
-
+*/
     onNh3Update = nh3Update => {
         this.setState({nh3Update})
     };

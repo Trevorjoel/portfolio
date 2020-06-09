@@ -19,9 +19,9 @@ class Gallery extends React.Component {
     
     responsive = {
         
-        0: {items: 1},
+        0: {items: 2},
         900: {items: 2},
-        1200: {items: 3}
+        1200: {items: 4}
     };
     
     onSlideChange(e) {
@@ -41,31 +41,24 @@ class Gallery extends React.Component {
                  <h1 id="trigger-top" className="projects-title">LATEST PROJECTS</h1>
                
                 <div className="projects-container container">
-<div
-    
-    data-aos="flip-up"
-    data-aos-easing="ease-out-cubic"
-    data-aos-duration="1000"
-     data-aos-anchor="#trigger-top"
-    data-aos-anchor-placement="top-center">
-                
+
                     <AliceCarousel
                         
                         items={this.state.galleryItems}
                         responsive={this.responsive}
                         autoPlayInterval={5000}
                         autoPlayDirection="ltr"
-                        autoPlay={false}
+                        autoPlay={true}
                         fadeOutAnimation={true}
                         mouseTrackingEnabled={true}
                         playButtonEnabled={false}
                         disableAutoPlayOnAction={false}
                         onSlideChange={this.onSlideChange}
                         onSlideChanged={this.onSlideChanged}
-                        buttonsDisabled={true}
+                        buttonsDisabled={false}
 
                     />
-</div>
+
                 </div>
             </div>
             
