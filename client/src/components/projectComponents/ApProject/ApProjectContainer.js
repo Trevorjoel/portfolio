@@ -107,10 +107,7 @@ class ApProjectContainer extends Component {
     resetSettings = () => {
         console.log('Clicked')
         this.setState({
-            /*tempSettingsValue: [this.state.fishParams.temp_low_critical,
-                this.state.fishParams.temp_low_warn,
-                this.state.fishParams.temp_high_warn,
-                this.state.fishParams.temp_high_critical].slice(),*/
+
             tempSettingsUpdate: [this.state.fishParams.temp_low_critical,
                 this.state.fishParams.temp_low_warn,
                 this.state.fishParams.temp_high_warn,
@@ -235,18 +232,22 @@ class ApProjectContainer extends Component {
 
         this.mapFishSetState(selectFishType, this.state.fishId);
         this.mapFish(getFish);
-
         window.addEventListener('scroll', this.handleScroll);
 
-        /*window.onscroll = function() {myFunction()};
-        let container =document.getElementById("sticky-cont");
-        let stickyTrigger = document.getElementById("sticky-trigger");
-        let header = document.getElementById("sticky-el");
-        let end = document.getElementById("sticky-end");
-        let sticky = stickyTrigger.offsetTop;
-        let stickyBottom = end.offsetTop;
+    }
 
-        function myFunction() {
+    handleScroll= (event) => {
+        let container =document.getElementById("sticky-cont");
+        let header = document.getElementById("sticky-el");
+
+        let stickyTrigger = document.getElementById("sticky-trigger");
+        let end = document.getElementById("sticky-end");
+            let sticky = stickyTrigger.offsetTop;
+            let stickyBottom = end.offsetTop;
+
+console.log(`Page Offset: ${window.pageYOffset} Sticky(Trigger div): ${sticky} StickyBottom: ${stickyBottom} `)
+
+
             if (window.pageYOffset > sticky && window.pageYOffset < stickyBottom ) {
                 console.log('Adding element')
                 header.classList.add(classes.StickyElement);
@@ -256,27 +257,6 @@ class ApProjectContainer extends Component {
                 container.classList.remove(classes.AddHeight);
                 console.log('Removing element')
             }
-
-        }*/
-    }
-
-    handleScroll= event => {
-        let container =document.getElementById("sticky-cont");
-        let stickyTrigger = document.getElementById("sticky-trigger");
-        let header = document.getElementById("sticky-el");
-        let end = document.getElementById("sticky-end");
-        let sticky = stickyTrigger.offsetTop;
-        let stickyBottom = end.offsetTop;
-
-        if (window.pageYOffset > sticky && window.pageYOffset < stickyBottom ) {
-            console.log('Adding element')
-            header.classList.add(classes.StickyElement);
-            container.classList.add(classes.AddHeight);
-        } else {
-            header.classList.remove(classes.StickyElement);
-            container.classList.remove(classes.AddHeight);
-            console.log('Removing element')
-        }
     }
 
     onNh3Update = nh3Update => {
@@ -297,9 +277,7 @@ class ApProjectContainer extends Component {
     onTempChange = tempValues => {
         this.setState({tempValues})
     };
-    /*onTempSettingsUpdate = tempSettingsUpdate => {
-        this.setState({tempSettingsUpdate})
-    };*/
+
     onTempSettingsChange = tempSettingsUpdate => {
         this.setState({tempSettingsUpdate})
     };
@@ -445,13 +423,15 @@ class ApProjectContainer extends Component {
                         <div >
                             <h2 className="reading-box ">View historical data</h2>
                             <p className="reading-box ">Track your previous readings to make better decisions for your
-                                systems future.</p><br/>
-                            <div id="sticky-cont"  className={classes.StickyContainer}>{/*Container */}
-                                <div id="sticky-el">{/*Element to make sticky*/}
+                                systems future.</p><br/><div id="sticky-trigger"></div>
+                            <div id="sticky-cont"  className={classes.StickyContainer}>
+
+                                <div id="sticky-el">
                                     <DateRange
                                         onDaySelect={this.mapReadingsRangeSetState}
-                                    /><div id="sticky-trigger"></div>
-                                </div>{/*End of sticky element*/}
+                                    />
+                                </div>
+
                                 <Tabs  defaultActiveKey="temp" id="uncontrolled-tab-example">
                                     <Tab eventKey="temp" title="Temperature - History"
                                          style={{background: "white", color: "black"}}>
@@ -491,9 +471,10 @@ class ApProjectContainer extends Component {
                                     </Tab>
                                 </Tabs>
                                 <Row/>
-                                <div id="sticky-end"></div>
+
                             </div>
-                            {/* End of sticky container*/}                        </div>
+                            <div id="sticky-end"></div>
+                                         </div>
                         <hr  className="divider"/>
                         <AdviceContainer/>
                         <Row className={settings_classes.Container}>
