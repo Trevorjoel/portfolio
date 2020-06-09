@@ -107,16 +107,16 @@ class ApProjectContainer extends Component {
     resetSettings = () => {
         console.log('Clicked')
         this.setState({
-            tempSettingsValue: [this.state.fishParams.temp_low_critical,
+            /*tempSettingsValue: [this.state.fishParams.temp_low_critical,
                 this.state.fishParams.temp_low_warn,
                 this.state.fishParams.temp_high_warn,
-                this.state.fishParams.temp_high_critical].slice(),
+                this.state.fishParams.temp_high_critical].slice(),*/
             tempSettingsUpdate: [this.state.fishParams.temp_low_critical,
                 this.state.fishParams.temp_low_warn,
                 this.state.fishParams.temp_high_warn,
                 this.state.fishParams.temp_high_critical].slice(),
         })
-        this.forceUpdate();
+        //this.forceUpdate();
     }
 
 
@@ -297,11 +297,11 @@ class ApProjectContainer extends Component {
     onTempChange = tempValues => {
         this.setState({tempValues})
     };
-    onTempSettingsUpdate = tempSettingsUpdate => {
+    /*onTempSettingsUpdate = tempSettingsUpdate => {
         this.setState({tempSettingsUpdate})
-    };
-    onTempSettingsChange = tempSettingsValues => {
-        this.setState({tempSettingsValues})
+    };*/
+    onTempSettingsChange = tempSettingsUpdate => {
+        this.setState({tempSettingsUpdate})
     };
 
     onFishChange = fishId => {
@@ -501,21 +501,21 @@ class ApProjectContainer extends Component {
                                 <div><h3>Change Alerts for {this.state.fishParams.fish_name}</h3>
                                     <br/>
                                     <SettingsTemp
-                                        onUpdate={this.onTempSettingsUpdate}
+                                        //onUpdate={this.onTempSettingsUpdate}
                                         onChange={this.onTempSettingsChange}
                                         values={this.state.tempSettingsValue}
                                         updates={this.state.tempSettingsUpdate}
                                         reset={this.resetSettings}
                                     />
                                     <SettingsTemp
-                                        onUpdate={this.onTempSettingsUpdate}
+                                        //onUpdate={this.onTempSettingsUpdate}
                                         onChange={this.onTempSettingsChange}
                                         values={this.state.tempSettingsValue}
                                         updates={this.state.tempSettingsUpdate}
                                         reset={this.resetSettings}
                                     />
                                     <SettingsTemp
-                                        onUpdate={this.onTempSettingsUpdate}
+                                        //onUpdate={this.onTempSettingsUpdate}
                                         onChange={this.onTempSettingsChange}
                                         values={this.state.tempSettingsValue}
                                         updates={this.state.tempSettingsUpdate}

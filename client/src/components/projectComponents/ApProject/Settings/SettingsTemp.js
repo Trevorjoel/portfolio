@@ -60,12 +60,12 @@ class SettingsTemp extends Component {
                         step={.5}
                         domain={[this.props.values[0] - 5, this.props.values[3] + 5]}  // this.props.values[0] - 5 ,this.props.values[3] + 5] this causes a crash sometimes due to the API call
                         rootStyle={sliderStyle}
-                        onUpdate={this.props.onUpdate}
+                        //onUpdate={this.props.onUpdate}
                         onChange={this.props.onChange}
                         values={this.props.updates}
 
                     >
-                        {console.log(this.props.update)}
+                        {console.log(this.props.updates)}
                         <Rail>
                             {({getRailProps}) => <div style={railStyle} {...getRailProps()} />}
                         </Rail>
