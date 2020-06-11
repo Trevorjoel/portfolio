@@ -5,7 +5,9 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import classes from './FishProfile.module.css';
 import React, { useState } from 'react';
-import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
+import {Dropdown, DropdownToggle, DropdownMenu, DropdownItem, NavItem, NavLink, Nav} from 'reactstrap';
+import {Link} from "react-scroll";
+import {NavLink as RRNavLink} from "react-router-dom";
 // Test
 const FishProfile = (props) =>{
     let fishImage;
@@ -25,7 +27,11 @@ const FishProfile = (props) =>{
                {/* <Row>
                     <Col>*/}
                 <h4>{props.fishParams.fish_name}</h4>
-                    <img alt="Github icon"
+                    <img
+                        data-aos="fade-right"
+                        data-aos-delay="1000"
+                        data-aos-duration="800"
+                        alt={props.fishParams.fish_name}
                          className={classes.FishImage}
                          src={fishImage}/>
                   {/*  </Col>  <Col>
@@ -33,9 +39,13 @@ const FishProfile = (props) =>{
                     <div className={classes.OptimalWrapper}>
 
                         <p style={{textAlign:"center"}} className="reading-box ">
-                           <Row>
+
+                           <Row
+                               >
                                 <Col>
-                                    <strong> {props.fishParams.temp_low_warn} - {props.fishParams.temp_high_warn}</strong> {String.fromCharCode(8451)}<br/>
+                                    <strong data-aos="fade-down"
+                                            data-aos-delay="0"
+                                            data-aos-duration="300"> {props.fishParams.temp_low_warn} - {props.fishParams.temp_high_warn}</strong> {String.fromCharCode(8451)}<br/>
                               </Col>
                                 <Col>
                                     <strong>{props.fishParams.ph_low_warn} - {props.fishParams.ph_high_warn}</strong> pH<br/>
@@ -47,10 +57,20 @@ const FishProfile = (props) =>{
                         </p>
 
                     </div>
-                {/*</Col>
-                </Row>*/}
-                <p className="reading-box ">See our caring for <a href="#">{props.fishParams.fish_name}</a> page.</p>
-
+                <div>
+                    <Link
+                        exact
+                        activeClass=""
+                        to="advice"
+                        spy={true}
+                        smooth={true}
+                        offset={-70}
+                        duration={500}
+                    >
+                        <p
+                            activeClassName="" tag={RRNavLink} href="/" exact to="/sensors">See our caring for <a href="#">{props.fishParams.fish_name}</a> page.</p>
+                    </Link>
+                </div>
                 <br/>
 
 

@@ -6,7 +6,7 @@ function TroutInfo() {
 }
 function Headline() {
     return (<div className="">
-            <h4 className="reading-box">Caring For Trout</h4>
+            <h4 id="" className="reading-box">Caring For Trout</h4>
 
 
             <img alt="Github icon" className="fish-image" src={github}/>

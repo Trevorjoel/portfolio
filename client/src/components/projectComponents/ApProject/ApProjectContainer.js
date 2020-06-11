@@ -33,9 +33,6 @@ import {Tab, Tabs} from "react-bootstrap";
 import SettingsTemp from "./Settings/SettingsTemp";
 import settings_classes from './Settings/SettingsContainer.module.css';
 
-// todo: New fish has been added to the database. Plan and code a feature to allow the user to select different fish.
-//         pattern has been created.
-
 // Todo: Create id's to navigate the demo app, example: to the caring for trout pages
 
 class ApProjectContainer extends Component {
@@ -101,6 +98,10 @@ class ApProjectContainer extends Component {
         //this.selectWeek = selectWeek.bind(this)
         this.resetSettings = this.resetSettings.bind(this);
         //this.handleScroll = this.handleScroll.bind(this);
+        this.topTriggerEl = React.createRef();
+       this.containerEl = React.createRef();
+        this.stickyEl = React.createRef();
+        this.bottomTriggerEl = React.createRef();
 
     }
 
@@ -220,47 +221,34 @@ class ApProjectContainer extends Component {
             )
     }
 
-    // todo: pass a function into the DateRange component that changes the state for start/end dates
     componentDidMount() {
 
-        // When user arrives on the page make sure to arrive at the top of the page
-        //  window.scrollTo(0, 0);
-        //this.mapReadingsSetState(selectReadings, 169);
-        // own function
         this.getPreviousTime();
-        //  this.selectAllReadings()
-
         this.mapFishSetState(selectFishType, this.state.fishId);
         this.mapFish(getFish);
-       // window.addEventListener('scroll', this.handleScroll);
+       window.addEventListener('scroll', this.handleScroll);
 
     }
  // todo: You should be using ref callbacks, never normal DOM traversal, to get access to nodes in componentDidMount.
   //  https://reactjs.org/docs/refs-and-the-dom.html
-    /*handleScroll= (event) => {
-        let stickyTrigger;
-        let container =document.getElementById("sticky-cont");
-        let header = document.getElementById("sticky-el");
+    handleScroll= (event) => {
 
-         stickyTrigger = document.getElementById("sticky-trigger");
-        let end = document.getElementById("sticky-end");
-            let sticky = stickyTrigger.offsetTop;
-            let stickyBottom = end.offsetTop;
+if (this.topTriggerEl.current !== null ) { // Check that Aquaponics page has rendered. Was causing a bug when changing pages meaning the
+    // Check that view is between the correct ranges (In the history components)
 
-console.log(`Page Offset: ${window.pageYOffset} Sticky(Trigger div): ${sticky} StickyBottom: ${stickyBottom} `)
+    if (window.pageYOffset > this.topTriggerEl.current.offsetTop && window.pageYOffset < this.bottomTriggerEl.current.offsetTop) {
+        console.log('Adding element')
+        document.getElementById("sticky-el").classList.add(classes.StickyElement)
+        document.getElementById("sticky-cont").classList.add(classes.AddHeight)
 
-
-            if (window.pageYOffset > sticky && window.pageYOffset < stickyBottom ) {
-                console.log('Adding element')
-                header.classList.add(classes.StickyElement);
-                container.classList.add(classes.AddHeight);
-            } else {
-                header.classList.remove(classes.StickyElement);
-                container.classList.remove(classes.AddHeight);
-                console.log('Removing element')
-            }
+    } else {
+        document.getElementById("sticky-el").classList.remove(classes.StickyElement)
+        document.getElementById("sticky-cont").classList.remove(classes.AddHeight)
+        console.log('Removing element')
     }
-*/
+}
+    }
+
     onNh3Update = nh3Update => {
         this.setState({nh3Update})
     };
@@ -369,7 +357,6 @@ console.log(`Page Offset: ${window.pageYOffset} Sticky(Trigger div): ${sticky} S
                                                 <TempSliderVertical
                                                     values={this.state.tempValue}
                                                     update={this.state.tempUpdate}
-                                                    // defaultValues={Assets.defaultTemp}
                                                     onUpdate={this.onTempUpdate}
                                                     onChange={this.onTempChange}
                                                 />
@@ -425,10 +412,11 @@ console.log(`Page Offset: ${window.pageYOffset} Sticky(Trigger div): ${sticky} S
                         <div >
                             <h2 className="reading-box ">View historical data</h2>
                             <p className="reading-box ">Track your previous readings to make better decisions for your
-                                systems future.</p><br/><div id="sticky-trigger"></div>
-                            <div id="sticky-cont"  className={classes.StickyContainer}>
+                                systems future.</p><br/>
+                                <div ref={this.topTriggerEl} className="check" id="sticky-trigger"></div>
+                            <div id="sticky-cont" ref={this.containerEl} className={classes.StickyContainer}>
 
-                                <div id="sticky-el">
+                                <div id="sticky-el" ref={this.stickyEl}>
                                     <DateRange
                                         onDaySelect={this.mapReadingsRangeSetState}
                                     />
@@ -475,7 +463,7 @@ console.log(`Page Offset: ${window.pageYOffset} Sticky(Trigger div): ${sticky} S
                                 <Row/>
 
                             </div>
-                            <div id="sticky-end"></div>
+                            <div ref={this.bottomTriggerEl} id="sticky-end"></div>
                                          </div>
                         <hr  className="divider"/>
                         <AdviceContainer/>

@@ -9,20 +9,20 @@ import {Col} from "reactstrap";
 // Caret symbols &#8897; &#8896; [classes.Color, classes.Size].join(' ')
 const AdviceContainer = (props) => {
     return (
-        <div className={classes.Container}>
+        <div id="advice" className={classes.Container}>
             <h1 className="">System Advice pages</h1>
             <p className={ classes}>Get the advice you need when you need it.</p>
-            <Accordion title="Ammonia"
+            <Accordion title="Ammonia Management"
                        sub1={<AccordionSub title="High" text="Loremu ipsum"/>}
                        sub2={<AccordionSub title="Low" text="Loremu ipsum"/>}
 
             />
-            <Accordion title="Fish"
+            <Accordion  title="Fish Care"
                 sub1={<AccordionSub title="Trout" text="Loremu ipsum" info={<TroutInfo/>}/>}
                 sub2={<AccordionSub title="Silver Perch" text="Loremu ipsum"/>}
                 sub3={<AccordionSub title="Carp" text="Loremu ipsum"/>}
                 />
-            <Accordion title="Temperature"
+            <Accordion title="Temperature Management"
                        sub1={<AccordionSub title="High" text="Loremu ipsum"
                                            info={<TemperatureInfo/>}
                        />}

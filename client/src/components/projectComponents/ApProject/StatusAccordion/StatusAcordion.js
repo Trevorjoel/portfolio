@@ -4,7 +4,8 @@ import React, {useState, useRef} from "react";
 import Chevron from "../advicePages/Chevron";
 import {Badge, Col, Row} from "reactstrap";
 import Button from "react-bootstrap/Button";
-
+import {Link} from "react-scroll";
+import {NavLink as RRNavLink} from "react-router-dom";
 
 // Caret symbols &#8897; &#8896; [classes.Color, classes.Size].join(' ')
 const Accordion = (props) => {
@@ -59,9 +60,23 @@ const Accordion = (props) => {
                     <p data-aos="fade"
                        data-aos-delay="0"
                        data-aos-duration="1000" className="">{props.adviceText}</p>
-                    <p data-aos="fade"
-                       data-aos-delay="0"
-                       data-aos-duration="1000"> Please see <a href={props.link}> our wiki.</a></p>
+
+                     <Link
+                        exact
+                        activeClass=""
+                        to="advice"
+                        spy={true}
+                        smooth={true}
+                        offset={-70}
+                        duration={500}
+                    >
+                        <p
+                            data-aos="fade"
+                            data-aos-delay="0"
+                            data-aos-duration="1000"
+                            activeClassName="" tag={RRNavLink} href="/" exact to="/sensors">Please see <a href="#"> our wiki.</a></p>
+                    </Link>
+
                     <Button variant="info" size={"sm"}>Modify {
                         props.paramName === "" ? "nh3" : props.paramName} alerts</Button><br/>
                     <br/>
