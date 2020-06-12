@@ -33,7 +33,7 @@ export class Handle extends Component {
                             marginTop: "-30px"
                         }}
                     > <div style={{ fontFamily: 'Roboto', fontSize: 14, marginTop: -25, background: 'black', color:'white', padding: '10px' }}>
-                       Temp: {value}
+                        {this.props.tiplabel}: {value.toFixed(2)}
                     </div>
 
                     </div>
@@ -89,15 +89,14 @@ Handle.propTypes = {
 // *******************************************************
 // TRACK COMPONENT
 // *******************************************************
-export function Track({ source, target, getTrackProps, index }) {
-const color = ["yellow", "green", "yellow"];
+export function Track({ source, target, getTrackProps, index, trackcolor }) {
     return (
         <div
             style={{
                 position: "absolute",
                 height: 8,
                 zIndex: 1,
-                backgroundColor: color[index] ,
+                backgroundColor: trackcolor[index] ,
                 borderRadius: 4,
                 cursor: "pointer",
                 left: `${source.percent}%`,

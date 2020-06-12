@@ -31,6 +31,8 @@ import SlidersModal from "./sliders/SlidersModal";
 import moment from 'moment';
 import {Tab, Tabs} from "react-bootstrap";
 import SettingsTemp from "./Settings/SettingsTemp";
+import SettingsPh from "./Settings/SettingsPh";
+import SettingsNh3 from "./Settings/SettingsNh3";
 import settings_classes from './Settings/SettingsContainer.module.css';
 
 // Todo: Create id's to navigate the demo app, example: to the caring for trout pages
@@ -49,7 +51,11 @@ class ApProjectContainer extends Component {
             phUpdate: [],
             nh3Update: [],
             tempSettingsUpdate: [],
-            tempSettingsValue: [0, 0, 0, 0], // 0 0 0 0 Prevents error in the settings component domain fields
+            tempSettingsValue: [], // 0 0 0 0 Prevents error in the settings component domain fields
+            phSettingsUpdate: [],
+            phSettingsValue: [],
+            nh3SettingsUpdate: [],
+            nh3SettingsValue: [],
             // Used in the alert feature setTimeOut
             tempCaptureValue: Assets.defaultTemp.slice(),
             phCaptureValue: Assets.defaultPh.slice(),
@@ -96,17 +102,18 @@ class ApProjectContainer extends Component {
         this.handleToggleDescription = this.handleToggleDescription.bind(this);
         this.handleToggleSliders = this.handleToggleSliders.bind(this);
         //this.selectWeek = selectWeek.bind(this)
-        this.resetSettings = this.resetSettings.bind(this);
+        this.resetTempSettings = this.resetTempSettings.bind(this);
+        this.resetPhSettings = this.resetPhSettings.bind(this);
+        this.resetNh3Settings = this.resetNh3Settings.bind(this);
         //this.handleScroll = this.handleScroll.bind(this);
         this.topTriggerEl = React.createRef();
-       this.containerEl = React.createRef();
+        this.containerEl = React.createRef();
         this.stickyEl = React.createRef();
         this.bottomTriggerEl = React.createRef();
 
     }
 
-    resetSettings = () => {
-        console.log('Clicked')
+    resetTempSettings = () => {
         this.setState({
 
             tempSettingsUpdate: [this.state.fishParams.temp_low_critical,
@@ -114,7 +121,24 @@ class ApProjectContainer extends Component {
                 this.state.fishParams.temp_high_warn,
                 this.state.fishParams.temp_high_critical].slice(),
         })
-        //this.forceUpdate();
+    }
+
+    resetPhSettings = () => {
+        this.setState({
+
+            phSettingsUpdate: [this.state.fishParams.ph_low_critical,
+                this.state.fishParams.ph_low_warn,
+                this.state.fishParams.ph_high_warn,
+                this.state.fishParams.ph_high_critical].slice(),
+        })
+    }
+
+    resetNh3Settings = () => {
+        this.setState({
+
+            nh3SettingsUpdate: [this.state.fishParams.nh3_warn,
+                this.state.fishParams.nh3_critical].slice(),
+        })
     }
 
 
@@ -167,6 +191,18 @@ class ApProjectContainer extends Component {
                             returnedFishParams.temp_low_warn,
                             returnedFishParams.temp_high_warn,
                             returnedFishParams.temp_high_critical].slice(),
+                        phSettingsValue: [returnedFishParams.ph_low_critical,
+                            returnedFishParams.ph_low_warn,
+                            returnedFishParams.ph_high_warn,
+                            returnedFishParams.ph_high_critical].slice(),
+                        phSettingsUpdate: [returnedFishParams.ph_low_critical,
+                            returnedFishParams.ph_low_warn,
+                            returnedFishParams.ph_high_warn,
+                            returnedFishParams.ph_high_critical].slice(),
+                        nh3SettingsValue: [returnedFishParams.nh3_warn,
+                            returnedFishParams.nh3_critical].slice(),
+                        nh3SettingsUpdate: [returnedFishParams.nh3_warn,
+                            returnedFishParams.nh3_critical].slice(),
                         tempValue: [returnedFishParams.temp_target].slice(),
                         tempUpdate: [returnedFishParams.temp_target].slice(),
                         phValue: [returnedFishParams.ph_target].slice(),
@@ -271,6 +307,15 @@ if (this.topTriggerEl.current !== null ) { // Check that Aquaponics page has ren
     onTempSettingsChange = tempSettingsUpdate => {
         this.setState({tempSettingsUpdate})
     };
+
+    onPhSettingsChange = phSettingsUpdate => {
+        this.setState({phSettingsUpdate})
+    };
+
+    onNh3SettingsChange = nh3SettingsUpdate => {
+        this.setState({nh3SettingsUpdate})
+    };
+
 
     onFishChange = fishId => {
         this.mapFishSetState(selectFishType, fishId)
@@ -449,7 +494,10 @@ if (this.topTriggerEl.current !== null ) { // Check that Aquaponics page has ren
                                                 <h5 className="reading-box">Highest, lowest and average daily
                                                     temperatures</h5>
                                                 <p>from {this.state.startPeriod} to {this.state.endPeriod}</p>
-                                                <HighLow readings={this.state.readings}/>
+                                                <HighLow
+                                                    fishParams={this.state.fishParams}
+                                                    readings={this.state.readings}
+                                                />
                                             </Col>
                                         </Row>
                                     </Tab>
@@ -476,21 +524,19 @@ if (this.topTriggerEl.current !== null ) { // Check that Aquaponics page has ren
                                         onChange={this.onTempSettingsChange}
                                         values={this.state.tempSettingsValue}
                                         updates={this.state.tempSettingsUpdate}
-                                        reset={this.resetSettings}
+                                        reset={this.resetTempSettings}
                                     />
-                                    <SettingsTemp
-                                        //onUpdate={this.onTempSettingsUpdate}
-                                        onChange={this.onTempSettingsChange}
-                                        values={this.state.tempSettingsValue}
-                                        updates={this.state.tempSettingsUpdate}
-                                        reset={this.resetSettings}
+                                    <SettingsPh
+                                        onChange={this.onPhSettingsChange}
+                                        values={this.state.phSettingsValue}
+                                        updates={this.state.phSettingsUpdate}
+                                        reset={this.resetPhSettings}
                                     />
-                                    <SettingsTemp
-                                        //onUpdate={this.onTempSettingsUpdate}
-                                        onChange={this.onTempSettingsChange}
-                                        values={this.state.tempSettingsValue}
-                                        updates={this.state.tempSettingsUpdate}
-                                        reset={this.resetSettings}
+                                    <SettingsNh3
+                                        onChange={this.onNh3SettingsChange}
+                                        values={this.state.nh3SettingsValue}
+                                        updates={this.state.nh3SettingsUpdate}
+                                        reset={this.resetNh3Settings}
                                     />
                                 </div>
                             </Col>

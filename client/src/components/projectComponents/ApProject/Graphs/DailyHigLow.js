@@ -117,35 +117,75 @@ const HighLow = (props)=> {
                 
             },
             yAxis: {
-                type: 'value'
+                type: 'value',
             },
             series: [{
                 name: 'Highest Temperature',
-
+                symbolSize: 9,
                 stack: '',
-                areaStyle: {color: 'green'},
+                //areaStyle: {color: 'green'},
                 data: highestNumArray,
-                type: 'line'
+                type: 'line',
+                markArea: {
+                    data: [ [{
+
+                        yAxis: '0',
+                        itemStyle: {color: 'rgba(253,0,1,0.5)'}
+                    }, {
+                        yAxis: props.fishParams.temp_low_critical
+                    }], [{
+
+                        yAxis: props.fishParams.temp_high_critical,
+                        itemStyle: {color: 'rgba(253,0,1,0.5)'}
+
+                    }, {
+                        yAxis: '35'
+                    }],
+                        [{
+
+                            yAxis: props.fishParams.temp_low_critical,
+                            itemStyle: {color: 'rgba(253,253,1,0.5)'}
+                        }, {
+                            yAxis: props.fishParams.temp_low_warn
+                        }], [{
+
+                            yAxis: props.fishParams.temp_high_warn,
+                            itemStyle: {color: 'rgba(253,253,1,0.5)'}
+
+                        }, {
+                            yAxis: props.fishParams.temp_high_critical
+                        }],
+                        [{
+
+                            yAxis: props.fishParams.temp_low_warn,
+                            itemStyle: {color: 'rgba(0,127,1,0.4)'}
+
+                        }, {
+                            yAxis: props.fishParams.temp_high_warn
+                        }]
+                    ],
+
+                }
             },{
                 name: 'Lowest Temperature',
-
+                symbolSize: 9,
                 stack: '',
-                areaStyle: {
+                /*areaStyle: {
                     color:'blue'
-                },
+                },*/
                 type: 'line',
                 data: lowestNumArray,
                 
             },
                 {
                     name: 'Average Temperature',
-
+                    symbolSize: 9,
                     stack: '',
-
                     type: 'line',
                     data: averageArray,
-
                 },
+
+
             ]
  
     
