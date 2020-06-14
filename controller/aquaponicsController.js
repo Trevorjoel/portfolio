@@ -3,7 +3,7 @@
 * Middleware for the aquaponics API
 * */
 
-const TakeData = require('../model/aquaponicsModel');
+const TakeData = require('../models/aquaponicsModel');
 
 exports.get_previous_time =  (req, res) => {
     console.log('GetTime Runs');

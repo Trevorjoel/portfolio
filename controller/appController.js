@@ -5,10 +5,10 @@
 import {validationResult} from "express-validator";
 
 const nodemailer = require('nodemailer');
-const sql = require('../model/db');
+const sql = require('../models/db');
 
 const keys = require('../config/keys');
-const dbModel = require('../model/appModel');
+const dbModel = require('../models/appModel');
 
 // handle the contact form request
 exports.emailer = function (req) {

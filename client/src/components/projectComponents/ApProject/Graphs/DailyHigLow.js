@@ -111,7 +111,7 @@ const HighLow = (props)=> {
                 type: 'category',
                 data: timeArray,
                 textStyle: {
-                    fontFamily: 'akkurta,Inconsolata, monospace',
+                    fontFamily: 'Ubuntu',
                     color: '#ccc'
                 }
                 
@@ -121,6 +121,7 @@ const HighLow = (props)=> {
             },
             series: [{
                 name: 'Highest Temperature',
+                smooth:true,
                 symbolSize: 9,
                 stack: '',
                 //areaStyle: {color: 'green'},

@@ -1,5 +1,5 @@
-import classes from '../advicePages/AdviceContainer.module.css';
-import StatClasses from './StatusAccordion.module.css';
+/*import classes from '../advicePages/AdviceContainer.module.css';*/
+import classes from './StatusAccordion.module.scss';
 import React, {useState, useRef} from "react";
 import Chevron from "../advicePages/Chevron";
 import {Badge, Col, Row} from "reactstrap";
@@ -27,10 +27,10 @@ const Accordion = (props) => {
         )
     }
     return (
-        <div className={classes}>
-            <button className={[classes.Button, setActive].join(' ')}
+        <div>
+            <button style={props.addRadius} className={[classes.Button, setActive].join(' ')}
                     onClick={toggleContent}>
-                <Row className={classes.TxtLeft}>
+                <Row >
 
                         <Col lg={4} sm={4} xs={4}>
                             <div>
@@ -56,7 +56,7 @@ const Accordion = (props) => {
             </button>
 
             <div ref={content} style={{maxHeight:`${setHeight}`}} className={classes.Content}>
-                <div className={StatClasses.InnerMessage}>
+                <div className={classes.InnerMessage}>
                     <p data-aos="fade"
                        data-aos-delay="0"
                        data-aos-duration="1000" className="">{props.adviceText}</p>

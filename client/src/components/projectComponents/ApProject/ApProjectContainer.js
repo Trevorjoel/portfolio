@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import * as Assets from './Assets/ApProjectAssets';
-import classes from './ApProjectContainer.module.css';
+import classes from './ApProjectContainer.module.scss';
 import {
     addReadingsToDB,
     createNotificationController,
@@ -363,14 +363,14 @@ if (this.topTriggerEl.current !== null ) { // Check that Aquaponics page has ren
                     </Button>
                     <div className={classes.ProjectContainer}>
 
-                        <h1 className="reading-box "><strong>Aquaponics System Monitor</strong> (Prototype)</h1>
+                        <h1 className=" "><strong>Aquaponics System Monitor</strong> (Prototype)</h1>
 
                         <Row>
                             <Col lg={12}>
 
                                 <br/>
-                                <h4 className=""><strong>Live Monitor</strong></h4>
-                                <p className="reading-box">See the current status of your system and get notifications
+                                <h2 className=""><strong>Live Monitor</strong></h2>
+                                <p className="">See the current status of your system and get notifications
                                     to your phone if there are problems</p>
                                 <div className={classes.StatusWrapper}>
 
@@ -383,10 +383,12 @@ if (this.topTriggerEl.current !== null ) { // Check that Aquaponics page has ren
 
                                 <div className={classes.BarsWrapper}
                                      title="Live readings from your system & information to help">
+                                    <div className={classes.AccordionContainer}>
                                     <h4>System Parameters</h4>
                                     {this.tempController(this.state.tempUpdate[0])}
                                     {this.phController(this.state.phUpdate[0])}
                                     {this.nh3Controller(this.state.nh3Update[0])}
+                                    </div>
 
                                     {this.state.activeSliders &&
                                     <div className={classes.SlidersWrap}>

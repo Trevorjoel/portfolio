@@ -1,6 +1,7 @@
+@import "styleVariables";
 .ProjectContainer{
-    font-family: Arial, Helvetica, sans-serif;
-    background: #151134;
+    font-family: $body-font;
+    background: $dark-blue;
     padding:20px;
     max-width:100%;
     color:whitesmoke;
@@ -10,6 +11,10 @@
     text-align: center;
     border-radius: 10px;
 }
+.ProjectContainer h1, h2, h3, h4, h5, h6{
+    font-family: $title-font
+}
+
 .h5{
     text-align: center;
     margin: 40px auto;
@@ -22,11 +27,11 @@
 }
 .StatusWrapper{
     background:
-            whitesmoke;
+            white;
     color:
             black;
-    border-radius: 20px 20px 0 0px;
-    padding: 15px 0px 15px 0;
+    border-radius: 20px;
+    padding: 30px 0px 20px 0px;
     text-align: center;
     max-width: 650px;
     margin: 0px auto;
@@ -34,15 +39,20 @@
     border: 1px solid
     #550909;
 }
+.AccordionContainer{
+    padding: 0px;
+    border-radius: 20px;
+    background: $dark-blue;
+    color:whitesmoke;
+}
 .BarsWrapper{
-    background: whitesmoke;
+    background: $dark-blue;
     color: black;
     border-radius: 0 0 20px 20px;
-    padding: 20px 20px 41px 20px;
+    padding: 40px 0px 20px 0px;
     text-align: center;
     max-width: 650px;
     margin: auto;
-    border: 1px solid #550909;
 }
 .ToggleButton{
     background: #1b1e21;

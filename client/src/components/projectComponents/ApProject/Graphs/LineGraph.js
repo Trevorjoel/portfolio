@@ -92,7 +92,7 @@ const LineGraph = (props) => {
             //symbol: 'circle',
           color: 'blue',
             name: 'Temperature',
-           // smooth: true,
+            smooth: true,
             stack: '',
             //areaStyle: {color: '#dce2eb'},
             data: tempData,

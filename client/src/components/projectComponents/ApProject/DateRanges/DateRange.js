@@ -126,8 +126,8 @@ class DateRange extends React.Component {
         return (
             <div id="range-select" className={classes.Wrap}>
                 <Row>
-                    <Col lg={2}><h4>View</h4></Col>
-                    <Col lg={5}>
+
+                    <Col lg={4}>
 
 <Dropdown showDay={()=>this.setPeriodOfDates('day')}
           showWeek={()=>this.setPeriodOfDates('week')}
@@ -135,23 +135,15 @@ class DateRange extends React.Component {
               showYear={()=>this.setPeriodOfDates('year')}
               showAll={()=>this.setPeriodOfDates('all')}
 />
-     {/*                   <ToggleButtonGroup className={classes.Pick} type="radio" name="options" defaultValue={'week'}>
-                            <ToggleButton value={'day'} onClick={()=>this.setPeriodOfDates('day')} color="primary">Day</ToggleButton>
-                            <ToggleButton value={'week'} onClick={()=>this.setPeriodOfDates('week')} color="primary">Week</ToggleButton>
-                            <ToggleButton value={'month'} onClick={()=>this.setPeriodOfDates('month')} color="primary">Month</ToggleButton>
-                            <ToggleButton value={'year'} onClick={()=>this.setPeriodOfDates('year')} color="primary">Year</ToggleButton>
-                            <ToggleButton value={'all'} onClick={()=>this.setPeriodOfDates('all')} color="primary">All Time</ToggleButton>
-                        </ToggleButtonGroup>
-*/}
-
-
 
                     </Col>
-                    <Col lg={5}>
 
-                    <label>Ranges<DatePicker
+                    <Col lg={4}>
+
+                   <DatePicker
                 dateFormat="dd/MM/yyyy"
-                selected={this.state.startDate}
+                selected={null}
+                placeholderText="From"
                 maxDate={this.state.endDate}
                 minDate={this.state.minDate}
                 onChange={this.setStartDate}
@@ -159,8 +151,12 @@ class DateRange extends React.Component {
                 startDate={this.state.startDate}
                 endDate={this.state.endDate}
                 className={classes.Fields}
-            /></label>
-                <label> - <DatePicker
+                withPortal
+            />
+                    </Col>
+                    <Col lg={4}>
+
+                <DatePicker
                     dateFormat="dd/MM/yyyy"
                     selected={this.state.endDate}
                     maxDate={this.state.maxDate}
@@ -170,7 +166,8 @@ class DateRange extends React.Component {
                     endDate={this.state.endDate}
                     minDate={this.state.startDate}
                     className={classes.Fields}
-                /></label>
+                    withPortal
+                />
 
                     </Col>
                 </Row>

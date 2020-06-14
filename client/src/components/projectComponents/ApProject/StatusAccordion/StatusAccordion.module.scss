@@ -1,0 +1,80 @@
+.TxtLeft{
+    text-align: left;
+    padding: 4px 0px 4px 0px;
+    background: #dfdfdf;
+    color: #151134;
+    border-radius: 8px 2px 2px 8px;
+    border-left: 1px solid #0c5460;
+    margin: 1px;
+}
+.InnerMessage{
+    background: #e8e8e8;
+    padding: 7px 11px 11px 11px;
+    font-size: initial;
+}
+.Container{
+    background: whitesmoke;
+    color: #1b1e21;
+    text-align: left;
+    padding:40px;
+    font-family: Arial, Helvetica, sans-serif;
+    margin-bottom: 200px;
+}
+.Flex{
+    display: flex;
+}
+.SubFlex{
+    display: flex;
+    margin: 5px 20px 5px 20px;
+}
+.Icon{
+    margin-left: auto;
+    margin-top: auto;
+    transition: transform 0.7ms ease;
+}
+.Rotate{
+    transform: rotate(90deg);
+}
+.NoRotate{
+    transform: rotate(0deg);
+}
+.Content{
+    margin-left: auto;
+    transition:  max-height .5s ease;
+    overflow: auto;
+
+}
+.SubContent{
+    margin-left: auto;
+    transition: height .7s ease;
+    overflow: hidden;
+}
+.Rotate{
+    transform: rotate(90deg);
+}
+.Button{
+    border: 0px;
+    background: #eeeeee;
+    width: 100%;
+    text-align: left;
+    min-height: 48px;
+    padding:16px;
+}
+.SubButton{
+    border: 0px;
+    background: #eeeeee;
+    width: 100%;
+    text-align: left;
+
+}
+
+.SubButton:hover,  .active{
+    font-weight: bold;
+    background: #ccc;
+
+}
+.Button:hover,  .active{
+    font-weight: bold;
+    background: #ccc;
+
+}

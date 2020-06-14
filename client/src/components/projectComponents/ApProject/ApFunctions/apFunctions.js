@@ -76,6 +76,7 @@ export const tempController = function (temp) {
                 adviceToggle={this.state.toggleTempAdvice}
                 adviceText={Assets.tempLowCritical}
                 link={'https://portfolio.fullstack-adventure.com'}
+                addRadius={{borderRadius: "20px 20px 0 0"}}
             /></div>);
 
         case temp > this.state.fishParams.temp_low_critical && temp <= this.state.fishParams.temp_low_warn : //
@@ -105,6 +106,7 @@ export const tempController = function (temp) {
                 adviceToggle={this.state.toggleTempAdvice}
                 adviceText={Assets.tempLowWarn}
                 link={'https://portfolio.fullstack-adventure.com'}
+                addRadius={{borderRadius: "20px 20px 0 0"}}
             />;
 
         case temp > this.state.fishParams.temp_low_warn && temp <= this.state.fishParams.temp_high_warn : //
@@ -133,6 +135,7 @@ export const tempController = function (temp) {
                 adviceToggle={this.state.toggleTempAdvice}
                 adviceText={Assets.tempOk}
                 link={'https://portfolio.fullstack-adventure.com'}
+                addRadius={{borderRadius: "20px 20px 0 0"}}
             />;
 
         case temp > this.state.fishParams.temp_high_warn && temp <= this.state.fishParams.temp_high_critical : //
@@ -159,6 +162,7 @@ export const tempController = function (temp) {
                 adviceToggle={this.state.toggleTempAdvice}
                 adviceText={Assets.tempHighWarn}
                 link={'https://portfolio.fullstack-adventure.com'}
+                addRadius={{borderRadius: "20px 20px 0 0"}}
             />;
 
 
@@ -186,6 +190,7 @@ export const tempController = function (temp) {
                 adviceToggle={this.state.toggleTempAdvice}
                 adviceText={Assets.tempHighCritical}
                 link={'https://portfolio.fullstack-adventure.com'}
+                addRadius={{borderRadius: "20px 20px 0 0"}}
             />;
         default:
             return <div className="">
@@ -344,6 +349,7 @@ export const nh3Controller = function (nh3) {
                 adviceToggle={this.state.toggleNh3Advice}
                 adviceText={Assets.nh3Ok}
                 link={'https://portfolio.fullstack-adventure.com'}
+                addRadius={{borderRadius: "0 0 20px 20px"}}
             />;
 
         case nh3 > this.state.fishParams.nh3_warn && nh3 <= this.state.fishParams.nh3_critical : //
@@ -368,6 +374,7 @@ export const nh3Controller = function (nh3) {
                 adviceToggle={this.state.toggleNh3Advice}
                 adviceText={Assets.nh3Warn}
                 link={'https://portfolio.fullstack-adventure.com'}
+                addRadius={{borderRadius: "0 0 20px 20px"}}
             />;
         case nh3 > this.state.fishParams.nh3_critical : //
             if (this.state.nh3Update === this.state.nh3CaptureValue && this.state.nh3ShowNotification.nh3HighCritical === true) {
@@ -389,6 +396,7 @@ export const nh3Controller = function (nh3) {
                 adviceToggle={this.state.toggleNh3Advice}
                 adviceText={Assets.nh3Critical}
                 link={'https://portfolio.fullstack-adventure.com'}
+                addRadius={{borderRadius: "0 0 20px 20px"}}
             />;
         default:
             return <div className="">

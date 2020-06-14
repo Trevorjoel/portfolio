@@ -11,18 +11,30 @@ const AdviceContainer = (props) => {
     return (
         <div id="advice" className={classes.Container}>
             <h1 className="">System Advice pages</h1>
-            <p className={ classes}>Get the advice you need when you need it.</p>
+            <p className={ classes}>Get the advice you need</p>
             <Accordion title="Ammonia Management"
                        sub1={<AccordionSub title="High" text="Loremu ipsum"/>}
                        sub2={<AccordionSub title="Low" text="Loremu ipsum"/>}
+                       active={"0"}
+                       translate={"translateY(0)"}
+                        height={"0px"}
+                       rotate={classes.NoRotate}
 
             />
             <Accordion  title="Fish Care"
+                        active={"0"}
+                        translate={"translateY(0)"}
+                        height={"0px"}
+                        rotate={classes.NoRotate}
                 sub1={<AccordionSub title="Trout" text="Loremu ipsum" info={<TroutInfo/>}/>}
                 sub2={<AccordionSub title="Silver Perch" text="Loremu ipsum"/>}
                 sub3={<AccordionSub title="Carp" text="Loremu ipsum"/>}
                 />
             <Accordion title="Temperature Management"
+                       active={"0"}
+                       translate={"translateY(0)"}
+                       height={"0px"}
+                       rotate={classes.NoRotate}
                        sub1={<AccordionSub title="High" text="Loremu ipsum"
                                            info={<TemperatureInfo/>}
                        />}

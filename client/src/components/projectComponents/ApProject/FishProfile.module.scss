@@ -1,0 +1,49 @@
+@import "styleVariables";
+.Container{
+    padding:20px;
+    border-radius:8px;
+}
+
+.Container h4{
+    text-transform: capitalize;
+    text-align: center;
+}
+
+.FishImage{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+padding:0px;
+    width:70%;
+
+}
+.OptimalWrapper{
+    background: $light-grey;
+    padding: 0px;
+    color: #372727;
+    border-radius: 4px;
+    box-shadow: 0px 0px 14px 0px rgba(0,0,0,0.1);
+}
+/*.Container button{
+    background: $light-green;
+    color:$dark-blue;
+    border:none;
+}
+.Container button :active{
+    background: $dark-grey;
+    color:$dark-blue;
+}
+.Container button :hover{
+    background: $light-green;
+    color:$dark-blue;
+}*/
+.Background{
+
+    background: $light-green;
+    color:$dark-blue;
+    border:none;
+}
+.Background :hover{
+    background: $light-grey;
+    color:$light-blue;
+}

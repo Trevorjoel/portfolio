@@ -1,9 +1,9 @@
-import trout from "../../../images/UIHere.8acef598.png";
-import silverPerch from './Assets/output-onlinepngtools.png';
-import barramundi from './Assets/barra.png';
+import trout from "../../../images/troutPic.png";
+import silverPerch from '../../../images/silver_perchPic.png';
+import barramundi from '../../../images/barraPic.png';
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import classes from './FishProfile.module.css';
+import classes from './FishProfile.module.scss';
 import React, { useState } from 'react';
 import {Dropdown, DropdownToggle, DropdownMenu, DropdownItem, NavItem, NavLink, Nav} from 'reactstrap';
 import {Link} from "react-scroll";
@@ -78,11 +78,11 @@ const FishProfile = (props) =>{
 
 
             </div>
-            <Dropdown title="Change fish" isOpen={dropdownOpen} toggle={toggle}>
-                <DropdownToggle caret>
+            <Dropdown   title="Change fish" isOpen={dropdownOpen} toggle={toggle}>
+                <DropdownToggle className={classes.Background} caret>
                     Choose Fish stock
                 </DropdownToggle>
-                <DropdownMenu>
+                <DropdownMenu >
                     <DropdownItem header><strong>Select Fish</strong></DropdownItem>
                     <DropdownItem divider />
 
