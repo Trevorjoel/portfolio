@@ -10,9 +10,9 @@ import {Col} from "reactstrap";
 const AdviceContainer = (props) => {
     return (
         <div id="advice" className={classes.Container}>
-            <h1 className="">System Advice pages</h1>
-            <p className={ classes}>Get the advice you need</p>
-            <Accordion title="Ammonia Management"
+            <h3 className=""><strong>System Advice</strong></h3>
+            <p className={ classes}>References for running your system</p>
+            <Accordion title="Ammonia"
                        sub1={<AccordionSub title="High" text="Loremu ipsum"/>}
                        sub2={<AccordionSub title="Low" text="Loremu ipsum"/>}
                        active={"0"}
@@ -21,7 +21,7 @@ const AdviceContainer = (props) => {
                        rotate={classes.NoRotate}
 
             />
-            <Accordion  title="Fish Care"
+            <Accordion  title="Fish"
                         active={"0"}
                         translate={"translateY(0)"}
                         height={"0px"}
@@ -30,7 +30,7 @@ const AdviceContainer = (props) => {
                 sub2={<AccordionSub title="Silver Perch" text="Loremu ipsum"/>}
                 sub3={<AccordionSub title="Carp" text="Loremu ipsum"/>}
                 />
-            <Accordion title="Temperature Management"
+            <Accordion title="Temperature"
                        active={"0"}
                        translate={"translateY(0)"}
                        height={"0px"}

@@ -4,7 +4,7 @@ import {Handle, Tick, Track} from "./components";
 import Button from "react-bootstrap/Button";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import classes from './SettingsContainer.module.css';
+import classes from './SettingsContainer.module.scss';
 import { format } from 'd3-format'
 // todo: Note there's a lot that needs fixing with regards  to passing state from the ApProjectContainer.js
 const sliderStyle = {
@@ -58,6 +58,7 @@ class SettingsPh extends Component {
 
                 <div style={{margin: "20px 8%", height: 60, width: "85%"}}>
                     <Slider
+
                         mode={2}
                         step={.01}
                         domain={[5, 10.5]}  // this.props.values[0] - 5 ,this.props.values[3] + 5] this causes a crash sometimes due to the API call

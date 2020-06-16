@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import DatePicker from "react-datepicker";
-import classes from './DateRange.module.css';
+import classes from './DateRange.module.scss';
 import "react-datepicker/dist/react-datepicker.css";
 import { ToggleButtonGroup, Row, Col} from 'react-bootstrap';
 import ToggleButton from "react-bootstrap/ToggleButton";
@@ -11,6 +11,7 @@ import {
     getFirstLastReadings,
 } from '../ApFunctions/apFunctions';
 import moment from 'moment';
+import {DropdownToggle} from "reactstrap";
 class DateRange extends React.Component {
     //
     // todo: https://dev.to/n8tb1t/tracking-scroll-position-with-react-hooks-3bbj
@@ -129,7 +130,7 @@ class DateRange extends React.Component {
 
                     <Col lg={4}>
 
-<Dropdown showDay={()=>this.setPeriodOfDates('day')}
+<Dropdown  showDay={()=>this.setPeriodOfDates('day')}
           showWeek={()=>this.setPeriodOfDates('week')}
               showMonth={()=>this.setPeriodOfDates('month')}
               showYear={()=>this.setPeriodOfDates('year')}

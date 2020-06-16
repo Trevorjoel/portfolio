@@ -4,7 +4,7 @@ import {Handle, Tick, Track} from "./components";
 import Button from "react-bootstrap/Button";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import classes from './SettingsContainer.module.css';
+import classes from './SettingsContainer.module.scss';
 // todo: Note there's a lot that needs fixing with regards  to passing state from the ApProjectContainer.js
 const sliderStyle = {
     position: "relative",
@@ -31,9 +31,10 @@ class SettingsTemp extends Component {
 
         return <Row className={classes.Wrap}>
             <Col lg={4} style={{textAlign: "center", borderRadius: "50px"}}>
-                <h3 style={{textAlign: "center", marginTop: "10px"}}>Temperature</h3>
+                <h4 className={classes.ReadingTitle} >Temperature</h4>
             </Col>
             <Col lg={4}>
+                {/*
                 <p>
                     <p style={{textAlign: "center", padding: "7px", borderRadius: "10px"}}>
                         <strong style={{margin:"2px", textAlign: "center", borderRadius: "10px", background:'#fe7f7f none repeat scroll 0% 0%', minWidth:"45px", display:"inline-table"}}>{this.props.updates[0]}</strong>
@@ -42,20 +43,21 @@ class SettingsTemp extends Component {
                         <strong style={{margin:"2px", textAlign: "center", borderRadius: "10px", background:'rgb(254, 254, 127) none repeat scroll 0% 0%', minWidth:"45px", display:"inline-table"}}>{this.props.updates[2]}</strong>
                         <strong style={{margin:"2px", textAlign: "center", borderRadius: "10px", background:'#fe7f7f none repeat scroll 0% 0%', minWidth:"45px", display:"inline-table"}}>{this.props.updates[3]}</strong></p>
                 </p>
-            </Col>
+*/}            </Col>
             <Col lg={4}>
-                <Button variant="secondary" style={{margin: "10px 2%"}} onClick={this.props.reset}>Reset</Button>
-                <Button style={{margin: "10px 2%"}}>Enter</Button>
+                <Button className={classes.ButtonReset}  variant="secondary" style={{margin: "10px 2%"}} onClick={this.props.reset}>Reset</Button>
+                <Button className={classes.ButtonEnter} style={{margin: "10px 2%"}}>Enter</Button>
             </Col>
 
 
 
 
             <Col lg={12}>
+<hr/>
 
-
-                <div style={{margin: "20px 8%", height: 60, width: "85%"}}>
+                <div style={{margin: "20px 1%", height: 60, width: "95%"}}>
                     <Slider
+
                         mode={2}
                         step={.5}
                         domain={[this.props.values[0] - 5, this.props.values[3] + 5]}  // this.props.values[0] - 5 ,this.props.values[3] + 5] this causes a crash sometimes due to the API call

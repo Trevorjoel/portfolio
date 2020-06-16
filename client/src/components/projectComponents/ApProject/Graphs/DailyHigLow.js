@@ -94,7 +94,7 @@ const HighLow = (props)=> {
         legend: {
             data: ['Highest Temperature', 'Lowest Temperature', 'Average Temperature'],
             textStyle: {
-                fontFamily: 'akkurta,Inconsolata, monospace',
+                fontFamily: 'Open Sans',
                 color: 'black'
             }
         },

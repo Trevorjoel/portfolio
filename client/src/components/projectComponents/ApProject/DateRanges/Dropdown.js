@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
+import classes from "./DateRange.module.scss";
 
 const Dropdown = (props) => {
     const [dropdownOpen, setOpen] = useState(false);
@@ -8,7 +9,7 @@ const Dropdown = (props) => {
 // reset
     return (
         <ButtonDropdown isOpen={dropdownOpen} toggle={toggle}>
-            <DropdownToggle color="primary"  caret>
+            <DropdownToggle className={classes.Button}  color="secondary"  caret>
                 Recent Readings
             </DropdownToggle>
             <DropdownMenu>

@@ -24,8 +24,8 @@ const Accordion = (props) => {
         <div className={classes}>
             <button className={[classes.Button, setActive].join(' ')}
                     onClick={toggleContent}>
-                <h2 className={classes.Flex} id="">{props.title}
-                <Chevron className={[classes.Icon, `${setRotate}`].join(' ') } fill={'#777'} height="20px"/></h2>
+                <strong>  <h4 className={classes.Flex} id="">{props.title}
+                    <Chevron className={[classes.Icon, `${setRotate}`].join(' ') } fill={'#777'} height="20px"/></h4></strong>
             </button>
             <div ref={content} style={{maxHeight:`${setHeight}`}} className={classes.Content}>
                 {props.sub}{props.sub1}{props.sub2}{props.sub3}{props.sub4}{props.sub5}

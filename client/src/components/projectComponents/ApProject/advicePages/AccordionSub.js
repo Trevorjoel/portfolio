@@ -19,8 +19,8 @@ const AccordionSub = (props) => {
 
     const div = <div className={classes}>
         <button className={[classes.SubButton, SubsetActive].join(' ')} onClick={toggleContent}>
-            <h4 className={classes.SubFlex} id="">{props.title}
-                <Chevron className={[classes.Icon, `${setRotate}`].join(' ')} fill={'#777'} height="15px"/></h4>
+            <h5 className={classes.SubFlex} id="">{props.title}
+                <Chevron className={[classes.Icon, `${setRotate}`].join(' ')} fill={'#777'} height="15px"/></h5>
         </button>
         <div ref={subContent} style={{height: `${SubsetHeight}`}} className={classes.SubContent}>
             <p className={classes.SubContent} id="">{props.text}</p>

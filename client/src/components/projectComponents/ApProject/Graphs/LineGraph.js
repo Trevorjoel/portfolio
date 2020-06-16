@@ -74,7 +74,7 @@ const LineGraph = (props) => {
             type: 'category',
             data: timeData,
             textStyle: {
-                fontFamily: 'akkurta,Inconsolata, monospace',
+                fontFamily: 'Open Sans',
                 color: '#ccc'
             }
 

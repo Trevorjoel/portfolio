@@ -33,7 +33,8 @@ import {Tab, Tabs} from "react-bootstrap";
 import SettingsTemp from "./Settings/SettingsTemp";
 import SettingsPh from "./Settings/SettingsPh";
 import SettingsNh3 from "./Settings/SettingsNh3";
-import settings_classes from './Settings/SettingsContainer.module.css';
+import settings_classes from './Settings/SettingsContainer.module.scss';
+import LoadingContainer from "./Loading/LoadingContainer";
 
 // Todo: Create id's to navigate the demo app, example: to the caring for trout pages
 
@@ -51,7 +52,7 @@ class ApProjectContainer extends Component {
             phUpdate: [],
             nh3Update: [],
             tempSettingsUpdate: [],
-            tempSettingsValue: [], // 0 0 0 0 Prevents error in the settings component domain fields
+            tempSettingsValue: [],
             phSettingsUpdate: [],
             phSettingsValue: [],
             nh3SettingsUpdate: [],
@@ -326,7 +327,7 @@ if (this.topTriggerEl.current !== null ) { // Check that Aquaponics page has ren
         const { fishParams } = this.state;
 
         if (fishParams === null) {
-            return null;
+            return <LoadingContainer/>;
         }
 
         return (
@@ -363,15 +364,14 @@ if (this.topTriggerEl.current !== null ) { // Check that Aquaponics page has ren
                     </Button>
                     <div className={classes.ProjectContainer}>
 
-                        <h1 className=" "><strong>Aquaponics System Monitor</strong> (Prototype)</h1>
+                        <h1 className={classes.Title}><strong>Aquaponics System Monitor</strong> (Prototype)</h1>
 
                         <Row>
                             <Col lg={12}>
 
                                 <br/>
-                                <h2 className=""><strong>Live Monitor</strong></h2>
-                                <p className="">See the current status of your system and get notifications
-                                    to your phone if there are problems</p>
+                                <h2 className={classes.SecondaryTitle}><strong>Live Monitor</strong></h2>
+
                                 <div className={classes.StatusWrapper}>
 
                                     <FishProfile
@@ -384,7 +384,7 @@ if (this.topTriggerEl.current !== null ) { // Check that Aquaponics page has ren
                                 <div className={classes.BarsWrapper}
                                      title="Live readings from your system & information to help">
                                     <div className={classes.AccordionContainer}>
-                                    <h4>System Parameters</h4>
+                                        <h4><strong>Current Status</strong></h4>
                                     {this.tempController(this.state.tempUpdate[0])}
                                     {this.phController(this.state.phUpdate[0])}
                                     {this.nh3Controller(this.state.nh3Update[0])}
@@ -458,8 +458,7 @@ if (this.topTriggerEl.current !== null ) { // Check that Aquaponics page has ren
                         <hr className="divider"/>
                         <div >
                             <h2 className="reading-box ">View historical data</h2>
-                            <p className="reading-box ">Track your previous readings to make better decisions for your
-                                systems future.</p><br/>
+                          <br/>
                                 <div ref={this.topTriggerEl} className="check" id="sticky-trigger"></div>
                             <div id="sticky-cont" ref={this.containerEl} className={classes.StickyContainer}>
 
@@ -475,16 +474,16 @@ if (this.topTriggerEl.current !== null ) { // Check that Aquaponics page has ren
                                         <Row >
                                             <Col lg={12}>
 
-                                                <h5  className="reading-box">Hourly temperature readings</h5>
-                                                <p>from {this.state.startPeriod} to {this.state.endPeriod}</p>
+                                                <h3  className="reading-box">Hourly temperature readings</h3>
+                                                <h5>From: {this.state.startPeriod} To: {this.state.endPeriod}</h5>
                                                 <LinerGraph
                                                     fishParams={this.state.fishParams}
                                                     readings={this.state.readings}
                                                 />
                                             </Col>
                                             <Col lg={12}><br/>
-                                                <h5 className="reading-box">Temperature readings by alert category</h5>
-                                                <p>from {this.state.startPeriod} to {this.state.endPeriod}</p>
+                                                <h3 className="reading-box">Temperature readings by alert category</h3>
+                                                <h5>From: {this.state.startPeriod} To: {this.state.endPeriod}</h5>
                                                 <TempPie
                                                     fishParams={this.state.fishParams}
                                                     readings={this.state.readings}
@@ -493,9 +492,9 @@ if (this.topTriggerEl.current !== null ) { // Check that Aquaponics page has ren
                                         </Row>
                                         <Row className="row-margin">
                                             <Col lg={12}>
-                                                <h5 className="reading-box">Highest, lowest and average daily
-                                                    temperatures</h5>
-                                                <p>from {this.state.startPeriod} to {this.state.endPeriod}</p>
+                                                <h3 className="reading-box"><strong>Highest, lowest and average daily
+                                                    temperatures</strong></h3>
+                                                <h5>From: {this.state.startPeriod} To: {this.state.endPeriod}</h5>
                                                 <HighLow
                                                     fishParams={this.state.fishParams}
                                                     readings={this.state.readings}
@@ -516,13 +515,14 @@ if (this.topTriggerEl.current !== null ) { // Check that Aquaponics page has ren
                             <div ref={this.bottomTriggerEl} id="sticky-end"></div>
                                          </div>
                         <hr  className="divider"/>
-                        <AdviceContainer/>
+                        <AdviceContainer />
                         <Row className={settings_classes.Container}>
                             <Col lg={12}>
                                 <div><h3>Change Alerts for {this.state.fishParams.fish_name}</h3>
                                     <br/>
                                     <SettingsTemp
                                         //onUpdate={this.onTempSettingsUpdate}
+                                        vertical={true}
                                         onChange={this.onTempSettingsChange}
                                         values={this.state.tempSettingsValue}
                                         updates={this.state.tempSettingsUpdate}

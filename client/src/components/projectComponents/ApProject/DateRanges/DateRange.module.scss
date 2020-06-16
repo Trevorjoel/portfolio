@@ -1,3 +1,4 @@
+@import "../styleVariables.scss";
 .Wrap{
     background: whitesmoke;
     padding:10px;
@@ -24,4 +25,18 @@
 .Title{
     text-align: center;
 
+}
+.Button{
+
+    background: $light-green;
+    color:$dark-blue;
+    border:none;
+    height: 35px;
+    min-width: 100px;
+    border-radius: 30px;
+    padding:0px 20px 0 20px;
+}
+.Button :hover{
+    background: $light-grey;
+    color:$light-blue;
 }

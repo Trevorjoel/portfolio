@@ -48,7 +48,7 @@ let tempData=[];
             left: 'left',
             top: 0,
             textStyle: {
-                fontFamily: 'akkurta,Inconsolata, monospace',
+                fontFamily: 'Open Sans',
                 color: '#ccc'
             }
         },
@@ -57,12 +57,11 @@ let tempData=[];
             formatter: "{a} <br/>{b} : {c} ({d}%)"
         },
         legend: {
-            orient: "vertical",
-            left: "left",
-            top: 0,
+            orient: 'vertical',
+            left: 10,
 
             textStyle: {
-                fontFamily: 'akkurta,Inconsolata, monospace',
+                fontFamily: 'Open Sans',
                 color: '#1a1919'
             }
         },
@@ -77,7 +76,7 @@ let tempData=[];
                     alignTo: 'labelLine',
                     margin: 0
                 },
-                radius: ['60%', '100%'],
+                radius: ['50%', '80%'],
                 center: ['50%', '50%'],
               
                 color: ['#c8031f', '#d3b126', '#187316', "#d3b126", "#c8031f"],
@@ -126,7 +125,7 @@ let tempData=[];
 
         return (
             <div className="">
-                <ReactEcharts option={getOption()} style={{ height: 400 , width:'100%', background: 'white'}} />
+                <ReactEcharts option={getOption()} style={{ height: 450 , width:'100%', background: 'white', padding:"20px"}} />
             </div>
         );
 
