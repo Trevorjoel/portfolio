@@ -24,6 +24,7 @@ class DateRange extends React.Component {
             endDate:        new Date(),
             maxDate:        new Date(),
             minDate:        new Date(),
+            dropDownLabel:  'Recent Readings',
         };
     }
 
@@ -87,25 +88,30 @@ class DateRange extends React.Component {
         {
             fromPeriod = moment(this.state.maxDate).subtract(1, 'days').format('YYYY-MM-DD 00:00:00');
             toPeriod = moment(this.state.maxDate).subtract(1, 'days').format('YYYY-MM-DD 23:59:59');
+            this.setState({dropDownLabel: 'Recent day'});
         }
         if (period === 'week')
         {
             fromPeriod = moment(this.state.maxDate).startOf('week').subtract(1, 'week').format('YYYY-MM-DD 00:00:00');
             toPeriod = moment(this.state.maxDate).endOf('week').subtract(1, 'week').format('YYYY-MM-DD 23:59:59');
+            this.setState({dropDownLabel: 'Recent week'});
         }
         if (period === 'month')
         {
             fromPeriod = moment(this.state.maxDate).startOf('month').subtract(1,'month').format('YYYY-MM-DD 00:00:00');
             toPeriod = moment(this.state.maxDate).endOf('month').subtract(1, 'month').format('YYYY-MM-DD 23:59:59');
+            this.setState({dropDownLabel: 'Recent month'});
         }
         if (period === 'year')
         {
             fromPeriod = moment(this.state.maxDate).startOf('year').subtract(1, 'year').format('YYYY-MM-DD 00:00:00');
             toPeriod = moment(this.state.maxDate).endOf('year').subtract(1, 'year').format('YYYY-MM-DD 23:59:59');
+            this.setState({dropDownLabel: 'Recent year'});
         }
         if (period === 'all')
         {
             fromPeriod = moment(this.state.minDate).format('YYYY-MM-DD 00:00:00');
+            this.setState({dropDownLabel: 'All time'});
         }
 
         this.props.onDaySelect(getReadingsRange, fromPeriod, toPeriod);
@@ -130,11 +136,13 @@ class DateRange extends React.Component {
 
                     <Col lg={4}>
 
-<Dropdown  showDay={()=>this.setPeriodOfDates('day')}
-          showWeek={()=>this.setPeriodOfDates('week')}
-              showMonth={()=>this.setPeriodOfDates('month')}
-              showYear={()=>this.setPeriodOfDates('year')}
-              showAll={()=>this.setPeriodOfDates('all')}
+<Dropdown
+    showDay={()=>this.setPeriodOfDates('day')}
+    showWeek={()=>this.setPeriodOfDates('week')}
+    showMonth={()=>this.setPeriodOfDates('month')}
+    showYear={()=>this.setPeriodOfDates('year')}
+    showAll={()=>this.setPeriodOfDates('all')}
+    dropDownLabel = {this.state.dropDownLabel}
 />
 
                     </Col>
