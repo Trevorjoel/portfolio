@@ -10,7 +10,7 @@ const Dropdown = (props) => {
     return (
         <ButtonDropdown isOpen={dropdownOpen} toggle={toggle}>
             <DropdownToggle className={classes.Button}  color="secondary"  caret>
-                Recent Readings
+                {props.dropDownLabel}
             </DropdownToggle>
             <DropdownMenu>
                 <DropdownItem header>Header</DropdownItem>
