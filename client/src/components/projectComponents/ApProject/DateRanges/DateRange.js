@@ -92,25 +92,25 @@ class DateRange extends React.Component {
         {
             fromPeriod = moment(this.state.maxDate).subtract(1, 'days').format('YYYY-MM-DD 00:00:00');
             toPeriod = moment(this.state.maxDate).subtract(1, 'days').format('YYYY-MM-DD 23:59:59');
-            this.setState({dropDownLabel: 'Recent day'});
+            this.setState({dropDownLabel: 'Previous day'});
         }
         if (period === 'week')
         {
             fromPeriod = moment(this.state.maxDate).startOf('week').subtract(1, 'week').format('YYYY-MM-DD 00:00:00');
             toPeriod = moment(this.state.maxDate).endOf('week').subtract(1, 'week').format('YYYY-MM-DD 23:59:59');
-            this.setState({dropDownLabel: 'Recent week'});
+            this.setState({dropDownLabel: 'Previous week'});
         }
         if (period === 'month')
         {
             fromPeriod = moment(this.state.maxDate).startOf('month').subtract(1,'month').format('YYYY-MM-DD 00:00:00');
             toPeriod = moment(this.state.maxDate).endOf('month').subtract(1, 'month').format('YYYY-MM-DD 23:59:59');
-            this.setState({dropDownLabel: 'Recent month'});
+            this.setState({dropDownLabel: 'Previous month'});
         }
         if (period === 'year')
         {
             fromPeriod = moment(this.state.maxDate).startOf('year').subtract(1, 'year').format('YYYY-MM-DD 00:00:00');
             toPeriod = moment(this.state.maxDate).endOf('year').subtract(1, 'year').format('YYYY-MM-DD 23:59:59');
-            this.setState({dropDownLabel: 'Recent year'});
+            this.setState({dropDownLabel: 'Previous year'});
         }
         if (period === 'all')
         {
@@ -140,7 +140,7 @@ class DateRange extends React.Component {
             <div id="range-select" className={classes.Wrap}>
                 <Row>
 
-                    <Col lg={4}>
+                    <Col lg={4} md={4} sm={4} xs={12}>
 
 <Dropdown
     showDay={()=>this.setPeriodOfDates('day')}
@@ -153,7 +153,7 @@ class DateRange extends React.Component {
 
                     </Col>
 
-                    <Col lg={4}>
+                    <Col lg={4} md={4} sm={4} xs={6}>
 
             <DatePicker
                 dateFormat="dd/MM/yyyy"
@@ -169,7 +169,7 @@ class DateRange extends React.Component {
                 withPortal
             />
                     </Col>
-                    <Col lg={4}>
+                    <Col lg={4} md={4} sm={4} xs={6}>
 
                 <DatePicker
                     dateFormat="dd/MM/yyyy"

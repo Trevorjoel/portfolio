@@ -13,7 +13,7 @@ const Dropdown = (props) => {
                 {props.dropDownLabel}
             </DropdownToggle>
             <DropdownMenu>
-                <DropdownItem header>Header</DropdownItem>
+                <DropdownItem header>See Previous</DropdownItem>
                 <DropdownItem value={'day'} onClick={props.showDay}>Day</DropdownItem>
                 <DropdownItem value={'week'} onClick={props.showWeek}>Week</DropdownItem>
                 <DropdownItem value={'month'} onClick={props.showMonth}>Month</DropdownItem>

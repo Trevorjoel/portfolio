@@ -13,13 +13,14 @@
     top:0;
     width:100%;
     z-index:100;
+
 }
 .Pick{
 
 
 }
 .Fields{
-    width: 140px;
+    width: 80%;
     margin:0px 10px 0 10px;
 }
 .Title{
@@ -39,4 +40,18 @@
 .Button :hover{
     background: $light-grey;
     color:$light-blue;
+}
+
+@media (max-width: 575px)  {
+    .Button{
+        margin:6px
+    }
+    .Wrap{
+        max-width: 109%;
+        width:109%;
+        margin-left: -20px;
+    }
+    .Fields{
+        width:73%;
+    }
 }

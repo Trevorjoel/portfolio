@@ -475,16 +475,16 @@ if (this.topTriggerEl.current !== null ) { // Check that Aquaponics page has ren
                                         <Row >
                                             <Col lg={12}>
 
-                                                <h3  className="reading-box">Hourly temperature readings</h3>
-                                                <h5>From: {this.state.startPeriod} To: {this.state.endPeriod}</h5>
+                                                <h3  className={classes.GraphTitle}>Hourly temperature readings</h3>
+                                                <h5 className={classes.GraphSub}>From: {this.state.startPeriod} To: {this.state.endPeriod}</h5>
                                                 <LinerGraph
                                                     fishParams={this.state.fishParams}
                                                     readings={this.state.readings}
                                                 />
                                             </Col>
                                             <Col lg={12}><br/>
-                                                <h3 className="reading-box">Temperature readings by alert category</h3>
-                                                <h5>From: {this.state.startPeriod} To: {this.state.endPeriod}</h5>
+                                                <h3 className={classes.GraphTitle}>Temperature readings by alert category</h3>
+                                                <h5 className={classes.GraphSub}>From: {this.state.startPeriod} To: {this.state.endPeriod}</h5>
                                                 <TempPie
                                                     fishParams={this.state.fishParams}
                                                     readings={this.state.readings}
@@ -493,9 +493,9 @@ if (this.topTriggerEl.current !== null ) { // Check that Aquaponics page has ren
                                         </Row>
                                         <Row className="row-margin">
                                             <Col lg={12}>
-                                                <h3 className="reading-box"><strong>Highest, lowest and average daily
-                                                    temperatures</strong></h3>
-                                                <h5>From: {this.state.startPeriod} To: {this.state.endPeriod}</h5>
+                                                <h3 className={classes.GraphTitle}>Highest, lowest and average daily
+                                                    temperatures</h3>
+                                                <h5 className={classes.GraphSub}>From: {this.state.startPeriod} To: {this.state.endPeriod}</h5>
                                                 <HighLow
                                                     fishParams={this.state.fishParams}
                                                     readings={this.state.readings}
