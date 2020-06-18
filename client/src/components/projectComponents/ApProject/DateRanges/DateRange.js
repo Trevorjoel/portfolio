@@ -20,11 +20,13 @@ class DateRange extends React.Component {
         super(props);
 
         this.state = {
-            startDate:      new Date(),
-            endDate:        new Date(),
-            maxDate:        new Date(),
-            minDate:        new Date(),
-            dropDownLabel:  'Recent Readings',
+            startDate:          new Date(),
+            endDate:            new Date(),
+            maxDate:            new Date(),
+            minDate:            new Date(),
+            selectedStartDate:  null,
+            selectedEndDate:    null,
+            dropDownLabel:      'Recent Readings',
         };
     }
 
@@ -53,7 +55,8 @@ class DateRange extends React.Component {
     setStartDate = date => {
 
         this.setState({
-            startDate: date
+            startDate: date,
+            selectedStartDate: date,
         });
 
         let fromDateStr = moment(date).format('YYYY-MM-DD 00:00:00');
@@ -72,7 +75,8 @@ class DateRange extends React.Component {
     setEndDate = date => {
 
         this.setState({
-            endDate: date
+            endDate: date,
+            selectedEndDate: date,
         });
 
         let fromDateStr = moment(this.state.startDate).format('YYYY-MM-DD 00:00:00');
@@ -118,7 +122,9 @@ class DateRange extends React.Component {
 
         this.setState({
             startDate:new Date(fromPeriod),
+            selectedStartDate:new Date(fromPeriod),
             endDate:new Date(toPeriod),
+            selectedEndDate:new Date(toPeriod),
         })
 
     } ;
@@ -149,9 +155,9 @@ class DateRange extends React.Component {
 
                     <Col lg={4}>
 
-                   <DatePicker
+            <DatePicker
                 dateFormat="dd/MM/yyyy"
-                selected={null}
+                selected={this.state.selectedStartDate}
                 placeholderText="From"
                 maxDate={this.state.endDate}
                 minDate={this.state.minDate}
@@ -167,7 +173,8 @@ class DateRange extends React.Component {
 
                 <DatePicker
                     dateFormat="dd/MM/yyyy"
-                    selected={this.state.endDate}
+                    selected={this.state.selectedEndDate}
+                    placeholderText="To"
                     maxDate={this.state.maxDate}
                     onChange={this.setEndDate}
                     selectsEnd
