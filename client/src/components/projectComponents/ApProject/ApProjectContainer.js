@@ -35,6 +35,7 @@ import SettingsPh from "./Settings/SettingsPh";
 import SettingsNh3 from "./Settings/SettingsNh3";
 import settings_classes from './Settings/SettingsContainer.module.scss';
 import LoadingContainer from "./Loading/LoadingContainer";
+import ComingSoon from "./Loading/ComingSoon";
 
 // Todo: Create id's to navigate the demo app, example: to the caring for trout pages
 
@@ -469,7 +470,7 @@ if (this.topTriggerEl.current !== null ) { // Check that Aquaponics page has ren
                                 </div>
 
                                 <Tabs  defaultActiveKey="temp" id="uncontrolled-tab-example">
-                                    <Tab eventKey="temp" title="Temperature - History"
+                                    <Tab eventKey="temp" title="Temperature"
                                          style={{background: "white", color: "black"}}>
                                         <Row >
                                             <Col lg={12}>
@@ -502,11 +503,11 @@ if (this.topTriggerEl.current !== null ) { // Check that Aquaponics page has ren
                                             </Col>
                                         </Row>
                                     </Tab>
-                                    <Tab eventKey="ph" title="pH - History">
-                                        <h1>Coming soon!</h1>
+                                    <Tab eventKey="ph" title="pH">
+                                        <ComingSoon/>
                                     </Tab>
-                                    <Tab eventKey="nh3" title="Nh3 - History">
-                                        <h1>Coming soon!</h1>
+                                    <Tab eventKey="nh3" title="Nh3">
+                                        <ComingSoon/>
                                     </Tab>
                                 </Tabs>
                                 <Row/>

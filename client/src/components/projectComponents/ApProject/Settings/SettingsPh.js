@@ -5,7 +5,7 @@ import Button from "react-bootstrap/Button";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import classes from './SettingsContainer.module.scss';
-import { format } from 'd3-format'
+import {format} from 'd3-format'
 // todo: Note there's a lot that needs fixing with regards  to passing state from the ApProjectContainer.js
 const sliderStyle = {
     position: "relative",
@@ -32,31 +32,35 @@ class SettingsPh extends Component {
     render(props) {
 
         return <Row className={classes.Wrap}>
-            <Col lg={4} style={{textAlign: "center", borderRadius: "50px"}}>
-                <h3 style={{textAlign: "center", marginTop: "10px"}}>pH</h3>
+            <Col lg={12} style={{textAlign: "center", borderRadius: "50px"}}>
+                <h4 className={classes.ReadingTitle}>pH</h4>
             </Col>
-            <Col lg={4}>
-                <p>
-                    <p style={{textAlign: "center", padding: "7px", borderRadius: "10px"}}>
-                        <strong style={{margin:"2px", textAlign: "center", borderRadius: "10px", background:'#fe7f7f none repeat scroll 0% 0%', minWidth:"45px", display:"inline-table"}}>{this.props.updates[0].toFixed(2)}</strong>
-                        <strong style={{margin:"2px", textAlign: "center", borderRadius: "10px", background:'rgb(254, 254, 127) none repeat scroll 0% 0%', minWidth:"45px", display:"inline-table"}}>{this.props.updates[1].toFixed(2)}</strong>
-                        <strong style={{margin:"2px", textAlign: "center", borderRadius: "10px", background:'rgb(0, 128, 0) none repeat scroll 0% 0%', minWidth:"45px", display:"inline-table"}}>-</strong>
-                        <strong style={{margin:"2px", textAlign: "center", borderRadius: "10px", background:'rgb(254, 254, 127) none repeat scroll 0% 0%', minWidth:"45px", display:"inline-table"}}>{this.props.updates[2].toFixed(2)}</strong>
-                        <strong style={{margin:"2px", textAlign: "center", borderRadius: "10px", background:'#fe7f7f none repeat scroll 0% 0%', minWidth:"45px", display:"inline-table"}}>{this.props.updates[3].toFixed(2)}</strong></p>
-                </p>
+            <Col lg={12}>
+                <hr/>
+                <Row className={classes.IndicatorRow} lg={12}>
+                    <Col>
+                        <strong className={classes.ValueIndicatorCritical}>
+                            {this.props.updates[0].toFixed(2)}</strong>
+                    </Col>
+                    <Col>
+                        <strong className={classes.ValueIndicatorAdvice}>
+                            {this.props.updates[1].toFixed(2)}</strong>
+                    </Col>
+                    <Col>
+                        <strong className={classes.ValueIndicatorAdvice}>
+                            {this.props.updates[2].toFixed(2)}</strong>
+                    </Col>
+                    <Col>
+                        <strong className={classes.ValueIndicatorCritical}>
+                            {this.props.updates[3].toFixed(2)}</strong>
+                    </Col>
+                </Row>
             </Col>
-            <Col lg={4}>
-                <Button variant="secondary" style={{margin: "10px 2%"}} onClick={this.props.reset}>Reset</Button>
-                <Button style={{margin: "10px 2%"}}>Enter</Button>
-            </Col>
-
-
-
 
             <Col lg={12}>
 
 
-                <div style={{margin: "20px 8%", height: 60, width: "85%"}}>
+                <div style={{margin: "20px 1%", height: 50, width: "95%"}}>
                     <Slider
 
                         mode={2}
@@ -82,7 +86,7 @@ class SettingsPh extends Component {
                                         handle={handle}
                                         getHandleProps={getHandleProps}
                                         domain={domain}
-                                        tiplabel = 'Ph'
+                                        tiplabel='Ph'
                                     />
 
                                 ))}
@@ -117,7 +121,13 @@ class SettingsPh extends Component {
                     </Slider>
 
                 </div>
-
+                <Col lg={12}>
+                    <Button className={classes.ButtonReset} variant="secondary" style={{margin: "10px 2%"}}
+                            onClick={this.props.reset}>Reset</Button>
+                    <Button className={classes.ButtonEnter} style={{margin: "10px 2%"}}
+                            variant="secondary">Enter</Button>
+                </Col>
+                <hr/>
             </Col>
         </Row>;
     }
