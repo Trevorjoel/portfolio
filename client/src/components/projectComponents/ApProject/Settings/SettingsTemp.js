@@ -33,26 +33,25 @@ class SettingsTemp extends Component {
             <h4 className={classes.ReadingTitle}>Temperature</h4>
             <Row className={classes.Wrap}>
 
-        {/*    <Col lg={12} style={{textAlign: "center", borderRadius: "50px"}}>
 
-            </Col>*/}
+
             <Col lg={12}>
-                <hr/>
+
                 <Row className={classes.IndicatorRow} lg={12}>
-                    <Col>
+                    <Col lg={3} md={3} sm={3} xs={3}>
                         <strong className={classes.ValueIndicatorCritical}>
                             {this.props.updates[0]}</strong>
                     </Col>
-                    <Col>
+                    <Col lg={3} md={3} sm={3} xs={3}>
                         <strong className={classes.ValueIndicatorAdvice}>
                             {this.props.updates[1]}</strong>
                     </Col>
 
-                    <Col>
+                    <Col lg={3} md={3} sm={3} xs={3}>
                         <strong className={classes.ValueIndicatorAdvice}>
                             {this.props.updates[2]}</strong>
                     </Col>
-                    <Col>
+                    <Col lg={3} md={3} sm={3} xs={3}>
                         <strong className={classes.ValueIndicatorCritical}>
                             {this.props.updates[3]}</strong>
 
@@ -127,7 +126,7 @@ class SettingsTemp extends Component {
                             onClick={this.props.reset}>Reset</Button>
                     <Button className={classes.ButtonEnter} style={{margin: "10px 2%"}}>Enter</Button>
                 </Col>
-                <hr/>
+
             </Col>
         </Row>
         </div>

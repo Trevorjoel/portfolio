@@ -194,7 +194,7 @@ const HighLow = (props)=> {
 
         return (
             <div className="">
-                <ReactEcharts option={getOption()} style={{ height: 400 , width:'100%', background: 'white'}} />
+                <ReactEcharts option={getOption()} style={{ height: 400 , width:'100%', background: 'white', borderRadius:"20px"}} />
             </div>
         );
 

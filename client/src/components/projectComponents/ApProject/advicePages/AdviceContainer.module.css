@@ -5,6 +5,7 @@
     padding:40px;
     font-family: Arial, Helvetica, sans-serif;
     margin-bottom: 200px;
+    border-radius: 20px;
 }
 .Flex{
     display: flex;

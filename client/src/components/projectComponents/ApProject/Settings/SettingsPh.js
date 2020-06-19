@@ -36,7 +36,7 @@ class SettingsPh extends Component {
                 <h4 className={classes.ReadingTitle}>pH</h4>
             </Col>
             <Col lg={12}>
-                <hr/>
+
                 <Row className={classes.IndicatorRow} lg={12}>
                     <Col>
                         <strong className={classes.ValueIndicatorCritical}>
@@ -127,7 +127,7 @@ class SettingsPh extends Component {
                     <Button className={classes.ButtonEnter} style={{margin: "10px 2%"}}
                             variant="secondary">Enter</Button>
                 </Col>
-                <hr/>
+
             </Col>
         </Row>;
     }

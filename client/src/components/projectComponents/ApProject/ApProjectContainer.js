@@ -21,7 +21,7 @@ import Nh3SliderVertical from "./sliders/Nh3SliderVertical";
 import {Button, Col, Container, Row} from 'reactstrap';
 import ProjectsHeader from '../ProjectsHeader'
 import github from "../../../images/hiclipart.com.718cad62.png";
-import LinerGraph from './Graphs/LineGraph';
+import LineGraph from './Graphs/LineGraph';
 import TempPie from "./Graphs/PieCharts";
 import HighLow from "./Graphs/DailyHigLow";
 import FishProfile from "./fishProfile";
@@ -252,8 +252,8 @@ class ApProjectContainer extends Component {
                     );
                     this.setState({
                         readings: updatedReadings,
-                        startPeriod: moment(from).format('DD-MM-YYYY'),
-                        endPeriod: moment(to).format('DD-MM-YYYY'),
+                        startPeriod: moment(from).format('ddd, MMM Do, YYYY'),
+                        endPeriod: moment(to).format('ddd, MMM Do,  YYYY'),
                     })
                 }
             )
@@ -466,36 +466,39 @@ if (this.topTriggerEl.current !== null ) { // Check that Aquaponics page has ren
                                 <div id="sticky-el" ref={this.stickyEl}>
                                     <DateRange
                                         onDaySelect={this.mapReadingsRangeSetState}
+                                        fishParams={this.state.fishParams}
+                                        allFish={this.state.fish}
+                                        onChange={this.onFishChange}
                                     />
                                 </div>
 
-                                <Tabs  defaultActiveKey="temp" id="uncontrolled-tab-example">
+                                <Tabs className={classes.TabContainer}  defaultActiveKey="temp" id="uncontrolled-tab-example">
                                     <Tab eventKey="temp" title="Temperature"
-                                         style={{background: "white", color: "black"}}>
+                                         style={{background: "white", color: "black", borderRadius: "0px 0px 20px 20px"}}>
                                         <Row >
                                             <Col lg={12}>
 
                                                 <h3  className={classes.GraphTitle}>Hourly temperature readings</h3>
-                                                <h5 className={classes.GraphSub}>From: {this.state.startPeriod} To: {this.state.endPeriod}</h5>
-                                                <LinerGraph
+                                                <h6 className={classes.GraphSub}>{this.state.startPeriod} <br/> {this.state.endPeriod}</h6>
+                                                <LineGraph
                                                     fishParams={this.state.fishParams}
                                                     readings={this.state.readings}
                                                 />
                                             </Col>
                                             <Col lg={12}><br/>
                                                 <h3 className={classes.GraphTitle}>Temperature readings by alert category</h3>
-                                                <h5 className={classes.GraphSub}>From: {this.state.startPeriod} To: {this.state.endPeriod}</h5>
+                                                <h6 className={classes.GraphSub}>{this.state.startPeriod} <br/> {this.state.endPeriod}</h6>
                                                 <TempPie
                                                     fishParams={this.state.fishParams}
                                                     readings={this.state.readings}
                                                 />
                                             </Col>
                                         </Row>
-                                        <Row className="row-margin">
+                                        <Row >
                                             <Col lg={12}>
                                                 <h3 className={classes.GraphTitle}>Highest, lowest and average daily
                                                     temperatures</h3>
-                                                <h5 className={classes.GraphSub}>From: {this.state.startPeriod} To: {this.state.endPeriod}</h5>
+                                                <h6 className={classes.GraphSub}>{this.state.startPeriod} <br/> {this.state.endPeriod}</h6>
                                                 <HighLow
                                                     fishParams={this.state.fishParams}
                                                     readings={this.state.readings}
@@ -517,9 +520,11 @@ if (this.topTriggerEl.current !== null ) { // Check that Aquaponics page has ren
                                          </div>
                         <hr  className="divider"/>
                         <AdviceContainer />
-                        <Row className={settings_classes.Container}>
-                            <Col lg={12}>
-                                <div><h3>Change Alerts for {this.state.fishParams.fish_name}</h3>
+                        <h2 className="reading-box">Customise Alerts</h2>
+                        <Tabs className={classes.TabContainer} Key="customise-current" id="custom-tab">
+                            <Tab eventKey="customise-current" title="Current Fish"
+                                 style={{background: "white", color: "black", borderRadius: "0px 0px 20px 20px"}}>
+
                                     <br/>
                                     <SettingsTemp
                                         //onUpdate={this.onTempSettingsUpdate}
@@ -541,9 +546,14 @@ if (this.topTriggerEl.current !== null ) { // Check that Aquaponics page has ren
                                         updates={this.state.nh3SettingsUpdate}
                                         reset={this.resetNh3Settings}
                                     />
-                                </div>
-                            </Col>
-                        </Row>
+
+                            </Tab>
+                            <Tab eventKey="Create New" title="New Customisation">
+                                <ComingSoon/>
+                            </Tab>
+
+                        </Tabs>
+
 
                         <div className="project-icons">
                             <a target="_blank"

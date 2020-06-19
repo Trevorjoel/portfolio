@@ -2,14 +2,14 @@ import React, { useState } from 'react';
 import { ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 import classes from "./DateRange.module.scss";
 
-const Dropdown = (props) => {
+const DropdownDates = (props) => {
     const [dropdownOpen, setOpen] = useState(false);
 
     const toggle = () => setOpen(!dropdownOpen);
 // reset
     return (
-        <ButtonDropdown isOpen={dropdownOpen} toggle={toggle}>
-            <DropdownToggle className={classes.Button}  color="secondary"  caret>
+        <ButtonDropdown style={{position: ""}} isOpen={dropdownOpen} toggle={toggle}>
+            <DropdownToggle  className={classes.Button}  color="secondary"  caret>
                 {props.dropDownLabel}
             </DropdownToggle>
             <DropdownMenu>
@@ -25,4 +25,4 @@ const Dropdown = (props) => {
     );
 }
 
-export default Dropdown;
+export default DropdownDates;
