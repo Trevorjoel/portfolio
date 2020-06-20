@@ -112,7 +112,7 @@ class SettingsNh3 extends Component {
                 </div>
                 <Col lg={12} style={{textAlign:"right"}}>
                     <Button variant="secondary" className={classes.ButtonReset} onClick={this.props.reset}>Reset</Button>
-                    <Button className={classes.ButtonEnter} style={{margin: "10px 2%"}}>Enter</Button>
+                    <Button type="submit" className={classes.ButtonEnter} style={{margin: "10px 2%"}}>Enter</Button>
                 </Col>
             </Col>
         </Row>

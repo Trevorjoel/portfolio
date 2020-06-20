@@ -124,7 +124,7 @@ class SettingsPh extends Component {
                 <Col lg={12} style={{textAlign:"right"}}>
                     <Button className={classes.ButtonReset} variant="secondary" style={{margin: "10px 2%"}}
                             onClick={this.props.reset}>Reset</Button>
-                    <Button className={classes.ButtonEnter} style={{margin: "10px 2%"}}
+                    <Button type="submit" className={classes.ButtonEnter} style={{margin: "10px 2%"}}
                             variant="secondary">Enter</Button>
                 </Col>
                 <hr/>

@@ -29,7 +29,7 @@ import BackBtn from "../ProjectBackBtn";
 import AdviceContainer from './advicePages/AdviceContainer';
 import SlidersModal from "./sliders/SlidersModal";
 import moment from 'moment';
-import {Tab, Tabs} from "react-bootstrap";
+import {Tab, Tabs, Form} from "react-bootstrap";
 import SettingsTemp from "./Settings/SettingsTemp";
 import SettingsPh from "./Settings/SettingsPh";
 import SettingsNh3 from "./Settings/SettingsNh3";
@@ -563,8 +563,44 @@ if (this.topTriggerEl.current !== null ) { // Check that Aquaponics page has ren
                                     />
 
                             </Tab>
-                            <Tab eventKey="Create New" title="New Customisation">
-                                <ComingSoon/>
+                            <Tab eventKey="Create New" title="New Customisation"
+                                 style={{background: "white", color: "black", borderRadius: "0px 0px 20px 20px"}}>
+                                <br/>
+                                <h5>Create new customisation</h5>
+
+
+                                <br/>  <form  >
+                                <label htmlFor="fname">Setting Name:</label><br/>
+                                <input required type="text" id="fname" name="fname" /><br/>
+                                <SettingsTemp
+                                    //onUpdate={this.onTempSettingsUpdate}
+                                    vertical={true}
+                                    onChange={this.onTempSettingsChange}
+                                    values={this.state.tempSettingsValue}
+                                    updates={this.state.tempSettingsUpdate}
+                                    reset={this.resetTempSettings}
+                                />
+                                <SettingsPh
+                                    onChange={this.onPhSettingsChange}
+                                    values={this.state.phSettingsValue}
+                                    updates={this.state.phSettingsUpdate}
+                                    reset={this.resetPhSettings}
+                                />
+                                <SettingsNh3
+                                    onChange={this.onNh3SettingsChange}
+                                    values={this.state.nh3SettingsValue}
+                                    updates={this.state.nh3SettingsUpdate}
+                                    reset={this.resetNh3Settings}
+                                />
+
+
+
+                                    <Button onClick={()=>{
+                                        console.log("Clicked That shit")
+                                    }} type="submit">Submit</Button>
+                                </form>
+
+
                             </Tab>
 
                         </Tabs>

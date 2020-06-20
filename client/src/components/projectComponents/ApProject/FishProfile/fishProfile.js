@@ -53,10 +53,10 @@ const FishProfile = (props) =>{
                                     )
                                 })}
                             <DropdownItem divider />
-                            <DropdownItem header><strong>Customise</strong></DropdownItem>
+                            <DropdownItem header><strong>User settings</strong></DropdownItem>
 
-                            <DropdownItem  onClick={()=> console.log('CLICK!')}>Customise {props.fishParams.fish_name} alerts</DropdownItem>
-                            <DropdownItem  onClick={()=> console.log('CLICK!')}>New customised alerts</DropdownItem>
+                            <DropdownItem  onClick={()=> console.log('CLICK!')}>{props.fishParams.fish_name} Custom</DropdownItem>
+                            <DropdownItem  onClick={()=> console.log('CLICK!')}>Trout & Silver Perch</DropdownItem>
                         </DropdownMenu>
 
                     </Dropdown>
