@@ -1,5 +1,5 @@
 
-import classes from '../FishProfile.module.scss';
+import classes from '../FishProfile/FishProfile.module.scss';
 import React, { useState } from 'react';
 import {Dropdown, DropdownToggle, DropdownMenu, DropdownItem, NavItem, NavLink, Nav} from 'reactstrap';
 import {Link} from "react-scroll";

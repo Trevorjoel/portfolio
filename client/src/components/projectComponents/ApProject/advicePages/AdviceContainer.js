@@ -10,7 +10,7 @@ import {Col} from "reactstrap";
 const AdviceContainer = (props) => {
     return (
         <div id="advice" className={classes.Container}>
-            <h3 className=""><strong>System Advice</strong></h3>
+
             <p className={ classes}>References for running your system</p>
             <Accordion title="Ammonia"
                        sub1={<AccordionSub title="High" text="Loremu ipsum"/>}

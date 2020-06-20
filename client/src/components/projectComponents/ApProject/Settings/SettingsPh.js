@@ -60,7 +60,7 @@ class SettingsPh extends Component {
             <Col lg={12}>
 
 
-                <div style={{margin: "20px 1%", height: 50, width: "95%"}}>
+                <div style={{margin: "30px 3%", height: 50, width: "93%"}}>
                     <Slider
 
                         mode={2}
@@ -121,13 +121,13 @@ class SettingsPh extends Component {
                     </Slider>
 
                 </div>
-                <Col lg={12}>
+                <Col lg={12} style={{textAlign:"right"}}>
                     <Button className={classes.ButtonReset} variant="secondary" style={{margin: "10px 2%"}}
                             onClick={this.props.reset}>Reset</Button>
                     <Button className={classes.ButtonEnter} style={{margin: "10px 2%"}}
                             variant="secondary">Enter</Button>
                 </Col>
-
+                <hr/>
             </Col>
         </Row>;
     }

@@ -1,6 +1,6 @@
-import trout from "../../../images/troutPic.png";
-import silverPerch from '../../../images/silver_perchPic.png';
-import barramundi from '../../../images/barraPic.png';
+import trout from "../../../../images/troutPic.png";
+import silverPerch from '../../../../images/silver_perchPic.png';
+import barramundi from '../../../../images/barraPic.png';
 import classes from './FishProfile.module.scss';
 import React, { useState } from 'react';
 import {Dropdown, DropdownToggle, DropdownMenu, DropdownItem, NavItem, NavLink, Nav} from 'reactstrap';
@@ -26,7 +26,7 @@ const FishProfile = (props) =>{
                 <h3>Fish Stock</h3>
 
                 <img
-                    data-aos="fade-right"
+                    data-aos="fade-left"
                     data-aos-delay="1000"
                     data-aos-duration="800"
                     alt={props.fishParams.fish_name}

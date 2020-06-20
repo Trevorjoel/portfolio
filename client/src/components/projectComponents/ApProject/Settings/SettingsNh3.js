@@ -48,7 +48,7 @@ class SettingsNh3 extends Component {
             <Col lg={12}>
 
 
-                <div style={{margin: "20px 1%", height: 60, width: "95%"}}>
+                <div style={{margin: "30px 3%", height: 60, width: "93%"}}>
                     <Slider
 
                         mode={2}
@@ -110,9 +110,9 @@ class SettingsNh3 extends Component {
                     </Slider>
 
                 </div>
-                <Col lg={12}>
+                <Col lg={12} style={{textAlign:"right"}}>
                     <Button variant="secondary" className={classes.ButtonReset} onClick={this.props.reset}>Reset</Button>
-                    <Button className={classes.ButtonEnter}>Enter</Button>
+                    <Button className={classes.ButtonEnter} style={{margin: "10px 2%"}}>Enter</Button>
                 </Col>
             </Col>
         </Row>

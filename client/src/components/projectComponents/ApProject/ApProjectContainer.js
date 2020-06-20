@@ -24,7 +24,7 @@ import github from "../../../images/hiclipart.com.718cad62.png";
 import LineGraph from './Graphs/LineGraph';
 import TempPie from "./Graphs/PieCharts";
 import HighLow from "./Graphs/DailyHigLow";
-import FishProfile from "./fishProfile";
+import FishProfile from "./FishProfile/fishProfile";
 import BackBtn from "../ProjectBackBtn";
 import AdviceContainer from './advicePages/AdviceContainer';
 import SlidersModal from "./sliders/SlidersModal";
@@ -36,6 +36,9 @@ import SettingsNh3 from "./Settings/SettingsNh3";
 import settings_classes from './Settings/SettingsContainer.module.scss';
 import LoadingContainer from "./Loading/LoadingContainer";
 import ComingSoon from "./Loading/ComingSoon";
+import ReadingsTable from "./ReadingsTable";
+import FishThumb from "./FishThumb/FishThumb";
+import LiveMonitorDescription from "./Descriptions/LiveMonitorDescription";
 
 // Todo: Create id's to navigate the demo app, example: to the caring for trout pages
 
@@ -371,7 +374,7 @@ if (this.topTriggerEl.current !== null ) { // Check that Aquaponics page has ren
                             <Col lg={12}>
 
                                 <br/>
-                                <h2 className={classes.SecondaryTitle}><strong>Live Monitor</strong></h2>
+                                <h2 className={classes.SecondaryTitle}><strong>Live Monitor </strong><LiveMonitorDescription /></h2>
 
                                 <div className={classes.StatusWrapper}>
 
@@ -477,17 +480,22 @@ if (this.topTriggerEl.current !== null ) { // Check that Aquaponics page has ren
                                          style={{background: "white", color: "black", borderRadius: "0px 0px 20px 20px"}}>
                                         <Row >
                                             <Col lg={12}>
+                                                <h1 className={classes.GraphHead}>Temperature</h1>
 
-                                                <h3  className={classes.GraphTitle}>Hourly temperature readings</h3>
                                                 <h6 className={classes.GraphSub}>{this.state.startPeriod} <br/> {this.state.endPeriod}</h6>
+                                                <FishThumb fishParams={this.state.fishParams}/>
+                                                <h3  className={classes.GraphTitle}>Hourly readings</h3>
+
+
+
                                                 <LineGraph
                                                     fishParams={this.state.fishParams}
                                                     readings={this.state.readings}
                                                 />
                                             </Col>
                                             <Col lg={12}><br/>
-                                                <h3 className={classes.GraphTitle}>Temperature readings by alert category</h3>
-                                                <h6 className={classes.GraphSub}>{this.state.startPeriod} <br/> {this.state.endPeriod}</h6>
+                                                <h3 className={classes.GraphTitle}>Readings by alert category</h3>
+
                                                 <TempPie
                                                     fishParams={this.state.fishParams}
                                                     readings={this.state.readings}
@@ -496,9 +504,8 @@ if (this.topTriggerEl.current !== null ) { // Check that Aquaponics page has ren
                                         </Row>
                                         <Row >
                                             <Col lg={12}>
-                                                <h3 className={classes.GraphTitle}>Highest, lowest and average daily
-                                                    temperatures</h3>
-                                                <h6 className={classes.GraphSub}>{this.state.startPeriod} <br/> {this.state.endPeriod}</h6>
+                                                <h3 className={classes.GraphTitle}>Highest, lowest and average daily readings</h3>
+
                                                 <HighLow
                                                     fishParams={this.state.fishParams}
                                                     readings={this.state.readings}
@@ -519,11 +526,19 @@ if (this.topTriggerEl.current !== null ) { // Check that Aquaponics page has ren
                             <div ref={this.bottomTriggerEl} id="sticky-end"></div>
                                          </div>
                         <hr  className="divider"/>
+                        <h2 className="reading-box">System Advice</h2>
+                        <br/>
                         <AdviceContainer />
-                        <h2 className="reading-box">Customise Alerts</h2>
+                        <hr className="divider"/>
+                        <h2 className="reading-box">Settings</h2>
+                        <br/>
                         <Tabs className={classes.TabContainer} Key="customise-current" id="custom-tab">
+
                             <Tab eventKey="customise-current" title="Current Fish"
                                  style={{background: "white", color: "black", borderRadius: "0px 0px 20px 20px"}}>
+                                <br/>
+                                <h5>{this.state.fishParams.fish_name}</h5>
+                                <FishThumb fishParams={this.state.fishParams}/>
 
                                     <br/>
                                     <SettingsTemp
@@ -568,6 +583,8 @@ if (this.topTriggerEl.current !== null ) { // Check that Aquaponics page has ren
                             <p>Code for this project.</p>
                         </div>
                     </div>
+                    {/* Debug*/}
+                    {/*<ReadingsTable readings={this.state.readings}/>*/}
                 </Container>
                 <BackBtn/>
                 <NotificationContainer/>
