@@ -41,6 +41,7 @@ import FishThumb from "./FishThumb/FishThumb";
 import LiveMonitorDescription from "./Descriptions/LiveMonitorDescription";
 
 // Todo: Create id's to navigate the demo app, example: to the caring for trout pages
+//todo: Conditionally render buttons in the settings area
 
 class ApProjectContainer extends Component {
 
@@ -548,18 +549,21 @@ if (this.topTriggerEl.current !== null ) { // Check that Aquaponics page has ren
                                         values={this.state.tempSettingsValue}
                                         updates={this.state.tempSettingsUpdate}
                                         reset={this.resetTempSettings}
+                                        renderButtons={true}
                                     />
                                     <SettingsPh
                                         onChange={this.onPhSettingsChange}
                                         values={this.state.phSettingsValue}
                                         updates={this.state.phSettingsUpdate}
                                         reset={this.resetPhSettings}
+                                        renderButtons={true}
                                     />
                                     <SettingsNh3
                                         onChange={this.onNh3SettingsChange}
                                         values={this.state.nh3SettingsValue}
                                         updates={this.state.nh3SettingsUpdate}
                                         reset={this.resetNh3Settings}
+                                        renderButtons={true}
                                     />
 
                             </Tab>
@@ -579,26 +583,32 @@ if (this.topTriggerEl.current !== null ) { // Check that Aquaponics page has ren
                                     values={this.state.tempSettingsValue}
                                     updates={this.state.tempSettingsUpdate}
                                     reset={this.resetTempSettings}
+                                    renderButtons={false}
                                 />
                                 <SettingsPh
                                     onChange={this.onPhSettingsChange}
                                     values={this.state.phSettingsValue}
                                     updates={this.state.phSettingsUpdate}
                                     reset={this.resetPhSettings}
+                                    renderButtons={false}
                                 />
                                 <SettingsNh3
                                     onChange={this.onNh3SettingsChange}
                                     values={this.state.nh3SettingsValue}
                                     updates={this.state.nh3SettingsUpdate}
                                     reset={this.resetNh3Settings}
+                                    renderButtons={false}
                                 />
 
 
-
-                                    <Button onClick={()=>{
-                                        console.log("Clicked That shit")
-                                    }} type="submit">Submit</Button>
+                                <Button className={classes.ButtonEnter} style={{margin: "10px 2%"}} onClick={()=>{
+                                    console.log("Clicked That shit")
+                                }} type="submit">Enter All</Button>
                                 </form>
+                                <Button  className={classes.ButtonReset} style={{margin: "10px 2%"}} onClick={()=>{
+                                    console.log("Clicked That shit")
+                                }} type="submit">Reset All</Button>
+
 
 
                             </Tab>

@@ -119,3 +119,35 @@
     }
 
 }
+.ButtonEnter{
+
+    background: $light-green;
+    color:$dark-blue;
+    border:none;
+    font-size: 1em;
+    min-height: 35px;
+    min-width: 100px;
+    margin: 25px 0px 25px 0px;
+    border-radius: 30px;
+    padding:0px 20px 0 20px;
+}
+.ButtonEnter :hover{
+    background: $light-grey;
+    color:$light-blue;
+}
+.ButtonReset{
+
+    background: $light-blue;
+    color:$dark-blue;
+    border:none;
+    font-size: 1em;
+    min-height: 35px;
+    min-width: 100px;
+    margin: 25px 0px 25px 0px;
+    border-radius: 30px;
+    padding:0px 20px 0 20px;
+}
+.ButtonReset :active{
+    background: $light-grey;
+    color:$light-blue;
+}

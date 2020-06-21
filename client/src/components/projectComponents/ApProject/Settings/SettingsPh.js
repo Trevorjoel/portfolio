@@ -6,6 +6,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import classes from './SettingsContainer.module.scss';
 import {format} from 'd3-format'
+import Buttons from "./Buttons";
 // todo: Note there's a lot that needs fixing with regards  to passing state from the ApProjectContainer.js
 const sliderStyle = {
     position: "relative",
@@ -122,10 +123,7 @@ class SettingsPh extends Component {
 
                 </div>
                 <Col lg={12} style={{textAlign:"right"}}>
-                    <Button className={classes.ButtonReset} variant="secondary" style={{margin: "10px 2%"}}
-                            onClick={this.props.reset}>Reset</Button>
-                    <Button type="submit" className={classes.ButtonEnter} style={{margin: "10px 2%"}}
-                            variant="secondary">Enter</Button>
+                    {this.props.renderButtons ? <Buttons reset={this.props.reset}/>: null }
                 </Col>
                 <hr/>
             </Col>
