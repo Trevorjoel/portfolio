@@ -1,10 +1,11 @@
 import React, {useState, useRef} from "react";
+import {Content, Panel, LinkList, ListHeader,HorizontalList, Header, Overlay} from 'wikipedia-react-components'
+import classes from "./AdviceContainer.module.css";
 import Chevron from "./Chevron";
-import classes from './AdviceContainer.module.css';
-import AccordionSub from "./AccordionSub";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 
-// Caret symbols &#8897; &#8896; [classes.Color, classes.Size].join(' ')
-const Accordion = (props) => {
+const AdviceWiki = (props) => {
     const [setActive, setActiveState] = useState(props.activate);
     const [setDisplay, setDisplayState] = useState(props.translate);
     const [setHeight, setHeightState] = useState(props.height);
@@ -22,6 +23,8 @@ const Accordion = (props) => {
     }
     return (
         <div className={classes}>
+            <Row>
+                <Col lg={2}>
             <button className={[classes.Button, setActive].join(' ')}
                     onClick={toggleContent}>
                 <strong>  <h4 className={classes.Flex} id="">{props.title}
@@ -30,9 +33,16 @@ const Accordion = (props) => {
             <div ref={content} style={{maxHeight:`${setHeight}`}} className={classes.Content}>
                 {props.sub}{props.sub1}{props.sub2}{props.sub3}{props.sub4}{props.sub5}
             </div>
+                </Col>
+                <Col lg={10}>
+<p>Content</p>
+            </Col>
+            </Row>
         </div>
     )
 
+
+
 }
 
-export default Accordion;
+export default AdviceWiki;

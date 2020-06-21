@@ -39,6 +39,7 @@ import ComingSoon from "./Loading/ComingSoon";
 import ReadingsTable from "./ReadingsTable";
 import FishThumb from "./FishThumb/FishThumb";
 import LiveMonitorDescription from "./Descriptions/LiveMonitorDescription";
+import AdviceWiki from "./advicePages/AdviceWiki";
 
 // Todo: Create id's to navigate the demo app, example: to the caring for trout pages
 //todo: Conditionally render buttons in the settings area
@@ -368,6 +369,7 @@ if (this.topTriggerEl.current !== null ) { // Check that Aquaponics page has ren
                         Development Details!
                     </Button>
                     <div className={classes.ProjectContainer}>
+                        <AdviceContainer />
 
                         <h1 className={classes.Title}><strong>Aquaponics System Monitor</strong> (Prototype)</h1>
 
@@ -529,7 +531,7 @@ if (this.topTriggerEl.current !== null ) { // Check that Aquaponics page has ren
                         <hr  className="divider"/>
                         <h2 className="reading-box">System Advice</h2>
                         <br/>
-                        <AdviceContainer />
+
                         <hr className="divider"/>
                         <h2 className="reading-box">Settings</h2>
                         <br/>

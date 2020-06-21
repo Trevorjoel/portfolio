@@ -5,11 +5,29 @@ import TroutInfo from "./TroutInfo";
 import classes from './AdviceContainer.module.css';
 import TemperatureInfo from "./TemperatureInfo";
 import {Col} from "reactstrap";
+import AdviceWiki from "./AdviceWiki";
 
 // Caret symbols &#8897; &#8896; [classes.Color, classes.Size].join(' ')
 const AdviceContainer = (props) => {
     return (
         <div id="advice" className={classes.Container}>
+
+
+            <AdviceWiki
+
+                title="Ammonia"
+                sub1={<AccordionSub title="High" text="Loremu ipsum"/>}
+                sub2={<AccordionSub title="Low" text="Loremu ipsum"/>}
+                active={"0"}
+                translate={"translateY(0)"}
+                height={"0px"}
+                rotate={classes.NoRotate}
+
+            />
+
+
+
+
 
             <p className={ classes}>References for running your system</p>
             <Accordion title="Ammonia"
