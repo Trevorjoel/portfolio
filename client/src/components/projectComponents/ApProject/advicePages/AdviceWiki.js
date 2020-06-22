@@ -4,7 +4,7 @@ import Chevron from "./Chevron";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import style from './style.css'
-import Sidebar from "react-sidebar";
+
 import TroutInfo from "./TroutInfo";
 
 
@@ -12,15 +12,24 @@ class AdviceWiki extends Component {
 
 
     render() {
-        const observer = new IntersectionObserver(entries => {
-            entries.forEach(entry => {
-                const id = entry.target.getAttribute('id');
-                if (entry.intersectionRatio > 0) {
-                    document.querySelector(`nav li a[href="#${id}"]`).parentElement.classList.add('active');
-                } else {
-                    document.querySelector(`nav li a[href="#${id}"]`).parentElement.classList.remove('active');
-                }
+        window.addEventListener('DOMContentLoaded', () => {
+
+            const observer = new IntersectionObserver(entries => {
+                entries.forEach(entry => {
+                    const id = entry.target.getAttribute('id');
+                    if (entry.intersectionRatio > 0) {
+                        document.querySelector(`nav li a[href="#${id}"]`).parentElement.classList.add('active');
+                    } else {
+                        document.querySelector(`nav li a[href="#${id}"]`).parentElement.classList.remove('active');
+                    }
+                });
             });
+
+            // Track all sections that have an `id` applied
+            document.querySelectorAll('section[id]').forEach((section) => {
+                observer.observe(section);
+            });
+
         });
         return (
             <main>
