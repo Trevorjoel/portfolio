@@ -339,6 +339,7 @@ if (this.topTriggerEl.current !== null ) { // Check that Aquaponics page has ren
         return (
             <div>
 
+
                 <Container className=" sensors-container">
 
                     {this.state.activeDescription &&

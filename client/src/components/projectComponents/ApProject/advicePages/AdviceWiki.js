@@ -1,48 +1,136 @@
-import React, {useState, useRef} from "react";
-import {Content, Panel, LinkList, ListHeader,HorizontalList, Header, Overlay} from 'wikipedia-react-components'
+import React, {Component} from "react";
 import classes from "./AdviceContainer.module.css";
 import Chevron from "./Chevron";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import style from './style.css'
+import Sidebar from "react-sidebar";
+import TroutInfo from "./TroutInfo";
 
-const AdviceWiki = (props) => {
-    const [setActive, setActiveState] = useState(props.activate);
-    const [setDisplay, setDisplayState] = useState(props.translate);
-    const [setHeight, setHeightState] = useState(props.height);
-    const [setRotate, setRotateState] = useState(props.rotate);
 
-    const content = useRef(null);
+class AdviceWiki extends Component {
 
-    function toggleContent(props) {
-        setActiveState(setActive === "" ? classes.active : "");
-        setHeightState(setActive === classes.active ? "0px" : `500px`)
-        setDisplayState(setActive === classes.active ? "translateY(0)" : `translateY(0vh)`)
-        setRotateState(
-            setActive === classes.active ? classes.NoRotate : classes.Rotate
-        )
+
+    render() {
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                const id = entry.target.getAttribute('id');
+                if (entry.intersectionRatio > 0) {
+                    document.querySelector(`nav li a[href="#${id}"]`).parentElement.classList.add('active');
+                } else {
+                    document.querySelector(`nav li a[href="#${id}"]`).parentElement.classList.remove('active');
+                }
+            });
+        });
+        return (
+            <main>
+                <nav className="section-nav">
+                    <ol>
+                        <li><a href="#introduction">Introduction</a></li>
+                        <li><a href="#ammonia">Ammonia</a>
+                            <ul>
+                                <li className=""><a href="#ammonia--basics">Basics</a></li>
+                                <li className=""><a href="#ammonia--high">High</a></li>
+                                <li className=""><a href="#ammonia--low">Low</a></li>
+
+                            </ul>
+                        </li>
+                        <li><a href="#cycling">Cycling</a></li>
+                        <li><a href="#fish">Fish</a>
+                            <ul>
+                                <li className=""><a href="#fish--barramundi">Barramundi</a></li>
+                                <li className=""><a href="#fish--silver-perch">Silver Perch</a></li>
+                                <li className=""><a href="#fish--trout">Trout</a></li>
+                            </ul>
+                        </li>
+                        <li className=""><a href="#resources">Resources</a></li>
+                        <li className=""><a href="#products">Products</a></li>
+
+                    </ol>
+                </nav>
+                <div>
+                    <h2>System advice</h2>
+                    <br/><br/><br/>
+                    <section id="introduction">
+                        <h3>Introduction</h3>
+                        <br/><br/><br/>
+                        <p>…</p>
+                    </section>
+                    <section id="ammonia">
+                        <h3>Ammonia</h3>
+                        <p>Component</p>
+                        <section id="ammonia--basics">
+                            <h5>Basics</h5>
+                            <p>Component</p>
+                        </section>
+                        <section id="ammonia--high">
+                            <h5>High</h5>
+                            <p>…</p>
+                        </section>
+                        <section id="ammonia--low">
+                            <h3>Low</h3>
+                            <p>Component</p>
+                        </section>
+                    </section>
+                    <section id="cycling">
+                        <h2>Cycling</h2>
+                        <p>Component</p>
+                    </section>
+                    <section id="fish">
+                        <h2>Fish</h2>
+                        <section id="fish--barramundi">
+                            <h3>Barramundi</h3>
+                            <p>…</p>
+                        </section>
+                        <section id="fish--silver-perch">
+                            <h3>Silver Perch</h3>
+                            <p>Component</p>
+                        </section>
+                        <section id="fish--trout">
+                            <h3>Trout</h3>
+                           <TroutInfo/>
+                        </section>
+                    </section>
+                    <section id="resources">
+                        <h2>Resources</h2>
+                        <p>Component</p>
+                    </section>
+                    <section id="products">
+                        <h2>Products</h2>
+                        <p>…</p>
+                    </section>
+
+                </div>
+
+            </main>
+
+        );
     }
-    return (
-        <div className={classes}>
-            <Row>
-                <Col lg={2}>
-            <button className={[classes.Button, setActive].join(' ')}
-                    onClick={toggleContent}>
-                <strong>  <h4 className={classes.Flex} id="">{props.title}
-                    <Chevron className={[classes.Icon, `${setRotate}`].join(' ') } fill={'#777'} height="20px"/></h4></strong>
-            </button>
-            <div ref={content} style={{maxHeight:`${setHeight}`}} className={classes.Content}>
-                {props.sub}{props.sub1}{props.sub2}{props.sub3}{props.sub4}{props.sub5}
-            </div>
-                </Col>
-                <Col lg={10}>
-<p>Content</p>
-            </Col>
-            </Row>
-        </div>
-    )
-
-
-
 }
 
 export default AdviceWiki;
+
+/*
+*
+            const observer = new IntersectionObserver(entries => {
+                entries.forEach(entry => {
+                    const id = entry.target.getAttribute('id');
+                    if (entry.intersectionRatio > 0) {
+                        document.querySelector(`nav li a[href="#${id}"]`).parentElement.classList.add('active');
+                    } else {
+                        document.querySelector(`nav li a[href="#${id}"]`).parentElement.classList.remove('active');
+                    }
+                });
+            });
+
+            // Track all sections that have an `id` applied
+            document.querySelectorAll('section[id]').forEach((section) => {
+                observer.observe(section);
+            });
+            console.log('running')
+        });
+        }
+        *
+        *
+        *
+        * */

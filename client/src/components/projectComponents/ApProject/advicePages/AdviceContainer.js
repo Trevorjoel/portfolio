@@ -15,21 +15,10 @@ const AdviceContainer = (props) => {
 
             <AdviceWiki
 
-                title="Ammonia"
-                sub1={<AccordionSub title="High" text="Loremu ipsum"/>}
-                sub2={<AccordionSub title="Low" text="Loremu ipsum"/>}
-                active={"0"}
-                translate={"translateY(0)"}
-                height={"0px"}
-                rotate={classes.NoRotate}
 
             />
 
-
-
-
-
-            <p className={ classes}>References for running your system</p>
+            {/*<p className={ classes}>References for running your system</p>
             <Accordion title="Ammonia"
                        sub1={<AccordionSub title="High" text="Loremu ipsum"/>}
                        sub2={<AccordionSub title="Low" text="Loremu ipsum"/>}
@@ -58,7 +47,7 @@ const AdviceContainer = (props) => {
                        />}
                        sub2={<AccordionSub title="Low" text="Loremu ipsum"/>}
 
-            />
+            />*/}
 
 
         </div>
