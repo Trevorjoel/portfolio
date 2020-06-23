@@ -54,7 +54,7 @@ export const tempController = function (temp) {
     switch (true) {
         case   temp <= this.state.fishParams.temp_low_critical  :
             if (this.state.tempUpdate === this.state.tempCaptureValue && this.state.tempShowNotification.tempLowCritical === true) {
-                console.log(this.state.tempShowNotification.tempHighCritical);
+
                 (this.createNotificationController('error', Assets.tempLowNotifyCritical, Assets.tempLowTitle))();
                 this.setState({
                     tempShowNotification: {
@@ -82,7 +82,7 @@ export const tempController = function (temp) {
         case temp > this.state.fishParams.temp_low_critical && temp <= this.state.fishParams.temp_low_warn : //
 
             if (this.state.tempUpdate === this.state.tempCaptureValue && this.state.tempShowNotification.tempLowWarn === true) {
-                console.log('Runs the alert');
+
                 (this.createNotificationController('warning', Assets.tempLowNotifyWarn, Assets.tempLowTitle))();
 
                 this.setState({
@@ -112,7 +112,7 @@ export const tempController = function (temp) {
         case temp > this.state.fishParams.temp_low_warn && temp <= this.state.fishParams.temp_high_warn : //
 
             if (this.state.tempUpdate === this.state.tempCaptureValue && this.state.tempShowNotification.tempOptimal === true) {
-                console.log('Runs the alert');
+
                 (this.createNotificationController('success', Assets.tempOkNotify, Assets.tempOkTitle))();
                 this.setState({
                     tempShowNotification: {
@@ -140,7 +140,7 @@ export const tempController = function (temp) {
 
         case temp > this.state.fishParams.temp_high_warn && temp <= this.state.fishParams.temp_high_critical : //
             if (this.state.tempUpdate === this.state.tempCaptureValue && this.state.tempShowNotification.tempHighWarn === true) {
-                console.log('Runs the alert');
+
                 (this.createNotificationController('warning', Assets.tempHighNotifyWarn, Assets.tempHighTitle))();
                 this.setState({
                     tempShowNotification: {
@@ -168,7 +168,7 @@ export const tempController = function (temp) {
 
         case temp > this.state.fishParams.temp_high_critical: //
             if (this.state.tempUpdate === this.state.tempCaptureValue && this.state.tempShowNotification.tempHighCritical === true) {
-                console.log('Runs the alert');
+
                 (this.createNotificationController('error', Assets.tempHighNotifyCritical, Assets.tempHighTitle))();
                 this.setState({
                     tempShowNotification: {
@@ -331,7 +331,7 @@ export const nh3Controller = function (nh3) {
                 }
             }, 5000);
             if (this.state.nh3Update === this.state.nh3CaptureValue && this.state.nh3ShowNotification.nh3Optimal === true) {
-                console.log(this.state.tempShowNotification.tempHighCritical);
+
                 (this.createNotificationController('success', Assets.nh3Ok, Assets.nh3TitleOk()))();
                 this.setState({
                     nh3ShowNotification: {
@@ -355,7 +355,7 @@ export const nh3Controller = function (nh3) {
         case nh3 > this.state.fishParams.nh3_warn && nh3 <= this.state.fishParams.nh3_critical : //
 
             if (this.state.nh3Update === this.state.nh3CaptureValue && this.state.nh3ShowNotification.nh3HighWarn === true) {
-                console.log(this.state.tempShowNotification.tempHighCritical);
+
                 (this.createNotificationController('warning', Assets.nh3NotifyWarn, Assets.nh3TitleHigh()))();
                 this.setState({
                     nh3ShowNotification: {
@@ -378,7 +378,7 @@ export const nh3Controller = function (nh3) {
             />;
         case nh3 > this.state.fishParams.nh3_critical : //
             if (this.state.nh3Update === this.state.nh3CaptureValue && this.state.nh3ShowNotification.nh3HighCritical === true) {
-                console.log(this.state.tempShowNotification.tempHighCritical);
+
                 (this.createNotificationController('error', Assets.nh3NotifyCritical, Assets.nh3TitleHigh()))();
                 this.setState({
                     nh3ShowNotification: {
@@ -409,7 +409,7 @@ export const nh3Controller = function (nh3) {
 
 export const addReadingsToDB = async function () {
     (this.createNotificationController('info', Assets.readingText, Assets.readingTitle))();
-    console.log('Enter to DB');
+
     const response = await fetch('/api/ap', {
         method: 'POST',
         headers: {
@@ -438,7 +438,7 @@ export const addReadingsToDB = async function () {
 
 // Function to get the last time inserted into the database
 export const getPreviousTime = async function () {
-    console.log('getting time');
+
     const response = await fetch('/api/ap', {
         method: 'GET',
         headers:
@@ -455,13 +455,13 @@ export const getPreviousTime = async function () {
     const query = await response.json();
     if (response.status !== 200) throw Error(query.message);
     const today = new Date(query.time[0].date_time);
-    //  console.log(today);
+
     today.setHours(today.getHours() + 4); // + 4 for the localhost - 4 for the deployment
-    //  console.log(today);
+
     this.setState({
         latestTime: today.toISOString().slice(0, 19).replace('T', ' ') //
     });
-    console.log(this.state.latestTime);
+
     return query;
 
 };
@@ -529,7 +529,7 @@ export const getFirstLastReadings = async function () {
 }
 
 export const getFish = async function () {
-    console.log('get all fish');
+
 
     const response = await fetch('/api/allfish', {
         method: 'GET',
@@ -548,7 +548,7 @@ export const getFish = async function () {
 }
 
 export const getReadingsRange = async function (from, to) {
-    console.log('get readings range');
+
 
     const response = await fetch('/api/range', {
         method: 'POST',

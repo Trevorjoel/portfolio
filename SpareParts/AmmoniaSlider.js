@@ -53,7 +53,7 @@ class Nh3Slider extends Component {
                                         getHandleProps={getHandleProps}
                                     />
                                 ))}
-                                {console.log(handles[0].value)}
+
                             
                             </div>
                         )}

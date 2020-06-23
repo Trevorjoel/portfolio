@@ -22,7 +22,6 @@ const FishProfile = (props) =>{
     return (<div className={classes.Container}>
 
             <div >
-               {console.log(props.fishParams)}
                 <h3>Fish Stock</h3>
 
                 <img

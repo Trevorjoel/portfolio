@@ -54,7 +54,7 @@ class PhSlider extends Component {
                                         getHandleProps={getHandleProps}
                                     />
                                 ))}
-                                {console.log(handles[0].value)}
+
                             
                             </div>
                         )}

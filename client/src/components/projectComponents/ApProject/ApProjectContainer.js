@@ -120,6 +120,33 @@ class ApProjectContainer extends Component {
 
     }
 
+    handleObservations = () => {
+
+console.log("Handle Observations Runs")
+        let options = {
+            root: document.querySelector('#scrollArea'),
+            rootMargin: '100px',
+
+        }
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                const id = entry.target.getAttribute('id');
+                if (entry.intersectionRatio > 0) {
+                    document.querySelector(`nav li a[href="#${id}"]`).parentElement.classList.add('active');
+                } else {
+                    document.querySelector(`nav li a[href="#${id}"]`).parentElement.classList.remove('active');
+                }
+            });
+        }, options);
+
+        // Track all sections that have an `id` applied
+        document.querySelectorAll('section[id]').forEach((section) => {
+            observer.observe(section);
+        });
+
+
+    }
+
     resetTempSettings = () => {
         this.setState({
 
@@ -271,6 +298,7 @@ class ApProjectContainer extends Component {
         this.mapFish(getFish);
        window.addEventListener('scroll', this.handleScroll);
 
+
     }
  // todo: You should be using ref callbacks, never normal DOM traversal, to get access to nodes in componentDidMount.
   //  https://reactjs.org/docs/refs-and-the-dom.html
@@ -335,6 +363,7 @@ if (this.topTriggerEl.current !== null ) { // Check that Aquaponics page has ren
         if (fishParams === null) {
             return <LoadingContainer/>;
         }
+        this.handleObservations()
 
         return (
             <div>
@@ -370,7 +399,7 @@ if (this.topTriggerEl.current !== null ) { // Check that Aquaponics page has ren
                         Development Details!
                     </Button>
                     <div className={classes.ProjectContainer}>
-                        <AdviceContainer />
+
 
                         <h1 className={classes.Title}><strong>Aquaponics System Monitor</strong> (Prototype)</h1>
 
@@ -530,10 +559,7 @@ if (this.topTriggerEl.current !== null ) { // Check that Aquaponics page has ren
                             <div ref={this.bottomTriggerEl} id="sticky-end"></div>
                                          </div>
                         <hr  className="divider"/>
-                        <h2 className="reading-box">System Advice</h2>
-                        <br/>
 
-                        <hr className="divider"/>
                         <h2 className="reading-box">Settings</h2>
                         <br/>
                         <Tabs className={classes.TabContainer} Key="customise-current" id="custom-tab">
@@ -618,7 +644,12 @@ if (this.topTriggerEl.current !== null ) { // Check that Aquaponics page has ren
 
                         </Tabs>
 
+                        <br/>
 
+                        <hr className="divider"/>
+                        <h2 className="reading-box">System Advice</h2>
+                        <AdviceContainer />
+                        <hr className="divider"/>
                         <div className="project-icons">
                             <a target="_blank"
                                rel="noopener noreferrer"
@@ -634,6 +665,7 @@ if (this.topTriggerEl.current !== null ) { // Check that Aquaponics page has ren
                     </div>
                     {/* Debug*/}
                     {/*<ReadingsTable readings={this.state.readings}/>*/}
+
                 </Container>
                 <BackBtn/>
                 <NotificationContainer/>

@@ -21,8 +21,8 @@ main > nav {
 /* Sidebar Navigation */
 .section-nav {
     padding-left: 0;
-    border-right: 1px solid #efefef;
-
+    border-right: 1px solid #bbbbbd;
+width:80%;
 }
 
 .section-nav a {
@@ -31,6 +31,7 @@ main > nav {
     padding: .125rem 0;
     color: #ccc;
     transition: all 50ms ease-in-out; /* 💡 This small transition makes setting of the active state smooth */
+
 }
 
 .section-nav a:hover,
