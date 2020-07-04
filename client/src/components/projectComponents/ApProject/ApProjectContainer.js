@@ -41,9 +41,11 @@ import ReadingsTable from "./ReadingsTable";
 import FishThumb from "./FishThumb/FishThumb";
 import LiveMonitorDescription from "./Descriptions/LiveMonitorDescription";
 import AdviceWiki from "./advicePages/AdviceWiki";
+import Logo from './Assets/logos/logo-03.png'
 
-// Todo: Create id's to navigate the demo app, example: to the caring for trout pages
-//todo: Conditionally render buttons in the settings area
+// Todo: Create id's to navigate the demo app, example: to the caring for trout pages OPEN THE ADVICE PAGES SCROLL TO ELEMENT
+//todo: refactor the css to scss make sticky scroll responsive
+//todo: make changeable bar/line graphs
 
 class ApProjectContainer extends Component {
 
@@ -454,10 +456,12 @@ if (this.topTriggerEl.current !== null ) { // Check that Aquaponics page has ren
                     <div className={classes.ProjectContainer}>
 
 
-                        <h1 className={classes.Title}><strong>Aquaponics System Monitor</strong> (Prototype)</h1>
+                        <h1 className={classes.Title}><strong>Aquaponics System Monitor</strong></h1>
 
                         <Row>
+
                             <Col lg={12}>
+                                <img style={{width:"60px"}} src={Logo}/>
 
                                 <br/>
                                 <h2 className={classes.SecondaryTitle}><strong>Live Monitor </strong><LiveMonitorDescription /></h2>

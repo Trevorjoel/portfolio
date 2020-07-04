@@ -1,4 +1,4 @@
-/*import classes from '../advicePages/AdviceContainer.module.css';*/
+/*import classes from '../advicePages/AdviceContainer.module.scss';*/
 import classes from './StatusAccordion.module.scss';
 import React, {useState, useRef} from "react";
 import Chevron from "../advicePages/Chevron";
@@ -6,6 +6,7 @@ import {Badge, Col, Row} from "reactstrap";
 import Button from "react-bootstrap/Button";
 import {Link} from "react-scroll";
 import {NavLink as RRNavLink} from "react-router-dom";
+import Logo from "../Assets/logos/logo-01.png";
 
 // Caret symbols &#8897; &#8896; [classes.Color, classes.Size].join(' ')
 const Accordion = (props) => {
@@ -43,13 +44,14 @@ const Accordion = (props) => {
                    {/* <Col lg={3} sm={4} xs={4}>
                         {props.statusTitle}
                     </Col>*/}
-                    <Col lg={4} sm={4} xs={4}>
+                    <Col lg={4} sm={4} xs={4} style={{textAlign:"center"}}>
                      {props.updatedValue} {props.symbol}
                     </Col>
 
 
                         <Col lg={4} sm={4} xs={4} style={{textAlign:"right"}}>
-                            <Chevron className={[classes.Icon, `${setRotate}`].join(' ') }  fill={'#777'} height="20px"/>
+                            <img style={{width:"30px", padding:"0px"}} className={[classes.Icon, `${setRotate}`].join(' ') }  src={Logo}/>
+                            {/*<Chevron className={[classes.Icon, `${setRotate}`].join(' ') }  fill={'#777'} height="20px"/>*/}
                         </Col>
 
                 </Row>

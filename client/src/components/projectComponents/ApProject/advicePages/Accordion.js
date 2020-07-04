@@ -1,6 +1,6 @@
 import React, {useState, useRef} from "react";
 import Chevron from "./Chevron";
-import classes from './AdviceContainer.module.css';
+import classes from './AdviceContainer.module.scss';
 import AccordionSub from "./AccordionSub";
 
 // Caret symbols &#8897; &#8896; [classes.Color, classes.Size].join(' ')

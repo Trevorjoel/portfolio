@@ -20,8 +20,8 @@ const LoadingContainer = () =>{
                     size={150}
                     color={"#214483"}
                 /><br/>
-                <h2 style={{color: "#214483", fontSize:"2em"}}><strong>IN DEVELOPMENT</strong></h2>
-                <p style={{color: "#214483"}}>Check back soon...</p>
+                <h2 style={{color: "#214483", fontSize:"1em", textAlign:"center"}}><strong>IN DEVELOPMENT</strong></h2>
+                <p style={{color: "#214483", textAlign:"center"}}>Check back soon...</p>
             </div>
         </div>
 

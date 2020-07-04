@@ -1,10 +1,12 @@
+@import "../styleVariables.scss";
+
 .Container{
     background: whitesmoke;
     color: #1b1e21;
     text-align: left;
-    padding:40px;
-    font-family: Arial, Helvetica, sans-serif;
-    margin: 200px 0 0 0;
+    padding:50px 25px 50px 16px;
+    font-family: $body-font;
+    margin: 0 0 0 0;
     border-radius: 20px;
 }
 .Flex{
@@ -17,11 +19,9 @@
 .Icon{
     margin-left: auto;
     margin-top: auto;
-    transition: transform 0.7ms ease;
+    transition: transform 1000ms ease;
 }
-.Rotate{
-    transform: rotate(90deg);
-}
+
 .NoRotate{
     transform: rotate(0deg);
 }
@@ -37,7 +37,7 @@
     overflow: hidden;
 }
 .Rotate{
-    transform: rotate(90deg);
+    transform: rotate(270deg);
 }
 .Button{
     border: 0px;

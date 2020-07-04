@@ -3,9 +3,12 @@ import silverPerch from '../../../../images/silver_perchPic.png';
 import barramundi from '../../../../images/barraPic.png';
 import classes from './FishProfile.module.scss';
 import React, { useState } from 'react';
-import {Dropdown, DropdownToggle, DropdownMenu, DropdownItem, NavItem, NavLink, Nav} from 'reactstrap';
+import {Dropdown, DropdownToggle, DropdownMenu, DropdownItem, NavItem, NavLink, Nav, Col} from 'reactstrap';
 import {Link} from "react-scroll";
 import {NavLink as RRNavLink} from "react-router-dom";
+import Logo from "../Assets/logos/logo-03.png";
+import LoadingContainer from "../Loading/LoadingContainer";
+import ComingSoon from "../Loading/ComingSoon";
 // Test
 const FishProfile = (props) =>{
     let fishImage;
@@ -23,14 +26,14 @@ const FishProfile = (props) =>{
 
             <div >
                 <h3>Fish Stock</h3>
-
-                <img
+                {props.fishParams  ? <img
                     data-aos="fade-left"
                     data-aos-delay="1000"
                     data-aos-duration="800"
                     alt={props.fishParams.fish_name}
                     className={classes.FishImage}
-                    src={fishImage}/>
+                    src={fishImage}/> : <LoadingContainer/>}
+
 
                 <div>
                     <Dropdown   title="Change fish" isOpen={dropdownOpen} toggle={toggle}>
@@ -85,6 +88,7 @@ const FishProfile = (props) =>{
                             <p
                                 activeClassName="" tag={RRNavLink} href="/" exact to="/sensors">See our caring for <a style={{textTransform:"capitalize"}} href="#">{props.fishParams.fish_name}</a> page.</p>
                         </Link>
+
                     </div>
 
                 <br/>
