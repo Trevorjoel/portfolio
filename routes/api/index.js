@@ -68,6 +68,36 @@ router.route('/api/allfish')
 router.route('/api/range')
     .post(Aquaponics.select_readings_range);
 
+router.route('/api/addsettings')
+    .post(Aquaponics.add_settings);
+
+router.route('/api/addtempsettings')
+    .post([check('setting_name', 'failed')
+            .isAlpha()
+            .not().isEmpty()
+            .trim()
+            .escape(),
+        ],
+        Aquaponics.add_temp_settings);
+
+router.route('/api/addphpsettings')
+    .post([check('setting_name', 'failed')
+            .isAlpha()
+            .not().isEmpty()
+            .trim()
+            .escape(),
+        ],
+        Aquaponics.add_ph_settings);
+
+router.route('/api/addnh3psettings')
+    .post([check('setting_name', 'failed')
+            .isAlpha()
+            .not().isEmpty()
+            .trim()
+            .escape(),
+        ],
+        Aquaponics.add_nh3_settings);
+
 export default router;
 
 

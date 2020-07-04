@@ -123,7 +123,7 @@ class SettingsPh extends Component {
 
                 </div>
                 <Col lg={12} style={{textAlign:"right"}}>
-                    {this.props.renderButtons ? <Buttons reset={this.props.reset}/>: null }
+                    {this.props.renderButtons ? <Buttons reset={this.props.reset} save={this.props.save}/>: null }
                 </Col>
                 <hr/>
             </Col>

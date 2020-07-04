@@ -89,4 +89,94 @@ TakeData.selectReadingsRange = (from, to, result) =>{
         });
 }
 
+TakeData.addSettings = (req, result) =>{
+    sqlAquaponics.query(`INSERT INTO \`settings\` ( \`users_id\`, \`setting_name\`, \`temp_low_critical\`, 
+    \`temp_low_warn\`, \`temp_high_warn\`, \`temp_high_critical\`, \`ph_low_critical\`, \`ph_low_warn\`, 
+    \`ph_high_warn\`, \`ph_high_critical\`, \`nh3_warn\`, \`nh3_critical\`, \`temp_target\`, \`ph_target\`, 
+    \`nh3_target\`) VALUES
+       ('${req.body.users_id}', '${req.body.setting_name}', '${req.body.temp_low_critical}',
+        '${req.body.temp_low_warn}', '${req.body.temp_high_warn}', '${req.body.temp_high_critical}',
+         '${req.body.ph_low_critical}', '${req.body.ph_low_warn}', '${req.body.ph_high_warn}',
+          '${req.body.ph_high_critical}', '${req.body.nh3_warn}', '${req.body.nh3_critical}',
+           '${req.body.temp_target}', '${req.body.ph_target}', '${req.body.nh3_target}') 
+           ON DUPLICATE KEY UPDATE \`temp_low_critical\` = '${req.body.temp_low_critical}', \`temp_low_warn\` = '${req.body.temp_low_warn}',
+            \`temp_high_warn\` = '${req.body.temp_high_warn}', \`temp_high_critical\` = '${req.body.temp_high_critical}',
+            \`ph_low_critical\` = '${req.body.ph_low_critical}', \`ph_low_warn\` = '${req.body.ph_low_warn}', 
+            \`ph_high_warn\` = '${req.body.ph_high_warn}', \`ph_high_critical\` = '${req.body.ph_high_critical}', 
+            \`nh3_warn\` = '${req.body.nh3_warn}', \`nh3_critical\` = '${req.body.nh3_critical}', 
+            \`temp_target\` = '${req.body.temp_target}', \`ph_target\` = '${req.body.ph_target}', \`nh3_target\` = '${req.body.nh3_target}'`,
+        (err, res) => {
+            if (err) {
+                result(err, null);
+            } else {
+                result(null, res);
+            }
+        });
+}
+
+TakeData.addTempSettings = (req, result) =>{
+    sqlAquaponics.query(`INSERT INTO \`settings\` ( \`users_id\`, \`setting_name\`, \`temp_low_critical\`, 
+    \`temp_low_warn\`, \`temp_high_warn\`, \`temp_high_critical\`, \`ph_low_critical\`, \`ph_low_warn\`, 
+    \`ph_high_warn\`, \`ph_high_critical\`, \`nh3_warn\`, \`nh3_critical\`, \`temp_target\`, \`ph_target\`, 
+    \`nh3_target\`) VALUES
+       ('${req.body.users_id}', '${req.body.setting_name}', '${req.body.temp_low_critical}',
+        '${req.body.temp_low_warn}', '${req.body.temp_high_warn}', '${req.body.temp_high_critical}',
+         '${req.body.ph_low_critical}', '${req.body.ph_low_warn}', '${req.body.ph_high_warn}',
+          '${req.body.ph_high_critical}', '${req.body.nh3_warn}', '${req.body.nh3_critical}',
+           '${req.body.temp_target}', '${req.body.ph_target}', '${req.body.nh3_target}') 
+           ON DUPLICATE KEY UPDATE \`temp_low_critical\` = '${req.body.temp_low_critical}', 
+           \`temp_low_warn\` = '${req.body.temp_low_warn}', \`temp_high_warn\` = '${req.body.temp_high_warn}',
+            \`temp_high_critical\` = '${req.body.temp_high_critical}', \`temp_target\` = '${req.body.temp_target}'`,
+        (err, res) => {
+            if (err) {
+                result(err, null);
+            } else {
+                result(null, res);
+            }
+        });
+}
+
+TakeData.addPhSettings = (req, result) =>{
+    sqlAquaponics.query(`INSERT INTO \`settings\` ( \`users_id\`, \`setting_name\`, \`temp_low_critical\`, 
+    \`temp_low_warn\`, \`temp_high_warn\`, \`temp_high_critical\`, \`ph_low_critical\`, \`ph_low_warn\`, 
+    \`ph_high_warn\`, \`ph_high_critical\`, \`nh3_warn\`, \`nh3_critical\`, \`temp_target\`, \`ph_target\`, 
+    \`nh3_target\`) VALUES
+       ('${req.body.users_id}', '${req.body.setting_name}', '${req.body.temp_low_critical}',
+        '${req.body.temp_low_warn}', '${req.body.temp_high_warn}', '${req.body.temp_high_critical}',
+         '${req.body.ph_low_critical}', '${req.body.ph_low_warn}', '${req.body.ph_high_warn}',
+          '${req.body.ph_high_critical}', '${req.body.nh3_warn}', '${req.body.nh3_critical}',
+           '${req.body.temp_target}', '${req.body.ph_target}', '${req.body.nh3_target}') 
+           ON DUPLICATE KEY UPDATE \`ph_low_critical\` = '${req.body.ph_low_critical}', 
+           \`ph_low_warn\` = '${req.body.ph_low_warn}', \`ph_high_warn\` = '${req.body.ph_high_warn}', 
+           \`ph_high_critical\` = '${req.body.ph_high_critical}', \`ph_target\` = '${req.body.ph_target}'`,
+        (err, res) => {
+            if (err) {
+                result(err, null);
+            } else {
+                result(null, res);
+            }
+        });
+}
+
+TakeData.addNh3Settings = (req, result) =>{
+    sqlAquaponics.query(`INSERT INTO \`settings\` ( \`users_id\`, \`setting_name\`, \`temp_low_critical\`, 
+    \`temp_low_warn\`, \`temp_high_warn\`, \`temp_high_critical\`, \`ph_low_critical\`, \`ph_low_warn\`, 
+    \`ph_high_warn\`, \`ph_high_critical\`, \`nh3_warn\`, \`nh3_critical\`, \`temp_target\`, \`ph_target\`, 
+    \`nh3_target\`) VALUES
+       ('${req.body.users_id}', '${req.body.setting_name}', '${req.body.temp_low_critical}',
+        '${req.body.temp_low_warn}', '${req.body.temp_high_warn}', '${req.body.temp_high_critical}',
+         '${req.body.ph_low_critical}', '${req.body.ph_low_warn}', '${req.body.ph_high_warn}',
+          '${req.body.ph_high_critical}', '${req.body.nh3_warn}', '${req.body.nh3_critical}',
+           '${req.body.temp_target}', '${req.body.ph_target}', '${req.body.nh3_target}') 
+           ON DUPLICATE KEY UPDATE \`nh3_warn\` = '${req.body.nh3_warn}', \`nh3_critical\` = '${req.body.nh3_critical}', 
+           \`nh3_target\` = '${req.body.nh3_target}'`,
+        (err, res) => {
+            if (err) {
+                result(err, null);
+            } else {
+                result(null, res);
+            }
+        });
+}
+
 module.exports = TakeData;

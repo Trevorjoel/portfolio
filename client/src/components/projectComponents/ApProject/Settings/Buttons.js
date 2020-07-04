@@ -9,7 +9,7 @@ const Buttons = (props) =>{
         <div>
         <Button className={classes.ButtonReset} variant="secondary" style={{margin: "10px 2%"}}
             onClick={() =>{props.reset()}}>Reset</Button>
-    <Button type="submit" className={classes.ButtonEnter} style={{margin: "10px 2%"}}>Enter</Button>
+    <Button type="submit" className={classes.ButtonEnter} style={{margin: "10px 2%"}} onClick={() =>{props.save()}}>Enter</Button>
         </div>
 )
 }
