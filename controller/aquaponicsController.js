@@ -75,4 +75,52 @@ exports.select_readings_range = (req, res) => {
     })
 }
 
+exports.add_settings = async (req, res) => {
+    console.log('add settings runs');
+
+    TakeData.addSettings(req, (err, data) =>{
+        if (err)
+            res.send(err)
+        else
+            res.send({body: data})
+    })
+
+};
+
+exports.add_temp_settings = async (req, res) => {
+    console.log('add temp settings runs');
+
+    TakeData.addTempSettings(req, (err, data) =>{
+        if (err)
+            res.send(err)
+        else
+            res.send({body: data})
+    })
+
+};
+
+exports.add_ph_settings = async (req, res) => {
+    console.log('add ph settings runs');
+
+    TakeData.addPhSettings(req, (err, data) =>{
+        if (err)
+            res.send(err)
+        else
+            res.send({body: data})
+    })
+
+};
+
+exports.add_nh3_settings = async (req, res) => {
+    console.log('add nh3 settings runs');
+
+    TakeData.addNh3Settings(req, (err, data) =>{
+        if (err)
+            res.send(err)
+        else
+            res.send({body: data})
+    })
+
+};
+
 

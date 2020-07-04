@@ -66,7 +66,7 @@ class SettingsTemp extends Component {
 
                         mode={2}
                         step={.5}
-                        domain={[this.props.values[0] - 5, this.props.values[3] + 5]}  // this.props.values[0] - 5 ,this.props.values[3] + 5] this causes a crash sometimes due to the API call
+                        domain={[this.props.mindomain - 5, this.props.maxdomain + 5]}  // this.props.values[0] - 5 ,this.props.values[3] + 5] this causes a crash sometimes due to the API call
                         rootStyle={sliderStyle}
                         //onUpdate={this.props.onUpdate}
                         onChange={this.props.onChange}
@@ -123,7 +123,7 @@ class SettingsTemp extends Component {
 
                 </div>
                 <Col lg={12} style={{textAlign:"right"}}>
-                    {this.props.renderButtons ? <Buttons reset={this.props.reset}/>: null }
+                    {this.props.renderButtons ? <Buttons reset={this.props.reset} save={this.props.save}/>: null }
 
 
                 </Col>

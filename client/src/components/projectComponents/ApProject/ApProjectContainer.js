@@ -11,6 +11,7 @@ import {
     selectFishType,
     selectReadings,
     tempController,
+    addSettingsToDB,
 } from './ApFunctions/apFunctions';
 import DateRange from "./DateRanges/DateRange";
 import {NotificationContainer} from 'react-notifications';
@@ -112,6 +113,10 @@ class ApProjectContainer extends Component {
         this.resetTempSettings = this.resetTempSettings.bind(this);
         this.resetPhSettings = this.resetPhSettings.bind(this);
         this.resetNh3Settings = this.resetNh3Settings.bind(this);
+        this.saveTempSettings = this.saveTempSettings.bind(this);
+        this.savePhSettings = this.savePhSettings.bind(this);
+        this.saveNh3Settings = this.saveNh3Settings.bind(this);
+        this.addSettingsToDB = addSettingsToDB.bind(this);
         //this.handleScroll = this.handleScroll.bind(this);
         this.topTriggerEl = React.createRef();
         this.containerEl = React.createRef();
@@ -173,6 +178,54 @@ console.log("Handle Observations Runs")
             nh3SettingsUpdate: [this.state.fishParams.nh3_warn,
                 this.state.fishParams.nh3_critical].slice(),
         })
+    }
+
+    saveTempSettings = () => {
+        if (JSON.stringify(this.state.tempSettingsUpdate) !== JSON.stringify(this.state.tempSettingsValue))
+        {
+            this.addSettingsToDB('addtempsettings', this.state.tempSettingsUpdate[0], this.state.tempSettingsUpdate[1],
+                this.state.tempSettingsUpdate[2], this.state.tempSettingsUpdate[3], this.state.phSettingsValue[0],
+                this.state.phSettingsValue[1], this.state.phSettingsValue[2], this.state.phSettingsValue[3],
+                this.state.nh3SettingsValue[0], this.state.nh3SettingsValue[1], this.state.tempValue[0],
+                this.state.phValue[0], this.state.nh3Value[0]);
+
+            this.setState({
+                tempSettingsValue: this.state.tempSettingsUpdate.slice(),
+            })
+            console.log('save temperature settings')
+        }
+    }
+
+    savePhSettings = () => {
+        if (JSON.stringify(this.state.phSettingsUpdate) !== JSON.stringify(this.state.phSettingsValue))
+        {
+            this.addSettingsToDB('addphpsettings', this.state.tempSettingsValue[0], this.state.tempSettingsValue[1],
+                this.state.tempSettingsValue[2], this.state.tempSettingsValue[3], this.state.phSettingsUpdate[0],
+                this.state.phSettingsUpdate[1], this.state.phSettingsUpdate[2], this.state.phSettingsUpdate[3],
+                this.state.nh3SettingsValue[0], this.state.nh3SettingsValue[1], this.state.tempValue[0],
+                this.state.phValue[0], this.state.nh3Value[0]);
+
+            this.setState({
+                phSettingsValue: this.state.phSettingsUpdate.slice(),
+            })
+            console.log('save Ph settings')
+        }
+    }
+
+    saveNh3Settings = () => {
+        if (JSON.stringify(this.state.nh3SettingsUpdate) !== JSON.stringify(this.state.nh3SettingsValue))
+        {
+            this.addSettingsToDB('addnh3psettings', this.state.tempSettingsValue[0], this.state.tempSettingsValue[1],
+                this.state.tempSettingsValue[2], this.state.tempSettingsValue[3], this.state.phSettingsValue[0],
+                this.state.phSettingsValue[1], this.state.phSettingsValue[2], this.state.phSettingsValue[3],
+                this.state.nh3SettingsUpdate[0], this.state.nh3SettingsUpdate[1], this.state.tempValue[0],
+                this.state.phValue[0], this.state.nh3Value[0]);
+
+            this.setState({
+                nh3SettingsValue: this.state.nh3SettingsUpdate.slice(),
+            })
+            console.log('save Nh3 settings')
+        }
     }
 
 
@@ -575,23 +628,25 @@ if (this.topTriggerEl.current !== null ) { // Check that Aquaponics page has ren
                                         //onUpdate={this.onTempSettingsUpdate}
                                         vertical={true}
                                         onChange={this.onTempSettingsChange}
-                                        values={this.state.tempSettingsValue}
+                                        mindomain={this.state.fishParams.temp_low_critical}
+                                        maxdomain={this.state.fishParams.temp_high_critical}
                                         updates={this.state.tempSettingsUpdate}
                                         reset={this.resetTempSettings}
+                                        save={this.saveTempSettings}
                                         renderButtons={true}
                                     />
                                     <SettingsPh
                                         onChange={this.onPhSettingsChange}
-                                        values={this.state.phSettingsValue}
                                         updates={this.state.phSettingsUpdate}
                                         reset={this.resetPhSettings}
+                                        save={this.savePhSettings}
                                         renderButtons={true}
                                     />
                                     <SettingsNh3
                                         onChange={this.onNh3SettingsChange}
-                                        values={this.state.nh3SettingsValue}
                                         updates={this.state.nh3SettingsUpdate}
                                         reset={this.resetNh3Settings}
+                                        save={this.saveNh3Settings}
                                         renderButtons={true}
                                     />
 
@@ -609,23 +664,25 @@ if (this.topTriggerEl.current !== null ) { // Check that Aquaponics page has ren
                                     //onUpdate={this.onTempSettingsUpdate}
                                     vertical={true}
                                     onChange={this.onTempSettingsChange}
-                                    values={this.state.tempSettingsValue}
+                                    mindomain={this.state.fishParams.temp_low_critical}
+                                    maxdomain={this.state.fishParams.temp_high_critical}
                                     updates={this.state.tempSettingsUpdate}
                                     reset={this.resetTempSettings}
+                                    save={this.saveTempSettings}
                                     renderButtons={false}
                                 />
                                 <SettingsPh
                                     onChange={this.onPhSettingsChange}
-                                    values={this.state.phSettingsValue}
                                     updates={this.state.phSettingsUpdate}
                                     reset={this.resetPhSettings}
+                                    save={this.savePhSettings}
                                     renderButtons={false}
                                 />
                                 <SettingsNh3
                                     onChange={this.onNh3SettingsChange}
-                                    values={this.state.nh3SettingsValue}
                                     updates={this.state.nh3SettingsUpdate}
                                     reset={this.resetNh3Settings}
+                                    save={this.saveNh3Settings}
                                     renderButtons={false}
                                 />
 

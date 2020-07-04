@@ -121,3 +121,4 @@ export const nh3NotifyCritical = 'You have critically high Ammonia levels. TAKE 
 
 export const readingTitle = 'Success';
 export const readingText = 'Reading Entered to database';
+export const settingsText = 'Settings Entered to database';
