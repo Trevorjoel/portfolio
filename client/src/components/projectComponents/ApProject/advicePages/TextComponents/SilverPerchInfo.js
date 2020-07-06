@@ -1,5 +1,5 @@
 import React from 'react';
-import github from "../../../../../images/silver_perchPic.png";
+import github from "../../Assets/silver_perchPic.png";
 
 function SilverPerchInfoInfo() {
     return (<div className="">

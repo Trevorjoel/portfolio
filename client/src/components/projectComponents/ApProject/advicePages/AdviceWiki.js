@@ -98,6 +98,7 @@ class AdviceWiki extends Component {
                     <section id="cycling">
                         <h2>Cycling</h2>
                         <hr/>
+                        <p>Getting your system started</p>
                         <ComingSoon/>
                     </section>
                     <section id="fish">

@@ -34,13 +34,10 @@ import {Tab, Tabs, Form} from "react-bootstrap";
 import SettingsTemp from "./Settings/SettingsTemp";
 import SettingsPh from "./Settings/SettingsPh";
 import SettingsNh3 from "./Settings/SettingsNh3";
-import settings_classes from './Settings/SettingsContainer.module.scss';
 import LoadingContainer from "./Loading/LoadingContainer";
 import ComingSoon from "./Loading/ComingSoon";
-import ReadingsTable from "./ReadingsTable";
 import FishThumb from "./FishThumb/FishThumb";
 import LiveMonitorDescription from "./Descriptions/LiveMonitorDescription";
-import AdviceWiki from "./advicePages/AdviceWiki";
 import Logo from './Assets/logos/logo-03.png'
 
 // Todo: Create id's to navigate the demo app, example: to the caring for trout pages OPEN THE ADVICE PAGES SCROLL TO ELEMENT
@@ -361,8 +358,9 @@ console.log("Handle Observations Runs")
 
 if (this.topTriggerEl.current !== null ) { // Check that Aquaponics page has rendered. Was causing a bug when changing pages meaning the
     // Check that view is between the correct ranges (In the history components)
-
-    if (window.pageYOffset > this.topTriggerEl.current.offsetTop && window.pageYOffset < this.bottomTriggerEl.current.offsetTop) {
+    // eslint-disable-next-line no-restricted-globals
+    let width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
+    if (window.pageYOffset > this.topTriggerEl.current.offsetTop && window.pageYOffset < this.bottomTriggerEl.current.offsetTop && width > 400) {
         console.log('Adding element')
         document.getElementById("sticky-el").classList.add(classes.StickyElement)
         document.getElementById("sticky-cont").classList.add(classes.AddHeight)
@@ -422,9 +420,7 @@ if (this.topTriggerEl.current !== null ) { // Check that Aquaponics page has ren
 
         return (
             <div>
-
-
-                <Container className=" sensors-container">
+                <Container className={classes.SensorsContainer}>
 
                     {this.state.activeDescription &&
                     <div>
@@ -455,17 +451,20 @@ if (this.topTriggerEl.current !== null ) { // Check that Aquaponics page has ren
                     </Button>
                     <div className={classes.ProjectContainer}>
 
-
                         <h1 className={classes.Title}><strong>Aquaponics System Monitor</strong></h1>
+                        <img style={{width:"200px", marginBottom:"40px"}} src={Logo}/>
+                        <p className={classes.SectionText}>Simplify back yard aquaponics
+                            and collect data to help achieve the best possible results. </p>
+<hr className="divider"/>
+
 
                         <Row>
-
                             <Col lg={12}>
-                                <img style={{width:"60px"}} src={Logo}/>
+
 
                                 <br/>
                                 <h2 className={classes.SecondaryTitle}><strong>Live Monitor </strong><LiveMonitorDescription /></h2>
-
+                                <p className={classes.SectionText}>Information about your system such as, fish stocked, recommended water quality parameters and water tank/grow bed capacity.</p>
                                 <div className={classes.StatusWrapper}>
 
                                     <FishProfile
@@ -479,6 +478,10 @@ if (this.topTriggerEl.current !== null ) { // Check that Aquaponics page has ren
                                      title="Live readings from your system & information to help">
                                     <div className={classes.AccordionContainer}>
                                         <h4><strong>Current Status</strong></h4>
+
+                                        <p className={classes.SectionText}>The parameters shown are updated live or in very short
+                                            frequencies to give an instant picture of the water quality and alert the user if there are problems.</p>
+
                                     {this.tempController(this.state.tempUpdate[0])}
                                     {this.phController(this.state.phUpdate[0])}
                                     {this.nh3Controller(this.state.nh3Update[0])}
@@ -552,6 +555,7 @@ if (this.topTriggerEl.current !== null ) { // Check that Aquaponics page has ren
                         <hr className="divider"/>
                         <div >
                             <h2 className="reading-box ">View historical data</h2>
+                            <p className={classes.SectionText}>At intervals of 1 hour the current water quality readings are entered into the database and represented in graphs for tracking and retrospective troubleshooting. </p>
                           <br/>
                                 <div ref={this.topTriggerEl} className="check" id="sticky-trigger"></div>
                             <div id="sticky-cont" ref={this.containerEl} className={classes.StickyContainer}>
@@ -564,7 +568,7 @@ if (this.topTriggerEl.current !== null ) { // Check that Aquaponics page has ren
                                         onChange={this.onFishChange}
                                     />
                                 </div>
-
+<div className={classes.StatusWrapper}>
                                 <Tabs className={classes.TabContainer}  defaultActiveKey="temp" id="uncontrolled-tab-example">
                                     <Tab eventKey="temp" title="Temperature"
                                          style={{background: "white", color: "black", borderRadius: "0px 0px 20px 20px"}}>
@@ -610,6 +614,7 @@ if (this.topTriggerEl.current !== null ) { // Check that Aquaponics page has ren
                                         <ComingSoon/>
                                     </Tab>
                                 </Tabs>
+</div>
                                 <Row/>
 
                             </div>
@@ -618,7 +623,10 @@ if (this.topTriggerEl.current !== null ) { // Check that Aquaponics page has ren
                         <hr  className="divider"/>
 
                         <h2 className="reading-box">Settings</h2>
+                        <p className={classes.SectionText}>If you are not satisfied with the preset alert triggers for the selected fish or want
+                            entirely new customizations, add your own using the sliders in this section.</p>
                         <br/>
+                        <div className={classes.StatusWrapper}>
                         <Tabs className={classes.TabContainer} Key="customise-current" id="custom-tab">
 
                             <Tab eventKey="customise-current" title="Current Fish"
@@ -662,8 +670,7 @@ if (this.topTriggerEl.current !== null ) { // Check that Aquaponics page has ren
 
 
                                 <br/>  <form  >
-                                <label htmlFor="fname">Setting Name:</label><br/>
-                                <input required type="text" id="fname" name="fname" /><br/>
+
                                 <SettingsTemp
                                     //onUpdate={this.onTempSettingsUpdate}
                                     vertical={true}
@@ -690,7 +697,8 @@ if (this.topTriggerEl.current !== null ) { // Check that Aquaponics page has ren
                                     renderButtons={false}
                                 />
 
-
+                                <label htmlFor="fname">Give it a name</label><br/>
+                                <input required type="text" id="fname" name="fname" /><br/>
                                 <Button className={classes.ButtonEnter} style={{margin: "10px 2%"}} onClick={()=>{
                                     console.log("Clicked That shit")
                                 }} type="submit">Enter All</Button>
@@ -704,12 +712,15 @@ if (this.topTriggerEl.current !== null ) { // Check that Aquaponics page has ren
                             </Tab>
 
                         </Tabs>
-
+                        </div>
                         <br/>
 
                         <hr className="divider"/>
                         <h2 className="reading-box">System Advice</h2>
+                        <p className={classes.SectionText}>This area provides advice and troubleshooting on your system</p>
+                        <div className={classes.StatusWrapper}>
                         <AdviceContainer />
+                        </div>
                         <hr className="divider"/>
                         <div className="project-icons">
                             <a target="_blank"

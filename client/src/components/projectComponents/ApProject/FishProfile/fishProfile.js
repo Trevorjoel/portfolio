@@ -1,6 +1,6 @@
-import trout from "../../../../images/troutPic.png";
-import silverPerch from '../../../../images/silver_perchPic.png';
-import barramundi from '../../../../images/barraPic.png';
+import trout from "../Assets/troutPic.png";
+import silverPerch from '../Assets/silver_perchPic.png';
+import barramundi from '../Assets/barraPic.png';
 import classes from './FishProfile.module.scss';
 import React, { useState } from 'react';
 import {Dropdown, DropdownToggle, DropdownMenu, DropdownItem, NavItem, NavLink, Nav, Col} from 'reactstrap';

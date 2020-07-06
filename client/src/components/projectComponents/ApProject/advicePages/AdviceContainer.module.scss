@@ -28,7 +28,7 @@
 .Content{
     margin-left: auto;
     transition:  max-height .5s ease;
-    overflow: auto;
+    overflow: scroll;
 
 }
 .SubContent{
@@ -62,5 +62,9 @@
 .Button:hover,  .active{
     font-weight: bold;
     background: #ccc;
+
+}
+
+@media (max-width: 575px)  {
 
 }

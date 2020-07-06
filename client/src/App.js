@@ -23,8 +23,9 @@ class App extends Component {
                     <NavBar/>
 
                     <Switch>
-                        <Route path="/" component={Home}  exact />
                         <Route path="/sensors" component={Sensors}  />
+                        <Route path="/" component={Home}  exact />
+
                         <Route component={Page404}  />
 
                     </Switch>
