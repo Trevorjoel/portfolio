@@ -69,11 +69,15 @@ router.route('/api/range')
     .post(Aquaponics.select_readings_range);
 
 router.route('/api/addsettings')
-    .post(Aquaponics.add_settings);
+    .post([check('setting_name', 'failed')
+            .not().isEmpty()
+            .trim()
+            .escape(),
+        ],
+        Aquaponics.add_settings);
 
 router.route('/api/addtempsettings')
     .post([check('setting_name', 'failed')
-            .isAlpha()
             .not().isEmpty()
             .trim()
             .escape(),
@@ -82,7 +86,6 @@ router.route('/api/addtempsettings')
 
 router.route('/api/addphpsettings')
     .post([check('setting_name', 'failed')
-            .isAlpha()
             .not().isEmpty()
             .trim()
             .escape(),
@@ -91,12 +94,14 @@ router.route('/api/addphpsettings')
 
 router.route('/api/addnh3psettings')
     .post([check('setting_name', 'failed')
-            .isAlpha()
             .not().isEmpty()
             .trim()
             .escape(),
         ],
         Aquaponics.add_nh3_settings);
+
+router.route('/api/user')
+    .post(Aquaponics.select_user_default_parameters);
 
 export default router;
 
