@@ -34,15 +34,17 @@ import {Tab, Tabs, Form} from "react-bootstrap";
 import SettingsTemp from "./Settings/SettingsTemp";
 import SettingsPh from "./Settings/SettingsPh";
 import SettingsNh3 from "./Settings/SettingsNh3";
+import settings_classes from './Settings/SettingsContainer.module.scss';
 import LoadingContainer from "./Loading/LoadingContainer";
 import ComingSoon from "./Loading/ComingSoon";
+import ReadingsTable from "./ReadingsTable";
 import FishThumb from "./FishThumb/FishThumb";
 import LiveMonitorDescription from "./Descriptions/LiveMonitorDescription";
-import Logo from './Assets/logos/logo-03.png'
+import AdviceWiki from "./advicePages/AdviceWiki";
+import {AvField, AvForm} from 'availity-reactstrap-validation';
 
-// Todo: Create id's to navigate the demo app, example: to the caring for trout pages OPEN THE ADVICE PAGES SCROLL TO ELEMENT
-//todo: refactor the css to scss make sticky scroll responsive
-//todo: make changeable bar/line graphs
+// Todo: Create id's to navigate the demo app, example: to the caring for trout pages
+//todo: Conditionally render buttons in the settings area
 
 class ApProjectContainer extends Component {
 
@@ -96,6 +98,21 @@ class ApProjectContainer extends Component {
             fish: [],
             startPeriod: '',
             endPeriod: '',
+            userId: 1,
+            userParams: null,
+            userTempValue: [],
+            userPhValue: [],
+            userNh3Value: [],
+            userTempUpdate: [],
+            userPhUpdate: [],
+            userNh3Update: [],
+            userTempSettingsUpdate: [],
+            userTempSettingsValue: [],
+            userPhSettingsUpdate: [],
+            userPhSettingsValue: [],
+            userNh3SettingsUpdate: [],
+            userNh3SettingsValue: [],
+            settingName: '',
         };
         // Bind the imported functions
         this.tempController = tempController.bind(this);
@@ -116,6 +133,12 @@ class ApProjectContainer extends Component {
         this.savePhSettings = this.savePhSettings.bind(this);
         this.saveNh3Settings = this.saveNh3Settings.bind(this);
         this.addSettingsToDB = addSettingsToDB.bind(this);
+        this.selectUserDefaultParameters = selectUserDefaultParameters.bind(this);
+        this.resetUserSettings = this.resetUserSettings.bind(this);
+        this.saveUserSettings = this.saveUserSettings.bind(this);
+        this.handleSettingNameChange = this.handleSettingNameChange.bind(this);
+        this.handleValidSubmit = this.handleValidSubmit.bind(this);
+        this.handleInvalidSubmit = this.handleInvalidSubmit.bind(this);
         //this.handleScroll = this.handleScroll.bind(this);
         this.topTriggerEl = React.createRef();
         this.containerEl = React.createRef();
@@ -179,6 +202,21 @@ console.log("Handle Observations Runs")
         })
     }
 
+    resetUserSettings = () => {
+        this.setState({
+            userTempSettingsUpdate: [this.state.userParams.temp_low_critical,
+                this.state.userParams.temp_low_warn,
+                this.state.userParams.temp_high_warn,
+                this.state.userParams.temp_high_critical].slice(),
+            userPhSettingsUpdate: [this.state.userParams.ph_low_critical,
+                this.state.userParams.ph_low_warn,
+                this.state.userParams.ph_high_warn,
+                this.state.userParams.ph_high_critical].slice(),
+            userNh3SettingsUpdate: [this.state.userParams.nh3_warn,
+                this.state.userParams.nh3_critical].slice(),
+        })
+    }
+
     saveTempSettings = () => {
         if (JSON.stringify(this.state.tempSettingsUpdate) !== JSON.stringify(this.state.tempSettingsValue))
         {
@@ -198,7 +236,7 @@ console.log("Handle Observations Runs")
     savePhSettings = () => {
         if (JSON.stringify(this.state.phSettingsUpdate) !== JSON.stringify(this.state.phSettingsValue))
         {
-            this.addSettingsToDB('addphpsettings', this.state.tempSettingsValue[0], this.state.tempSettingsValue[1],
+            this.addSettingsToDB('addphpsettings', this.state.fishParams.fish_name+'_custom', this.state.tempSettingsValue[0], this.state.tempSettingsValue[1],
                 this.state.tempSettingsValue[2], this.state.tempSettingsValue[3], this.state.phSettingsUpdate[0],
                 this.state.phSettingsUpdate[1], this.state.phSettingsUpdate[2], this.state.phSettingsUpdate[3],
                 this.state.nh3SettingsValue[0], this.state.nh3SettingsValue[1], this.state.tempValue[0],
@@ -214,7 +252,7 @@ console.log("Handle Observations Runs")
     saveNh3Settings = () => {
         if (JSON.stringify(this.state.nh3SettingsUpdate) !== JSON.stringify(this.state.nh3SettingsValue))
         {
-            this.addSettingsToDB('addnh3psettings', this.state.tempSettingsValue[0], this.state.tempSettingsValue[1],
+            this.addSettingsToDB('addnh3psettings', this.state.fishParams.fish_name+'_custom', this.state.tempSettingsValue[0], this.state.tempSettingsValue[1],
                 this.state.tempSettingsValue[2], this.state.tempSettingsValue[3], this.state.phSettingsValue[0],
                 this.state.phSettingsValue[1], this.state.phSettingsValue[2], this.state.phSettingsValue[3],
                 this.state.nh3SettingsUpdate[0], this.state.nh3SettingsUpdate[1], this.state.tempValue[0],
@@ -227,6 +265,25 @@ console.log("Handle Observations Runs")
         }
     }
 
+    saveUserSettings = () => {
+        if (this.state.settingName !== '' && this.state.settingName !== 'default_settings')
+        {
+            this.addSettingsToDB('addsettings', this.state.settingName, this.state.userTempSettingsUpdate[0], this.state.userTempSettingsUpdate[1],
+                this.state.userTempSettingsUpdate[2], this.state.userTempSettingsUpdate[3], this.state.userPhSettingsUpdate[0],
+                this.state.userPhSettingsUpdate[1], this.state.userPhSettingsUpdate[2], this.state.userPhSettingsUpdate[3],
+                this.state.userNh3SettingsUpdate[0], this.state.userNh3SettingsUpdate[1], this.state.userTempValue[0],
+                this.state.userPhValue[0], this.state.userNh3Value[0]);
+
+                this.setState({
+                    userTempSettingsValue: this.state.userTempSettingsUpdate.slice(),
+                    userPhSettingsValue: this.state.userPhSettingsUpdate.slice(),
+                    userNh3SettingsValue: this.state.userNh3SettingsUpdate.slice(),
+                })
+
+                this.form && this.form.reset();
+                console.log('save custom settings');
+        }
+    }
 
     toggleTempHandler() {
         this.setState({
@@ -300,6 +357,44 @@ console.log("Handle Observations Runs")
             )
     }
 
+    mapUserDefaultSetState = (requestFunction, userId) => {
+        requestFunction(userId)
+            .then(query => {
+                    const returnedUserParams = query;
+                    this.setState({
+                        userParams: returnedUserParams,
+                        // Set state here
+                        userTempSettingsValue: [returnedUserParams.temp_low_critical,
+                            returnedUserParams.temp_low_warn,
+                            returnedUserParams.temp_high_warn,
+                            returnedUserParams.temp_high_critical].slice(),
+                        userTempSettingsUpdate: [returnedUserParams.temp_low_critical,
+                            returnedUserParams.temp_low_warn,
+                            returnedUserParams.temp_high_warn,
+                            returnedUserParams.temp_high_critical].slice(),
+                        userPhSettingsValue: [returnedUserParams.ph_low_critical,
+                            returnedUserParams.ph_low_warn,
+                            returnedUserParams.ph_high_warn,
+                            returnedUserParams.ph_high_critical].slice(),
+                        userPhSettingsUpdate: [returnedUserParams.ph_low_critical,
+                            returnedUserParams.ph_low_warn,
+                            returnedUserParams.ph_high_warn,
+                            returnedUserParams.ph_high_critical].slice(),
+                        userNh3SettingsValue: [returnedUserParams.nh3_warn,
+                            returnedUserParams.nh3_critical].slice(),
+                        userNh3SettingsUpdate: [returnedUserParams.nh3_warn,
+                            returnedUserParams.nh3_critical].slice(),
+                        userTempValue: [returnedUserParams.temp_target].slice(),
+                        userTempUpdate: [returnedUserParams.temp_target].slice(),
+                        userPhValue: [returnedUserParams.ph_target].slice(),
+                        userPhUpdate: [returnedUserParams.ph_target].slice(),
+                        userNh3Value: [returnedUserParams.nh3_target].slice(),
+                        userNh3Update: [returnedUserParams.nh3_target].slice(),
+                    })
+                }
+            )
+    }
+
     mapFish = (requestFunction) => {
         requestFunction()
             .then(query => {
@@ -321,6 +416,23 @@ console.log("Handle Observations Runs")
             activeDescription: !this.state.activeDescription,
 
         })
+    }
+
+    handleSettingNameChange(event) {
+        this.setState({
+            settingName: event.target.value,
+        })
+    }
+
+    handleValidSubmit(event, values) {
+        this.setState({settingName: values.fname});
+        this.saveUserSettings();
+        console.log('valid');
+    }
+
+    handleInvalidSubmit(event, errors, values) {
+       this.setState({settingName: ''});
+        console.log('invalid');
     }
 
     mapReadingsRangeSetState = (requestFunction, from, to) => {
@@ -346,6 +458,7 @@ console.log("Handle Observations Runs")
     componentDidMount() {
 
         this.getPreviousTime();
+        this.mapUserDefaultSetState(selectUserDefaultParameters, this.state.userId);
         this.mapFishSetState(selectFishType, this.state.fishId);
         this.mapFish(getFish);
        window.addEventListener('scroll', this.handleScroll);
@@ -402,6 +515,18 @@ if (this.topTriggerEl.current !== null ) { // Check that Aquaponics page has ren
 
     onNh3SettingsChange = nh3SettingsUpdate => {
         this.setState({nh3SettingsUpdate})
+    };
+
+    onUserTempSettingsChange = userTempSettingsUpdate => {
+        this.setState({userTempSettingsUpdate})
+    };
+
+    onUserPhSettingsChange = userPhSettingsUpdate => {
+        this.setState({userPhSettingsUpdate})
+    };
+
+    onUserNh3SettingsChange = userNh3SettingsUpdate => {
+        this.setState({userNh3SettingsUpdate})
     };
 
 
@@ -668,43 +793,57 @@ if (this.topTriggerEl.current !== null ) { // Check that Aquaponics page has ren
                                 <br/>
                                 <h5>Create new customisation</h5>
 
-
-                                <br/>  <form  >
-
+                                <br/>
+                                <AvForm
+                                    onValidSubmit={this.handleValidSubmit}
+                                    onInvalidSubmit={this.handleInvalidSubmit}
+                                    ref={c => (this.form = c)}
+                                >
+                                <label htmlFor="fname">Setting Name:</label><br/>
+                                <AvField type="text" id="fname" name="fname"
+                                    onChange={this.handleSettingNameChange}
+                                    value={this.state.settingName}
+                                    validate={{
+                                        required: {value: true, errorMessage: 'Please enter a setting name'},
+                                        pattern: {
+                                            value: '/^[a-zA-Z0-9_]+$/',
+                                            errorMessage: 'Your setting must be composed only with letters or numbers or _'
+                                        },
+                                        minLength: {
+                                            value: 5,
+                                            errorMessage: 'Your setting name must be between 5 and 30 characters'
+                                        },
+                                        maxLength: {
+                                            value: 30,
+                                            errorMessage: 'Your setting name must be between 5 and 30 characters'
+                                        }
+                                    }}
+                                /><br/>
                                 <SettingsTemp
                                     //onUpdate={this.onTempSettingsUpdate}
                                     vertical={true}
-                                    onChange={this.onTempSettingsChange}
-                                    mindomain={this.state.fishParams.temp_low_critical}
-                                    maxdomain={this.state.fishParams.temp_high_critical}
-                                    updates={this.state.tempSettingsUpdate}
-                                    reset={this.resetTempSettings}
-                                    save={this.saveTempSettings}
+                                    onChange={this.onUserTempSettingsChange}
+                                    mindomain={this.state.userParams.temp_low_critical}
+                                    maxdomain={this.state.userParams.temp_high_critical}
+                                    updates={this.state.userTempSettingsUpdate}
                                     renderButtons={false}
                                 />
                                 <SettingsPh
-                                    onChange={this.onPhSettingsChange}
-                                    updates={this.state.phSettingsUpdate}
-                                    reset={this.resetPhSettings}
-                                    save={this.savePhSettings}
+                                    onChange={this.onUserPhSettingsChange}
+                                    updates={this.state.userPhSettingsUpdate}
                                     renderButtons={false}
                                 />
                                 <SettingsNh3
-                                    onChange={this.onNh3SettingsChange}
-                                    updates={this.state.nh3SettingsUpdate}
-                                    reset={this.resetNh3Settings}
-                                    save={this.saveNh3Settings}
+                                    onChange={this.onUserNh3SettingsChange}
+                                    updates={this.state.userNh3SettingsUpdate}
                                     renderButtons={false}
                                 />
 
-                                <label htmlFor="fname">Give it a name</label><br/>
-                                <input required type="text" id="fname" name="fname" /><br/>
-                                <Button className={classes.ButtonEnter} style={{margin: "10px 2%"}} onClick={()=>{
-                                    console.log("Clicked That shit")
-                                }} type="submit">Enter All</Button>
-                                </form>
+
+                                <Button className={classes.ButtonEnter} style={{margin: "10px 2%"}} type="submit">Enter All</Button>
+                                </AvForm>
                                 <Button  className={classes.ButtonReset} style={{margin: "10px 2%"}} onClick={()=>{
-                                    console.log("Clicked That shit")
+                                    this.resetUserSettings();
                                 }} type="submit">Reset All</Button>
 
 

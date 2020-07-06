@@ -570,7 +570,7 @@ export const getReadingsRange = async function (from, to) {
     return query;
 }
 
-export const addSettingsToDB = async function (type_settings, temp_low_critical, temp_low_warn, temp_high_warn, temp_high_critical,
+export const addSettingsToDB = async function (type_settings, setting_name, temp_low_critical, temp_low_warn, temp_high_warn, temp_high_critical,
                                                ph_low_critical, ph_low_warn, ph_high_warn, ph_high_critical, nh3_warn,
                                                nh3_critical, temp_target, ph_target, nh3_target)
 {
@@ -584,7 +584,7 @@ export const addSettingsToDB = async function (type_settings, temp_low_critical,
         },
         body: JSON.stringify({
             users_id: 1,
-            setting_name: this.state.fishParams.fish_name+'_custom',
+            setting_name: setting_name,
             temp_low_critical: temp_low_critical,
             temp_low_warn: temp_low_warn,
             temp_high_warn: temp_high_warn,
@@ -611,4 +611,26 @@ export const addSettingsToDB = async function (type_settings, temp_low_critical,
         })
 
 };
+
+export const selectUserDefaultParameters = async function (userId) {
+    console.log('get user params');
+
+    const response = await fetch('/api/user', {
+        method: 'POST',
+        headers:
+            {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+        body: JSON.stringify({
+            userId: userId,
+        })
+
+    });
+
+    const query = await response.json();
+
+    if (response.status !== 200) throw Error(query.message);
+    return query.data;
+}
 
