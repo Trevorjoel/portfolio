@@ -114,15 +114,27 @@
 .TabBody{
     border-radius:  200px 200px 200px 200px;
 }
-@media (max-width: 575px)  {
-.StickyElement{
-    max-width: 100%;
-    width: 93%;
-    margin-left: 0px;
-}
+
+@media (max-width: 991px)  {
 
     .AddHeight{
-        padding-top: 149px;
+        padding-top: 57px;
+    }
+    .StickyElement{
+
+        width: 97%;
+
+    }
+}
+@media (max-width: 575px)  {
+    .StickyElement{
+        max-width: 100%;
+        width: 93%;
+        margin-left: 0px;
+    }
+
+    .AddHeight{
+        padding-top: 97px;
     }
 
 }

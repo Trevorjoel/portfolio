@@ -1,11 +1,8 @@
 
-import classes from '../FishProfile/FishProfile.module.scss';
+import classes from './DateRange.module.scss';
 import React, { useState } from 'react';
 import {Dropdown, DropdownToggle, DropdownMenu, DropdownItem, NavItem, NavLink, Nav} from 'reactstrap';
-import {Link} from "react-scroll";
-import {NavLink as RRNavLink} from "react-router-dom";
-import LoadingContainer from "../Loading/LoadingContainer";
-// Test
+
 const DropdownFish = (props) =>{
 
     const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -15,7 +12,7 @@ const DropdownFish = (props) =>{
     return (
                     <Dropdown  title="Change fish" isOpen={dropdownOpen} toggle={toggle}>
 
-                        <DropdownToggle  style={{textTransform:"capitalize", margin: "0" }} className={classes.Background} caret>
+                        <DropdownToggle  style={{textTransform:"capitalize", margin: "0" }} className={classes.Button} caret>
                             {props.fishParams.fish_name}
                         </DropdownToggle>
 

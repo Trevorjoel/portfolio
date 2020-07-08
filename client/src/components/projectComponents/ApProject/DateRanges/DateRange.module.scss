@@ -21,7 +21,7 @@
 
 }
 .Fields{
-    width: 80%;
+    width: 50%;
     margin:0px 10px 0 10px;
 }
 .Title{
@@ -44,29 +44,8 @@
 }
 
 @media (max-width: 575px)  {
-    .Button{
-        margin:6px
-    }
-    .Wrap{
-        max-width: 109%;
-        width:109%;
-        margin-left: -20px;
-    }
     .Fields{
-        width:60%;
-        margin:5px 5px 5px 5px;
-    }
-}
-
-@media (max-width: 992px)  {
-    .Button{
-        margin:6px
-    }
-
-    .Fields{
-        .Fields{
-            width: 60%;
-            margin:10px 10px 10px;
-        }
+        width: 50%;
+        margin:10px 10px 0 10px;
     }
 }

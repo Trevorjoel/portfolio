@@ -12,6 +12,8 @@ import {
     selectReadings,
     tempController,
     addSettingsToDB,
+    selectUserDefaultParameters,
+
 } from './ApFunctions/apFunctions';
 import DateRange from "./DateRanges/DateRange";
 import {NotificationContainer} from 'react-notifications';
@@ -42,7 +44,7 @@ import FishThumb from "./FishThumb/FishThumb";
 import LiveMonitorDescription from "./Descriptions/LiveMonitorDescription";
 import AdviceWiki from "./advicePages/AdviceWiki";
 import {AvField, AvForm} from 'availity-reactstrap-validation';
-
+import Logo from './Assets/logos/logo-03.png'
 // Todo: Create id's to navigate the demo app, example: to the caring for trout pages
 //todo: Conditionally render buttons in the settings area
 

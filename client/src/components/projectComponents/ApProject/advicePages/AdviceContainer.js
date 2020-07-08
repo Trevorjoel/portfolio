@@ -26,7 +26,7 @@ const AdviceContainer = (props) => {
             <button className={[classes.Button, setActive].join(' ')}
                     onClick={toggleContent}>
                 <strong>    <h3 className={classes.Flex} style={{textAlign: "center", padding:"5px 0px 0px 0px"}} id="">View Advice
-                    <img style={{width:"60px", padding:"0px"}} className={[classes.Icon, `${setRotate}`].join(' ') }  src={Logo}/>  {/*<Chevron className={[classes.Icon, `${setRotate}`].join(' ') } fill={'#777'} height="30px"/> */} </h3> </strong>
+                    <img style={{width:"40px", padding:"0px"}} className={[classes.Icon, `${setRotate}`].join(' ') }  src={Logo}/>  {/*<Chevron className={[classes.Icon, `${setRotate}`].join(' ') } fill={'#777'} height="30px"/> */} </h3> </strong>
             </button>
 
             <div ref={content} style={{maxHeight:`${setHeight}`}} className={classes.Content}>
