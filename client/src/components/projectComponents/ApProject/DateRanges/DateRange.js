@@ -23,7 +23,7 @@ class DateRange extends React.Component {
             minDate: new Date(),
             selectedStartDate: null,
             selectedEndDate: null,
-            dropDownLabel: 'Recent Readings',
+            dropDownLabel: 'Recent',
         };
     }
 
@@ -88,26 +88,26 @@ class DateRange extends React.Component {
         if (period === 'day') {
             fromPeriod = moment(this.state.maxDate).subtract(1, 'days').format('YYYY-MM-DD 00:00:00');
             toPeriod = moment(this.state.maxDate).subtract(1, 'days').format('YYYY-MM-DD 23:59:59');
-            this.setState({dropDownLabel: 'Previous day'});
+            this.setState({dropDownLabel: ' day'});
         }
         if (period === 'week') {
             fromPeriod = moment(this.state.maxDate).startOf('week').subtract(1, 'week').format('YYYY-MM-DD 00:00:00');
             toPeriod = moment(this.state.maxDate).endOf('week').subtract(1, 'week').format('YYYY-MM-DD 23:59:59');
-            this.setState({dropDownLabel: 'Previous week'});
+            this.setState({dropDownLabel: ' week'});
         }
         if (period === 'month') {
             fromPeriod = moment(this.state.maxDate).startOf('month').subtract(1, 'month').format('YYYY-MM-DD 00:00:00');
             toPeriod = moment(this.state.maxDate).endOf('month').subtract(1, 'month').format('YYYY-MM-DD 23:59:59');
-            this.setState({dropDownLabel: 'Previous month'});
+            this.setState({dropDownLabel: ' month'});
         }
         if (period === 'year') {
             fromPeriod = moment(this.state.maxDate).startOf('year').subtract(1, 'year').format('YYYY-MM-DD 00:00:00');
             toPeriod = moment(this.state.maxDate).endOf('year').subtract(1, 'year').format('YYYY-MM-DD 23:59:59');
-            this.setState({dropDownLabel: 'Previous year'});
+            this.setState({dropDownLabel: ' year'});
         }
         if (period === 'all') {
             fromPeriod = moment(this.state.minDate).format('YYYY-MM-DD 00:00:00');
-            this.setState({dropDownLabel: 'All time'});
+            this.setState({dropDownLabel: 'All'});
         }
 
         this.props.onDaySelect(getReadingsRange, fromPeriod, toPeriod);
@@ -130,10 +130,11 @@ class DateRange extends React.Component {
         return (
             <div id="range-select" className={classes.Wrap}>
                 <Row>
-                    <Col lg={2} md={6} sm={6} xs={6}>
+                    <Col lg={2} md={2} sm={2} xs={6}>
                         <DropdownFish fishParams={this.props.fishParams} allFish={this.props.allFish}
                         onChange={this.props.onChange}/>
-                    </Col><Col lg={2} md={6} sm={6} xs={6}>
+                    </Col>
+                    <Col lg={2} md={2} sm={2} xs={6}>
                     <DropdownDates
                         showDay={() => this.setPeriodOfDates('day')}
                         showWeek={() => this.setPeriodOfDates('week')}
@@ -143,7 +144,7 @@ class DateRange extends React.Component {
                         dropDownLabel={this.state.dropDownLabel}
                     />
                 </Col>
-                    <Col lg={4} md={6} sm={6} xs={12}>
+                    <Col lg={4} md={4} sm={4} xs={6}>
 
                         <DatePicker
                             dateFormat="dd/MM/yyyy"
@@ -159,7 +160,7 @@ class DateRange extends React.Component {
                             withPortal
                         />
                     </Col>
-                    <Col lg={4} md={6} sm={6} xs={12}>
+                    <Col lg={4} md={4} sm={4} xs={6}>
 
                         <DatePicker
                             dateFormat="dd/MM/yyyy"

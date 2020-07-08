@@ -15,14 +15,15 @@ main > nav {
 /* 3. ScrollSpy active styles (see JS tab for activation) */
 .section-nav li.active > a {
     color: #333;
-    font-weight: 500;
+    font-weight: bold;
+    font-size: inherit;
 }
 
 /* Sidebar Navigation */
 .section-nav {
     padding-left: 0;
     border-right: 1px solid #bbbbbd;
-width:80%;
+width:90%;
 }
 
 .section-nav a {
@@ -31,7 +32,7 @@ width:80%;
     padding: .125rem 0;
     color: #ccc;
     transition: all 50ms ease-in-out; /* 💡 This small transition makes setting of the active state smooth */
-
+font-size: medium;
 }
 
 .section-nav a:hover,
@@ -43,16 +44,6 @@ width:80%;
 * {
     box-sizing: border-box;
 }
-
-/*
-html, body {
-    background: #fff;
-}
-
-body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
-}
-*/
 
 ul, ol {
     list-style: none;
@@ -70,7 +61,7 @@ h1 {
 /** page layout **/
 main {
     display: grid;
-    grid-template-columns: 15em 1fr;
+    grid-template-columns: 15em 1fr; /* todo: Breakpoints for small devices*/
     max-width: 100em;
     width: 100%;
     margin: 0 auto;
@@ -81,3 +72,12 @@ section {
     padding-bottom: 6rem;
 }
 
+@media (max-width: 900px) {
+main{
+    grid-template-columns: 10em 1fr; /* todo: Breakpoints for small devices*/
+}
+    .section-nav {
+
+        width:90%;
+    }
+}

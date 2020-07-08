@@ -15,21 +15,29 @@ function SlidersModal() {
 
                 className={classes.Content} show={show} onHide={handleClose}  >
                 <Modal.Header className={classes.Body} closeButton>
-                    <Modal.Title className={classes.Title}>CONFUSION ALERT</Modal.Title>
+                    <Modal.Title className={classes.Title}>ALERT</Modal.Title>
                 </Modal.Header >
                 <Modal.Body  className={classes.Body}><p>The sliders you are about to see are for development and demonstration of the app.
                 <br/>They are a substitute
                 for information coming from water quality probes.</p>
-                    <p>I wrote a little program to get changeable data for programming and show off how the app will work.</p>
-                       <p> They <strong>ARE NOT</strong> in the final project. -The readings come from the probes in the water.<p/>
-                           <p>They <strong>ARE NOT</strong> the same as the "System History" section. -The system will record hourly
-                               readings and the data will be presented in graphs for the user to make sense of.</p>
-                </p><p><strong>So how to use them?</strong></p>
-                    <p>Basically move the values up and down and check the changes in the "Live Monitor" section.
-                        <br/>Take note of the alerts, these would be sent to your telephone.
-                        <br/>Click on the "System Status" bars to get information and advice tailored to what the probes are reading about the water quality.</p>
 
-                <p>As you're moving the sliders imagine the numbers are from the probe detecting changes in the water, such as an increase in water temperature.</p>
+                       <p> They <strong>ARE NOT</strong> in the final project. -The readings come from the probes in the water.<p/>
+                           <p>They <strong>ARE NOT</strong> the same as the "View historical data" section.</p>
+                </p><p><strong>So how to use them?</strong></p>
+                    <p>Move the values in the sliders up and down and check the changes in the "Current Status" section.
+                        <br/>Take note of the alerts, these would be sent to your telephone.<br/><br/>
+
+                        <p><strong>Alerts</strong> come in three categories and are triggered when the probes detect readings in certain ranges related
+                        to the needs of the selected fish or user entered settings:<br/><br/>
+                       <strong> 1) Optimal <br/></strong> This is the range where you are aiming to keep your system parameters.<br/>
+                        At these ranges your fish are most comfortable.<br/>
+                        <strong>   2) Advice <br/> </strong>The alerts for this range indicate your system has shifted out of the optimal
+                        range higher or lower and attention should be given to preventing it moving further to the next alert level.<br/>
+                        <strong>  3) Critical alert <br/> </strong>This alert range indicates a real danger to the balance of the system,
+                        mostly a danger to the fish species stocked in the system.<br/>
+                        <br/>Click on the "Current Status" bars to get information and advice tailored to what the probes are
+                        reading about the water quality.</p>
+                    </p>
                 </Modal.Body>
                 <Modal.Footer className={classes.Body}>
                     <Button variant="secondary" onClick={handleClose}>

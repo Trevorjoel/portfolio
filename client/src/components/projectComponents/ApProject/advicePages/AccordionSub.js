@@ -1,6 +1,6 @@
 import React, {useState, useRef} from "react";
 import Chevron from "./Chevron";
-import classes from './AdviceContainer.module.css';
+import classes from './AdviceContainer.module.scss';
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 

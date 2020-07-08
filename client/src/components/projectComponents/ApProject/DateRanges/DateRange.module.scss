@@ -2,7 +2,7 @@
 .Wrap{
     background: whitesmoke;
     padding:10px;
-    max-width:100%;
+    max-width:992px;
    /* width: max-content; */
     color:black;
     border-radius:15px;
@@ -13,6 +13,7 @@
     top:0;
     width:100%;
     z-index:100;
+    margin: auto;
 
 }
 .Pick{
@@ -20,7 +21,7 @@
 
 }
 .Fields{
-    width: 80%;
+    width: 50%;
     margin:0px 10px 0 10px;
 }
 .Title{
@@ -43,15 +44,8 @@
 }
 
 @media (max-width: 575px)  {
-    .Button{
-        margin:6px
-    }
-    .Wrap{
-        max-width: 109%;
-        width:109%;
-        margin-left: -20px;
-    }
     .Fields{
-        width:73%;
+        width: 50%;
+        margin:10px 10px 0 10px;
     }
 }

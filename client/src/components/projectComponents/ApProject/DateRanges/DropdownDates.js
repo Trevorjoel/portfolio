@@ -8,8 +8,8 @@ const DropdownDates = (props) => {
     const toggle = () => setOpen(!dropdownOpen);
 // reset
     return (
-        <ButtonDropdown style={{position: ""}} isOpen={dropdownOpen} toggle={toggle}>
-            <DropdownToggle  className={classes.Button}  color="secondary"  caret>
+        <ButtonDropdown  isOpen={dropdownOpen} toggle={toggle}>
+            <DropdownToggle style={{textTransform:"capitalize", margin: "0" }}  className={classes.Button}  color="secondary"  caret>
                 {props.dropDownLabel}
             </DropdownToggle>
             <DropdownMenu>
