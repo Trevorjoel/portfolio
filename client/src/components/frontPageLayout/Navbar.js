@@ -19,20 +19,7 @@ class NavBar extends Component {
             newState: ''
         };
     }
-    componentDidMount() {
-        let position = "navbar";
-        let prevScrollpos = window.pageYOffset;
-        window.onscroll = function () {
-            const currentScrollPos = window.pageYOffset;
-            if (prevScrollpos > currentScrollPos) {
-                document.getElementById(position).style.top = "0";
-            } else {
-                document.getElementById(position).style.top = "-100%";
-            }
-            prevScrollpos = currentScrollPos;
-        };
-    }
-    
+
     toggle() {
         this.setState({
             isOpen: !this.state.isOpen

@@ -73,7 +73,7 @@ class ApProjectContainer extends Component {
             nh3CaptureValue: Assets.defaultNh3.slice(),
             activeSliders: false, // show & hide sliders
             activeDescription: false, // Show & hide description
-            setButtonText: "TEST IT",
+            setButtonText: "Test Alerts",
             tempShowNotification: {
                 tempLowCritical: true,
                 tempLowWarn: true,
@@ -409,7 +409,7 @@ console.log("Handle Observations Runs")
     handleToggleSliders() {
         this.setState({
             activeSliders: !this.state.activeSliders,
-            setButtonText: this.state.setButtonText === "TEST IT" ? "CLOSE TEST" : "TEST IT"
+            setButtonText: this.state.setButtonText === "Test Alerts" ? "Close Test" : "Test Alerts"
         })
     }
 
@@ -604,7 +604,7 @@ if (this.topTriggerEl.current !== null ) { // Check that Aquaponics page has ren
                                 <div className={classes.BarsWrapper}
                                      title="Live readings from your system & information to help">
                                     <div className={classes.AccordionContainer}>
-                                        <h4><strong>Current Status</strong></h4>
+                                        <h2 className={classes.SecondaryTitle}><strong>Current Status</strong></h2>
 
                                         <p className={classes.SectionText}>The parameters shown are updated live or in very short
                                             frequencies to give an instant picture of the water quality and alert the user if there are problems.</p>
@@ -674,7 +674,7 @@ if (this.topTriggerEl.current !== null ) { // Check that Aquaponics page has ren
                                     {<Button title="See the system working" className={classes.TestButton}
                                              onClick={() => {
                                                  this.handleToggleSliders();
-                                             }} size="sm">{this.state.setButtonText}</Button>}
+                                             }} size="sm"> {this.state.setButtonText} </Button>}
                                 </div>
 
                             </Col>

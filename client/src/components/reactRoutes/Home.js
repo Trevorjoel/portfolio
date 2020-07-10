@@ -3,6 +3,8 @@ import ContactForm from "../frontPageLayout/ContactForm";
 import Gallery from "../projectCards/ProjectsCarousel";
 import React, {Component} from "react";
 import SkillsTabs from "../SkillsTabs";
+import NavBar from "../frontPageLayout/Navbar";
+import {BrowserRouter} from "react-router-dom";
 
 class Home extends Component {
 
@@ -23,6 +25,7 @@ class Home extends Component {
     render() {
         return (
             <div>
+                <NavBar/>
                 <Header/>
                 <SkillsTabs/>
                 <Gallery />

@@ -20,7 +20,7 @@ class App extends Component {
             <div className="App">
 
                 <BrowserRouter>
-                    <NavBar/>
+
 
                     <Switch>
                         <Route path="/sensors" component={Sensors}  />
