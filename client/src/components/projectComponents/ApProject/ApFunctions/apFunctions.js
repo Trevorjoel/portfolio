@@ -612,7 +612,7 @@ export const addSettingsToDB = async function (type_settings, setting_name, temp
 
 };
 
-export const selectUserDefaultParameters = async function (userId) {
+export const selectUserParameters = async function (userId,settingName) {
     console.log('get user params');
 
     const response = await fetch('/api/user', {
@@ -624,6 +624,7 @@ export const selectUserDefaultParameters = async function (userId) {
             },
         body: JSON.stringify({
             userId: userId,
+            settingName: settingName,
         })
 
     });
@@ -632,5 +633,24 @@ export const selectUserDefaultParameters = async function (userId) {
 
     if (response.status !== 200) throw Error(query.message);
     return query.data;
+}
+
+export const getSettings = async function () {
+
+
+    const response = await fetch('/api/allsettings', {
+        method: 'GET',
+        headers:
+            {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            }
+
+    });
+
+    const query = await response.json();
+
+    if (response.status !== 200) throw Error(query.message);
+    return query;
 }
 

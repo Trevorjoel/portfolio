@@ -12,7 +12,8 @@ import {
     selectReadings,
     tempController,
     addSettingsToDB,
-    selectUserDefaultParameters,
+    selectUserParameters,
+    getSettings,
 
 } from './ApFunctions/apFunctions';
 import DateRange from "./DateRanges/DateRange";
@@ -115,6 +116,10 @@ class ApProjectContainer extends Component {
             userNh3SettingsUpdate: [],
             userNh3SettingsValue: [],
             settingName: '',
+            settings: [],
+            selectedFishOrSettingName:'',
+            tempDomain: [],
+            graphParams: null,
         };
         // Bind the imported functions
         this.tempController = tempController.bind(this);
@@ -135,12 +140,13 @@ class ApProjectContainer extends Component {
         this.savePhSettings = this.savePhSettings.bind(this);
         this.saveNh3Settings = this.saveNh3Settings.bind(this);
         this.addSettingsToDB = addSettingsToDB.bind(this);
-        this.selectUserDefaultParameters = selectUserDefaultParameters.bind(this);
+        this.selectUserParameters = selectUserParameters.bind(this);
         this.resetUserSettings = this.resetUserSettings.bind(this);
         this.saveUserSettings = this.saveUserSettings.bind(this);
         this.handleSettingNameChange = this.handleSettingNameChange.bind(this);
         this.handleValidSubmit = this.handleValidSubmit.bind(this);
         this.handleInvalidSubmit = this.handleInvalidSubmit.bind(this);
+        this.getSettings = getSettings.bind(this);
         //this.handleScroll = this.handleScroll.bind(this);
         this.topTriggerEl = React.createRef();
         this.containerEl = React.createRef();
@@ -222,7 +228,7 @@ console.log("Handle Observations Runs")
     saveTempSettings = () => {
         if (JSON.stringify(this.state.tempSettingsUpdate) !== JSON.stringify(this.state.tempSettingsValue))
         {
-            this.addSettingsToDB('addtempsettings', this.state.tempSettingsUpdate[0], this.state.tempSettingsUpdate[1],
+            this.addSettingsToDB('addtempsettings', this.state.fishParams.fish_name+'_custom', this.state.tempSettingsUpdate[0], this.state.tempSettingsUpdate[1],
                 this.state.tempSettingsUpdate[2], this.state.tempSettingsUpdate[3], this.state.phSettingsValue[0],
                 this.state.phSettingsValue[1], this.state.phSettingsValue[2], this.state.phSettingsValue[3],
                 this.state.nh3SettingsValue[0], this.state.nh3SettingsValue[1], this.state.tempValue[0],
@@ -231,7 +237,8 @@ console.log("Handle Observations Runs")
             this.setState({
                 tempSettingsValue: this.state.tempSettingsUpdate.slice(),
             })
-            console.log('save temperature settings')
+            console.log('save temperature settings');
+            this.mapSettings(getSettings);
         }
     }
 
@@ -247,7 +254,8 @@ console.log("Handle Observations Runs")
             this.setState({
                 phSettingsValue: this.state.phSettingsUpdate.slice(),
             })
-            console.log('save Ph settings')
+            console.log('save Ph settings');
+            this.mapSettings(getSettings);
         }
     }
 
@@ -263,7 +271,8 @@ console.log("Handle Observations Runs")
             this.setState({
                 nh3SettingsValue: this.state.nh3SettingsUpdate.slice(),
             })
-            console.log('save Nh3 settings')
+            console.log('save Nh3 settings');
+            this.mapSettings(getSettings);
         }
     }
 
@@ -283,7 +292,7 @@ console.log("Handle Observations Runs")
                 })
 
                 this.form && this.form.reset();
-                console.log('save custom settings');
+                console.log('save custom settings ');
         }
     }
 
@@ -327,6 +336,7 @@ console.log("Handle Observations Runs")
                     const returnedFishParams = query;
                     this.setState({
                         fishParams: returnedFishParams,
+                        graphParams: returnedFishParams,
                         // Set state here
                         tempSettingsValue: [returnedFishParams.temp_low_critical,
                             returnedFishParams.temp_low_warn,
@@ -354,17 +364,21 @@ console.log("Handle Observations Runs")
                         phUpdate: [returnedFishParams.ph_target].slice(),
                         nh3Value: [returnedFishParams.nh3_target].slice(),
                         nh3Update: [returnedFishParams.nh3_target].slice(),
+                        selectedFishOrSettingName: returnedFishParams.fish_name,
+                        tempDomain: [returnedFishParams.temp_low_critical,
+                            returnedFishParams.temp_high_critical].slice(),
                     })
                 }
             )
     }
 
-    mapUserDefaultSetState = (requestFunction, userId) => {
-        requestFunction(userId)
+    mapDefaultUserSetState = (requestFunction, userId, settingName) => {
+        requestFunction(userId, settingName)
             .then(query => {
                     const returnedUserParams = query;
                     this.setState({
                         userParams: returnedUserParams,
+                        graphParams: returnedUserParams,
                         // Set state here
                         userTempSettingsValue: [returnedUserParams.temp_low_critical,
                             returnedUserParams.temp_low_warn,
@@ -392,6 +406,85 @@ console.log("Handle Observations Runs")
                         userPhUpdate: [returnedUserParams.ph_target].slice(),
                         userNh3Value: [returnedUserParams.nh3_target].slice(),
                         userNh3Update: [returnedUserParams.nh3_target].slice(),
+                        selectedFishOrSettingName: returnedUserParams.setting_name,
+                    })
+                }
+            )
+    }
+
+    mapUserSetState = (requestFunction, userId, settingName) => {
+        requestFunction(userId, settingName)
+            .then(query => {
+                    const returnedUserParams = query;
+                    this.setState({
+                        graphParams: returnedUserParams,
+                        // Set state here
+                        userTempSettingsValue: [returnedUserParams.temp_low_critical,
+                            returnedUserParams.temp_low_warn,
+                            returnedUserParams.temp_high_warn,
+                            returnedUserParams.temp_high_critical].slice(),
+                        userTempSettingsUpdate: [returnedUserParams.temp_low_critical,
+                            returnedUserParams.temp_low_warn,
+                            returnedUserParams.temp_high_warn,
+                            returnedUserParams.temp_high_critical].slice(),
+                        userPhSettingsValue: [returnedUserParams.ph_low_critical,
+                            returnedUserParams.ph_low_warn,
+                            returnedUserParams.ph_high_warn,
+                            returnedUserParams.ph_high_critical].slice(),
+                        userPhSettingsUpdate: [returnedUserParams.ph_low_critical,
+                            returnedUserParams.ph_low_warn,
+                            returnedUserParams.ph_high_warn,
+                            returnedUserParams.ph_high_critical].slice(),
+                        userNh3SettingsValue: [returnedUserParams.nh3_warn,
+                            returnedUserParams.nh3_critical].slice(),
+                        userNh3SettingsUpdate: [returnedUserParams.nh3_warn,
+                            returnedUserParams.nh3_critical].slice(),
+                        userTempValue: [returnedUserParams.temp_target].slice(),
+                        userTempUpdate: [returnedUserParams.temp_target].slice(),
+                        userPhValue: [returnedUserParams.ph_target].slice(),
+                        userPhUpdate: [returnedUserParams.ph_target].slice(),
+                        userNh3Value: [returnedUserParams.nh3_target].slice(),
+                        userNh3Update: [returnedUserParams.nh3_target].slice(),
+                        selectedFishOrSettingName: returnedUserParams.setting_name,
+                    })
+                }
+            )
+    }
+
+    mapCustomFishSetState = (requestFunction, userId, settingName) => {
+        requestFunction(userId, settingName)
+            .then(query => {
+                    const returnedUserParams = query;
+                    this.setState({
+                        graphParams: returnedUserParams,
+                        // Set state here
+                        tempSettingsValue: [returnedUserParams.temp_low_critical,
+                            returnedUserParams.temp_low_warn,
+                            returnedUserParams.temp_high_warn,
+                            returnedUserParams.temp_high_critical].slice(),
+                        tempSettingsUpdate: [returnedUserParams.temp_low_critical,
+                            returnedUserParams.temp_low_warn,
+                            returnedUserParams.temp_high_warn,
+                            returnedUserParams.temp_high_critical].slice(),
+                        phSettingsValue: [returnedUserParams.ph_low_critical,
+                            returnedUserParams.ph_low_warn,
+                            returnedUserParams.ph_high_warn,
+                            returnedUserParams.ph_high_critical].slice(),
+                        phSettingsUpdate: [returnedUserParams.ph_low_critical,
+                            returnedUserParams.ph_low_warn,
+                            returnedUserParams.ph_high_warn,
+                            returnedUserParams.ph_high_critical].slice(),
+                        nh3SettingsValue: [returnedUserParams.nh3_warn,
+                            returnedUserParams.nh3_critical].slice(),
+                        nh3SettingsUpdate: [returnedUserParams.nh3_warn,
+                            returnedUserParams.nh3_critical].slice(),
+                        tempValue: [returnedUserParams.temp_target].slice(),
+                        tempUpdate: [returnedUserParams.temp_target].slice(),
+                        phValue: [returnedUserParams.ph_target].slice(),
+                        phUpdate: [returnedUserParams.ph_target].slice(),
+                        nh3Value: [returnedUserParams.nh3_target].slice(),
+                        nh3Update: [returnedUserParams.nh3_target].slice(),
+                        selectedFishOrSettingName: returnedUserParams.setting_name,
                     })
                 }
             )
@@ -430,6 +523,7 @@ console.log("Handle Observations Runs")
         this.setState({settingName: values.fname});
         this.saveUserSettings();
         console.log('valid');
+        this.mapSettings(getSettings);
     }
 
     handleInvalidSubmit(event, errors, values) {
@@ -457,12 +551,22 @@ console.log("Handle Observations Runs")
             )
     }
 
+    mapSettings = (requestFunction) => {
+        requestFunction()
+            .then(query => {
+                    const allSettings = query.database1.slice();
+                    this.setState({settings: allSettings.slice()})
+                }
+            )
+    }
+
     componentDidMount() {
 
         this.getPreviousTime();
-        this.mapUserDefaultSetState(selectUserDefaultParameters, this.state.userId);
+        this.mapDefaultUserSetState(selectUserParameters, this.state.userId, 'default_settings');
         this.mapFishSetState(selectFishType, this.state.fishId);
         this.mapFish(getFish);
+        this.mapSettings(getSettings);
        window.addEventListener('scroll', this.handleScroll);
 
 
@@ -536,11 +640,30 @@ if (this.topTriggerEl.current !== null ) { // Check that Aquaponics page has ren
         this.mapFishSetState(selectFishType, fishId)
     };
 
+    onSettingsChange = settingName => {
+
+       const checkcustom = this.state.fish.find(item => item.fish_name + '_custom' === settingName);
+
+        if(typeof checkcustom === 'undefined')
+        {
+            this.mapUserSetState(selectUserParameters, this.state.userId, settingName);
+            console.log('user setting');
+        }
+        else
+        {
+            this.setState({tempDomain: [checkcustom.temp_low_critical, checkcustom.temp_high_critical].slice()});
+            this.mapCustomFishSetState(selectUserParameters, this.state.userId, settingName);
+            console.log('custom setting');
+        }
+    };
+
     render() {
 
         const { fishParams } = this.state;
+        const { graphParams } = this.state;
+        const { userParams } = this.state;
 
-        if (fishParams === null) {
+        if (fishParams === null || graphParams === null || userParams === null) {
             return <LoadingContainer/>;
         }
         this.handleObservations()
@@ -597,7 +720,10 @@ if (this.topTriggerEl.current !== null ) { // Check that Aquaponics page has ren
                                     <FishProfile
                                         allFish={this.state.fish}
                                         fishParams={this.state.fishParams}
-                                        onChange={this.onFishChange}
+                                        selectedName ={this.state.selectedFishOrSettingName}
+                                        onFishChange={this.onFishChange}
+                                        allSettings={this.state.settings}
+                                        onSettingsChange={this.onSettingsChange}
                                     />
                                 </div>
 
@@ -690,9 +816,11 @@ if (this.topTriggerEl.current !== null ) { // Check that Aquaponics page has ren
                                 <div id="sticky-el" ref={this.stickyEl}>
                                     <DateRange
                                         onDaySelect={this.mapReadingsRangeSetState}
-                                        fishParams={this.state.fishParams}
+                                        selectedName ={this.state.selectedFishOrSettingName}
                                         allFish={this.state.fish}
-                                        onChange={this.onFishChange}
+                                        onFishChange={this.onFishChange}
+                                        allSettings={this.state.settings}
+                                        onSettingsChange={this.onSettingsChange}
                                     />
                                 </div>
 <div className={classes.StatusWrapper}>
@@ -710,7 +838,7 @@ if (this.topTriggerEl.current !== null ) { // Check that Aquaponics page has ren
 
 
                                                 <LineGraph
-                                                    fishParams={this.state.fishParams}
+                                                    fishParams={this.state.graphParams}
                                                     readings={this.state.readings}
                                                 />
                                             </Col>
@@ -718,7 +846,7 @@ if (this.topTriggerEl.current !== null ) { // Check that Aquaponics page has ren
                                                 <h3 className={classes.GraphTitle}>Readings by alert category</h3>
 
                                                 <TempPie
-                                                    fishParams={this.state.fishParams}
+                                                    fishParams={this.state.graphParams}
                                                     readings={this.state.readings}
                                                 />
                                             </Col>
@@ -728,7 +856,7 @@ if (this.topTriggerEl.current !== null ) { // Check that Aquaponics page has ren
                                                 <h3 className={classes.GraphTitle}>Highest, lowest and average daily readings</h3>
 
                                                 <HighLow
-                                                    fishParams={this.state.fishParams}
+                                                    fishParams={this.state.graphParams}
                                                     readings={this.state.readings}
                                                 />
                                             </Col>
@@ -759,16 +887,16 @@ if (this.topTriggerEl.current !== null ) { // Check that Aquaponics page has ren
                             <Tab eventKey="customise-current" title="Current Fish"
                                  style={{background: "white", color: "black", borderRadius: "0px 0px 20px 20px"}}>
                                 <br/>
-                                <h5>{this.state.fishParams.fish_name}</h5>
-                                <FishThumb fishParams={this.state.fishParams}/>
+                                <h5>{this.state.selectedFishOrSettingName}</h5>
+                                <FishThumb fishParams={this.state.fishParams} />
 
                                     <br/>
                                     <SettingsTemp
                                         //onUpdate={this.onTempSettingsUpdate}
                                         vertical={true}
                                         onChange={this.onTempSettingsChange}
-                                        mindomain={this.state.fishParams.temp_low_critical}
-                                        maxdomain={this.state.fishParams.temp_high_critical}
+                                        mindomain={this.state.tempDomain[0]}
+                                        maxdomain={this.state.tempDomain[1]}
                                         updates={this.state.tempSettingsUpdate}
                                         reset={this.resetTempSettings}
                                         save={this.saveTempSettings}

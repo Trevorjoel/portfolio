@@ -101,7 +101,10 @@ router.route('/api/addnh3psettings')
         Aquaponics.add_nh3_settings);
 
 router.route('/api/user')
-    .post(Aquaponics.select_user_default_parameters);
+    .post(Aquaponics.select_user_parameters);
+
+router.route('/api/allsettings')
+    .get(Aquaponics.select_settings);
 
 export default router;
 

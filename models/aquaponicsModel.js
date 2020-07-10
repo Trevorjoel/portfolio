@@ -215,14 +215,26 @@ TakeData.addNh3Settings = (req, result) =>{
     }
 }
 
-TakeData.selectUserDefaultParams = (number, result) =>{
+TakeData.selectUserParams = (number, settingName, result) =>{
 
-    sqlAquaponics.query(`SELECT * FROM settings WHERE settings.users_id = ${number} AND settings.setting_name = 'default_settings'`,
+    sqlAquaponics.query(`SELECT * FROM settings WHERE settings.users_id = ${number} AND settings.setting_name = '${settingName}'`,
         (err, res) => {
             if (err) {
                 result(err, null);
             } else {
                 result(null, res[0]);
+            }
+        });
+}
+
+TakeData.selectSettings = (result) =>{
+
+    sqlAquaponics.query(`SELECT * FROM settings WHERE settings.setting_name <> 'default_settings' ORDER BY id ASC`,
+        (err, res) => {
+            if (err) {
+                result(err, null);
+            } else {
+                result(null, res);
             }
         });
 }

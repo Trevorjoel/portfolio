@@ -39,7 +39,7 @@ const FishProfile = (props) =>{
                     <Dropdown   title="Change fish" isOpen={dropdownOpen} toggle={toggle}>
 
                         <DropdownToggle style={{textTransform:"capitalize"}} className={classes.Background} caret>
-                            {props.fishParams.fish_name}
+                            {props.selectedName}
                         </DropdownToggle>
 
                         <DropdownMenu >
@@ -51,14 +51,19 @@ const FishProfile = (props) =>{
                                 props.allFish.map((fish, index) => {
 
                                     return (
-                                        <DropdownItem  onClick={()=>props.onChange(fish.id)}>{fish.fish_name}</DropdownItem>
+                                        <DropdownItem  onClick={()=>props.onFishChange(fish.id)}>{fish.fish_name}</DropdownItem>
                                     )
                                 })}
                             <DropdownItem divider />
                             <DropdownItem header><strong>User settings</strong></DropdownItem>
+                            {
+                                /*Loop through settings from DB*/
+                                props.allSettings.map((setting, index) => {
 
-                            <DropdownItem  onClick={()=> console.log('CLICK!')}>{props.fishParams.fish_name} Custom</DropdownItem>
-                            <DropdownItem  onClick={()=> console.log('CLICK!')}>Trout & Silver Perch</DropdownItem>
+                                    return (
+                                        <DropdownItem onClick={()=>props.onSettingsChange(setting.setting_name)}>{setting.setting_name}</DropdownItem>
+                                    )
+                            })}
                         </DropdownMenu>
 
                     </Dropdown>
