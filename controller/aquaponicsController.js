@@ -123,12 +123,22 @@ exports.add_nh3_settings = async (req, res) => {
 
 };
 
-exports.select_user_default_parameters = (req, res) => {
-    TakeData.selectUserDefaultParams(req.body.userId, (err, data) => {
+exports.select_user_parameters = (req, res) => {
+    TakeData.selectUserParams(req.body.userId, req.body.settingName, (err, data) => {
         if (err)
             res.send(err)
         else
             res.send({data})
+    })
+
+};
+
+exports.select_settings = (req, res) => {
+    TakeData.selectSettings((err, data) => {
+        if (err)
+            res.send(err)
+        else
+            res.send({database1: data})
     })
 
 };

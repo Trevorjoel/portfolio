@@ -131,8 +131,8 @@ class DateRange extends React.Component {
             <div id="range-select" className={classes.Wrap}>
                 <Row>
                     <Col lg={2} md={2} sm={2} xs={6}>
-                        <DropdownFish fishParams={this.props.fishParams} allFish={this.props.allFish}
-                        onChange={this.props.onChange}/>
+                        <DropdownFish allFish={this.props.allFish} selectedName={this.props.selectedName}
+                        onFishChange={this.props.onFishChange} allSettings={this.props.allSettings} onSettingsChange={this.props.onSettingsChange}/>
                     </Col>
                     <Col lg={2} md={2} sm={2} xs={6}>
                     <DropdownDates
