@@ -467,7 +467,7 @@ export const getPreviousTime = async function () {
 };
 //jhg
 
-export const selectReadings = async function (numberOfReadings) {
+/*export const selectReadings = async function (numberOfReadings) {
 
     const response = await fetch('/api/all', {
         method: 'POST',
@@ -484,7 +484,7 @@ export const selectReadings = async function (numberOfReadings) {
 
     if (response.status !== 200) throw Error(query.message);
     return query;
-}
+}*/
 // Under construction
 
 export const selectFishType = async function (fishId) {

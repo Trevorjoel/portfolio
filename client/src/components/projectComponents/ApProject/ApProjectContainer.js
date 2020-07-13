@@ -55,13 +55,14 @@ class ApProjectContainer extends Component {
         super(props);
 
         this.state = {
-            // import default
+            // Testing sliders controlled components
             tempValue: [],
-            phValue: [], // follow this pattern
+            phValue: [],
             nh3Value: [],
             tempUpdate: [],
             phUpdate: [],
             nh3Update: [],
+            // Settings sliders controlled components
             tempSettingsUpdate: [],
             tempSettingsValue: [],
             phSettingsUpdate: [],
@@ -75,6 +76,7 @@ class ApProjectContainer extends Component {
             activeSliders: false, // show & hide sliders
             activeDescription: false, // Show & hide description
             setButtonText: "Test Alerts",
+            // Ensures that correct notifications are showing
             tempShowNotification: {
                 tempLowCritical: true,
                 tempLowWarn: true,
@@ -90,19 +92,23 @@ class ApProjectContainer extends Component {
                 phHighCritical: true
             },
             nh3ShowNotification: {nh3Optimal: false, nh3HighWarn: true, nh3HighCritical: true},
+            // Show advice text in status component
             togglePhAdvice: false,
             toggleTempAdvice: false,
             toggleNh3Advice: false,
             latestTime: '',
-            readings: [],
-            numberOfReadings: 169,
-            fishParams: null,
-            fishId: 1,
-            fish: [],
-            startPeriod: '',
+
+            numberOfReadings: 169, // default readings to show onload
+
+            fishParams: null, // Shows parameters for current selected fish todo: Refactor refactor to two objects (Show current state + a stored settings state)
+            fishId: 1, // Default fish to show on load
+            fish: [], //  All fish in database
+
+            startPeriod: '', // store time period
             endPeriod: '',
-            userId: 1,
-            userParams: null,
+            userId: 1, // default user onload
+
+            userParams: null, // todo: refactor to two objects (Show current state + a stored settings state prevParams)
             userTempValue: [],
             userPhValue: [],
             userNh3Value: [],
@@ -117,9 +123,18 @@ class ApProjectContainer extends Component {
             userNh3SettingsValue: [],
             settingName: '',
             settings: [],
-            selectedFishOrSettingName:'',
-            tempDomain: [],
-            graphParams: null,
+            tempDomain: [], // todo: find a better way to pass domains into the graphs
+            graphParams: null, // todo: this can be taken from a new current params object??
+            // NEW STATE
+            currentView:{
+                fishName:'Place Holder', // Pass in  fish.fish_name or settings.setting_name
+                fishImage: 'place holder', // Pass in URL or function to render image
+                navTo: 'place holder', // Pass in string with element ID
+                systemParams:[],
+                storedParams:[],
+                readings:[], // keep the readings in here?
+
+            }
         };
         // Bind the imported functions
         this.tempController = tempController.bind(this);
@@ -128,7 +143,7 @@ class ApProjectContainer extends Component {
         this.createNotificationController = createNotificationController.bind(this);
         this.addReadingsToDB = addReadingsToDB.bind(this);
         this.getPreviousTime = getPreviousTime.bind(this);
-        this.selectAllReadings = selectReadings.bind(this);
+        //this.selectAllReadings = selectReadings.bind(this);
         this.getFish = getFish.bind(this);
         this.handleToggleDescription = this.handleToggleDescription.bind(this);
         this.handleToggleSliders = this.handleToggleSliders.bind(this);
@@ -147,14 +162,15 @@ class ApProjectContainer extends Component {
         this.handleValidSubmit = this.handleValidSubmit.bind(this);
         this.handleInvalidSubmit = this.handleInvalidSubmit.bind(this);
         this.getSettings = getSettings.bind(this);
-        //this.handleScroll = this.handleScroll.bind(this);
+
+        // References for the sticky history component
         this.topTriggerEl = React.createRef();
         this.containerEl = React.createRef();
         this.stickyEl = React.createRef();
         this.bottomTriggerEl = React.createRef();
 
     }
-
+ // handles the navigation in the advice component
     handleObservations = () => {
 
 console.log("Handle Observations Runs")
@@ -181,7 +197,7 @@ console.log("Handle Observations Runs")
 
 
     }
-
+ // Reset settings to default of selected fish/usr setting by param
     resetTempSettings = () => {
         this.setState({
 
@@ -209,7 +225,7 @@ console.log("Handle Observations Runs")
                 this.state.fishParams.nh3_critical].slice(),
         })
     }
-
+// Reset settings to default of selected fish/usr allJust confirm
     resetUserSettings = () => {
         this.setState({
             userTempSettingsUpdate: [this.state.userParams.temp_low_critical,
@@ -314,27 +330,18 @@ console.log("Handle Observations Runs")
         })
     }
 
-    mapReadingsSetState = (requestFunction, numberOfReadings) => {
-        requestFunction(numberOfReadings)
-            .then(query => {
-                    const returnedReadings = query.database1.slice();
-                    const updatedReadings = returnedReadings.map(
-                        reading => {
-                            return {
-                                ...reading
-                            }
-                        }
-                    );
-                    this.setState({readings: updatedReadings})
-                }
-            )
-    }
 
     mapFishSetState = (requestFunction, fishId) => {
         requestFunction(fishId)
             .then(query => {
                     const returnedFishParams = query;
                     this.setState({
+                        currentView:{
+                            fishSettingName: returnedFishParams.fish_name,
+                            systemParams:returnedFishParams,
+                            readings:this.state.currentView.readings
+                        }
+                        ,
                         fishParams: returnedFishParams,
                         graphParams: returnedFishParams,
                         // Set state here
@@ -364,7 +371,6 @@ console.log("Handle Observations Runs")
                         phUpdate: [returnedFishParams.ph_target].slice(),
                         nh3Value: [returnedFishParams.nh3_target].slice(),
                         nh3Update: [returnedFishParams.nh3_target].slice(),
-                        selectedFishOrSettingName: returnedFishParams.fish_name,
                         tempDomain: [returnedFishParams.temp_low_critical,
                             returnedFishParams.temp_high_critical].slice(),
                     })
@@ -377,6 +383,12 @@ console.log("Handle Observations Runs")
             .then(query => {
                     const returnedUserParams = query;
                     this.setState({
+                        currentView:{
+                            fishSettingName: returnedUserParams.setting_name,
+                            systemParams: returnedUserParams,
+                            readings: this.state.currentView.readings
+
+                        },
                         userParams: returnedUserParams,
                         graphParams: returnedUserParams,
                         // Set state here
@@ -406,7 +418,7 @@ console.log("Handle Observations Runs")
                         userPhUpdate: [returnedUserParams.ph_target].slice(),
                         userNh3Value: [returnedUserParams.nh3_target].slice(),
                         userNh3Update: [returnedUserParams.nh3_target].slice(),
-                        selectedFishOrSettingName: returnedUserParams.setting_name,
+
                     })
                 }
             )
@@ -417,6 +429,11 @@ console.log("Handle Observations Runs")
             .then(query => {
                     const returnedUserParams = query;
                     this.setState({
+                        currentView:{
+                            fishSettingName: returnedUserParams.setting_name,
+                            systemParams: returnedUserParams,
+                            readings: this.state.currentView.readings
+                        },
                         graphParams: returnedUserParams,
                         // Set state here
                         userTempSettingsValue: [returnedUserParams.temp_low_critical,
@@ -445,7 +462,6 @@ console.log("Handle Observations Runs")
                         userPhUpdate: [returnedUserParams.ph_target].slice(),
                         userNh3Value: [returnedUserParams.nh3_target].slice(),
                         userNh3Update: [returnedUserParams.nh3_target].slice(),
-                        selectedFishOrSettingName: returnedUserParams.setting_name,
                     })
                 }
             )
@@ -456,8 +472,13 @@ console.log("Handle Observations Runs")
             .then(query => {
                     const returnedUserParams = query;
                     this.setState({
-                        graphParams: returnedUserParams,
+                        currentView:{
+                            fishSettingName: returnedUserParams.setting_name,
+                            systemParams: returnedUserParams,
+                            readings: this.state.currentView.readings
+                        },
                         // Set state here
+
                         tempSettingsValue: [returnedUserParams.temp_low_critical,
                             returnedUserParams.temp_low_warn,
                             returnedUserParams.temp_high_warn,
@@ -484,7 +505,7 @@ console.log("Handle Observations Runs")
                         phUpdate: [returnedUserParams.ph_target].slice(),
                         nh3Value: [returnedUserParams.nh3_target].slice(),
                         nh3Update: [returnedUserParams.nh3_target].slice(),
-                        selectedFishOrSettingName: returnedUserParams.setting_name,
+
                     })
                 }
             )
@@ -544,11 +565,19 @@ console.log("Handle Observations Runs")
                     );
                     this.setState({
                         readings: updatedReadings,
+                        currentView:{
+                            fishSettingName: this.state.currentView.fishSettingName,
+                            readings: updatedReadings,
+                            systemParams: this.state.currentView.systemParams
+                        },
                         startPeriod: moment(from).format('ddd, MMM Do, YYYY'),
                         endPeriod: moment(to).format('ddd, MMM Do,  YYYY'),
                     })
-                }
+                },
+        console.log(`Original: ${this.state.readings}`),
+        console.log(` VIEW ${this.state.currentView.readings}`)
             )
+
     }
 
     mapSettings = (requestFunction) => {
@@ -568,7 +597,8 @@ console.log("Handle Observations Runs")
         this.mapFish(getFish);
         this.mapSettings(getSettings);
        window.addEventListener('scroll', this.handleScroll);
-
+        console.log(`Original: ${this.state.readings}`)
+        console.log(` VIEW ${this.state.currentView.readings}`)
 
     }
  // todo: You should be using ref callbacks, never normal DOM traversal, to get access to nodes in componentDidMount.
@@ -719,8 +749,8 @@ if (this.topTriggerEl.current !== null ) { // Check that Aquaponics page has ren
 
                                     <FishProfile
                                         allFish={this.state.fish}
-                                        fishParams={this.state.fishParams}
-                                        selectedName ={this.state.selectedFishOrSettingName}
+                                        fishParams={this.state.currentView.systemParams}
+                                        selectedName ={this.state.currentView.fishSettingName}
                                         onFishChange={this.onFishChange}
                                         allSettings={this.state.settings}
                                         onSettingsChange={this.onSettingsChange}
@@ -816,7 +846,7 @@ if (this.topTriggerEl.current !== null ) { // Check that Aquaponics page has ren
                                 <div id="sticky-el" ref={this.stickyEl}>
                                     <DateRange
                                         onDaySelect={this.mapReadingsRangeSetState}
-                                        selectedName ={this.state.selectedFishOrSettingName}
+                                        selectedName ={this.state.currentView.fishSettingName}
                                         allFish={this.state.fish}
                                         onFishChange={this.onFishChange}
                                         allSettings={this.state.settings}
@@ -832,22 +862,22 @@ if (this.topTriggerEl.current !== null ) { // Check that Aquaponics page has ren
                                                 <h1 className={classes.GraphHead}>Temperature</h1>
 
                                                 <h6 className={classes.GraphSub}>{this.state.startPeriod} <br/> {this.state.endPeriod}</h6>
-                                                <FishThumb fishParams={this.state.fishParams}/>
+                                                <FishThumb fishParams={this.state.currentView.systemParams}/>
                                                 <h3  className={classes.GraphTitle}>Hourly readings</h3>
 
 
 
                                                 <LineGraph
-                                                    fishParams={this.state.graphParams}
-                                                    readings={this.state.readings}
+                                                    fishParams={this.state.currentView.systemParams}
+                                                    readings={this.state.currentView.readings}
                                                 />
                                             </Col>
                                             <Col lg={12}><br/>
                                                 <h3 className={classes.GraphTitle}>Readings by alert category</h3>
 
                                                 <TempPie
-                                                    fishParams={this.state.graphParams}
-                                                    readings={this.state.readings}
+                                                    fishParams={this.state.currentView.systemParams}
+                                                    readings={this.state.currentView.readings}
                                                 />
                                             </Col>
                                         </Row>
@@ -856,8 +886,8 @@ if (this.topTriggerEl.current !== null ) { // Check that Aquaponics page has ren
                                                 <h3 className={classes.GraphTitle}>Highest, lowest and average daily readings</h3>
 
                                                 <HighLow
-                                                    fishParams={this.state.graphParams}
-                                                    readings={this.state.readings}
+                                                    fishParams={this.state.currentView.systemParams}
+                                                    readings={this.state.currentView.readings}
                                                 />
                                             </Col>
                                         </Row>
@@ -887,8 +917,8 @@ if (this.topTriggerEl.current !== null ) { // Check that Aquaponics page has ren
                             <Tab eventKey="customise-current" title="Current Fish"
                                  style={{background: "white", color: "black", borderRadius: "0px 0px 20px 20px"}}>
                                 <br/>
-                                <h5>{this.state.selectedFishOrSettingName}</h5>
-                                <FishThumb fishParams={this.state.fishParams} />
+                                <h5>{this.state.currentView.fishSettingName}</h5>
+                                <FishThumb fishParams={this.state.currentView.systemParams} />
 
                                     <br/>
                                     <SettingsTemp
@@ -929,26 +959,8 @@ if (this.topTriggerEl.current !== null ) { // Check that Aquaponics page has ren
                                     onInvalidSubmit={this.handleInvalidSubmit}
                                     ref={c => (this.form = c)}
                                 >
-                                <label htmlFor="fname">Setting Name:</label><br/>
-                                <AvField type="text" id="fname" name="fname"
-                                    onChange={this.handleSettingNameChange}
-                                    value={this.state.settingName}
-                                    validate={{
-                                        required: {value: true, errorMessage: 'Please enter a setting name'},
-                                        pattern: {
-                                            value: '/^[a-zA-Z0-9_]+$/',
-                                            errorMessage: 'Your setting must be composed only with letters or numbers or _'
-                                        },
-                                        minLength: {
-                                            value: 5,
-                                            errorMessage: 'Your setting name must be between 5 and 30 characters'
-                                        },
-                                        maxLength: {
-                                            value: 30,
-                                            errorMessage: 'Your setting name must be between 5 and 30 characters'
-                                        }
-                                    }}
-                                /><br/>
+
+                             <br/>
                                 <SettingsTemp
                                     //onUpdate={this.onTempSettingsUpdate}
                                     vertical={true}
@@ -968,8 +980,26 @@ if (this.topTriggerEl.current !== null ) { // Check that Aquaponics page has ren
                                     updates={this.state.userNh3SettingsUpdate}
                                     renderButtons={false}
                                 />
-
-
+                                    <label htmlFor="fname">Setting Name:</label><br/>
+                                    <AvField style={{width:"200px", margin:"auto"}} type="text" id="fname" name="fname"
+                                             onChange={this.handleSettingNameChange}
+                                             value={this.state.settingName}
+                                             validate={{
+                                                 required: {value: true, errorMessage: 'Please enter a setting name'},
+                                                 pattern: {
+                                                     value: '/^[a-zA-Z0-9_]+$/',
+                                                     errorMessage: 'Your setting must be composed only with letters or numbers or _'
+                                                 },
+                                                 minLength: {
+                                                     value: 5,
+                                                     errorMessage: 'Your setting name must be between 5 and 30 characters'
+                                                 },
+                                                 maxLength: {
+                                                     value: 30,
+                                                     errorMessage: 'Your setting name must be between 5 and 30 characters'
+                                                 }
+                                             }}
+                                    />
                                 <Button className={classes.ButtonEnter} style={{margin: "10px 2%"}} type="submit">Enter All</Button>
                                 </AvForm>
                                 <Button  className={classes.ButtonReset} style={{margin: "10px 2%"}} onClick={()=>{

@@ -1,6 +1,7 @@
 import trout from "../Assets/troutPic.png";
 import silverPerch from '../Assets/silver_perchPic.png';
 import barramundi from '../Assets/barraPic.png';
+import custom from '../Assets/piranha-png-photos.png'
 import classes from './FishProfile.module.scss';
 import React, { useState } from 'react';
 import {Dropdown, DropdownToggle, DropdownMenu, DropdownItem, NavItem, NavLink, Nav, Col} from 'reactstrap';
@@ -10,13 +11,23 @@ import Logo from "../Assets/logos/logo-03.png";
 import LoadingContainer from "../Loading/LoadingContainer";
 import ComingSoon from "../Loading/ComingSoon";
 // Test
-const FishProfile = (props) =>{
+const FishProfile = (props) =>{ // todo: write a decent function for image swap
     let fishImage;
-    if(props.fishParams.id === 1) fishImage = trout
-    if (props.fishParams.id === 2)
-        fishImage = silverPerch;
-    if (props.fishParams.id === 3)
-        fishImage = barramundi;
+    switch (props.selectedName) {
+        case 'trout':
+            fishImage = trout
+            break;
+        case 'silver perch':
+            fishImage = silverPerch
+            break;
+        case 'barramundi':
+            fishImage = barramundi
+            break;
+
+        default:
+            fishImage = custom
+    }
+    console.log(props.selectedName)
 
     const [dropdownOpen, setDropdownOpen] = useState(false);
 
@@ -30,6 +41,7 @@ const FishProfile = (props) =>{
                     data-aos="fade-left"
                     data-aos-delay="1000"
                     data-aos-duration="800"
+                    style={{maxWidth:"300px"}}
                     alt={props.fishParams.fish_name}
                     className={classes.FishImage}
                     src={fishImage}/> : <LoadingContainer/>}
