@@ -9,7 +9,6 @@ import {
     nh3Controller,
     phController,
     selectFishType,
-    selectReadings,
     tempController,
     addSettingsToDB,
     selectUserParameters,
@@ -37,15 +36,13 @@ import {Tab, Tabs, Form} from "react-bootstrap";
 import SettingsTemp from "./Settings/SettingsTemp";
 import SettingsPh from "./Settings/SettingsPh";
 import SettingsNh3 from "./Settings/SettingsNh3";
-import settings_classes from './Settings/SettingsContainer.module.scss';
 import LoadingContainer from "./Loading/LoadingContainer";
 import ComingSoon from "./Loading/ComingSoon";
-import ReadingsTable from "./ReadingsTable";
 import FishThumb from "./FishThumb/FishThumb";
 import LiveMonitorDescription from "./Descriptions/LiveMonitorDescription";
-import AdviceWiki from "./advicePages/AdviceWiki";
 import {AvField, AvForm} from 'availity-reactstrap-validation';
 import Logo from './Assets/logos/logo-03.png'
+import SettingsContainer from "./Settings/SettingsContainer";
 // Todo: Create id's to navigate the demo app, example: to the caring for trout pages
 //todo: Conditionally render buttons in the settings area
 
@@ -177,7 +174,6 @@ console.log("Handle Observations Runs")
         let options = {
             root: document.querySelector('#scrollArea'),
             rootMargin: '100px',
-
         }
         const observer = new IntersectionObserver(entries => {
             entries.forEach(entry => {
@@ -225,7 +221,7 @@ console.log("Handle Observations Runs")
                 this.state.fishParams.nh3_critical].slice(),
         })
     }
-// Reset settings to default of selected fish/usr allJust confirm
+// Reset settings to default of selected fish/usr all Just confirm
     resetUserSettings = () => {
         this.setState({
             userTempSettingsUpdate: [this.state.userParams.temp_low_critical,
@@ -621,50 +617,10 @@ if (this.topTriggerEl.current !== null ) { // Check that Aquaponics page has ren
     }
 }
     }
-
-    onNh3Update = nh3Update => {
-        this.setState({nh3Update})
-    };
-    onNh3Change = nh3Values => {
-        this.setState({nh3Values})
-    };
-    onPhUpdate = phUpdate => {
-        this.setState({phUpdate})
-    };
-    onPhChange = phValues => {
-        this.setState({phValues})
-    };
-    onTempUpdate = tempUpdate => {
-        this.setState({tempUpdate})
-    };
-    onTempChange = tempValues => {
-        this.setState({tempValues})
-    };
-
-    onTempSettingsChange = tempSettingsUpdate => {
-        this.setState({tempSettingsUpdate})
-    };
-
-    onPhSettingsChange = phSettingsUpdate => {
-        this.setState({phSettingsUpdate})
-    };
-
-    onNh3SettingsChange = nh3SettingsUpdate => {
-        this.setState({nh3SettingsUpdate})
-    };
-
-    onUserTempSettingsChange = userTempSettingsUpdate => {
-        this.setState({userTempSettingsUpdate})
-    };
-
-    onUserPhSettingsChange = userPhSettingsUpdate => {
-        this.setState({userPhSettingsUpdate})
-    };
-
-    onUserNh3SettingsChange = userNh3SettingsUpdate => {
-        this.setState({userNh3SettingsUpdate})
-    };
-
+  changeHandler = (name, value) => {
+        console.log('Running ' + value)
+        this.setState({[name]: value});
+    }
 
     onFishChange = fishId => {
         this.mapFishSetState(selectFishType, fishId)
@@ -784,8 +740,8 @@ if (this.topTriggerEl.current !== null ) { // Check that Aquaponics page has ren
                                                 <TempSliderVertical
                                                     values={this.state.tempValue}
                                                     update={this.state.tempUpdate}
-                                                    onUpdate={this.onTempUpdate}
-                                                    onChange={this.onTempChange}
+                                                    onUpdate={(value)=>this.changeHandler('tempUpdate', value )}
+                                                    onChange={(value)=>this.changeHandler('tempChange', value )}
                                                 />
                                             </div>
                                         </Col><Col lg={4} md={4} sm={4} xs={4}>
@@ -797,8 +753,8 @@ if (this.topTriggerEl.current !== null ) { // Check that Aquaponics page has ren
                                                 values={this.state.phValue}
                                                 update={this.state.phUpdate}
                                                 defaultValues={Assets.defaultPh}
-                                                onUpdate={this.onPhUpdate}
-                                                onChange={this.onPhChange}
+                                                onUpdate={(value)=>this.changeHandler('phUpdate', value )}
+                                                onChange={(value)=>this.changeHandler('phChange', value )}
                                             />
                                         </div>
                                     </Col><Col lg={4} md={4} sm={4} xs={4}>
@@ -812,8 +768,9 @@ if (this.topTriggerEl.current !== null ) { // Check that Aquaponics page has ren
                                                 values={this.state.nh3Value}
                                                 update={this.state.nh3Update}
                                                 defaultValues={Assets.defaultNh3}
-                                                onUpdate={this.onNh3Update}
-                                                onChange={this.onNh3Change}
+                                                onUpdate={(value)=>this.changeHandler('nh3Update', value )}
+                                                onChange={(value)=>this.changeHandler('nh3Change', value )}
+
                                             />
                                         </div>
 
@@ -912,6 +869,18 @@ if (this.topTriggerEl.current !== null ) { // Check that Aquaponics page has ren
                             entirely new customizations, add your own using the sliders in this section.</p>
                         <br/>
                         <div className={classes.StatusWrapper}>
+                {/*           <SettingsContainer
+                                fishSettingName={this.state.currentView.fishSettingName}
+                                systemParams={this.state.currentView.systemParams}
+                                minDomain={this.state.tempDomain[0]}
+                                maxDomain={this.state.tempDomain[1]}
+                                tempUpdate={this.state.tempSettingsUpdate}
+                                nh3Update={this.state.nh3SettingsUpdate}
+                                phUpdate={this.state.phSettingsUpdate}
+
+
+                            />
+*/}
                         <Tabs className={classes.TabContainer} Key="customise-current" id="custom-tab">
 
                             <Tab eventKey="customise-current" title="Current Fish"
@@ -924,7 +893,7 @@ if (this.topTriggerEl.current !== null ) { // Check that Aquaponics page has ren
                                     <SettingsTemp
                                         //onUpdate={this.onTempSettingsUpdate}
                                         vertical={true}
-                                        onChange={this.onTempSettingsChange}
+                                        onChange={(value)=>this.changeHandler('tempSettingsUpdate', value )}
                                         mindomain={this.state.tempDomain[0]}
                                         maxdomain={this.state.tempDomain[1]}
                                         updates={this.state.tempSettingsUpdate}
@@ -933,14 +902,14 @@ if (this.topTriggerEl.current !== null ) { // Check that Aquaponics page has ren
                                         renderButtons={true}
                                     />
                                     <SettingsPh
-                                        onChange={this.onPhSettingsChange}
+                                        onChange={(value)=>this.changeHandler('phSettingsUpdate', value )}
                                         updates={this.state.phSettingsUpdate}
                                         reset={this.resetPhSettings}
                                         save={this.savePhSettings}
                                         renderButtons={true}
                                     />
                                     <SettingsNh3
-                                        onChange={this.onNh3SettingsChange}
+                                        onChange={(value)=>this.changeHandler('nh3SettingsUpdate', value )}
                                         updates={this.state.nh3SettingsUpdate}
                                         reset={this.resetNh3Settings}
                                         save={this.saveNh3Settings}
@@ -964,19 +933,19 @@ if (this.topTriggerEl.current !== null ) { // Check that Aquaponics page has ren
                                 <SettingsTemp
                                     //onUpdate={this.onTempSettingsUpdate}
                                     vertical={true}
-                                    onChange={this.onUserTempSettingsChange}
+                                    onChange={(value)=>this.changeHandler('userTempSettingsUpdate', value )}
                                     mindomain={this.state.userParams.temp_low_critical}
                                     maxdomain={this.state.userParams.temp_high_critical}
                                     updates={this.state.userTempSettingsUpdate}
                                     renderButtons={false}
                                 />
                                 <SettingsPh
-                                    onChange={this.onUserPhSettingsChange}
+                                    onChange={(value)=>this.changeHandler('userPhSettingsUpdate', value )}
                                     updates={this.state.userPhSettingsUpdate}
                                     renderButtons={false}
                                 />
                                 <SettingsNh3
-                                    onChange={this.onUserNh3SettingsChange}
+                                    onChange={(value)=>this.changeHandler('userNh3SettingsUpdate', value )}
                                     updates={this.state.userNh3SettingsUpdate}
                                     renderButtons={false}
                                 />
