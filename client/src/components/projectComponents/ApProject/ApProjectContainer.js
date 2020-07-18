@@ -3,17 +3,16 @@ import * as Assets from './Assets/ApProjectAssets';
 import classes from './ApProjectContainer.module.scss';
 import {
     addReadingsToDB,
+    addSettingsToDB,
     createNotificationController,
     getFish,
     getPreviousTime,
+    getSettings,
     nh3Controller,
     phController,
     selectFishType,
-    tempController,
-    addSettingsToDB,
     selectUserParameters,
-    getSettings,
-
+    tempController,
 } from './ApFunctions/apFunctions';
 import DateRange from "./DateRanges/DateRange";
 import {NotificationContainer} from 'react-notifications';
@@ -32,15 +31,11 @@ import BackBtn from "../ProjectBackBtn";
 import AdviceContainer from './advicePages/AdviceContainer';
 import SlidersModal from "./sliders/SlidersModal";
 import moment from 'moment';
-import {Tab, Tabs, Form} from "react-bootstrap";
-import SettingsTemp from "./Settings/SettingsTemp";
-import SettingsPh from "./Settings/SettingsPh";
-import SettingsNh3 from "./Settings/SettingsNh3";
+import {Tab, Tabs} from "react-bootstrap";
 import LoadingContainer from "./Loading/LoadingContainer";
 import ComingSoon from "./Loading/ComingSoon";
 import FishThumb from "./FishThumb/FishThumb";
 import LiveMonitorDescription from "./Descriptions/LiveMonitorDescription";
-import {AvField, AvForm} from 'availity-reactstrap-validation';
 import Logo from './Assets/logos/logo-03.png'
 import SettingsContainer from "./Settings/SettingsContainer";
 // Todo: Create id's to navigate the demo app, example: to the caring for trout pages
@@ -89,22 +84,14 @@ class ApProjectContainer extends Component {
                 phHighCritical: true
             },
             nh3ShowNotification: {nh3Optimal: false, nh3HighWarn: true, nh3HighCritical: true},
-            // Show advice text in status component
-            togglePhAdvice: false,
-            toggleTempAdvice: false,
-            toggleNh3Advice: false,
             latestTime: '',
-
             numberOfReadings: 169, // default readings to show onload
-
             fishParams: null, // Shows parameters for current selected fish todo: Refactor refactor to two objects (Show current state + a stored settings state)
             fishId: 1, // Default fish to show on load
             fish: [], //  All fish in database
-
             startPeriod: '', // store time period
             endPeriod: '',
             userId: 1, // default user onload
-
             userParams: null, // todo: refactor to two objects (Show current state + a stored settings state prevParams)
             userTempValue: [],
             userPhValue: [],
@@ -123,13 +110,13 @@ class ApProjectContainer extends Component {
             tempDomain: [], // todo: find a better way to pass domains into the graphs
             graphParams: null, // todo: this can be taken from a new current params object??
             // NEW STATE
-            currentView:{
-                fishName:'Place Holder', // Pass in  fish.fish_name or settings.setting_name
+            currentView: {
+                fishName: 'Place Holder', // Pass in  fish.fish_name or settings.setting_name
                 fishImage: 'place holder', // Pass in URL or function to render image
                 navTo: 'place holder', // Pass in string with element ID
-                systemParams:[],
-                storedParams:[],
-                readings:[], // keep the readings in here?
+                systemParams: [],
+                storedParams: [],
+                readings: [], // keep the readings in here?
 
             }
         };
@@ -140,11 +127,8 @@ class ApProjectContainer extends Component {
         this.createNotificationController = createNotificationController.bind(this);
         this.addReadingsToDB = addReadingsToDB.bind(this);
         this.getPreviousTime = getPreviousTime.bind(this);
-        //this.selectAllReadings = selectReadings.bind(this);
         this.getFish = getFish.bind(this);
-        this.handleToggleDescription = this.handleToggleDescription.bind(this);
         this.handleToggleSliders = this.handleToggleSliders.bind(this);
-        //this.selectWeek = selectWeek.bind(this)
         this.resetTempSettings = this.resetTempSettings.bind(this);
         this.resetPhSettings = this.resetPhSettings.bind(this);
         this.resetNh3Settings = this.resetNh3Settings.bind(this);
@@ -155,7 +139,7 @@ class ApProjectContainer extends Component {
         this.selectUserParameters = selectUserParameters.bind(this);
         this.resetUserSettings = this.resetUserSettings.bind(this);
         this.saveUserSettings = this.saveUserSettings.bind(this);
-        this.handleSettingNameChange = this.handleSettingNameChange.bind(this);
+        this.handleSettingNameChange = this.handleSettingNameChange.bind(this); // Is this used?
         this.handleValidSubmit = this.handleValidSubmit.bind(this);
         this.handleInvalidSubmit = this.handleInvalidSubmit.bind(this);
         this.getSettings = getSettings.bind(this);
@@ -167,10 +151,9 @@ class ApProjectContainer extends Component {
         this.bottomTriggerEl = React.createRef();
 
     }
- // handles the navigation in the advice component
-    handleObservations = () => {
 
-console.log("Handle Observations Runs")
+    // handles the navigation in the advice component
+    handleObservations = () => {
         let options = {
             root: document.querySelector('#scrollArea'),
             rootMargin: '100px',
@@ -193,7 +176,7 @@ console.log("Handle Observations Runs")
 
 
     }
- // Reset settings to default of selected fish/usr setting by param
+    // Reset settings to default of selected fish/usr setting by param
     resetTempSettings = () => {
         this.setState({
 
@@ -205,8 +188,8 @@ console.log("Handle Observations Runs")
     }
 
     resetPhSettings = () => {
-        this.setState({
 
+        this.setState({
             phSettingsUpdate: [this.state.fishParams.ph_low_critical,
                 this.state.fishParams.ph_low_warn,
                 this.state.fishParams.ph_high_warn,
@@ -215,8 +198,8 @@ console.log("Handle Observations Runs")
     }
 
     resetNh3Settings = () => {
-        this.setState({
 
+        this.setState({
             nh3SettingsUpdate: [this.state.fishParams.nh3_warn,
                 this.state.fishParams.nh3_critical].slice(),
         })
@@ -238,9 +221,8 @@ console.log("Handle Observations Runs")
     }
 
     saveTempSettings = () => {
-        if (JSON.stringify(this.state.tempSettingsUpdate) !== JSON.stringify(this.state.tempSettingsValue))
-        {
-            this.addSettingsToDB('addtempsettings', this.state.fishParams.fish_name+'_custom', this.state.tempSettingsUpdate[0], this.state.tempSettingsUpdate[1],
+        if (JSON.stringify(this.state.tempSettingsUpdate) !== JSON.stringify(this.state.tempSettingsValue)) {
+            this.addSettingsToDB('addtempsettings', this.state.fishParams.fish_name + '_custom', this.state.tempSettingsUpdate[0], this.state.tempSettingsUpdate[1],
                 this.state.tempSettingsUpdate[2], this.state.tempSettingsUpdate[3], this.state.phSettingsValue[0],
                 this.state.phSettingsValue[1], this.state.phSettingsValue[2], this.state.phSettingsValue[3],
                 this.state.nh3SettingsValue[0], this.state.nh3SettingsValue[1], this.state.tempValue[0],
@@ -249,15 +231,13 @@ console.log("Handle Observations Runs")
             this.setState({
                 tempSettingsValue: this.state.tempSettingsUpdate.slice(),
             })
-            console.log('save temperature settings');
             this.mapSettings(getSettings);
         }
     }
 
     savePhSettings = () => {
-        if (JSON.stringify(this.state.phSettingsUpdate) !== JSON.stringify(this.state.phSettingsValue))
-        {
-            this.addSettingsToDB('addphpsettings', this.state.fishParams.fish_name+'_custom', this.state.tempSettingsValue[0], this.state.tempSettingsValue[1],
+        if (JSON.stringify(this.state.phSettingsUpdate) !== JSON.stringify(this.state.phSettingsValue)) {
+            this.addSettingsToDB('addphpsettings', this.state.fishParams.fish_name + '_custom', this.state.tempSettingsValue[0], this.state.tempSettingsValue[1],
                 this.state.tempSettingsValue[2], this.state.tempSettingsValue[3], this.state.phSettingsUpdate[0],
                 this.state.phSettingsUpdate[1], this.state.phSettingsUpdate[2], this.state.phSettingsUpdate[3],
                 this.state.nh3SettingsValue[0], this.state.nh3SettingsValue[1], this.state.tempValue[0],
@@ -266,15 +246,13 @@ console.log("Handle Observations Runs")
             this.setState({
                 phSettingsValue: this.state.phSettingsUpdate.slice(),
             })
-            console.log('save Ph settings');
             this.mapSettings(getSettings);
         }
     }
 
     saveNh3Settings = () => {
-        if (JSON.stringify(this.state.nh3SettingsUpdate) !== JSON.stringify(this.state.nh3SettingsValue))
-        {
-            this.addSettingsToDB('addnh3psettings', this.state.fishParams.fish_name+'_custom', this.state.tempSettingsValue[0], this.state.tempSettingsValue[1],
+        if (JSON.stringify(this.state.nh3SettingsUpdate) !== JSON.stringify(this.state.nh3SettingsValue)) {
+            this.addSettingsToDB('addnh3psettings', this.state.fishParams.fish_name + '_custom', this.state.tempSettingsValue[0], this.state.tempSettingsValue[1],
                 this.state.tempSettingsValue[2], this.state.tempSettingsValue[3], this.state.phSettingsValue[0],
                 this.state.phSettingsValue[1], this.state.phSettingsValue[2], this.state.phSettingsValue[3],
                 this.state.nh3SettingsUpdate[0], this.state.nh3SettingsUpdate[1], this.state.tempValue[0],
@@ -283,61 +261,38 @@ console.log("Handle Observations Runs")
             this.setState({
                 nh3SettingsValue: this.state.nh3SettingsUpdate.slice(),
             })
-            console.log('save Nh3 settings');
             this.mapSettings(getSettings);
         }
     }
 
     saveUserSettings = () => {
-        if (this.state.settingName !== '' && this.state.settingName !== 'default_settings')
-        {
+        if (this.state.settingName !== '' && this.state.settingName !== 'default_settings') {
             this.addSettingsToDB('addsettings', this.state.settingName, this.state.userTempSettingsUpdate[0], this.state.userTempSettingsUpdate[1],
                 this.state.userTempSettingsUpdate[2], this.state.userTempSettingsUpdate[3], this.state.userPhSettingsUpdate[0],
                 this.state.userPhSettingsUpdate[1], this.state.userPhSettingsUpdate[2], this.state.userPhSettingsUpdate[3],
                 this.state.userNh3SettingsUpdate[0], this.state.userNh3SettingsUpdate[1], this.state.userTempValue[0],
                 this.state.userPhValue[0], this.state.userNh3Value[0]);
 
-                this.setState({
-                    userTempSettingsValue: this.state.userTempSettingsUpdate.slice(),
-                    userPhSettingsValue: this.state.userPhSettingsUpdate.slice(),
-                    userNh3SettingsValue: this.state.userNh3SettingsUpdate.slice(),
-                })
+            this.setState({
+                userTempSettingsValue: this.state.userTempSettingsUpdate.slice(),
+                userPhSettingsValue: this.state.userPhSettingsUpdate.slice(),
+                userNh3SettingsValue: this.state.userNh3SettingsUpdate.slice(),
+            })
 
-                this.form && this.form.reset();
-                console.log('save custom settings ');
+            this.form && this.form.reset();
         }
     }
-
-    toggleTempHandler() {
-        this.setState({
-            toggleTempAdvice: !this.state.toggleTempAdvice
-        })
-    }
-
-    togglePhHandler() {
-        this.setState({
-            togglePhAdvice: !this.state.togglePhAdvice
-        })
-    }
-
-    toggleNh3Handler() {
-        this.setState({
-            toggleNh3Advice: !this.state.toggleNh3Advice
-        })
-    }
-
 
     mapFishSetState = (requestFunction, fishId) => {
         requestFunction(fishId)
             .then(query => {
                     const returnedFishParams = query;
                     this.setState({
-                        currentView:{
+                        currentView: {
                             fishSettingName: returnedFishParams.fish_name,
-                            systemParams:returnedFishParams,
-                            readings:this.state.currentView.readings
-                        }
-                        ,
+                            systemParams: returnedFishParams,
+                            readings: this.state.currentView.readings
+                        },
                         fishParams: returnedFishParams,
                         graphParams: returnedFishParams,
                         // Set state here
@@ -361,8 +316,8 @@ console.log("Handle Observations Runs")
                             returnedFishParams.nh3_critical].slice(),
                         nh3SettingsUpdate: [returnedFishParams.nh3_warn,
                             returnedFishParams.nh3_critical].slice(),
-                        tempValue: [returnedFishParams.temp_target].slice(),
-                        tempUpdate: [returnedFishParams.temp_target].slice(),
+                        tempValue: [this.setTarget(returnedFishParams.temp_low_warn, returnedFishParams.temp_high_warn)].slice(),
+                        tempUpdate: [this.setTarget(returnedFishParams.temp_low_warn, returnedFishParams.temp_high_warn)].slice(), // todo: create a function that calculates the middle of each warning params to set as default for alerts
                         phValue: [returnedFishParams.ph_target].slice(),
                         phUpdate: [returnedFishParams.ph_target].slice(),
                         nh3Value: [returnedFishParams.nh3_target].slice(),
@@ -377,47 +332,45 @@ console.log("Handle Observations Runs")
     mapDefaultUserSetState = (requestFunction, userId, settingName) => {
         requestFunction(userId, settingName)
             .then(query => {
-                    const returnedUserParams = query;
-                    this.setState({
-                        currentView:{
-                            fishSettingName: returnedUserParams.setting_name,
-                            systemParams: returnedUserParams,
-                            readings: this.state.currentView.readings
+                const returnedUserParams = query;
+                this.setState({
+                    currentView: {
+                        fishSettingName: returnedUserParams.setting_name,
+                        systemParams: returnedUserParams,
+                        readings: this.state.currentView.readings
+                    },
+                    userParams: returnedUserParams,
+                    graphParams: returnedUserParams,
+                    // Set state here
+                    userTempSettingsValue: [returnedUserParams.temp_low_critical,
+                        returnedUserParams.temp_low_warn,
+                        returnedUserParams.temp_high_warn,
+                        returnedUserParams.temp_high_critical].slice(),
+                    userTempSettingsUpdate: [returnedUserParams.temp_low_critical,
+                        returnedUserParams.temp_low_warn,
+                        returnedUserParams.temp_high_warn,
+                        returnedUserParams.temp_high_critical].slice(),
+                    userPhSettingsValue: [returnedUserParams.ph_low_critical,
+                        returnedUserParams.ph_low_warn,
+                        returnedUserParams.ph_high_warn,
+                        returnedUserParams.ph_high_critical].slice(),
+                    userPhSettingsUpdate: [returnedUserParams.ph_low_critical,
+                        returnedUserParams.ph_low_warn,
+                        returnedUserParams.ph_high_warn,
+                        returnedUserParams.ph_high_critical].slice(),
+                    userNh3SettingsValue: [returnedUserParams.nh3_warn,
+                        returnedUserParams.nh3_critical].slice(),
+                    userNh3SettingsUpdate: [returnedUserParams.nh3_warn,
+                        returnedUserParams.nh3_critical].slice(),
+                    userTempValue: [this.setTarget(returnedUserParams.temp_low_warn, returnedUserParams.temp_high_warn)].slice(),
+                    userTempUpdate: [this.setTarget(returnedUserParams.temp_low_warn, returnedUserParams.temp_high_warn)].slice(),
+                    userPhValue: [returnedUserParams.ph_target].slice(),
+                    userPhUpdate: [returnedUserParams.ph_target].slice(),
+                    userNh3Value: [returnedUserParams.nh3_target].slice(),
+                    userNh3Update: [returnedUserParams.nh3_target].slice(),
 
-                        },
-                        userParams: returnedUserParams,
-                        graphParams: returnedUserParams,
-                        // Set state here
-                        userTempSettingsValue: [returnedUserParams.temp_low_critical,
-                            returnedUserParams.temp_low_warn,
-                            returnedUserParams.temp_high_warn,
-                            returnedUserParams.temp_high_critical].slice(),
-                        userTempSettingsUpdate: [returnedUserParams.temp_low_critical,
-                            returnedUserParams.temp_low_warn,
-                            returnedUserParams.temp_high_warn,
-                            returnedUserParams.temp_high_critical].slice(),
-                        userPhSettingsValue: [returnedUserParams.ph_low_critical,
-                            returnedUserParams.ph_low_warn,
-                            returnedUserParams.ph_high_warn,
-                            returnedUserParams.ph_high_critical].slice(),
-                        userPhSettingsUpdate: [returnedUserParams.ph_low_critical,
-                            returnedUserParams.ph_low_warn,
-                            returnedUserParams.ph_high_warn,
-                            returnedUserParams.ph_high_critical].slice(),
-                        userNh3SettingsValue: [returnedUserParams.nh3_warn,
-                            returnedUserParams.nh3_critical].slice(),
-                        userNh3SettingsUpdate: [returnedUserParams.nh3_warn,
-                            returnedUserParams.nh3_critical].slice(),
-                        userTempValue: [returnedUserParams.temp_target].slice(),
-                        userTempUpdate: [returnedUserParams.temp_target].slice(),
-                        userPhValue: [returnedUserParams.ph_target].slice(),
-                        userPhUpdate: [returnedUserParams.ph_target].slice(),
-                        userNh3Value: [returnedUserParams.nh3_target].slice(),
-                        userNh3Update: [returnedUserParams.nh3_target].slice(),
-
-                    })
-                }
-            )
+                })
+            })
     }
 
     mapUserSetState = (requestFunction, userId, settingName) => {
@@ -425,7 +378,7 @@ console.log("Handle Observations Runs")
             .then(query => {
                     const returnedUserParams = query;
                     this.setState({
-                        currentView:{
+                        currentView: {
                             fishSettingName: returnedUserParams.setting_name,
                             systemParams: returnedUserParams,
                             readings: this.state.currentView.readings
@@ -452,8 +405,8 @@ console.log("Handle Observations Runs")
                             returnedUserParams.nh3_critical].slice(),
                         userNh3SettingsUpdate: [returnedUserParams.nh3_warn,
                             returnedUserParams.nh3_critical].slice(),
-                        userTempValue: [returnedUserParams.temp_target].slice(),
-                        userTempUpdate: [returnedUserParams.temp_target].slice(),
+                        userTempValue: [this.setTarget(returnedUserParams.temp_low_warn, returnedUserParams.temp_high_warn)].slice(),
+                        userTempUpdate: [this.setTarget(returnedUserParams.temp_low_warn, returnedUserParams.temp_high_warn)].slice(),
                         userPhValue: [returnedUserParams.ph_target].slice(),
                         userPhUpdate: [returnedUserParams.ph_target].slice(),
                         userNh3Value: [returnedUserParams.nh3_target].slice(),
@@ -468,21 +421,17 @@ console.log("Handle Observations Runs")
             .then(query => {
                     const returnedUserParams = query;
                     this.setState({
-                        currentView:{
+                        currentView: {
                             fishSettingName: returnedUserParams.setting_name,
                             systemParams: returnedUserParams,
                             readings: this.state.currentView.readings
                         },
                         // Set state here
 
-                        tempSettingsValue: [returnedUserParams.temp_low_critical,
-                            returnedUserParams.temp_low_warn,
-                            returnedUserParams.temp_high_warn,
-                            returnedUserParams.temp_high_critical].slice(),
-                        tempSettingsUpdate: [returnedUserParams.temp_low_critical,
-                            returnedUserParams.temp_low_warn,
-                            returnedUserParams.temp_high_warn,
-                            returnedUserParams.temp_high_critical].slice(),
+                        tempSettingsValue: [returnedUserParams.temp_low_critical, returnedUserParams.temp_low_warn,
+                            returnedUserParams.temp_high_warn, returnedUserParams.temp_high_critical].slice(),
+                        tempSettingsUpdate: [returnedUserParams.temp_low_critical, returnedUserParams.temp_low_warn,
+                            returnedUserParams.temp_high_warn, returnedUserParams.temp_high_critical].slice(),
                         phSettingsValue: [returnedUserParams.ph_low_critical,
                             returnedUserParams.ph_low_warn,
                             returnedUserParams.ph_high_warn,
@@ -495,8 +444,9 @@ console.log("Handle Observations Runs")
                             returnedUserParams.nh3_critical].slice(),
                         nh3SettingsUpdate: [returnedUserParams.nh3_warn,
                             returnedUserParams.nh3_critical].slice(),
-                        tempValue: [returnedUserParams.temp_target].slice(),
-                        tempUpdate: [returnedUserParams.temp_target].slice(),
+                        tempValue: [this.setTarget(returnedUserParams.temp_low_warn, returnedUserParams.temp_high_warn)].slice(),
+                        tempUpdate: [this.setTarget(returnedUserParams.temp_low_warn, returnedUserParams.temp_high_warn)].slice(),
+
                         phValue: [returnedUserParams.ph_target].slice(),
                         phUpdate: [returnedUserParams.ph_target].slice(),
                         nh3Value: [returnedUserParams.nh3_target].slice(),
@@ -523,29 +473,25 @@ console.log("Handle Observations Runs")
         })
     }
 
-    handleToggleDescription() {
-        this.setState({
-            activeDescription: !this.state.activeDescription,
+    // Universal on change handler
+    changeHandler = (name, value) => {this.setState({[name]: value})}
 
-        })
-    }
+// Universal toggle handler.. binary toggle single set state
 
-    handleSettingNameChange(event) {
-        this.setState({
-            settingName: event.target.value,
-        })
+    toggleHandler = (name) => {this.setState({[name]: !this.state[name]})}
+
+    handleSettingNameChange( event ) {
+        this.setState({settingName: event.target.value})
     }
 
     handleValidSubmit(event, values) {
         this.setState({settingName: values.fname});
         this.saveUserSettings();
-        console.log('valid');
         this.mapSettings(getSettings);
     }
 
     handleInvalidSubmit(event, errors, values) {
-       this.setState({settingName: ''});
-        console.log('invalid');
+        this.setState({settingName: ''});
     }
 
     mapReadingsRangeSetState = (requestFunction, from, to) => {
@@ -561,7 +507,7 @@ console.log("Handle Observations Runs")
                     );
                     this.setState({
                         readings: updatedReadings,
-                        currentView:{
+                        currentView: {
                             fishSettingName: this.state.currentView.fishSettingName,
                             readings: updatedReadings,
                             systemParams: this.state.currentView.systemParams
@@ -570,8 +516,6 @@ console.log("Handle Observations Runs")
                         endPeriod: moment(to).format('ddd, MMM Do,  YYYY'),
                     })
                 },
-        console.log(`Original: ${this.state.readings}`),
-        console.log(` VIEW ${this.state.currentView.readings}`)
             )
 
     }
@@ -584,6 +528,13 @@ console.log("Handle Observations Runs")
                 }
             )
     }
+    setTarget = (lowWarn, highWarn)=>{
+        const a =  lowWarn + highWarn;
+        const target = a/2;
+        console.log("AVG: " + target);
+
+        return target
+    }
 
     componentDidMount() {
 
@@ -592,34 +543,28 @@ console.log("Handle Observations Runs")
         this.mapFishSetState(selectFishType, this.state.fishId);
         this.mapFish(getFish);
         this.mapSettings(getSettings);
-       window.addEventListener('scroll', this.handleScroll);
-        console.log(`Original: ${this.state.readings}`)
-        console.log(` VIEW ${this.state.currentView.readings}`)
+        window.addEventListener('scroll', this.handleScroll);
 
     }
- // todo: You should be using ref callbacks, never normal DOM traversal, to get access to nodes in componentDidMount.
-  //  https://reactjs.org/docs/refs-and-the-dom.html
-    handleScroll= (event) => {
 
-if (this.topTriggerEl.current !== null ) { // Check that Aquaponics page has rendered. Was causing a bug when changing pages meaning the
-    // Check that view is between the correct ranges (In the history components)
-    // eslint-disable-next-line no-restricted-globals
-    let width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
-    if (window.pageYOffset > this.topTriggerEl.current.offsetTop && window.pageYOffset < this.bottomTriggerEl.current.offsetTop && width > 400) {
-        console.log('Adding element')
-        document.getElementById("sticky-el").classList.add(classes.StickyElement)
-        document.getElementById("sticky-cont").classList.add(classes.AddHeight)
+    // todo: You should be using ref callbacks, never normal DOM traversal, to get access to nodes in componentDidMount.
+    //  https://reactjs.org/docs/refs-and-the-dom.html
+    handleScroll = (event) => {
 
-    } else {
-        document.getElementById("sticky-el").classList.remove(classes.StickyElement)
-        document.getElementById("sticky-cont").classList.remove(classes.AddHeight)
-        console.log('Removing element')
-    }
-}
-    }
-  changeHandler = (name, value) => {
-        console.log('Running ' + value)
-        this.setState({[name]: value});
+        if (this.topTriggerEl.current !== null) { // Check that Aquaponics page has rendered. Was causing a bug when changing pages meaning the
+            // Check that view is between the correct ranges (In the history components)
+            // eslint-disable-next-line no-restricted-globals
+            let width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
+            if (window.pageYOffset > this.topTriggerEl.current.offsetTop && window.pageYOffset < this.bottomTriggerEl.current.offsetTop && width > 400) {
+                document.getElementById("sticky-el").classList.add(classes.StickyElement)
+                document.getElementById("sticky-cont").classList.add(classes.AddHeight)
+
+            } else {
+                document.getElementById("sticky-el").classList.remove(classes.StickyElement)
+                document.getElementById("sticky-cont").classList.remove(classes.AddHeight)
+
+            }
+        }
     }
 
     onFishChange = fishId => {
@@ -628,26 +573,21 @@ if (this.topTriggerEl.current !== null ) { // Check that Aquaponics page has ren
 
     onSettingsChange = settingName => {
 
-       const checkcustom = this.state.fish.find(item => item.fish_name + '_custom' === settingName);
+        const checkcustom = this.state.fish.find(item => item.fish_name + '_custom' === settingName);
 
-        if(typeof checkcustom === 'undefined')
-        {
+        if (typeof checkcustom === 'undefined') {
             this.mapUserSetState(selectUserParameters, this.state.userId, settingName);
-            console.log('user setting');
-        }
-        else
-        {
+        } else {
             this.setState({tempDomain: [checkcustom.temp_low_critical, checkcustom.temp_high_critical].slice()});
             this.mapCustomFishSetState(selectUserParameters, this.state.userId, settingName);
-            console.log('custom setting');
         }
     };
 
     render() {
 
-        const { fishParams } = this.state;
-        const { graphParams } = this.state;
-        const { userParams } = this.state;
+        const {fishParams} = this.state;
+        const {graphParams} = this.state;
+        const {userParams} = this.state;
 
         if (fishParams === null || graphParams === null || userParams === null) {
             return <LoadingContainer/>;
@@ -682,16 +622,16 @@ if (this.topTriggerEl.current !== null ) { // Check that Aquaponics page has ren
                     </div>
                     }
                     <Button size="sm" className={classes.ToggleButton} type="button"
-                            onClick={this.handleToggleDescription}>
+                            onClick={(value) => this.toggleHandler('activeDescription', value)}>
                         Development Details!
                     </Button>
                     <div className={classes.ProjectContainer}>
 
                         <h1 className={classes.Title}><strong>Aquaponics System Monitor</strong></h1>
-                        <img style={{width:"200px", marginBottom:"40px"}} src={Logo}/>
+                        <img style={{width: "200px", marginBottom: "40px"}} src={Logo}/>
                         <p className={classes.SectionText}>Simplify back yard aquaponics
                             and collect data to help achieve the best possible results. </p>
-<hr className="divider"/>
+                        <hr className="divider"/>
 
 
                         <Row>
@@ -699,14 +639,16 @@ if (this.topTriggerEl.current !== null ) { // Check that Aquaponics page has ren
 
 
                                 <br/>
-                                <h2 className={classes.SecondaryTitle}><strong>Live Monitor </strong><LiveMonitorDescription /></h2>
-                                <p className={classes.SectionText}>Information about your system such as, fish stocked, recommended water quality parameters and water tank/grow bed capacity.</p>
+                                <h2 className={classes.SecondaryTitle}><strong>Live
+                                    Monitor </strong><LiveMonitorDescription/></h2>
+                                <p className={classes.SectionText}>Information about your system such as, fish stocked,
+                                    recommended water quality parameters and water tank/grow bed capacity.</p>
                                 <div className={classes.StatusWrapper}>
 
                                     <FishProfile
                                         allFish={this.state.fish}
                                         fishParams={this.state.currentView.systemParams}
-                                        selectedName ={this.state.currentView.fishSettingName}
+                                        selectedName={this.state.currentView.fishSettingName}
                                         onFishChange={this.onFishChange}
                                         allSettings={this.state.settings}
                                         onSettingsChange={this.onSettingsChange}
@@ -718,12 +660,14 @@ if (this.topTriggerEl.current !== null ) { // Check that Aquaponics page has ren
                                     <div className={classes.AccordionContainer}>
                                         <h2 className={classes.SecondaryTitle}><strong>Current Status</strong></h2>
 
-                                        <p className={classes.SectionText}>The parameters shown are updated live or in very short
-                                            frequencies to give an instant picture of the water quality and alert the user if there are problems.</p>
+                                        <p className={classes.SectionText}>The parameters shown are updated live or in
+                                            very short
+                                            frequencies to give an instant picture of the water quality and alert the
+                                            user if there are problems.</p>
 
-                                    {this.tempController(this.state.tempUpdate[0])}
-                                    {this.phController(this.state.phUpdate[0])}
-                                    {this.nh3Controller(this.state.nh3Update[0])}
+                                        {this.tempController(this.state.tempUpdate[0])}
+                                        {this.phController(this.state.phUpdate[0])}
+                                        {this.nh3Controller(this.state.nh3Update[0])}
                                     </div>
 
                                     {this.state.activeSliders &&
@@ -740,8 +684,8 @@ if (this.topTriggerEl.current !== null ) { // Check that Aquaponics page has ren
                                                 <TempSliderVertical
                                                     values={this.state.tempValue}
                                                     update={this.state.tempUpdate}
-                                                    onUpdate={(value)=>this.changeHandler('tempUpdate', value )}
-                                                    onChange={(value)=>this.changeHandler('tempChange', value )}
+                                                    onUpdate={(value) => this.changeHandler('tempUpdate', value)}
+                                                    onChange={(value) => this.changeHandler('tempChange', value)}
                                                 />
                                             </div>
                                         </Col><Col lg={4} md={4} sm={4} xs={4}>
@@ -753,8 +697,8 @@ if (this.topTriggerEl.current !== null ) { // Check that Aquaponics page has ren
                                                 values={this.state.phValue}
                                                 update={this.state.phUpdate}
                                                 defaultValues={Assets.defaultPh}
-                                                onUpdate={(value)=>this.changeHandler('phUpdate', value )}
-                                                onChange={(value)=>this.changeHandler('phChange', value )}
+                                                onUpdate={(value) => this.changeHandler('phUpdate', value)}
+                                                onChange={(value) => this.changeHandler('phChange', value)}
                                             />
                                         </div>
                                     </Col><Col lg={4} md={4} sm={4} xs={4}>
@@ -768,18 +712,14 @@ if (this.topTriggerEl.current !== null ) { // Check that Aquaponics page has ren
                                                 values={this.state.nh3Value}
                                                 update={this.state.nh3Update}
                                                 defaultValues={Assets.defaultNh3}
-                                                onUpdate={(value)=>this.changeHandler('nh3Update', value )}
-                                                onChange={(value)=>this.changeHandler('nh3Change', value )}
+                                                onUpdate={(value) => this.changeHandler('nh3Update', value)}
+                                                onChange={(value) => this.changeHandler('nh3Change', value)}
 
                                             />
                                         </div>
-
                                     </Col>
-
-
-
                                     </Row>
-                                        <Button color="info" onClick={()=>{
+                                        <Button color="info" onClick={() => {
                                             this.addReadingsToDB();
                                         }} size="md" block>Enter readings into database.</Button>
 
@@ -793,83 +733,92 @@ if (this.topTriggerEl.current !== null ) { // Check that Aquaponics page has ren
                             </Col>
                         </Row>
                         <hr className="divider"/>
-                        <div >
+                        <div>
                             <h2 className="reading-box ">View historical data</h2>
-                            <p className={classes.SectionText}>At intervals of 1 hour the current water quality readings are entered into the database and represented in graphs for tracking and retrospective troubleshooting. </p>
-                          <br/>
-                                <div ref={this.topTriggerEl} className="check" id="sticky-trigger"></div>
+                            <p className={classes.SectionText}>At intervals of 1 hour the current water quality readings
+                                are entered into the database and represented in graphs for tracking and retrospective
+                                troubleshooting. </p>
+                            <br/>
+                            <div ref={this.topTriggerEl} className="check" id="sticky-trigger"></div>
                             <div id="sticky-cont" ref={this.containerEl} className={classes.StickyContainer}>
 
                                 <div id="sticky-el" ref={this.stickyEl}>
                                     <DateRange
                                         onDaySelect={this.mapReadingsRangeSetState}
-                                        selectedName ={this.state.currentView.fishSettingName}
+                                        selectedName={this.state.currentView.fishSettingName}
                                         allFish={this.state.fish}
                                         onFishChange={this.onFishChange}
                                         allSettings={this.state.settings}
                                         onSettingsChange={this.onSettingsChange}
                                     />
                                 </div>
-<div className={classes.StatusWrapper}>
-                                <Tabs className={classes.TabContainer}  defaultActiveKey="temp" id="uncontrolled-tab-example">
-                                    <Tab eventKey="temp" title="Temperature"
-                                         style={{background: "white", color: "black", borderRadius: "0px 0px 20px 20px"}}>
-                                        <Row >
-                                            <Col lg={12}>
-                                                <h1 className={classes.GraphHead}>Temperature</h1>
+                                <div className={classes.StatusWrapper}>
+                                    <Tabs className={classes.TabContainer} defaultActiveKey="temp"
+                                          id="uncontrolled-tab-example">
+                                        <Tab eventKey="temp" title="Temperature"
+                                             style={{
+                                                 background: "white",
+                                                 color: "black",
+                                                 borderRadius: "0px 0px 20px 20px"
+                                             }}>
+                                            <Row>
+                                                <Col lg={12}>
+                                                    <h1 className={classes.GraphHead}>Temperature</h1>
 
-                                                <h6 className={classes.GraphSub}>{this.state.startPeriod} <br/> {this.state.endPeriod}</h6>
-                                                <FishThumb fishParams={this.state.currentView.systemParams}/>
-                                                <h3  className={classes.GraphTitle}>Hourly readings</h3>
+                                                    <h6 className={classes.GraphSub}>{this.state.startPeriod}
+                                                        <br/> {this.state.endPeriod}</h6>
+                                                    <FishThumb fishParams={this.state.currentView.systemParams}/>
+                                                    <h3 className={classes.GraphTitle}>Hourly readings</h3>
 
 
+                                                    <LineGraph
+                                                        fishParams={this.state.currentView.systemParams}
+                                                        readings={this.state.currentView.readings}
+                                                    />
+                                                </Col>
+                                                <Col lg={12}><br/>
+                                                    <h3 className={classes.GraphTitle}>Readings by alert category</h3>
 
-                                                <LineGraph
-                                                    fishParams={this.state.currentView.systemParams}
-                                                    readings={this.state.currentView.readings}
-                                                />
-                                            </Col>
-                                            <Col lg={12}><br/>
-                                                <h3 className={classes.GraphTitle}>Readings by alert category</h3>
+                                                    <TempPie
+                                                        fishParams={this.state.currentView.systemParams}
+                                                        readings={this.state.currentView.readings}
+                                                    />
+                                                </Col>
+                                            </Row>
+                                            <Row>
+                                                <Col lg={12}>
+                                                    <h3 className={classes.GraphTitle}>Highest, lowest and average daily
+                                                        readings</h3>
 
-                                                <TempPie
-                                                    fishParams={this.state.currentView.systemParams}
-                                                    readings={this.state.currentView.readings}
-                                                />
-                                            </Col>
-                                        </Row>
-                                        <Row >
-                                            <Col lg={12}>
-                                                <h3 className={classes.GraphTitle}>Highest, lowest and average daily readings</h3>
-
-                                                <HighLow
-                                                    fishParams={this.state.currentView.systemParams}
-                                                    readings={this.state.currentView.readings}
-                                                />
-                                            </Col>
-                                        </Row>
-                                    </Tab>
-                                    <Tab eventKey="ph" title="pH">
-                                        <ComingSoon/>
-                                    </Tab>
-                                    <Tab eventKey="nh3" title="Nh3">
-                                        <ComingSoon/>
-                                    </Tab>
-                                </Tabs>
-</div>
+                                                    <HighLow
+                                                        fishParams={this.state.currentView.systemParams}
+                                                        readings={this.state.currentView.readings}
+                                                    />
+                                                </Col>
+                                            </Row>
+                                        </Tab>
+                                        <Tab eventKey="ph" title="pH">
+                                            <ComingSoon/>
+                                        </Tab>
+                                        <Tab eventKey="nh3" title="Nh3">
+                                            <ComingSoon/>
+                                        </Tab>
+                                    </Tabs>
+                                </div>
                                 <Row/>
 
                             </div>
                             <div ref={this.bottomTriggerEl} id="sticky-end"></div>
-                                         </div>
-                        <hr  className="divider"/>
+                        </div>
+                        <hr className="divider"/>
 
                         <h2 className="reading-box">Settings</h2>
-                        <p className={classes.SectionText}>If you are not satisfied with the preset alert triggers for the selected fish or want
+                        <p className={classes.SectionText}>If you are not satisfied with the preset alert triggers for
+                            the selected fish or want
                             entirely new customizations, add your own using the sliders in this section.</p>
                         <br/>
                         <div className={classes.StatusWrapper}>
-                {/*           <SettingsContainer
+                            <SettingsContainer
                                 fishSettingName={this.state.currentView.fishSettingName}
                                 systemParams={this.state.currentView.systemParams}
                                 minDomain={this.state.tempDomain[0]}
@@ -877,117 +826,19 @@ if (this.topTriggerEl.current !== null ) { // Check that Aquaponics page has ren
                                 tempUpdate={this.state.tempSettingsUpdate}
                                 nh3Update={this.state.nh3SettingsUpdate}
                                 phUpdate={this.state.phSettingsUpdate}
-
+                                handleChange={this.changeHandler}
 
                             />
-*/}
-                        <Tabs className={classes.TabContainer} Key="customise-current" id="custom-tab">
 
-                            <Tab eventKey="customise-current" title="Current Fish"
-                                 style={{background: "white", color: "black", borderRadius: "0px 0px 20px 20px"}}>
-                                <br/>
-                                <h5>{this.state.currentView.fishSettingName}</h5>
-                                <FishThumb fishParams={this.state.currentView.systemParams} />
-
-                                    <br/>
-                                    <SettingsTemp
-                                        //onUpdate={this.onTempSettingsUpdate}
-                                        vertical={true}
-                                        onChange={(value)=>this.changeHandler('tempSettingsUpdate', value )}
-                                        mindomain={this.state.tempDomain[0]}
-                                        maxdomain={this.state.tempDomain[1]}
-                                        updates={this.state.tempSettingsUpdate}
-                                        reset={this.resetTempSettings}
-                                        save={this.saveTempSettings}
-                                        renderButtons={true}
-                                    />
-                                    <SettingsPh
-                                        onChange={(value)=>this.changeHandler('phSettingsUpdate', value )}
-                                        updates={this.state.phSettingsUpdate}
-                                        reset={this.resetPhSettings}
-                                        save={this.savePhSettings}
-                                        renderButtons={true}
-                                    />
-                                    <SettingsNh3
-                                        onChange={(value)=>this.changeHandler('nh3SettingsUpdate', value )}
-                                        updates={this.state.nh3SettingsUpdate}
-                                        reset={this.resetNh3Settings}
-                                        save={this.saveNh3Settings}
-                                        renderButtons={true}
-                                    />
-
-                            </Tab>
-                            <Tab eventKey="Create New" title="New Customisation"
-                                 style={{background: "white", color: "black", borderRadius: "0px 0px 20px 20px"}}>
-                                <br/>
-                                <h5>Create new customisation</h5>
-
-                                <br/>
-                                <AvForm
-                                    onValidSubmit={this.handleValidSubmit}
-                                    onInvalidSubmit={this.handleInvalidSubmit}
-                                    ref={c => (this.form = c)}
-                                >
-
-                             <br/>
-                                <SettingsTemp
-                                    //onUpdate={this.onTempSettingsUpdate}
-                                    vertical={true}
-                                    onChange={(value)=>this.changeHandler('userTempSettingsUpdate', value )}
-                                    mindomain={this.state.userParams.temp_low_critical}
-                                    maxdomain={this.state.userParams.temp_high_critical}
-                                    updates={this.state.userTempSettingsUpdate}
-                                    renderButtons={false}
-                                />
-                                <SettingsPh
-                                    onChange={(value)=>this.changeHandler('userPhSettingsUpdate', value )}
-                                    updates={this.state.userPhSettingsUpdate}
-                                    renderButtons={false}
-                                />
-                                <SettingsNh3
-                                    onChange={(value)=>this.changeHandler('userNh3SettingsUpdate', value )}
-                                    updates={this.state.userNh3SettingsUpdate}
-                                    renderButtons={false}
-                                />
-                                    <label htmlFor="fname">Setting Name:</label><br/>
-                                    <AvField style={{width:"200px", margin:"auto"}} type="text" id="fname" name="fname"
-                                             onChange={this.handleSettingNameChange}
-                                             value={this.state.settingName}
-                                             validate={{
-                                                 required: {value: true, errorMessage: 'Please enter a setting name'},
-                                                 pattern: {
-                                                     value: '/^[a-zA-Z0-9_]+$/',
-                                                     errorMessage: 'Your setting must be composed only with letters or numbers or _'
-                                                 },
-                                                 minLength: {
-                                                     value: 5,
-                                                     errorMessage: 'Your setting name must be between 5 and 30 characters'
-                                                 },
-                                                 maxLength: {
-                                                     value: 30,
-                                                     errorMessage: 'Your setting name must be between 5 and 30 characters'
-                                                 }
-                                             }}
-                                    />
-                                <Button className={classes.ButtonEnter} style={{margin: "10px 2%"}} type="submit">Enter All</Button>
-                                </AvForm>
-                                <Button  className={classes.ButtonReset} style={{margin: "10px 2%"}} onClick={()=>{
-                                    this.resetUserSettings();
-                                }} type="submit">Reset All</Button>
-
-
-
-                            </Tab>
-
-                        </Tabs>
                         </div>
                         <br/>
 
                         <hr className="divider"/>
                         <h2 className="reading-box">System Advice</h2>
-                        <p className={classes.SectionText}>This area provides advice and troubleshooting on your system</p>
+                        <p className={classes.SectionText}>This area provides advice and troubleshooting on your
+                            system</p>
                         <div className={classes.StatusWrapper}>
-                        <AdviceContainer />
+                            <AdviceContainer/>
                         </div>
                         <hr className="divider"/>
                         <div className="project-icons">

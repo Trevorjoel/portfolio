@@ -51,33 +51,7 @@ componentDidMount() {
 
     })
 }
-    onTempSettingsChange = tempSettingsUpdate => {
-        this.setState({tempSettingsUpdate})
-    };
 
-    onPhSettingsChange = phSettingsUpdate => {
-        this.setState({phSettingsUpdate})
-    };
-
-    onNh3SettingsChange = nh3SettingsUpdate => {
-        this.setState({nh3SettingsUpdate})
-    };
-
-    onUserTempSettingsChange = userTempSettingsUpdate => {
-        this.setState({userTempSettingsUpdate})
-    };
-
-    onUserPhSettingsChange = userPhSettingsUpdate => {
-        this.setState({userPhSettingsUpdate})
-    };
-
-    onUserNh3SettingsChange = userNh3SettingsUpdate => {
-        this.setState({userNh3SettingsUpdate})
-    };
-    myChangeHandler = (name, value) => {
-console.log('Running ' + value)
-        this.setState({[name]: value});
-    }
     render() {
         return(
             <Tabs className={classes.TabContainer} Key="customise-current" id="custom-tab">
@@ -91,29 +65,26 @@ console.log('Running ' + value)
                     <br/>
                    <SettingsTemp
                         vertical={true}
-                        name={this.state.tempSettingsUpdate}
-                        onChange={(value)=>this.myChangeHandler('tempSettingsUpdate', value )}
-                        updates={this.state.tempSettingsUpdate}
+                        onChange={(value)=> this.props.handleChange('tempSettingsUpdate', value )}
+                        updates={this.props.tempUpdate}
                         mindomain={this.props.minDomain}
                         maxdomain={this.props.maxDomain}
                         reset={this.resetTempSettings}
                         save={this.saveTempSettings}
                         renderButtons={true}
-                        name={'tempSettingsUpdate'}
+
                     />
 
                 <SettingsPh
-                    onChange={(value)=>this.myChangeHandler('phSettingsUpdate', value )}
-                           updates={this.state.phSettingsUpdate}
+                    onChange={(value)=>this.props.handleChange('phSettingsUpdate', value )}
+                           updates={this.props.phUpdate}
                            reset={this.resetPhSettings}
                            save={this.savePhSettings}
                            renderButtons={true}
                        />
-                    {console.log(this.state.tempSettingsUpdate)}
-                    {console.log(this.state.phSettingsUpdate)}
                     <SettingsNh3
-                           onChange={this.onNh3SettingsChange}
-                           updates={this.state.nh3SettingsUpdate}
+                           onChange={(value)=>this.props.handleChange('nh3SettingsUpdate', value )}
+                           updates={this.props.nh3Update}
                            reset={this.resetNh3Settings}
                            save={this.saveNh3Settings}
                            renderButtons={true}
@@ -133,25 +104,28 @@ console.log('Running ' + value)
                     >
 
                         <br/>
-                        {/*<SettingsTemp
+                        <SettingsTemp
                             //onUpdate={this.onTempSettingsUpdate}
                             vertical={true}
-                            onChange={this.onUserTempSettingsChange}
-                            mindomain={this.props.systemParams.temp_low_critical}
-                            maxdomain={this.props.systemParams.temp_high_critical}
-                            updates={this.state.userTempSettingsUpdate}
+                            onChange={(value)=> this.props.handleChange('tempSettingsUpdate', value )}
+                            updates={this.props.tempUpdate}
+                            mindomain={this.props.minDomain}
+                            maxdomain={this.props.maxDomain}
+                            reset={this.resetTempSettings}
+                            save={this.saveTempSettings}
                             renderButtons={false}
                         />
                         <SettingsPh
-                            onChange={this.onUserPhSettingsChange}
-                            updates={this.state.userPhSettingsUpdate}
+                            onChange={(value)=>this.props.handleChange('phSettingsUpdate', value )}
+                            updates={this.props.phUpdate}
+
                             renderButtons={false}
                         />
                         <SettingsNh3
-                            onChange={this.onUserNh3SettingsChange}
-                            updates={this.state.userNh3SettingsUpdate}
+                            onChange={(value)=>this.props.handleChange('nh3SettingsUpdate', value )}
+                            updates={this.props.nh3Update}
                             renderButtons={false}
-                        />*/}
+                        />
                         <label htmlFor="fname">Setting Name:</label><br/>
                         <AvField style={{width:"200px", margin:"auto"}} type="text" id="fname" name="fname"
                                  onChange={this.handleSettingNameChange}

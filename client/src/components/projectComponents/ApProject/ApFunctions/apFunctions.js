@@ -50,9 +50,8 @@ export const tempController = function (temp) {
             this.setState({tempCaptureValue: this.state.tempUpdate});
         }
     }, 5000);
-
     switch (true) {
-        case   temp <= this.state.fishParams.temp_low_critical  :
+        case   temp <= this.state.currentView.systemParams.temp_low_critical  :
             if (this.state.tempUpdate === this.state.tempCaptureValue && this.state.tempShowNotification.tempLowCritical === true) {
 
                 (this.createNotificationController('error', Assets.tempLowNotifyCritical, Assets.tempLowTitle))();
@@ -69,7 +68,6 @@ export const tempController = function (temp) {
             return (<div><StatusAccordion
                 paramName={Assets.paramNameTemp}
                 divStyle={'red-alert'}
-                toggleHandler={this.toggleTempHandler.bind(this)}
                 updatedValue={this.state.tempUpdate[0].toPrecision(2)}
                 symbol={String.fromCharCode(8451)}
                 statusTitle={Assets.tempLowTitle}
@@ -79,7 +77,7 @@ export const tempController = function (temp) {
                 addRadius={{borderRadius: "20px 20px 0 0"}}
             /></div>);
 
-        case temp > this.state.fishParams.temp_low_critical && temp <= this.state.fishParams.temp_low_warn : //
+        case temp > this.state.currentView.systemParams.temp_low_critical && temp <= this.state.currentView.systemParams.temp_low_warn : //
 
             if (this.state.tempUpdate === this.state.tempCaptureValue && this.state.tempShowNotification.tempLowWarn === true) {
 
@@ -99,7 +97,6 @@ export const tempController = function (temp) {
             return <StatusAccordion
                 paramName={Assets.paramNameTemp}
                 divStyle={'yellow-alert'}
-                toggleHandler={this.toggleTempHandler.bind(this)}
                 updatedValue={this.state.tempUpdate[0].toPrecision(3)}
                 symbol={String.fromCharCode(8451)}
                 statusTitle={Assets.tempLowTitle}
@@ -109,7 +106,7 @@ export const tempController = function (temp) {
                 addRadius={{borderRadius: "20px 20px 0 0"}}
             />;
 
-        case temp > this.state.fishParams.temp_low_warn && temp <= this.state.fishParams.temp_high_warn : //
+        case temp > this.state.currentView.systemParams.temp_low_warn && temp <= this.state.currentView.systemParams.temp_high_warn : //
 
             if (this.state.tempUpdate === this.state.tempCaptureValue && this.state.tempShowNotification.tempOptimal === true) {
 
@@ -128,7 +125,6 @@ export const tempController = function (temp) {
             return <StatusAccordion
                 paramName={Assets.paramNameTemp}
                 divStyle={'green-alert'}
-                toggleHandler={this.toggleTempHandler.bind(this)}
                 updatedValue={this.state.tempUpdate[0].toPrecision(3)}
                 symbol={String.fromCharCode(8451)}
                 statusTitle={Assets.tempOkTitle}
@@ -138,7 +134,7 @@ export const tempController = function (temp) {
                 addRadius={{borderRadius: "20px 20px 0 0"}}
             />;
 
-        case temp > this.state.fishParams.temp_high_warn && temp <= this.state.fishParams.temp_high_critical : //
+        case temp > this.state.currentView.systemParams.temp_high_warn && temp <= this.state.currentView.systemParams.temp_high_critical : //
             if (this.state.tempUpdate === this.state.tempCaptureValue && this.state.tempShowNotification.tempHighWarn === true) {
 
                 (this.createNotificationController('warning', Assets.tempHighNotifyWarn, Assets.tempHighTitle))();
@@ -155,7 +151,6 @@ export const tempController = function (temp) {
             return <StatusAccordion
                 paramName={Assets.paramNameTemp}
                 divStyle={'yellow-alert'}
-                toggleHandler={this.toggleTempHandler.bind(this)}
                 updatedValue={this.state.tempUpdate[0].toPrecision(3)}
                 symbol={String.fromCharCode(8451)}
                 statusTitle={Assets.tempHighTitle}
@@ -166,7 +161,7 @@ export const tempController = function (temp) {
             />;
 
 
-        case temp > this.state.fishParams.temp_high_critical: //
+        case temp > this.state.currentView.systemParams.temp_high_critical: //
             if (this.state.tempUpdate === this.state.tempCaptureValue && this.state.tempShowNotification.tempHighCritical === true) {
 
                 (this.createNotificationController('error', Assets.tempHighNotifyCritical, Assets.tempHighTitle))();
@@ -183,7 +178,6 @@ export const tempController = function (temp) {
             return <StatusAccordion
                 paramName={Assets.paramNameTemp}
                 divStyle={'red-alert'}
-                toggleHandler={this.toggleTempHandler.bind(this)}
                 updatedValue={this.state.tempUpdate[0].toPrecision(3)}
                 symbol={String.fromCharCode(8451)}
                 statusTitle={Assets.tempHighTitle}
@@ -219,7 +213,6 @@ export const phController = function (ph) {
             return <StatusAccordion
                 paramName={Assets.paramNamePh}
                 divStyle={'red-alert'}
-                toggleHandler={this.togglePhHandler.bind(this)}
                 updatedValue={this.state.phUpdate[0.].toPrecision(2)}
                 symbol={'pH'}
                 statusTitle={Assets.phLowTitle}
@@ -240,7 +233,7 @@ export const phController = function (ph) {
             return <StatusAccordion
                 paramName={Assets.paramNamePh}
                 divStyle={'yellow-alert'}
-                toggleHandler={this.togglePhHandler.bind(this)}
+
                 updatedValue={this.state.phUpdate[0.].toPrecision(2)}
                 symbol={'pH'}
                 statusTitle={Assets.phLowTitle}
@@ -263,7 +256,6 @@ export const phController = function (ph) {
             return <StatusAccordion
                 paramName={Assets.paramNamePh}
                 divStyle={'green-alert'}
-                toggleHandler={this.togglePhHandler.bind(this)}
                 updatedValue={this.state.phUpdate[0.].toPrecision(2)}
                 symbol={'pH'}
                 statusTitle={Assets.phOkTitle}
@@ -284,7 +276,6 @@ export const phController = function (ph) {
             return <StatusAccordion
                 paramName={Assets.paramNamePh}
                 divStyle={'yellow-alert'}
-                toggleHandler={this.togglePhHandler.bind(this)}
                 updatedValue={this.state.phUpdate[0.].toPrecision(2)}
                 symbol={'pH'}
                 statusTitle={Assets.phHighTitle}
@@ -306,7 +297,6 @@ export const phController = function (ph) {
             return <StatusAccordion
                 paramName={Assets.paramNamePh}
                 divStyle={'red-alert'}
-                toggleHandler={this.togglePhHandler.bind(this)}
                 updatedValue={this.state.phUpdate[0.].toPrecision(2)}
                 symbol={'pH'}
                 statusTitle={Assets.phHighTitle}
@@ -342,7 +332,6 @@ export const nh3Controller = function (nh3) {
             return <StatusAccordion
                 paramName={""}
                 divStyle={'green-alert'}
-                toggleHandler={this.toggleNh3Handler.bind(this)}
                 updatedValue={this.state.nh3Update[0].toPrecision(2)}
                 symbol={'mg/L'}
                 statusTitle={Assets.nh3TitleOk()}
@@ -367,7 +356,6 @@ export const nh3Controller = function (nh3) {
             return <StatusAccordion
                 paramName={""}
                 divStyle={'yellow-alert'}
-                toggleHandler={this.toggleNh3Handler.bind(this)}
                 updatedValue={this.state.nh3Update[0].toPrecision(2)}
                 symbol={'mg/L'}
                 statusTitle={Assets.nh3TitleHigh()}
@@ -389,7 +377,6 @@ export const nh3Controller = function (nh3) {
             return <StatusAccordion
                 paramName={""}
                 divStyle={'red-alert'}
-                toggleHandler={this.toggleNh3Handler.bind(this)}
                 updatedValue={this.state.nh3Update[0].toPrecision(2)}
                 symbol={'mg/L'}
                 statusTitle={nh3TitleHigh()}
@@ -465,31 +452,8 @@ export const getPreviousTime = async function () {
     return query;
 
 };
-//jhg
-
-/*export const selectReadings = async function (numberOfReadings) {
-
-    const response = await fetch('/api/all', {
-        method: 'POST',
-        headers:
-            {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-            },
-        body: JSON.stringify({
-            numberOfReadings: numberOfReadings,
-        })
-    })
-    const query = await response.json();
-
-    if (response.status !== 200) throw Error(query.message);
-    return query;
-}*/
-// Under construction
 
 export const selectFishType = async function (fishId) {
-    console.log('get fish params');
-
     const response = await fetch('/api/fish', {
         method: 'POST',
         headers:
@@ -510,7 +474,6 @@ export const selectFishType = async function (fishId) {
 }
 
 export const getFirstLastReadings = async function () {
-    console.log('get last readings');
 
     const response = await fetch('/api/minmax', {
         method: 'GET',
@@ -613,7 +576,6 @@ export const addSettingsToDB = async function (type_settings, setting_name, temp
 };
 
 export const selectUserParameters = async function (userId,settingName) {
-    console.log('get user params');
 
     const response = await fetch('/api/user', {
         method: 'POST',

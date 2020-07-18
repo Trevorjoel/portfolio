@@ -1,7 +1,7 @@
 import trout from "../Assets/troutPic.png";
 import silverPerch from '../Assets/silver_perchPic.png';
 import barramundi from '../Assets/barraPic.png';
-import custom from '../Assets/piranha-png-photos.png'
+import custom from '../Assets/pinpng.com-great-white-shark-png-686944.png'
 import classes from './FishProfile.module.scss';
 import React, { useState } from 'react';
 import {Dropdown, DropdownToggle, DropdownMenu, DropdownItem, NavItem, NavLink, Nav, Col} from 'reactstrap';
@@ -27,7 +27,6 @@ const FishProfile = (props) =>{ // todo: write a decent function for image swap
         default:
             fishImage = custom
     }
-    console.log(props.selectedName)
 
     const [dropdownOpen, setDropdownOpen] = useState(false);
 

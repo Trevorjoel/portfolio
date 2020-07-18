@@ -1,14 +1,12 @@
-/*import classes from '../advicePages/AdviceContainer.module.scss';*/
+
 import classes from './StatusAccordion.module.scss';
 import React, {useState, useRef} from "react";
-import Chevron from "../advicePages/Chevron";
 import {Badge, Col, Row} from "reactstrap";
 import Button from "react-bootstrap/Button";
 import {Link} from "react-scroll";
 import {NavLink as RRNavLink} from "react-router-dom";
 import Logo from "../Assets/logos/logo-01.png";
 
-// Caret symbols &#8897; &#8896; [classes.Color, classes.Size].join(' ')
 const Accordion = (props) => {
     const [setActive, setActiveState] = useState("");
     const [setOpacity, setOpacityState] = useState("0");
