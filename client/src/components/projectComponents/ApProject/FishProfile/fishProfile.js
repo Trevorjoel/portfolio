@@ -27,7 +27,7 @@ const FishProfile = (props) =>{ // todo: write a decent function for image swap
                     <FishSwitch
                         selectedName={props.selectedName}
                         viewParams={props.viewParams}
-                        size={200}
+                        size={250}
                                 />
                 <div>
                     <Dropdown   title="Change fish" isOpen={dropdownOpen} toggle={toggle}>

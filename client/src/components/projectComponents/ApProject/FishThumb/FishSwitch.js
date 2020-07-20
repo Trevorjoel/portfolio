@@ -37,8 +37,8 @@ return(
     <img
         style={{width:props.size, margin:"30px auto 0px auto"}}
         data-aos="fade-left"
-        data-aos-delay="1000"
-        data-aos-duration="800"
+        data-aos-delay="600"
+        data-aos-duration="1000"
         alt={props.selectedName}
         className={classes.FishImage}
         src={img}/>: <LoadingContainer/>}

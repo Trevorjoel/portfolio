@@ -38,6 +38,7 @@ import FishSwitch from "./FishThumb/FishSwitch";
 import LiveMonitorDescription from "./Descriptions/LiveMonitorDescription";
 import Logo from './Assets/logos/logo-03.png'
 import SettingsContainer from "./Settings/SettingsContainer";
+import DropdownFish from "./DateRanges/DropDownFish";
 // Todo: Create id's to navigate the demo app, example: to the caring for trout pages
 //todo: Conditionally render buttons in the settings area
 
@@ -110,15 +111,14 @@ class ApProjectContainer extends Component {
             tempDomain: [], // todo: find a better way to pass domains into the graphs
 
             // NEW STATE
-            currentView: {
-                fishName: 'Place Holder', // Pass in  fish.fish_name or settings.setting_name
-                fishImage: 'place holder', // Pass in URL or function to render image
-                navTo: 'place holder', // Pass in string with element ID
-                systemParams: [],
+
+                fishName: 'Loading...', // Pass in  fish.fish_name or settings.setting_name
+                fishImage: 'Loading...', // Pass in URL or function to render image
+                navTo: '#', // Pass in string with element ID
+                systemParams: null,
                 storedParams: [],
                 readings: [], // keep the readings in here?
 
-            }
         };
         // Bind the imported functions
         this.tempController = tempController.bind(this);
@@ -179,29 +179,28 @@ class ApProjectContainer extends Component {
     // Reset settings to default of selected fish setting by param
     resetTempSettings = () => {
         this.setState({
-
-            tempSettingsUpdate: [this.state.fishParams.temp_low_critical,
-                this.state.fishParams.temp_low_warn,
-                this.state.fishParams.temp_high_warn,
-                this.state.fishParams.temp_high_critical].slice(),
+            tempSettingsUpdate: [this.state.systemParams.temp_low_critical,
+                this.state.systemParams.temp_low_warn,
+                this.state.systemParams.temp_high_warn,
+                this.state.systemParams.temp_high_critical].slice(),
         })
     }
 
     resetPhSettings = () => {
 
         this.setState({
-            phSettingsUpdate: [this.state.fishParams.ph_low_critical,
-                this.state.fishParams.ph_low_warn,
-                this.state.fishParams.ph_high_warn,
-                this.state.fishParams.ph_high_critical].slice(),
+            phSettingsUpdate: [this.state.systemParams.ph_low_critical,
+                this.state.systemParams.ph_low_warn,
+                this.state.systemParams.ph_high_warn,
+                this.state.systemParams.ph_high_critical].slice(),
         })
     }
 
     resetNh3Settings = () => {
 
         this.setState({
-            nh3SettingsUpdate: [this.state.fishParams.nh3_warn,
-                this.state.fishParams.nh3_critical].slice(),
+            nh3SettingsUpdate: [this.state.systemParams.nh3_warn,
+                this.state.systemParams.nh3_critical].slice(),
         })
     }
 // Reset settings to default of selected fish/usr all Just confirm
@@ -222,7 +221,7 @@ class ApProjectContainer extends Component {
 
     saveTempSettings = () => {
         if (JSON.stringify(this.state.tempSettingsUpdate) !== JSON.stringify(this.state.tempSettingsValue)) {
-            this.addSettingsToDB('addtempsettings', this.state.fishParams.fish_name + '_custom', this.state.tempSettingsUpdate[0], this.state.tempSettingsUpdate[1],
+            this.addSettingsToDB('addtempsettings', this.state.systemParams.fish_name + '_custom', this.state.tempSettingsUpdate[0], this.state.tempSettingsUpdate[1],
                 this.state.tempSettingsUpdate[2], this.state.tempSettingsUpdate[3], this.state.phSettingsValue[0],
                 this.state.phSettingsValue[1], this.state.phSettingsValue[2], this.state.phSettingsValue[3],
                 this.state.nh3SettingsValue[0], this.state.nh3SettingsValue[1], this.state.tempValue[0],
@@ -236,7 +235,7 @@ class ApProjectContainer extends Component {
 
     savePhSettings = () => {
         if (JSON.stringify(this.state.phSettingsUpdate) !== JSON.stringify(this.state.phSettingsValue)) {
-            this.addSettingsToDB('addphpsettings', this.state.fishParams.fish_name + '_custom', this.state.tempSettingsValue[0], this.state.tempSettingsValue[1],
+            this.addSettingsToDB('addphpsettings', this.state.systemParams.fish_name + '_custom', this.state.tempSettingsValue[0], this.state.tempSettingsValue[1],
                 this.state.tempSettingsValue[2], this.state.tempSettingsValue[3], this.state.phSettingsUpdate[0],
                 this.state.phSettingsUpdate[1], this.state.phSettingsUpdate[2], this.state.phSettingsUpdate[3],
                 this.state.nh3SettingsValue[0], this.state.nh3SettingsValue[1], this.state.tempValue[0],
@@ -251,7 +250,7 @@ class ApProjectContainer extends Component {
 
     saveNh3Settings = () => {
         if (JSON.stringify(this.state.nh3SettingsUpdate) !== JSON.stringify(this.state.nh3SettingsValue)) {
-            this.addSettingsToDB('addnh3psettings', this.state.fishParams.fish_name + '_custom', this.state.tempSettingsValue[0], this.state.tempSettingsValue[1],
+            this.addSettingsToDB('addnh3psettings', this.state.systemParams.fish_name + '_custom', this.state.tempSettingsValue[0], this.state.tempSettingsValue[1],
                 this.state.tempSettingsValue[2], this.state.tempSettingsValue[3], this.state.phSettingsValue[0],
                 this.state.phSettingsValue[1], this.state.phSettingsValue[2], this.state.phSettingsValue[3],
                 this.state.nh3SettingsUpdate[0], this.state.nh3SettingsUpdate[1], this.state.tempValue[0],
@@ -287,11 +286,9 @@ class ApProjectContainer extends Component {
             .then(query => {
                     const returnedFishParams = query;
                     this.setState({
-                        currentView: {
                             fishSettingName: returnedFishParams.fish_name,
-                            systemParams: returnedFishParams,
-                            readings: this.state.currentView.readings
-                        },
+                            systemParams: returnedFishParams
+                        ,
                         fishParams: returnedFishParams,
 
                         // Set state here
@@ -317,8 +314,8 @@ class ApProjectContainer extends Component {
                             returnedFishParams.nh3_critical].slice(),
                         tempValue: [this.setTarget(returnedFishParams.temp_low_warn, returnedFishParams.temp_high_warn)].slice(),
                         tempUpdate: [this.setTarget(returnedFishParams.temp_low_warn, returnedFishParams.temp_high_warn)].slice(),
-                        phValue: [returnedFishParams.ph_target].slice(),
-                        phUpdate: [returnedFishParams.ph_target].slice(),
+                        phValue: [this.setTarget(returnedFishParams.ph_low_warn, returnedFishParams.ph_high_warn)],
+                        phUpdate: [this.setTarget(returnedFishParams.ph_low_warn, returnedFishParams.ph_high_warn)],
                         nh3Value: [returnedFishParams.nh3_target].slice(),
                         nh3Update: [returnedFishParams.nh3_target].slice(),
                         tempDomain: [returnedFishParams.temp_low_critical,
@@ -333,11 +330,10 @@ class ApProjectContainer extends Component {
             .then(query => {
                 const returnedUserParams = query;
                 this.setState({
-                    currentView: {
+
                         fishSettingName: returnedUserParams.setting_name,
-                        systemParams: returnedUserParams,
-                        readings: this.state.currentView.readings
-                    },
+                        systemParams: returnedUserParams
+                    ,
                     userParams: returnedUserParams,
 
                     // Set state here
@@ -364,8 +360,8 @@ class ApProjectContainer extends Component {
                     tempUpdate: [this.setTarget(returnedUserParams.temp_low_warn, returnedUserParams.temp_high_warn)].slice(),
                     userTempValue: [this.setTarget(returnedUserParams.temp_low_warn, returnedUserParams.temp_high_warn)].slice(),
                     userTempUpdate: [this.setTarget(returnedUserParams.temp_low_warn, returnedUserParams.temp_high_warn)].slice(),
-                    userPhValue: [returnedUserParams.ph_target].slice(),
-                    userPhUpdate: [returnedUserParams.ph_target].slice(),
+                    userPhValue: [this.setTarget(returnedUserParams.ph_low_warn, returnedUserParams.ph_high_warn)],
+                    userPhUpdate: [this.setTarget(returnedUserParams.ph_low_warn, returnedUserParams.ph_high_warn)],
                     userNh3Value: [returnedUserParams.nh3_target].slice(),
                     userNh3Update: [returnedUserParams.nh3_target].slice(),
 
@@ -378,11 +374,9 @@ class ApProjectContainer extends Component {
             .then(query => {
                     const returnedUserParams = query;
                     this.setState({
-                        currentView: {
+
                             fishSettingName: returnedUserParams.setting_name,
                             systemParams: returnedUserParams,
-                            readings: this.state.currentView.readings
-                        },
 
                         // Set state here
                         userTempSettingsValue: [returnedUserParams.temp_low_critical,
@@ -409,8 +403,8 @@ class ApProjectContainer extends Component {
                         tempUpdate: [this.setTarget(returnedUserParams.temp_low_warn, returnedUserParams.temp_high_warn)].slice(),
                         userTempValue: [this.setTarget(returnedUserParams.temp_low_warn, returnedUserParams.temp_high_warn)].slice(),
                         userTempUpdate: [this.setTarget(returnedUserParams.temp_low_warn, returnedUserParams.temp_high_warn)].slice(),
-                        userPhValue: [returnedUserParams.ph_target].slice(),
-                        userPhUpdate: [returnedUserParams.ph_target].slice(),
+                        userPhValue: [this.setTarget(returnedUserParams.ph_low_warn, returnedUserParams.ph_high_warn)],
+                        userPhUpdate: [this.setTarget(returnedUserParams.ph_low_warn, returnedUserParams.ph_high_warn)],
                         userNh3Value: [returnedUserParams.nh3_target].slice(),
                         userNh3Update: [returnedUserParams.nh3_target].slice(),
                     })
@@ -423,11 +417,9 @@ class ApProjectContainer extends Component {
             .then(query => {
                     const returnedUserParams = query;
                     this.setState({
-                        currentView: {
                             fishSettingName: returnedUserParams.setting_name,
                             systemParams: returnedUserParams,
-                            readings: this.state.currentView.readings
-                        },
+
                         // Set state here
 
                         tempSettingsValue: [returnedUserParams.temp_low_critical, returnedUserParams.temp_low_warn,
@@ -449,8 +441,8 @@ class ApProjectContainer extends Component {
                         tempValue: [this.setTarget(returnedUserParams.temp_low_warn, returnedUserParams.temp_high_warn)].slice(),
                         tempUpdate: [this.setTarget(returnedUserParams.temp_low_warn, returnedUserParams.temp_high_warn)].slice(),
 
-                        phValue: [returnedUserParams.ph_target].slice(),
-                        phUpdate: [returnedUserParams.ph_target].slice(),
+                        phValue: [this.setTarget(returnedUserParams.ph_low_warn, returnedUserParams.ph_high_warn)],
+                        phUpdate: [this.setTarget(returnedUserParams.ph_low_warn, returnedUserParams.ph_high_warn)],
                         nh3Value: [returnedUserParams.nh3_target].slice(),
                         nh3Update: [returnedUserParams.nh3_target].slice(),
 
@@ -509,11 +501,6 @@ class ApProjectContainer extends Component {
                     );
                     this.setState({
                         readings: updatedReadings,
-                        currentView: {
-                            fishSettingName: this.state.currentView.fishSettingName,
-                            readings: updatedReadings,
-                            systemParams: this.state.currentView.systemParams
-                        },
                         startPeriod: moment(from).format('ddd, MMM Do, YYYY'),
                         endPeriod: moment(to).format('ddd, MMM Do,  YYYY'),
                     })
@@ -530,11 +517,10 @@ class ApProjectContainer extends Component {
                 }
             )
     }
+    // create a number between hi warn and low warn
     setTarget = (lowWarn, highWarn)=>{
         const a =  lowWarn + highWarn;
         const target = a/2;
-        console.log("AVG: " + target);
-
         return target
     }
 
@@ -649,8 +635,8 @@ class ApProjectContainer extends Component {
 
                                     <FishProfile
                                         allFish={this.state.fish}
-                                        viewParams={this.state.currentView.systemParams}
-                                        selectedName={this.state.currentView.fishSettingName}
+                                        viewParams={this.state.systemParams}
+                                        selectedName={this.state.fishSettingName}
                                         onFishChange={this.onFishChange}
                                         allSettings={this.state.settings}
                                         onSettingsChange={this.onSettingsChange}
@@ -747,7 +733,7 @@ class ApProjectContainer extends Component {
                                 <div id="sticky-el" ref={this.stickyEl}>
                                     <DateRange
                                         onDaySelect={this.mapReadingsRangeSetState}
-                                        selectedName={this.state.currentView.fishSettingName}
+                                        selectedName={this.state.fishSettingName}
                                         allFish={this.state.fish}
                                         onFishChange={this.onFishChange}
                                         allSettings={this.state.settings}
@@ -771,23 +757,27 @@ class ApProjectContainer extends Component {
                                                         <br/> {this.state.endPeriod}</h6>
 
                                                     <FishSwitch
-                                                        selectedName={this.state.currentView.fishSettingName}
-                                                        size={200}
+                                                        selectedName={this.state.fishSettingName}
+                                                        size={150}
                                                     />
+
+                                                        <DropdownFish allFish={this.state.fish} selectedName={this.state.fishSettingName}
+                                                                      onFishChange={this.onFishChange} allSettings={this.state.settings} onSettingsChange={this.onSettingsChange}/>
+
                                                     <h3 className={classes.GraphTitle}>Hourly readings</h3>
 
 
                                                     <LineGraph
-                                                        viewParams={this.state.currentView.systemParams}
-                                                        readings={this.state.currentView.readings}
+                                                        viewParams={this.state.systemParams}
+                                                        readings={this.state.readings}
                                                     />
                                                 </Col>
                                                 <Col lg={12}><br/>
                                                     <h3 className={classes.GraphTitle}>Readings by alert category</h3>
 
                                                     <TempPie
-                                                        viewParams={this.state.currentView.systemParams}
-                                                        readings={this.state.currentView.readings}
+                                                        viewParams={this.state.systemParams}
+                                                        readings={this.state.readings}
                                                     />
                                                 </Col>
                                             </Row>
@@ -797,8 +787,8 @@ class ApProjectContainer extends Component {
                                                         readings</h3>
 
                                                     <HighLow
-                                                        viewParams={this.state.currentView.systemParams}
-                                                        readings={this.state.currentView.readings}
+                                                        viewParams={this.state.systemParams}
+                                                        readings={this.state.readings}
                                                     />
                                                 </Col>
                                             </Row>
@@ -825,8 +815,8 @@ class ApProjectContainer extends Component {
                         <br/>
                         <div className={classes.StatusWrapper}>
                             <SettingsContainer
-                                fishSettingName={this.state.currentView.fishSettingName}
-                                systemParams={this.state.currentView.systemParams}
+                                fishSettingName={this.state.fishSettingName}
+                                systemParams={this.state.systemParams}
                                 minDomain={this.state.tempDomain[0]}
                                 maxDomain={this.state.tempDomain[1]}
                                 tempUpdate={this.state.tempSettingsUpdate}

@@ -13,30 +13,6 @@ class SettingsContainer extends Component{
     constructor(props) {
         super(props);
         this.state={
-            // Settings sliders controlled components
-            tempSettingsUpdate: [],
-            tempSettingsValue: [],
-            phSettingsUpdate: [0,0,0,0],
-            phSettingsValue: [],
-            nh3SettingsUpdate: [0,0,0,0],
-            nh3SettingsValue: [],
-            userParams: null,
-            tempDomain: [],
-            userTempValue: [],
-            userPhValue: [],
-            userNh3Value: [],
-            userTempUpdate: [],
-            userPhUpdate: [],
-            userNh3Update: [],
-            userTempSettingsUpdate: [],
-            userTempSettingsValue: [],
-            userPhSettingsUpdate: [],
-            userPhSettingsValue: [],
-            userNh3SettingsUpdate: [],
-            userNh3SettingsValue: [],
-            settingName: '',
-            settings: [],
-            fishParams:null
 
         }
     }
@@ -62,7 +38,7 @@ componentDidMount() {
                     <h5>{this.props.fishSettingName}</h5>
                     <FishSwitch
                         selectedName={this.props.fishSettingName}
-                        size={200}
+                        size={150}
                     />
 
                     <br/>

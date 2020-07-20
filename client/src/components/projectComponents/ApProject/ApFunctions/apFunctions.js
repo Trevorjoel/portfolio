@@ -51,7 +51,7 @@ export const tempController = function (temp) {
         }
     }, 5000);
     switch (true) {
-        case   temp <= this.state.currentView.systemParams.temp_low_critical  :
+        case   temp <= this.state.systemParams.temp_low_critical  :
             if (this.state.tempUpdate === this.state.tempCaptureValue && this.state.tempShowNotification.tempLowCritical === true) {
 
                 (this.createNotificationController('error', Assets.tempLowNotifyCritical, Assets.tempLowTitle))();
@@ -77,7 +77,7 @@ export const tempController = function (temp) {
                 addRadius={{borderRadius: "20px 20px 0 0"}}
             /></div>);
 
-        case temp > this.state.currentView.systemParams.temp_low_critical && temp <= this.state.currentView.systemParams.temp_low_warn : //
+        case temp > this.state.systemParams.temp_low_critical && temp <= this.state.systemParams.temp_low_warn : //
 
             if (this.state.tempUpdate === this.state.tempCaptureValue && this.state.tempShowNotification.tempLowWarn === true) {
 
@@ -106,7 +106,7 @@ export const tempController = function (temp) {
                 addRadius={{borderRadius: "20px 20px 0 0"}}
             />;
 
-        case temp > this.state.currentView.systemParams.temp_low_warn && temp <= this.state.currentView.systemParams.temp_high_warn : //
+        case temp > this.state.systemParams.temp_low_warn && temp <= this.state.systemParams.temp_high_warn : //
 
             if (this.state.tempUpdate === this.state.tempCaptureValue && this.state.tempShowNotification.tempOptimal === true) {
 
@@ -134,7 +134,7 @@ export const tempController = function (temp) {
                 addRadius={{borderRadius: "20px 20px 0 0"}}
             />;
 
-        case temp > this.state.currentView.systemParams.temp_high_warn && temp <= this.state.currentView.systemParams.temp_high_critical : //
+        case temp > this.state.systemParams.temp_high_warn && temp <= this.state.systemParams.temp_high_critical : //
             if (this.state.tempUpdate === this.state.tempCaptureValue && this.state.tempShowNotification.tempHighWarn === true) {
 
                 (this.createNotificationController('warning', Assets.tempHighNotifyWarn, Assets.tempHighTitle))();
@@ -161,7 +161,7 @@ export const tempController = function (temp) {
             />;
 
 
-        case temp > this.state.currentView.systemParams.temp_high_critical: //
+        case temp > this.state.systemParams.temp_high_critical: //
             if (this.state.tempUpdate === this.state.tempCaptureValue && this.state.tempShowNotification.tempHighCritical === true) {
 
                 (this.createNotificationController('error', Assets.tempHighNotifyCritical, Assets.tempHighTitle))();
@@ -200,7 +200,7 @@ export const phController = function (ph) {
         }
     }, 5000);
     switch (true) {
-        case   ph <= this.state.fishParams.ph_low_critical  :
+        case   ph <= this.state.systemParams.ph_low_critical  :
             if (this.state.phUpdate === this.state.phCaptureValue && this.state.phShowNotification.phLowCritical === true) {
 
                 (this.createNotificationController('error', Assets.phLowNotifyCritical, Assets.phLowTitle))();
@@ -220,7 +220,7 @@ export const phController = function (ph) {
                 adviceText={Assets.phLowCritical}
                 link={'https://portfolio.fullstack-adventure.com'}
             />;
-        case ph > this.state.fishParams.ph_low_critical && ph <= this.state.fishParams.ph_low_warn : //
+        case ph > this.state.systemParams.ph_low_critical && ph <= this.state.systemParams.ph_low_warn : //
             if (this.state.phUpdate === this.state.phCaptureValue && this.state.phShowNotification.phLowWarn === true) {
 
                 (this.createNotificationController('warning', Assets.phLowNotifyWarn, Assets.phLowTitle))();
@@ -241,7 +241,7 @@ export const phController = function (ph) {
                 adviceText={Assets.phLowWarn}
                 link={'https://portfolio.fullstack-adventure.com'}
             />;
-        case ph > this.state.fishParams.ph_low_warn && ph <= this.state.fishParams.ph_high_warn : //
+        case ph > this.state.systemParams.ph_low_warn && ph <= this.state.systemParams.ph_high_warn : //
 
             if (this.state.phUpdate === this.state.phCaptureValue && this.state.phShowNotification.phOptimal === true) {
 
@@ -252,7 +252,7 @@ export const phController = function (ph) {
                     }
                 })
             }
-
+console.log(this.state.phUpdate)
             return <StatusAccordion
                 paramName={Assets.paramNamePh}
                 divStyle={'green-alert'}
@@ -263,7 +263,7 @@ export const phController = function (ph) {
                 adviceText={Assets.phOk}
                 link={'https://portfolio.fullstack-adventure.com'}
             />;
-        case ph > this.state.fishParams.ph_high_warn && ph <= this.state.fishParams.ph_high_critical : //
+        case ph > this.state.systemParams.ph_high_warn && ph <= this.state.systemParams.ph_high_critical : //
             if (this.state.phUpdate === this.state.phCaptureValue && this.state.phShowNotification.phHighWarn === true) {
 
                 (this.createNotificationController('warning', Assets.phHighNotifyWarn, Assets.phHighTitle))();
@@ -284,7 +284,7 @@ export const phController = function (ph) {
                 link={'https://portfolio.fullstack-adventure.com'}
             />;
 
-        case ph > this.state.fishParams.ph_high_critical: //
+        case ph > this.state.systemParams.ph_high_critical: //
             if (this.state.phUpdate === this.state.phCaptureValue && this.state.phShowNotification.phHighCritical === true) {
 
                 (this.createNotificationController('error', Assets.phHighNotifyCritical, Assets.phHighTitle))();
@@ -314,7 +314,7 @@ export const phController = function (ph) {
 
 export const nh3Controller = function (nh3) {
     switch (true) {
-        case   nh3 <= this.state.fishParams.nh3_warn  :
+        case   nh3 <= this.state.systemParams.nh3_warn  :
             setInterval(() => {
                 if (this.state.nh3Update !== this.state.nh3CaptureValue) {
                     this.setState({nh3CaptureValue: this.state.nh3Update});
@@ -341,7 +341,7 @@ export const nh3Controller = function (nh3) {
                 addRadius={{borderRadius: "0 0 20px 20px"}}
             />;
 
-        case nh3 > this.state.fishParams.nh3_warn && nh3 <= this.state.fishParams.nh3_critical : //
+        case nh3 > this.state.systemParams.nh3_warn && nh3 <= this.state.systemParams.nh3_critical : //
 
             if (this.state.nh3Update === this.state.nh3CaptureValue && this.state.nh3ShowNotification.nh3HighWarn === true) {
 
@@ -364,7 +364,7 @@ export const nh3Controller = function (nh3) {
                 link={'https://portfolio.fullstack-adventure.com'}
                 addRadius={{borderRadius: "0 0 20px 20px"}}
             />;
-        case nh3 > this.state.fishParams.nh3_critical : //
+        case nh3 > this.state.systemParams.nh3_critical : //
             if (this.state.nh3Update === this.state.nh3CaptureValue && this.state.nh3ShowNotification.nh3HighCritical === true) {
 
                 (this.createNotificationController('error', Assets.nh3NotifyCritical, Assets.nh3TitleHigh()))();
