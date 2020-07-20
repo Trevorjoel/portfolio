@@ -34,7 +34,7 @@ import moment from 'moment';
 import {Tab, Tabs} from "react-bootstrap";
 import LoadingContainer from "./Loading/LoadingContainer";
 import ComingSoon from "./Loading/ComingSoon";
-import FishThumb from "./FishThumb/FishThumb";
+import FishSwitch from "./FishThumb/FishSwitch";
 import LiveMonitorDescription from "./Descriptions/LiveMonitorDescription";
 import Logo from './Assets/logos/logo-03.png'
 import SettingsContainer from "./Settings/SettingsContainer";
@@ -108,7 +108,7 @@ class ApProjectContainer extends Component {
             settingName: '',
             settings: [],
             tempDomain: [], // todo: find a better way to pass domains into the graphs
-            graphParams: null, // todo: this can be taken from a new current params object??
+
             // NEW STATE
             currentView: {
                 fishName: 'Place Holder', // Pass in  fish.fish_name or settings.setting_name
@@ -132,7 +132,7 @@ class ApProjectContainer extends Component {
         this.resetTempSettings = this.resetTempSettings.bind(this);
         this.resetPhSettings = this.resetPhSettings.bind(this);
         this.resetNh3Settings = this.resetNh3Settings.bind(this);
-        this.saveTempSettings = this.saveTempSettings.bind(this);
+       this.saveTempSettings = this.saveTempSettings.bind(this);
         this.savePhSettings = this.savePhSettings.bind(this);
         this.saveNh3Settings = this.saveNh3Settings.bind(this);
         this.addSettingsToDB = addSettingsToDB.bind(this);
@@ -176,7 +176,7 @@ class ApProjectContainer extends Component {
 
 
     }
-    // Reset settings to default of selected fish/usr setting by param
+    // Reset settings to default of selected fish setting by param
     resetTempSettings = () => {
         this.setState({
 
@@ -227,7 +227,6 @@ class ApProjectContainer extends Component {
                 this.state.phSettingsValue[1], this.state.phSettingsValue[2], this.state.phSettingsValue[3],
                 this.state.nh3SettingsValue[0], this.state.nh3SettingsValue[1], this.state.tempValue[0],
                 this.state.phValue[0], this.state.nh3Value[0]);
-
             this.setState({
                 tempSettingsValue: this.state.tempSettingsUpdate.slice(),
             })
@@ -294,7 +293,7 @@ class ApProjectContainer extends Component {
                             readings: this.state.currentView.readings
                         },
                         fishParams: returnedFishParams,
-                        graphParams: returnedFishParams,
+
                         // Set state here
                         tempSettingsValue: [returnedFishParams.temp_low_critical,
                             returnedFishParams.temp_low_warn,
@@ -317,7 +316,7 @@ class ApProjectContainer extends Component {
                         nh3SettingsUpdate: [returnedFishParams.nh3_warn,
                             returnedFishParams.nh3_critical].slice(),
                         tempValue: [this.setTarget(returnedFishParams.temp_low_warn, returnedFishParams.temp_high_warn)].slice(),
-                        tempUpdate: [this.setTarget(returnedFishParams.temp_low_warn, returnedFishParams.temp_high_warn)].slice(), // todo: create a function that calculates the middle of each warning params to set as default for alerts
+                        tempUpdate: [this.setTarget(returnedFishParams.temp_low_warn, returnedFishParams.temp_high_warn)].slice(),
                         phValue: [returnedFishParams.ph_target].slice(),
                         phUpdate: [returnedFishParams.ph_target].slice(),
                         nh3Value: [returnedFishParams.nh3_target].slice(),
@@ -340,7 +339,7 @@ class ApProjectContainer extends Component {
                         readings: this.state.currentView.readings
                     },
                     userParams: returnedUserParams,
-                    graphParams: returnedUserParams,
+
                     // Set state here
                     userTempSettingsValue: [returnedUserParams.temp_low_critical,
                         returnedUserParams.temp_low_warn,
@@ -362,6 +361,7 @@ class ApProjectContainer extends Component {
                         returnedUserParams.nh3_critical].slice(),
                     userNh3SettingsUpdate: [returnedUserParams.nh3_warn,
                         returnedUserParams.nh3_critical].slice(),
+                    tempUpdate: [this.setTarget(returnedUserParams.temp_low_warn, returnedUserParams.temp_high_warn)].slice(),
                     userTempValue: [this.setTarget(returnedUserParams.temp_low_warn, returnedUserParams.temp_high_warn)].slice(),
                     userTempUpdate: [this.setTarget(returnedUserParams.temp_low_warn, returnedUserParams.temp_high_warn)].slice(),
                     userPhValue: [returnedUserParams.ph_target].slice(),
@@ -383,7 +383,7 @@ class ApProjectContainer extends Component {
                             systemParams: returnedUserParams,
                             readings: this.state.currentView.readings
                         },
-                        graphParams: returnedUserParams,
+
                         // Set state here
                         userTempSettingsValue: [returnedUserParams.temp_low_critical,
                             returnedUserParams.temp_low_warn,
@@ -405,6 +405,8 @@ class ApProjectContainer extends Component {
                             returnedUserParams.nh3_critical].slice(),
                         userNh3SettingsUpdate: [returnedUserParams.nh3_warn,
                             returnedUserParams.nh3_critical].slice(),
+                        // tempUpdate is passed into the functions file to determine alerts, on change of fish/usr settings
+                        tempUpdate: [this.setTarget(returnedUserParams.temp_low_warn, returnedUserParams.temp_high_warn)].slice(),
                         userTempValue: [this.setTarget(returnedUserParams.temp_low_warn, returnedUserParams.temp_high_warn)].slice(),
                         userTempUpdate: [this.setTarget(returnedUserParams.temp_low_warn, returnedUserParams.temp_high_warn)].slice(),
                         userPhValue: [returnedUserParams.ph_target].slice(),
@@ -586,10 +588,10 @@ class ApProjectContainer extends Component {
     render() {
 
         const {fishParams} = this.state;
-        const {graphParams} = this.state;
+
         const {userParams} = this.state;
 
-        if (fishParams === null || graphParams === null || userParams === null) {
+        if (fishParams === null || userParams === null) {
             return <LoadingContainer/>;
         }
         this.handleObservations()
@@ -647,7 +649,7 @@ class ApProjectContainer extends Component {
 
                                     <FishProfile
                                         allFish={this.state.fish}
-                                        fishParams={this.state.currentView.systemParams}
+                                        viewParams={this.state.currentView.systemParams}
                                         selectedName={this.state.currentView.fishSettingName}
                                         onFishChange={this.onFishChange}
                                         allSettings={this.state.settings}
@@ -767,12 +769,16 @@ class ApProjectContainer extends Component {
 
                                                     <h6 className={classes.GraphSub}>{this.state.startPeriod}
                                                         <br/> {this.state.endPeriod}</h6>
-                                                    <FishThumb fishParams={this.state.currentView.systemParams}/>
+
+                                                    <FishSwitch
+                                                        selectedName={this.state.currentView.fishSettingName}
+                                                        size={200}
+                                                    />
                                                     <h3 className={classes.GraphTitle}>Hourly readings</h3>
 
 
                                                     <LineGraph
-                                                        fishParams={this.state.currentView.systemParams}
+                                                        viewParams={this.state.currentView.systemParams}
                                                         readings={this.state.currentView.readings}
                                                     />
                                                 </Col>
@@ -780,7 +786,7 @@ class ApProjectContainer extends Component {
                                                     <h3 className={classes.GraphTitle}>Readings by alert category</h3>
 
                                                     <TempPie
-                                                        fishParams={this.state.currentView.systemParams}
+                                                        viewParams={this.state.currentView.systemParams}
                                                         readings={this.state.currentView.readings}
                                                     />
                                                 </Col>
@@ -791,7 +797,7 @@ class ApProjectContainer extends Component {
                                                         readings</h3>
 
                                                     <HighLow
-                                                        fishParams={this.state.currentView.systemParams}
+                                                        viewParams={this.state.currentView.systemParams}
                                                         readings={this.state.currentView.readings}
                                                     />
                                                 </Col>
@@ -827,6 +833,7 @@ class ApProjectContainer extends Component {
                                 nh3Update={this.state.nh3SettingsUpdate}
                                 phUpdate={this.state.phSettingsUpdate}
                                 handleChange={this.changeHandler}
+                                saveTempSettings={this.saveTempSettings}
 
                             />
 

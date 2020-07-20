@@ -1,12 +1,12 @@
 import React, {Component} from "react";
 import {Tab, Tabs} from "react-bootstrap";
 import classes from "../ApProjectContainer.module.scss";
-import FishThumb from "../FishThumb/FishThumb";
+import FishSwitch from "../FishThumb/FishSwitch";
 import SettingsTemp from "./SettingsTemp";
 import SettingsPh from "./SettingsPh";
 import SettingsNh3 from "./SettingsNh3";
 import {AvField, AvForm} from "availity-reactstrap-validation";
-import {Button} from "reactstrap";
+import {Button, Col} from "reactstrap";
 import {getSettings} from "../ApFunctions/apFunctions";
 
 class SettingsContainer extends Component{
@@ -60,7 +60,10 @@ componentDidMount() {
                      style={{background: "white", color: "black", borderRadius: "0px 0px 20px 20px"}}>
                     <br/>
                     <h5>{this.props.fishSettingName}</h5>
-                    <FishThumb fishParams={this.props.systemParams} />
+                    <FishSwitch
+                        selectedName={this.props.fishSettingName}
+                        size={200}
+                    />
 
                     <br/>
                    <SettingsTemp
@@ -70,7 +73,7 @@ componentDidMount() {
                         mindomain={this.props.minDomain}
                         maxdomain={this.props.maxDomain}
                         reset={this.resetTempSettings}
-                        save={this.saveTempSettings}
+                        save={()=> this.saveTempSettings()}
                         renderButtons={true}
 
                     />

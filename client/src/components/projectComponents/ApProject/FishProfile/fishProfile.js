@@ -10,23 +10,9 @@ import {NavLink as RRNavLink} from "react-router-dom";
 import Logo from "../Assets/logos/logo-03.png";
 import LoadingContainer from "../Loading/LoadingContainer";
 import ComingSoon from "../Loading/ComingSoon";
+import FishSwitch from "../FishThumb/FishSwitch";
 // Test
 const FishProfile = (props) =>{ // todo: write a decent function for image swap
-    let fishImage;
-    switch (props.selectedName) {
-        case 'trout':
-            fishImage = trout
-            break;
-        case 'silver perch':
-            fishImage = silverPerch
-            break;
-        case 'barramundi':
-            fishImage = barramundi
-            break;
-
-        default:
-            fishImage = custom
-    }
 
     const [dropdownOpen, setDropdownOpen] = useState(false);
 
@@ -36,16 +22,13 @@ const FishProfile = (props) =>{ // todo: write a decent function for image swap
 
             <div >
                 <h3>Fish Stock</h3>
-                {props.fishParams  ? <img
-                    data-aos="fade-left"
-                    data-aos-delay="1000"
-                    data-aos-duration="800"
-                    style={{maxWidth:"300px"}}
-                    alt={props.fishParams.fish_name}
-                    className={classes.FishImage}
-                    src={fishImage}/> : <LoadingContainer/>}
 
 
+                    <FishSwitch
+                        selectedName={props.selectedName}
+                        viewParams={props.viewParams}
+                        size={200}
+                                />
                 <div>
                     <Dropdown   title="Change fish" isOpen={dropdownOpen} toggle={toggle}>
 
@@ -82,13 +65,13 @@ const FishProfile = (props) =>{ // todo: write a decent function for image swap
                 </div>
 
                   {/*  </Col>  <Col>
-                    */}<br/><p style={{textAlign:"center", textTransform:"capitalize"}}>Ideal ranges for {props.fishParams.fish_name}</p>
+                    */}<br/><p style={{textAlign:"center", textTransform:"capitalize"}}>Ideal ranges for {props.viewParams.fish_name}</p>
                     <div className={classes.OptimalWrapper}>
 
                         <div style={{textAlign:"center", marginBottom:"5px"}} className="reading-box ">
-                               <p style={{marginBottom:"0px"}}>{props.fishParams.temp_low_warn} - {props.fishParams.temp_high_warn} {String.fromCharCode(8451)}</p>
-                               <p style={{marginBottom:"0px"}}>{props.fishParams.ph_low_warn} - {props.fishParams.ph_high_warn} pH</p>
-                               <p style={{ marginBottom:"0px"}}> 0.0 - {props.fishParams.nh3_warn} NH<sub>3</sub> ppm</p>
+                               <p style={{marginBottom:"0px"}}>{props.viewParams.temp_low_warn} - {props.viewParams.temp_high_warn} {String.fromCharCode(8451)}</p>
+                               <p style={{marginBottom:"0px"}}>{props.viewParams.ph_low_warn} - {props.viewParams.ph_high_warn} pH</p>
+                               <p style={{ marginBottom:"0px"}}> 0.0 - {props.viewParams.nh3_warn} NH<sub>3</sub> ppm</p>
 
 
                         </div>
@@ -102,7 +85,7 @@ const FishProfile = (props) =>{ // todo: write a decent function for image swap
                             duration={500}
                         >
                             <p
-                                activeClassName="" tag={RRNavLink} href="/" exact to="/sensors">See our caring for <a style={{textTransform:"capitalize"}} href="#">{props.fishParams.fish_name}</a> page.</p>
+                                activeClassName="" tag={RRNavLink} href="/" exact to="/sensors">See our caring for <a style={{textTransform:"capitalize"}} href="#">{props.viewParams.fish_name}</a> page.</p>
                         </Link>
 
                     </div>

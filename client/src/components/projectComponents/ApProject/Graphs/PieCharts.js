@@ -14,22 +14,22 @@ let tempData=[];
         //tempData.push(reading.temperature)
       //  console.log('Reading: '+ reading.temperature)
         switch (true) {
-            case reading.temperature <= props.fishParams.temp_low_critical:
+            case reading.temperature <= props.viewParams.temp_low_critical:
                critLow++
                 break;
-            case reading.temperature > props.fishParams.temp_low_critical && reading.temperature <= props.fishParams.temp_low_warn:
+            case reading.temperature > props.viewParams.temp_low_critical && reading.temperature <= props.viewParams.temp_low_warn:
         //        console.log('reading low warn')
                 wrnLow++
                 break;
-            case reading.temperature > props.fishParams.temp_low_warn && reading.temperature <= props.fishParams.temp_high_warn:
+            case reading.temperature > props.viewParams.temp_low_warn && reading.temperature <= props.viewParams.temp_high_warn:
        //         console.log('reading optimal')
                 optimal++
                 break;
-            case reading.temperature > props.fishParams.temp_high_warn && reading.temperature <= props.fishParams.temp_high_critical:
+            case reading.temperature > props.viewParams.temp_high_warn && reading.temperature <= props.viewParams.temp_high_critical:
        //         console.log('reading high warn')
                 wrnHigh++
                 break;
-            case reading.temperature > props.fishParams.temp_high_critical:
+            case reading.temperature > props.viewParams.temp_high_critical:
       //          console.log('reading high crit')
                 critHigh++
                 break;

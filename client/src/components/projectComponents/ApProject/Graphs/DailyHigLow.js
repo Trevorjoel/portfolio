@@ -159,10 +159,10 @@ const HighLow = (props)=> {
                             yAxis: '0',
                             itemStyle: {color: 'rgba(253,0,1,0.5)'}
                         }, {
-                            yAxis: props.fishParams.temp_low_critical
+                            yAxis: props.viewParams.temp_low_critical
                         }], [{
 
-                            yAxis: props.fishParams.temp_high_critical,
+                            yAxis: props.viewParams.temp_high_critical,
                             itemStyle: {color: 'rgba(253,0,1,0.5)'}
 
                         }, {
@@ -170,25 +170,25 @@ const HighLow = (props)=> {
                         }],
                             [{
 
-                                yAxis: props.fishParams.temp_low_critical,
+                                yAxis: props.viewParams.temp_low_critical,
                                 itemStyle: {color: 'rgba(253,253,1,0.5)'}
                             }, {
-                                yAxis: props.fishParams.temp_low_warn
+                                yAxis: props.viewParams.temp_low_warn
                             }], [{
 
-                                yAxis: props.fishParams.temp_high_warn,
+                                yAxis: props.viewParams.temp_high_warn,
                                 itemStyle: {color: 'rgba(253,253,1,0.5)'}
 
                             }, {
-                                yAxis: props.fishParams.temp_high_critical
+                                yAxis: props.viewParams.temp_high_critical
                             }],
                             [{
 
-                                yAxis: props.fishParams.temp_low_warn,
+                                yAxis: props.viewParams.temp_low_warn,
                                 itemStyle: {color: 'rgba(0,127,1,0.4)'}
 
                             }, {
-                                yAxis: props.fishParams.temp_high_warn
+                                yAxis: props.viewParams.temp_high_warn
                             }]
                         ],
 
