@@ -93,19 +93,6 @@ class ApProjectContainer extends Component {
             startPeriod: '', // store time period
             endPeriod: '',
             userId: 1, // default user onload
-            userParams: null, // todo: refactor to two objects (Show current state + a stored settings state prevParams)
-            userTempValue: [],
-            userPhValue: [],
-            userNh3Value: [],
-            userTempUpdate: [],
-            userPhUpdate: [],
-            userNh3Update: [],
-            userTempSettingsUpdate: [],
-            userTempSettingsValue: [],
-            userPhSettingsUpdate: [],
-            userPhSettingsValue: [],
-            userNh3SettingsUpdate: [],
-            userNh3SettingsValue: [],
             settingName: '',
             settings: [],
             tempDomain: [], // todo: find a better way to pass domains into the graphs
@@ -220,6 +207,7 @@ class ApProjectContainer extends Component {
     }
 
     saveTempSettings = () => {
+        // todo: Needs to be able to modify pre existing customed rows
         if (JSON.stringify(this.state.tempSettingsUpdate) !== JSON.stringify(this.state.tempSettingsValue)) {
             this.addSettingsToDB('addtempsettings', this.state.systemParams.fish_name + '_custom', this.state.tempSettingsUpdate[0], this.state.tempSettingsUpdate[1],
                 this.state.tempSettingsUpdate[2], this.state.tempSettingsUpdate[3], this.state.phSettingsValue[0],
@@ -314,8 +302,8 @@ class ApProjectContainer extends Component {
                             returnedFishParams.nh3_critical].slice(),
                         tempValue: [this.setTarget(returnedFishParams.temp_low_warn, returnedFishParams.temp_high_warn)].slice(),
                         tempUpdate: [this.setTarget(returnedFishParams.temp_low_warn, returnedFishParams.temp_high_warn)].slice(),
-                        phValue: [this.setTarget(returnedFishParams.ph_low_warn, returnedFishParams.ph_high_warn)],
-                        phUpdate: [this.setTarget(returnedFishParams.ph_low_warn, returnedFishParams.ph_high_warn)],
+                        phValue: [this.setTarget(returnedFishParams.ph_low_warn, returnedFishParams.ph_high_warn)].slice(),
+                        phUpdate: [this.setTarget(returnedFishParams.ph_low_warn, returnedFishParams.ph_high_warn)].slice(),
                         nh3Value: [returnedFishParams.nh3_target].slice(),
                         nh3Update: [returnedFishParams.nh3_target].slice(),
                         tempDomain: [returnedFishParams.temp_low_critical,
@@ -357,14 +345,12 @@ class ApProjectContainer extends Component {
                         returnedUserParams.nh3_critical].slice(),
                     userNh3SettingsUpdate: [returnedUserParams.nh3_warn,
                         returnedUserParams.nh3_critical].slice(),
+                    tempValue: [this.setTarget(returnedUserParams.temp_low_warn, returnedUserParams.temp_high_warn)].slice(),
                     tempUpdate: [this.setTarget(returnedUserParams.temp_low_warn, returnedUserParams.temp_high_warn)].slice(),
-                    userTempValue: [this.setTarget(returnedUserParams.temp_low_warn, returnedUserParams.temp_high_warn)].slice(),
-                    userTempUpdate: [this.setTarget(returnedUserParams.temp_low_warn, returnedUserParams.temp_high_warn)].slice(),
-                    userPhValue: [this.setTarget(returnedUserParams.ph_low_warn, returnedUserParams.ph_high_warn)],
-                    userPhUpdate: [this.setTarget(returnedUserParams.ph_low_warn, returnedUserParams.ph_high_warn)],
-                    userNh3Value: [returnedUserParams.nh3_target].slice(),
-                    userNh3Update: [returnedUserParams.nh3_target].slice(),
-
+                    phValue: [this.setTarget(returnedUserParams.ph_low_warn, returnedUserParams.ph_high_warn)].slice(),
+                    phUpdate: [this.setTarget(returnedUserParams.ph_low_warn, returnedUserParams.ph_high_warn)].slice(),
+                    nh3Value: [returnedUserParams.nh3_target].slice(),
+                    nh3Update: [returnedUserParams.nh3_target].slice(),
                 })
             })
     }
@@ -401,12 +387,8 @@ class ApProjectContainer extends Component {
                             returnedUserParams.nh3_critical].slice(),
                         // tempUpdate is passed into the functions file to determine alerts, on change of fish/usr settings
                         tempUpdate: [this.setTarget(returnedUserParams.temp_low_warn, returnedUserParams.temp_high_warn)].slice(),
-                        userTempValue: [this.setTarget(returnedUserParams.temp_low_warn, returnedUserParams.temp_high_warn)].slice(),
-                        userTempUpdate: [this.setTarget(returnedUserParams.temp_low_warn, returnedUserParams.temp_high_warn)].slice(),
-                        userPhValue: [this.setTarget(returnedUserParams.ph_low_warn, returnedUserParams.ph_high_warn)],
-                        userPhUpdate: [this.setTarget(returnedUserParams.ph_low_warn, returnedUserParams.ph_high_warn)],
-                        userNh3Value: [returnedUserParams.nh3_target].slice(),
-                        userNh3Update: [returnedUserParams.nh3_target].slice(),
+                        phValue: [this.setTarget(returnedUserParams.ph_low_warn, returnedUserParams.ph_high_warn)].slice(),
+                        phUpdate: [this.setTarget(returnedUserParams.ph_low_warn, returnedUserParams.ph_high_warn)].slice(),
                     })
                 }
             )
@@ -441,8 +423,8 @@ class ApProjectContainer extends Component {
                         tempValue: [this.setTarget(returnedUserParams.temp_low_warn, returnedUserParams.temp_high_warn)].slice(),
                         tempUpdate: [this.setTarget(returnedUserParams.temp_low_warn, returnedUserParams.temp_high_warn)].slice(),
 
-                        phValue: [this.setTarget(returnedUserParams.ph_low_warn, returnedUserParams.ph_high_warn)],
-                        phUpdate: [this.setTarget(returnedUserParams.ph_low_warn, returnedUserParams.ph_high_warn)],
+                        phValue: [this.setTarget(returnedUserParams.ph_low_warn, returnedUserParams.ph_high_warn)].slice(),
+                        phUpdate: [this.setTarget(returnedUserParams.ph_low_warn, returnedUserParams.ph_high_warn)].slice(),
                         nh3Value: [returnedUserParams.nh3_target].slice(),
                         nh3Update: [returnedUserParams.nh3_target].slice(),
 
@@ -561,12 +543,12 @@ class ApProjectContainer extends Component {
 
     onSettingsChange = settingName => {
 
-        const checkcustom = this.state.fish.find(item => item.fish_name + '_custom' === settingName);
-
-        if (typeof checkcustom === 'undefined') {
+        const checkCustom = this.state.fish.find(item => item.fish_name + '_custom' === settingName);
+console.log(settingName)
+        if (typeof checkCustom === 'undefined') {
             this.mapUserSetState(selectUserParameters, this.state.userId, settingName);
         } else {
-            this.setState({tempDomain: [checkcustom.temp_low_critical, checkcustom.temp_high_critical].slice()});
+            this.setState({tempDomain: [checkCustom.temp_low_critical, checkCustom.temp_high_critical].slice()});
             this.mapCustomFishSetState(selectUserParameters, this.state.userId, settingName);
         }
     };
@@ -574,7 +556,6 @@ class ApProjectContainer extends Component {
     render() {
 
         const {fishParams} = this.state;
-
         const {userParams} = this.state;
 
         if (fishParams === null || userParams === null) {
@@ -624,8 +605,6 @@ class ApProjectContainer extends Component {
 
                         <Row>
                             <Col lg={12}>
-
-
                                 <br/>
                                 <h2 className={classes.SecondaryTitle}><strong>Live
                                     Monitor </strong><LiveMonitorDescription/></h2>
@@ -682,8 +661,8 @@ class ApProjectContainer extends Component {
                                                 <p>pH</p>
                                             </div>
                                             <PhSliderVertical
-                                                values={this.state.phValue}
-                                                update={this.state.phUpdate}
+                                                values={this.state.phValue[0]}
+                                                update={this.state.phUpdate[0]}
                                                 defaultValues={Assets.defaultPh}
                                                 onUpdate={(value) => this.changeHandler('phUpdate', value)}
                                                 onChange={(value) => this.changeHandler('phChange', value)}
@@ -761,8 +740,12 @@ class ApProjectContainer extends Component {
                                                         size={150}
                                                     />
 
-                                                        <DropdownFish allFish={this.state.fish} selectedName={this.state.fishSettingName}
-                                                                      onFishChange={this.onFishChange} allSettings={this.state.settings} onSettingsChange={this.onSettingsChange}/>
+                                                        <DropdownFish allFish={this.state.fish}
+                                                                      selectedName={this.state.fishSettingName}
+                                                                      onFishChange={this.onFishChange}
+                                                                      allSettings={this.state.settings}
+                                                                      onSettingsChange={this.onSettingsChange}
+                                                        />
 
                                                     <h3 className={classes.GraphTitle}>Hourly readings</h3>
 
@@ -824,7 +807,7 @@ class ApProjectContainer extends Component {
                                 phUpdate={this.state.phSettingsUpdate}
                                 handleChange={this.changeHandler}
                                 saveTempSettings={this.saveTempSettings}
-
+resetTemp={this.resetTempSettings}
                             />
 
                         </div>
