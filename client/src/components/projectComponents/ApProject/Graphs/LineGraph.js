@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from 'react';
 
 import ReactEcharts from "echarts-for-react";
+import GraphSwitch from "./GraphSwitch";
 
 const LineGraph = (props) => {
     const timeData = [];
@@ -31,6 +32,9 @@ const LineGraph = (props) => {
         tempData.push(reading.temperature)
 
     });
+    const [type, setType] = useState("line");
+
+
 
     const getOption = () => ({
 
@@ -43,7 +47,6 @@ const LineGraph = (props) => {
         },
         dataZoom: [{
             type: 'inside',
-            //maxValueSpan: 3600 * 24 * 1000 * 1,
             start:  0,//100 - ( 23 /timeData.length ) * 100,
             end: 100
 
@@ -96,7 +99,7 @@ const LineGraph = (props) => {
             stack: '',
             //areaStyle: {color: '#dce2eb'},
             data: tempData,
-            type: 'line',
+            type: type,
            markArea: {
                 data: [ [{
 
@@ -134,20 +137,24 @@ const LineGraph = (props) => {
                     }, {
                         yAxis: props.viewParams.temp_high_warn
                     }]
-                ],
-
-            }
-        },
-
-        ],
-
-
-
+                ],}
+        },],
     });
-    return (
+
+    return (<div>
+
         <ReactEcharts option={getOption()} style={{height: 500, width: '100%', background: 'white'}}/>
-    );
+        <br/>
+        <GraphSwitch click={()=>{
+            console.log("CLICK "+type)
+            type === "line" ? setType('bar') :
+                setType('line')
 
+        }}
 
+        />
+    </div> );
+
+/* setType( type === "line" ? this.setState({type: 'bar'}) : this.setState({type: 'line'}))*/
 }
 export default LineGraph;

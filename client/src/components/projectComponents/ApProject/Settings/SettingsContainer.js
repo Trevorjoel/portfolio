@@ -91,7 +91,7 @@ componentDidMount() {
                             mindomain={this.props.minDomain}
                             maxdomain={this.props.maxDomain}
                             reset={this.resetTempSettings}
-                            save={()=> this.saveTempSettings(this.state.settingName)}
+                            save={this.saveTempSettings}
                             renderButtons={false}
                         />
                         <SettingsPh

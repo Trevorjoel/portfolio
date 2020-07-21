@@ -99,7 +99,7 @@ class ApProjectContainer extends Component {
 
             // NEW STATE
 
-                fishName: 'Loading...', // Pass in  fish.fish_name or settings.setting_name
+                fishSettingName: 'Loading...', // Pass in  fish.fish_name or settings.setting_name
                 fishImage: 'Loading...', // Pass in URL or function to render image
                 navTo: '#', // Pass in string with element ID
                 systemParams: null,
@@ -207,16 +207,18 @@ class ApProjectContainer extends Component {
     }
 
     saveTempSettings = () => {
-        // todo: Needs to be able to modify pre existing customed rows
-        if (JSON.stringify(this.state.tempSettingsUpdate) !== JSON.stringify(this.state.tempSettingsValue)) {
-            this.addSettingsToDB('addtempsettings', this.state.systemParams.fish_name + '_custom', this.state.tempSettingsUpdate[0], this.state.tempSettingsUpdate[1],
+        if (JSON.stringify(this.state.tempSettingsUpdate) !== JSON.stringify(this.state.tempSettingsValue))
+        {
+            this.addSettingsToDB('addtempsettings', this.state.fishSettingName+'_custom', this.state.tempSettingsUpdate[0], this.state.tempSettingsUpdate[1],
                 this.state.tempSettingsUpdate[2], this.state.tempSettingsUpdate[3], this.state.phSettingsValue[0],
                 this.state.phSettingsValue[1], this.state.phSettingsValue[2], this.state.phSettingsValue[3],
                 this.state.nh3SettingsValue[0], this.state.nh3SettingsValue[1], this.state.tempValue[0],
                 this.state.phValue[0], this.state.nh3Value[0]);
+
             this.setState({
                 tempSettingsValue: this.state.tempSettingsUpdate.slice(),
             })
+            console.log('save temperature settings');
             this.mapSettings(getSettings);
         }
     }

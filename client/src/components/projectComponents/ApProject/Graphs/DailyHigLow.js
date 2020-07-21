@@ -1,41 +1,16 @@
-import React from "react";
+import React, {useState} from "react";
 import ReactEcharts from "echarts-for-react";
 import moment from "moment";
+import GraphSwitch from "./GraphSwitch";
 
 
 const HighLow = (props)=> {
-    /*const timeData = [];
-    const tempData = [];
-
-    // Convert time from the JSON format to user readable
-    const timeConverter = (dateTime) => {
-        let dateArray;
-        const a = new Date(dateTime);
-        const hrs = a.getHours();
-        const mins = ('0' + a.getMinutes()).slice(-2); //adds a 0 if the
-
-        const days = ["Sun", "Mon", "Tue", "Wed", "Thur", "Fri", "Sat"];
-        // const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"];
-        let month = a.getMonth()+1;
-        let day = days[a.getDay()];
-        let date = a.getDate()
-
-        dateArray =  day + ' '+ date +'/'+ month ;
-        return dateArray;
-
-    }
-    props.readings.map((reading, index) => {
-        timeData.push(timeConverter(reading.date_time))
-        tempData.push(reading.temperature)
-
-    });*/
-
+    const [typeHi, setTypeHi] = useState("line");
+    const [typeLow, setTypeLow] = useState("line");
+    const [typeAvg, setTypeAvg] = useState("line");
     let highestNumArray = [];
     let lowestNumArray = [];
     let timeArray =[];
-    /*let highStore =[];
-    let averageStore =[];
-    let lowStore = [];*/
     let averageArray = [];
     let tempDateObj = {};
 
@@ -63,32 +38,6 @@ const HighLow = (props)=> {
         }
     )
 
-
-    // Collect 24hrs of temperature readings & create two arrays,
-    // highest readings and lowest readings for each 24hr period
-    /*tempData.forEach(
-        (element, index) =>{
-
-            if(index % 24 === 0 && index !== 0){
-
-                highStore.push(element);
-                lowStore.push(element);
-                averageStore.push(element)
-                highestNumArray.push(Math.max(...highStore));
-                lowestNumArray.push(Math.min(...lowStore));
-                averageArray.push( averageStore.reduce((a,b) => a + b, 0) / averageStore.length)
-                timeArray.push(timeData[index])
-                highStore =[];
-                lowStore = [];
-                averageStore = [];
-            }else{
-                highStore.push(element);
-                lowStore.push(element);
-                averageStore.push(element)
-            }
-           // console.log(averageArray)
-        }
-    )*/
    const getOption = () => ({
 
         legend: {
@@ -124,25 +73,26 @@ const HighLow = (props)=> {
                 smooth:true,
                 symbolSize: 9,
                 stack: '',
-                //areaStyle: {color: 'green'},
+                color: 'red',
                 data: highestNumArray,
-                type: 'line',
+                type: typeHi,
             },{
                 name: 'Lowest Temperature',
                 symbolSize: 9,
                 stack: '',
-                /*areaStyle: {
-                    color:'blue'
-                },*/
-                type: 'line',
+
+                    color:'blue',
+
+                type: typeLow,
                 data: lowestNumArray,
                 
             },
                 {
                     name: 'Average Temperature',
+                    color: 'green',
                     symbolSize: 9,
                     stack: '',
-                    type: 'line',
+                    type: typeAvg,
                     data: averageArray,
                 },
                 {
@@ -205,6 +155,24 @@ const HighLow = (props)=> {
         return (
             <div className="">
                 <ReactEcharts option={getOption()} style={{ height: 400 , width:'100%', background: 'white', borderRadius:"20px"}} />
+                <GraphSwitch  click={()=>{
+                    console.log("CLICK "+typeHi)
+                    typeHi === "line" ? setTypeHi('bar') :
+                        setTypeHi('line')
+                }}
+                />
+                <GraphSwitch style={{margin:"10px"}} click={()=>{
+                    console.log("CLICK "+typeLow)
+                    typeLow === "line" ? setTypeLow('bar') :
+                        setTypeLow('line')
+                }}
+                />
+                <GraphSwitch  style={{margin:"10px"}} click={()=>{
+                    console.log("CLICK "+typeAvg)
+                    typeAvg === "line" ? setTypeAvg('bar') :
+                        setTypeAvg('line')
+                }}
+                />
             </div>
         );
 
