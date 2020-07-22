@@ -40,7 +40,7 @@ export const headerStyle = {
 // Default probe parameters
 export const defaultTemp = [12.5];
 export const defaultPh = [7.5];
-export const defaultNh3 = [0.05];
+export const defaultNh3 = [0.0];
 
 // Alert messages
 

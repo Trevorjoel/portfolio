@@ -78,6 +78,7 @@ const HighLow = (props)=> {
                 type: typeHi,
             },{
                 name: 'Lowest Temperature',
+                smooth:true,
                 symbolSize: 9,
                 stack: '',
 
@@ -89,6 +90,7 @@ const HighLow = (props)=> {
             },
                 {
                     name: 'Average Temperature',
+                    smooth:true,
                     color: 'green',
                     symbolSize: 9,
                     stack: '',

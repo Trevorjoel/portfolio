@@ -84,7 +84,10 @@ class ApProjectContainer extends Component {
                 phHighWarn: true,
                 phHighCritical: true
             },
-            nh3ShowNotification: {nh3Optimal: false, nh3HighWarn: true, nh3HighCritical: true},
+            nh3ShowNotification: {
+                nh3Optimal: false,
+                nh3HighWarn: true,
+                nh3HighCritical: true},
             latestTime: '',
             numberOfReadings: 169, // default readings to show onload
             fishParams: null, // Shows parameters for current selected fish todo: Refactor refactor to two objects (Show current state + a stored settings state)
@@ -275,85 +278,59 @@ class ApProjectContainer extends Component {
         requestFunction(fishId)
             .then(query => {
                     const returnedFishParams = query;
-                    this.setState({
-                            fishSettingName: returnedFishParams.fish_name,
-                            systemParams: returnedFishParams
-                        ,
-                        fishParams: returnedFishParams,
-
-                        // Set state here
-                        tempSettingsValue: [returnedFishParams.temp_low_critical,
-                            returnedFishParams.temp_low_warn,
-                            returnedFishParams.temp_high_warn,
-                            returnedFishParams.temp_high_critical].slice(),
-                        tempSettingsUpdate: [returnedFishParams.temp_low_critical,
-                            returnedFishParams.temp_low_warn,
-                            returnedFishParams.temp_high_warn,
-                            returnedFishParams.temp_high_critical].slice(),
-                        phSettingsValue: [returnedFishParams.ph_low_critical,
-                            returnedFishParams.ph_low_warn,
-                            returnedFishParams.ph_high_warn,
-                            returnedFishParams.ph_high_critical].slice(),
-                        phSettingsUpdate: [returnedFishParams.ph_low_critical,
-                            returnedFishParams.ph_low_warn,
-                            returnedFishParams.ph_high_warn,
-                            returnedFishParams.ph_high_critical].slice(),
-                        nh3SettingsValue: [returnedFishParams.nh3_warn,
-                            returnedFishParams.nh3_critical].slice(),
-                        nh3SettingsUpdate: [returnedFishParams.nh3_warn,
-                            returnedFishParams.nh3_critical].slice(),
-                        tempValue: [this.setTarget(returnedFishParams.temp_low_warn, returnedFishParams.temp_high_warn)].slice(),
-                        tempUpdate: [this.setTarget(returnedFishParams.temp_low_warn, returnedFishParams.temp_high_warn)].slice(),
-                        phValue: [this.setTarget(returnedFishParams.ph_low_warn, returnedFishParams.ph_high_warn)].slice(),
-                        phUpdate: [this.setTarget(returnedFishParams.ph_low_warn, returnedFishParams.ph_high_warn)].slice(),
-                        nh3Value: [returnedFishParams.nh3_target].slice(),
-                        nh3Update: [returnedFishParams.nh3_target].slice(),
-                        tempDomain: [returnedFishParams.temp_low_critical,
-                            returnedFishParams.temp_high_critical].slice(),
-                    })
+                  this.updateAllStateForView(returnedFishParams);
                 }
             )
+    }
+    updateAllStateForView = (returnedData) =>{
+        if(returnedData.fish_name){
+            this.setState({fishSettingName: returnedData.fish_name})
+        }else{
+            this.setState({fishSettingName: returnedData.setting_name})
+        }
+        this.setState({
+
+            systemParams: returnedData
+            ,
+            fishParams: returnedData,
+
+            // Set state here
+            tempSettingsValue: [returnedData.temp_low_critical,
+                returnedData.temp_low_warn,
+                returnedData.temp_high_warn,
+                returnedData.temp_high_critical].slice(),
+            tempSettingsUpdate: [returnedData.temp_low_critical,
+                returnedData.temp_low_warn,
+                returnedData.temp_high_warn,
+                returnedData.temp_high_critical].slice(),
+            phSettingsValue: [returnedData.ph_low_critical,
+                returnedData.ph_low_warn,
+                returnedData.ph_high_warn,
+                returnedData.ph_high_critical].slice(),
+            phSettingsUpdate: [returnedData.ph_low_critical,
+                returnedData.ph_low_warn,
+                returnedData.ph_high_warn,
+                returnedData.ph_high_critical].slice(),
+            nh3SettingsValue: [returnedData.nh3_warn,
+                returnedData.nh3_critical].slice(),
+            nh3SettingsUpdate: [returnedData.nh3_warn,
+                returnedData.nh3_critical].slice(),
+            tempValue: [this.setTarget(returnedData.temp_low_warn, returnedData.temp_high_warn)].slice(),
+            tempUpdate: [this.setTarget(returnedData.temp_low_warn, returnedData.temp_high_warn)].slice(),
+            phValue: [this.setTarget(returnedData.ph_low_warn, returnedData.ph_high_warn)].slice(),
+            phUpdate: [this.setTarget(returnedData.ph_low_warn, returnedData.ph_high_warn)].slice(),
+            nh3Value: [returnedData.nh3_target].slice(),
+            nh3Update: [returnedData.nh3_target].slice(),
+            tempDomain: [returnedData.temp_low_critical,
+                returnedData.temp_high_critical].slice(),
+        })
     }
 
     mapDefaultUserSetState = (requestFunction, userId, settingName) => {
         requestFunction(userId, settingName)
             .then(query => {
                 const returnedUserParams = query;
-                this.setState({
-
-                        fishSettingName: returnedUserParams.setting_name,
-                        systemParams: returnedUserParams
-                    ,
-                    userParams: returnedUserParams,
-
-                    // Set state here
-                    userTempSettingsValue: [returnedUserParams.temp_low_critical,
-                        returnedUserParams.temp_low_warn,
-                        returnedUserParams.temp_high_warn,
-                        returnedUserParams.temp_high_critical].slice(),
-                    userTempSettingsUpdate: [returnedUserParams.temp_low_critical,
-                        returnedUserParams.temp_low_warn,
-                        returnedUserParams.temp_high_warn,
-                        returnedUserParams.temp_high_critical].slice(),
-                    userPhSettingsValue: [returnedUserParams.ph_low_critical,
-                        returnedUserParams.ph_low_warn,
-                        returnedUserParams.ph_high_warn,
-                        returnedUserParams.ph_high_critical].slice(),
-                    userPhSettingsUpdate: [returnedUserParams.ph_low_critical,
-                        returnedUserParams.ph_low_warn,
-                        returnedUserParams.ph_high_warn,
-                        returnedUserParams.ph_high_critical].slice(),
-                    userNh3SettingsValue: [returnedUserParams.nh3_warn,
-                        returnedUserParams.nh3_critical].slice(),
-                    userNh3SettingsUpdate: [returnedUserParams.nh3_warn,
-                        returnedUserParams.nh3_critical].slice(),
-                    tempValue: [this.setTarget(returnedUserParams.temp_low_warn, returnedUserParams.temp_high_warn)].slice(),
-                    tempUpdate: [this.setTarget(returnedUserParams.temp_low_warn, returnedUserParams.temp_high_warn)].slice(),
-                    phValue: [this.setTarget(returnedUserParams.ph_low_warn, returnedUserParams.ph_high_warn)].slice(),
-                    phUpdate: [this.setTarget(returnedUserParams.ph_low_warn, returnedUserParams.ph_high_warn)].slice(),
-                    nh3Value: [returnedUserParams.nh3_target].slice(),
-                    nh3Update: [returnedUserParams.nh3_target].slice(),
-                })
+                this.updateAllStateForView(returnedUserParams);
             })
     }
 
@@ -361,37 +338,7 @@ class ApProjectContainer extends Component {
         requestFunction(userId, settingName)
             .then(query => {
                     const returnedUserParams = query;
-                    this.setState({
-
-                            fishSettingName: returnedUserParams.setting_name,
-                            systemParams: returnedUserParams,
-
-                        // Set state here
-                        userTempSettingsValue: [returnedUserParams.temp_low_critical,
-                            returnedUserParams.temp_low_warn,
-                            returnedUserParams.temp_high_warn,
-                            returnedUserParams.temp_high_critical].slice(),
-                        userTempSettingsUpdate: [returnedUserParams.temp_low_critical,
-                            returnedUserParams.temp_low_warn,
-                            returnedUserParams.temp_high_warn,
-                            returnedUserParams.temp_high_critical].slice(),
-                        userPhSettingsValue: [returnedUserParams.ph_low_critical,
-                            returnedUserParams.ph_low_warn,
-                            returnedUserParams.ph_high_warn,
-                            returnedUserParams.ph_high_critical].slice(),
-                        userPhSettingsUpdate: [returnedUserParams.ph_low_critical,
-                            returnedUserParams.ph_low_warn,
-                            returnedUserParams.ph_high_warn,
-                            returnedUserParams.ph_high_critical].slice(),
-                        userNh3SettingsValue: [returnedUserParams.nh3_warn,
-                            returnedUserParams.nh3_critical].slice(),
-                        userNh3SettingsUpdate: [returnedUserParams.nh3_warn,
-                            returnedUserParams.nh3_critical].slice(),
-                        // tempUpdate is passed into the functions file to determine alerts, on change of fish/usr settings
-                        tempUpdate: [this.setTarget(returnedUserParams.temp_low_warn, returnedUserParams.temp_high_warn)].slice(),
-                        phValue: [this.setTarget(returnedUserParams.ph_low_warn, returnedUserParams.ph_high_warn)].slice(),
-                        phUpdate: [this.setTarget(returnedUserParams.ph_low_warn, returnedUserParams.ph_high_warn)].slice(),
-                    })
+                    this.updateAllStateForView(returnedUserParams)
                 }
             )
     }
@@ -400,37 +347,7 @@ class ApProjectContainer extends Component {
         requestFunction(userId, settingName)
             .then(query => {
                     const returnedUserParams = query;
-                    this.setState({
-                            fishSettingName: returnedUserParams.setting_name,
-                            systemParams: returnedUserParams,
-
-                        // Set state here
-
-                        tempSettingsValue: [returnedUserParams.temp_low_critical, returnedUserParams.temp_low_warn,
-                            returnedUserParams.temp_high_warn, returnedUserParams.temp_high_critical].slice(),
-                        tempSettingsUpdate: [returnedUserParams.temp_low_critical, returnedUserParams.temp_low_warn,
-                            returnedUserParams.temp_high_warn, returnedUserParams.temp_high_critical].slice(),
-                        phSettingsValue: [returnedUserParams.ph_low_critical,
-                            returnedUserParams.ph_low_warn,
-                            returnedUserParams.ph_high_warn,
-                            returnedUserParams.ph_high_critical].slice(),
-                        phSettingsUpdate: [returnedUserParams.ph_low_critical,
-                            returnedUserParams.ph_low_warn,
-                            returnedUserParams.ph_high_warn,
-                            returnedUserParams.ph_high_critical].slice(),
-                        nh3SettingsValue: [returnedUserParams.nh3_warn,
-                            returnedUserParams.nh3_critical].slice(),
-                        nh3SettingsUpdate: [returnedUserParams.nh3_warn,
-                            returnedUserParams.nh3_critical].slice(),
-                        tempValue: [this.setTarget(returnedUserParams.temp_low_warn, returnedUserParams.temp_high_warn)].slice(),
-                        tempUpdate: [this.setTarget(returnedUserParams.temp_low_warn, returnedUserParams.temp_high_warn)].slice(),
-
-                        phValue: [this.setTarget(returnedUserParams.ph_low_warn, returnedUserParams.ph_high_warn)].slice(),
-                        phUpdate: [this.setTarget(returnedUserParams.ph_low_warn, returnedUserParams.ph_high_warn)].slice(),
-                        nh3Value: [returnedUserParams.nh3_target].slice(),
-                        nh3Update: [returnedUserParams.nh3_target].slice(),
-
-                    })
+                  this.updateAllStateForView(returnedUserParams);
                 }
             )
     }
@@ -663,8 +580,8 @@ console.log(settingName)
                                                 <p>pH</p>
                                             </div>
                                             <PhSliderVertical
-                                                values={this.state.phValue[0]}
-                                                update={this.state.phUpdate[0]}
+                                                values={this.state.phValue}
+                                                update={this.state.phUpdate}
                                                 defaultValues={Assets.defaultPh}
                                                 onUpdate={(value) => this.changeHandler('phUpdate', value)}
                                                 onChange={(value) => this.changeHandler('phChange', value)}
@@ -849,7 +766,5 @@ resetTemp={this.resetTempSettings}
         );
     }
 }
-
-
 export default ApProjectContainer;
 
