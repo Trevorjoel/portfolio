@@ -8,27 +8,31 @@ import SettingsNh3 from "./SettingsNh3";
 import {AvField, AvForm} from "availity-reactstrap-validation";
 import {Button, Col} from "reactstrap";
 import {getSettings} from "../ApFunctions/apFunctions";
+import LoadingContainer from "../Loading/LoadingContainer";
 
 class SettingsContainer extends Component{
     constructor(props) {
         super(props);
         this.state={
-
-        }
+            tempSettingsUpdate: null,
+            phSettingsUpdate: null,
+            nh3SettingsUpdate: null,
+        };
     }
 
-componentDidMount() {
+    componentDidMount() {
 
-    this.setState({
-        nh3SettingsUpdate: this.props.nh3Update,
-        tempSettingsUpdate: this.props.tempUpdate,
-        phSettingsUpdate: this.props.phUpdate,
-        tempDomain: [this.props.minDomain, this.props.maxDomain]
+        this.setState({
+            tempSettingsUpdate: this.props.tempUpdate,
+            phSettingsUpdate: this.props.phUpdate,
+            nh3SettingsUpdate: this.props.nh3Update,
+            tempDomain: [this.props.minDomain, this.props.maxDomain]
 
-    })
-}
+        })
+    }
 
     render() {
+
         return(
             <Tabs className={classes.TabContainer} Key="customise-current" id="custom-tab">
 
@@ -48,26 +52,25 @@ componentDidMount() {
                         updates={this.props.tempUpdate}
                         mindomain={this.props.minDomain}
                         maxdomain={this.props.maxDomain}
-                        reset={this.props.resetTemp}
+                        reset={this.props.resetTempSettings}
                         save={this.props.saveTempSettings}
                         renderButtons={true}
 
                     />
-
-                <SettingsPh
-                    onChange={(value)=>this.props.handleChange('phSettingsUpdate', value )}
-                           updates={this.props.phUpdate}
-                           reset={this.resetPhSettings}
-                           save={this.savePhSettings}
-                           renderButtons={true}
-                       />
+                    <SettingsPh
+                        onChange={(value)=>this.props.handleChange('phSettingsUpdate', value )}
+                        updates={this.props.phUpdate}
+                        reset={this.props.resetPhSettings}
+                        save={this.props.savePhSettings}
+                        renderButtons={true}
+                    />
                     <SettingsNh3
                            onChange={(value)=>this.props.handleChange('nh3SettingsUpdate', value )}
                            updates={this.props.nh3Update}
-                           reset={this.resetNh3Settings}
-                           save={this.saveNh3Settings}
+                           reset={this.props.resetNh3Settings}
+                           save={this.props.saveNh3Settings}
                            renderButtons={true}
-                       />
+                    />
 
                 </Tab>
                 <Tab eventKey="Create New" title="New Customisation"
@@ -77,8 +80,8 @@ componentDidMount() {
 
                     <br/>
                     <AvForm
-                        onValidSubmit={this.handleValidSubmit}
-                        onInvalidSubmit={this.handleInvalidSubmit}
+                        onValidSubmit={this.props.handleValidSubmit}
+                        onInvalidSubmit={this.props.handleInvalidSubmit}
                         ref={c => (this.form = c)}
                     >
 
@@ -90,14 +93,11 @@ componentDidMount() {
                             updates={this.props.tempUpdate}
                             mindomain={this.props.minDomain}
                             maxdomain={this.props.maxDomain}
-                            reset={this.resetTempSettings}
-                            save={this.saveTempSettings}
                             renderButtons={false}
                         />
                         <SettingsPh
                             onChange={(value)=>this.props.handleChange('phSettingsUpdate', value )}
                             updates={this.props.phUpdate}
-
                             renderButtons={false}
                         />
                         <SettingsNh3
@@ -107,7 +107,7 @@ componentDidMount() {
                         />
                         <label htmlFor="fname">Setting Name:</label><br/>
                         <AvField style={{width:"200px", margin:"auto"}} type="text" id="fname" name="fname"
-                                 onChange={this.handleSettingNameChange}
+                                 onChange={this.props.handleSettingNameChange}
                                  value={this.state.settingName}
                                  validate={{
                                      required: {value: true, errorMessage: 'Please enter a setting name'},
@@ -128,7 +128,7 @@ componentDidMount() {
                         <Button className={classes.ButtonEnter} style={{margin: "10px 2%"}} type="submit">Enter All</Button>
                     </AvForm>
                     <Button  className={classes.ButtonReset} style={{margin: "10px 2%"}} onClick={()=>{
-                        this.resetUserSettings();
+                        this.props.resetUserSettings();
                     }} type="submit">Reset All</Button>
 
 
