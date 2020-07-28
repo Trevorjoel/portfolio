@@ -90,7 +90,6 @@ class ApProjectContainer extends Component {
                 nh3HighCritical: true},
             latestTime: '',
             numberOfReadings: 169, // default readings to show onload
-            fishParams: null, // Shows parameters for current selected fish todo: Refactor refactor to two objects (Show current state + a stored settings state)
             fishId: 1, // Default fish to show on load
             fish: [], //  All fish in database
             startPeriod: '', // store time period
@@ -119,20 +118,21 @@ class ApProjectContainer extends Component {
         this.getPreviousTime = getPreviousTime.bind(this);
         this.getFish = getFish.bind(this);
         this.handleToggleSliders = this.handleToggleSliders.bind(this);
-        this.resetTempSettings = this.resetTempSettings.bind(this);
-        this.resetPhSettings = this.resetPhSettings.bind(this);
-        this.resetNh3Settings = this.resetNh3Settings.bind(this);
-       this.saveTempSettings = this.saveTempSettings.bind(this);
+        this.saveTempSettings = this.saveTempSettings.bind(this);
         this.savePhSettings = this.savePhSettings.bind(this);
         this.saveNh3Settings = this.saveNh3Settings.bind(this);
         this.addSettingsToDB = addSettingsToDB.bind(this);
         this.selectUserParameters = selectUserParameters.bind(this);
+        this.resetTempSettings = this.resetTempSettings.bind(this);
+        this.resetPhSettings = this.resetPhSettings.bind(this);
+        this.resetNh3Settings = this.resetNh3Settings.bind(this);
         this.resetUserSettings = this.resetUserSettings.bind(this);
         this.saveUserSettings = this.saveUserSettings.bind(this);
         this.handleSettingNameChange = this.handleSettingNameChange.bind(this); // Is this used?
         this.handleValidSubmit = this.handleValidSubmit.bind(this);
         this.handleInvalidSubmit = this.handleInvalidSubmit.bind(this);
         this.getSettings = getSettings.bind(this);
+        this.settingNameWriteToDB = this.settingNameWriteToDB.bind(this);
 
         // References for the sticky history component
         this.topTriggerEl = React.createRef();
@@ -166,6 +166,7 @@ class ApProjectContainer extends Component {
 
 
     }
+
     // Reset settings to default of selected fish setting by param
     resetTempSettings = () => {
         this.setState({
@@ -184,6 +185,7 @@ class ApProjectContainer extends Component {
                 this.state.systemParams.ph_high_warn,
                 this.state.systemParams.ph_high_critical].slice(),
         })
+
     }
 
     resetNh3Settings = () => {
@@ -193,26 +195,41 @@ class ApProjectContainer extends Component {
                 this.state.systemParams.nh3_critical].slice(),
         })
     }
+
 // Reset settings to default of selected fish/usr all Just confirm
     resetUserSettings = () => {
         this.setState({
-            userTempSettingsUpdate: [this.state.userParams.temp_low_critical,
-                this.state.userParams.temp_low_warn,
-                this.state.userParams.temp_high_warn,
-                this.state.userParams.temp_high_critical].slice(),
-            userPhSettingsUpdate: [this.state.userParams.ph_low_critical,
-                this.state.userParams.ph_low_warn,
-                this.state.userParams.ph_high_warn,
-                this.state.userParams.ph_high_critical].slice(),
-            userNh3SettingsUpdate: [this.state.userParams.nh3_warn,
-                this.state.userParams.nh3_critical].slice(),
+            tempSettingsUpdate: [this.state.systemParams.temp_low_critical,
+                this.state.systemParams.temp_low_warn,
+                this.state.systemParams.temp_high_warn,
+                this.state.systemParams.temp_high_critical].slice(),
+            phSettingsUpdate: [this.state.systemParams.ph_low_critical,
+                this.state.systemParams.ph_low_warn,
+                this.state.systemParams.ph_high_warn,
+                this.state.systemParams.ph_high_critical].slice(),
+            nh3SettingsUpdate: [this.state.systemParams.nh3_warn,
+                this.state.systemParams.nh3_critical].slice(),
         })
+    }
+
+    settingNameWriteToDB = () => {
+        let setName ='';
+        const checkCustom = this.state.fish.find(item => item.fish_name + '_custom' === this.state.fishSettingName);
+
+        if (typeof checkCustom === 'undefined') {
+            setName = this.state.fishSettingName + '_custom';
+        } else {
+            setName = this.state.fishSettingName;
+        }
+
+        return setName;
+
     }
 
     saveTempSettings = () => {
         if (JSON.stringify(this.state.tempSettingsUpdate) !== JSON.stringify(this.state.tempSettingsValue))
         {
-            this.addSettingsToDB('addtempsettings', this.state.fishSettingName+'_custom', this.state.tempSettingsUpdate[0], this.state.tempSettingsUpdate[1],
+            this.addSettingsToDB('addtempsettings', this.settingNameWriteToDB(), this.state.tempSettingsUpdate[0], this.state.tempSettingsUpdate[1],
                 this.state.tempSettingsUpdate[2], this.state.tempSettingsUpdate[3], this.state.phSettingsValue[0],
                 this.state.phSettingsValue[1], this.state.phSettingsValue[2], this.state.phSettingsValue[3],
                 this.state.nh3SettingsValue[0], this.state.nh3SettingsValue[1], this.state.tempValue[0],
@@ -221,14 +238,14 @@ class ApProjectContainer extends Component {
             this.setState({
                 tempSettingsValue: this.state.tempSettingsUpdate.slice(),
             })
-            console.log('save temperature settings');
+            console.log('save temperature settings ');
             this.mapSettings(getSettings);
         }
     }
 
     savePhSettings = () => {
         if (JSON.stringify(this.state.phSettingsUpdate) !== JSON.stringify(this.state.phSettingsValue)) {
-            this.addSettingsToDB('addphpsettings', this.state.systemParams.fish_name + '_custom', this.state.tempSettingsValue[0], this.state.tempSettingsValue[1],
+            this.addSettingsToDB('addphpsettings', this.settingNameWriteToDB(), this.state.tempSettingsValue[0], this.state.tempSettingsValue[1],
                 this.state.tempSettingsValue[2], this.state.tempSettingsValue[3], this.state.phSettingsUpdate[0],
                 this.state.phSettingsUpdate[1], this.state.phSettingsUpdate[2], this.state.phSettingsUpdate[3],
                 this.state.nh3SettingsValue[0], this.state.nh3SettingsValue[1], this.state.tempValue[0],
@@ -243,7 +260,7 @@ class ApProjectContainer extends Component {
 
     saveNh3Settings = () => {
         if (JSON.stringify(this.state.nh3SettingsUpdate) !== JSON.stringify(this.state.nh3SettingsValue)) {
-            this.addSettingsToDB('addnh3psettings', this.state.systemParams.fish_name + '_custom', this.state.tempSettingsValue[0], this.state.tempSettingsValue[1],
+            this.addSettingsToDB('addnh3psettings', this.settingNameWriteToDB(), this.state.tempSettingsValue[0], this.state.tempSettingsValue[1],
                 this.state.tempSettingsValue[2], this.state.tempSettingsValue[3], this.state.phSettingsValue[0],
                 this.state.phSettingsValue[1], this.state.phSettingsValue[2], this.state.phSettingsValue[3],
                 this.state.nh3SettingsUpdate[0], this.state.nh3SettingsUpdate[1], this.state.tempValue[0],
@@ -258,16 +275,16 @@ class ApProjectContainer extends Component {
 
     saveUserSettings = () => {
         if (this.state.settingName !== '' && this.state.settingName !== 'default_settings') {
-            this.addSettingsToDB('addsettings', this.state.settingName, this.state.userTempSettingsUpdate[0], this.state.userTempSettingsUpdate[1],
-                this.state.userTempSettingsUpdate[2], this.state.userTempSettingsUpdate[3], this.state.userPhSettingsUpdate[0],
-                this.state.userPhSettingsUpdate[1], this.state.userPhSettingsUpdate[2], this.state.userPhSettingsUpdate[3],
-                this.state.userNh3SettingsUpdate[0], this.state.userNh3SettingsUpdate[1], this.state.userTempValue[0],
-                this.state.userPhValue[0], this.state.userNh3Value[0]);
+            this.addSettingsToDB('addsettings', this.state.settingName, this.state.tempSettingsUpdate[0], this.state.tempSettingsUpdate[1],
+                this.state.tempSettingsUpdate[2], this.state.tempSettingsUpdate[3], this.state.phSettingsUpdate[0],
+                this.state.phSettingsUpdate[1], this.state.phSettingsUpdate[2], this.state.phSettingsUpdate[3],
+                this.state.nh3SettingsUpdate[0], this.state.nh3SettingsUpdate[1], this.state.tempValue[0],
+                this.state.phValue[0], this.state.nh3Value[0]);
 
             this.setState({
-                userTempSettingsValue: this.state.userTempSettingsUpdate.slice(),
-                userPhSettingsValue: this.state.userPhSettingsUpdate.slice(),
-                userNh3SettingsValue: this.state.userNh3SettingsUpdate.slice(),
+                tempSettingsValue: this.state.tempSettingsUpdate.slice(),
+                phSettingsValue: this.state.phSettingsUpdate.slice(),
+                nh3SettingsValue: this.state.nh3SettingsUpdate.slice(),
             })
 
             this.form && this.form.reset();
@@ -289,10 +306,7 @@ class ApProjectContainer extends Component {
             this.setState({fishSettingName: returnedData.setting_name})
         }
         this.setState({
-
-            systemParams: returnedData
-            ,
-            fishParams: returnedData,
+            systemParams: returnedData,
 
             // Set state here
             tempSettingsValue: [returnedData.temp_low_critical,
@@ -326,28 +340,11 @@ class ApProjectContainer extends Component {
         })
     }
 
-    mapDefaultUserSetState = (requestFunction, userId, settingName) => {
-        requestFunction(userId, settingName)
-            .then(query => {
-                const returnedUserParams = query;
-                this.updateAllStateForView(returnedUserParams);
-            })
-    }
-
     mapUserSetState = (requestFunction, userId, settingName) => {
         requestFunction(userId, settingName)
             .then(query => {
                     const returnedUserParams = query;
                     this.updateAllStateForView(returnedUserParams)
-                }
-            )
-    }
-
-    mapCustomFishSetState = (requestFunction, userId, settingName) => {
-        requestFunction(userId, settingName)
-            .then(query => {
-                    const returnedUserParams = query;
-                  this.updateAllStateForView(returnedUserParams);
                 }
             )
     }
@@ -428,7 +425,6 @@ class ApProjectContainer extends Component {
     componentDidMount() {
 
         this.getPreviousTime();
-        this.mapDefaultUserSetState(selectUserParameters, this.state.userId, 'default_settings');
         this.mapFishSetState(selectFishType, this.state.fishId);
         this.mapFish(getFish);
         this.mapSettings(getSettings);
@@ -463,21 +459,20 @@ class ApProjectContainer extends Component {
     onSettingsChange = settingName => {
 
         const checkCustom = this.state.fish.find(item => item.fish_name + '_custom' === settingName);
-console.log(settingName)
+        console.log(settingName)
         if (typeof checkCustom === 'undefined') {
             this.mapUserSetState(selectUserParameters, this.state.userId, settingName);
         } else {
             this.setState({tempDomain: [checkCustom.temp_low_critical, checkCustom.temp_high_critical].slice()});
-            this.mapCustomFishSetState(selectUserParameters, this.state.userId, settingName);
+            this.mapUserSetState(selectUserParameters, this.state.userId, settingName);
         }
     };
 
     render() {
 
-        const {fishParams} = this.state;
-        const {userParams} = this.state;
+        const {systemParams} = this.state;
 
-        if (fishParams === null || userParams === null) {
+        if (systemParams === null) {
             return <LoadingContainer/>;
         }
         this.handleObservations()
@@ -725,8 +720,16 @@ console.log(settingName)
                                 nh3Update={this.state.nh3SettingsUpdate}
                                 phUpdate={this.state.phSettingsUpdate}
                                 handleChange={this.changeHandler}
+                                resetTempSettings={this.resetTempSettings}
+                                resetPhSettings={this.resetPhSettings}
+                                resetNh3Settings={this.resetNh3Settings}
                                 saveTempSettings={this.saveTempSettings}
-resetTemp={this.resetTempSettings}
+                                savePhSettings={this.savePhSettings}
+                                saveNh3Settings={this.saveNh3Settings}
+                                resetUserSettings={this.resetUserSettings}
+                                handleValidSubmit={this.handleValidSubmit}
+                                handleInvalidSubmit={this.handleInvalidSubmit}
+                                handleSettingNameChange={this.handleSettingNameChange}
                             />
 
                         </div>
