@@ -9,7 +9,7 @@ const LoadingContainer = () =>{
 `;
 
     return (
-        <div style={{marginTop:"0px", background:"white", padding: "30px"}}>
+        <div style={{marginTop:"0px", background:"whitesmoke", padding: "30px"}}>
             {/*    <Spinner style={{height: "500px", width: "500px", background:"#64B6FF"}} variant="info"  animation="grow" role="status">
             <span className="sr-only">Loading...</span>
         </Spinner>//

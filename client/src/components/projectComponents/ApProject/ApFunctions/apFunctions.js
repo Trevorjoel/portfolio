@@ -252,7 +252,6 @@ export const phController = function (ph) {
                     }
                 })
             }
-console.log(this.state.phUpdate)
             return <StatusAccordion
                 paramName={Assets.paramNamePh}
                 divStyle={'green-alert'}
@@ -592,7 +591,6 @@ export const selectUserParameters = async function (userId,settingName) {
     });
 
     const query = await response.json();
-
     if (response.status !== 200) throw Error(query.message);
     return query.data;
 }

@@ -35,7 +35,7 @@ return(
     <div>
         {props.selectedName  ?
     <img
-        style={{width:props.size, margin:"30px auto 0px auto"}}
+        style={{width:props.size, margin:"30px auto 30px auto"}}
         data-aos="fade-left"
         data-aos-delay="600"
         data-aos-duration="1000"

@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import * as Assets from './Assets/ApProjectAssets';
 import classes from './ApProjectContainer.module.scss';
+
 import {
     addReadingsToDB,
     addSettingsToDB,
@@ -20,7 +21,7 @@ import 'react-notifications/lib/notifications.css';
 import TempSliderVertical from "./sliders/TempSliderVertical";
 import PhSliderVertical from "./sliders/PhSliderVertical";
 import Nh3SliderVertical from "./sliders/Nh3SliderVertical";
-import {Button, Col, Container, Row} from 'reactstrap';
+import {Button, Col, Container, Modal, Row} from 'reactstrap';
 import ProjectsHeader from '../ProjectsHeader'
 import github from "../../../images/hiclipart.com.718cad62.png";
 import LineGraph from './Graphs/LineGraph';
@@ -39,6 +40,7 @@ import LiveMonitorDescription from "./Descriptions/LiveMonitorDescription";
 import Logo from './Assets/logos/logo-03.png'
 import SettingsContainer from "./Settings/SettingsContainer";
 import DropdownFish from "./DateRanges/DropDownFish";
+import Iframe from "../../Iframe";
 // Todo: Create id's to navigate the demo app, example: to the caring for trout pages
 //todo: Conditionally render buttons in the settings area
 
@@ -107,6 +109,7 @@ class ApProjectContainer extends Component {
                 systemParams: null,
                 storedParams: [],
                 readings: [], // keep the readings in here?
+                setCustom: false
 
         };
         // Bind the imported functions
@@ -141,18 +144,62 @@ class ApProjectContainer extends Component {
         this.bottomTriggerEl = React.createRef();
 
     }
+    // todo: You should be using ref callbacks, never normal DOM traversal, to get access to nodes in componentDidMount.
+    //  https://reactjs.org/docs/refs-and-the-dom.html
+    handleScroll = (event) => {
+
+        if (this.topTriggerEl.current !== null) { // Check that Aquaponics page has rendered. Was causing a bug when changing pages meaning the
+            // Check that view is between the correct ranges (In the history components)
+            // eslint-disable-next-line no-restricted-globals
+            let width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
+            if (window.pageYOffset > this.topTriggerEl.current.offsetTop && window.pageYOffset < this.bottomTriggerEl.current.offsetTop && width > 400) {
+                document.getElementById("sticky-el").classList.add(classes.StickyElement)
+                document.getElementById("sticky-cont").classList.add(classes.AddHeight)
+
+            } else {
+                document.getElementById("sticky-el").classList.remove(classes.StickyElement)
+                document.getElementById("sticky-cont").classList.remove(classes.AddHeight)
+
+            }
+        }
+    }
+// Test if parameters are from a user entered setting
+
+    /*
+    * <div ref={this.topTriggerEl} className="check" id="sticky-trigger"></div>
+    *  <li><a href="#ammonia">Ammonia</a>
+                            <ul>
+                                <li className=""><a href="#ammonia--basics">Basics</a></li>
+                                <li className=""><a href="#ammonia--high">High</a></li>
+                                <li className=""><a href="#ammonia--low">Low</a></li>
+
+                            </ul>
+                        </li>
+
+                         <section id="ammonia">
+                        <section id="ammonia--basics">
+                        ...
+                        </section>
+                        <section id="ammonia--high">
+                         ...
+                        </section>
+                        <section id="ammonia--low">
+                        ...
+                        </section>
+    * */
 
     // handles the navigation in the advice component
     handleObservations = () => {
         let options = {
             root: document.querySelector('#scrollArea'),
             rootMargin: '100px',
-        }
+        } // original root margin value 100px
         const observer = new IntersectionObserver(entries => {
             entries.forEach(entry => {
                 const id = entry.target.getAttribute('id');
                 if (entry.intersectionRatio > 0) {
-                    document.querySelector(`nav li a[href="#${id}"]`).parentElement.classList.add('active');
+                    document.querySelector(
+                        `nav li a[href="#${id}"]`).parentElement.classList.add('active');
                 } else {
                     document.querySelector(`nav li a[href="#${id}"]`).parentElement.classList.remove('active');
                 }
@@ -215,7 +262,7 @@ class ApProjectContainer extends Component {
     settingNameWriteToDB = () => {
         let setName ='';
         const checkCustom = this.state.fish.find(item => item.fish_name + '_custom' === this.state.fishSettingName);
-
+// todo: extra function here to prevent "setting name_custom_custom".
         if (typeof checkCustom === 'undefined') {
             setName = this.state.fishSettingName + '_custom';
         } else {
@@ -301,9 +348,11 @@ class ApProjectContainer extends Component {
     }
     updateAllStateForView = (returnedData) =>{
         if(returnedData.fish_name){
-            this.setState({fishSettingName: returnedData.fish_name})
-        }else{
-            this.setState({fishSettingName: returnedData.setting_name})
+            this.setState({fishSettingName: returnedData.fish_name,
+                setCustom: false})
+        }else {
+            this.setState({fishSettingName: returnedData.setting_name,
+                setCustom: true})
         }
         this.setState({
             systemParams: returnedData,
@@ -430,46 +479,35 @@ class ApProjectContainer extends Component {
         this.mapSettings(getSettings);
         window.addEventListener('scroll', this.handleScroll);
 
+
     }
 
-    // todo: You should be using ref callbacks, never normal DOM traversal, to get access to nodes in componentDidMount.
-    //  https://reactjs.org/docs/refs-and-the-dom.html
-    handleScroll = (event) => {
-
-        if (this.topTriggerEl.current !== null) { // Check that Aquaponics page has rendered. Was causing a bug when changing pages meaning the
-            // Check that view is between the correct ranges (In the history components)
-            // eslint-disable-next-line no-restricted-globals
-            let width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
-            if (window.pageYOffset > this.topTriggerEl.current.offsetTop && window.pageYOffset < this.bottomTriggerEl.current.offsetTop && width > 400) {
-                document.getElementById("sticky-el").classList.add(classes.StickyElement)
-                document.getElementById("sticky-cont").classList.add(classes.AddHeight)
-
-            } else {
-                document.getElementById("sticky-el").classList.remove(classes.StickyElement)
-                document.getElementById("sticky-cont").classList.remove(classes.AddHeight)
-
-            }
-        }
-    }
 
     onFishChange = fishId => {
-        this.mapFishSetState(selectFishType, fishId)
+        this.mapFishSetState(selectFishType, fishId);
     };
 
     onSettingsChange = settingName => {
 
         const checkCustom = this.state.fish.find(item => item.fish_name + '_custom' === settingName);
-        console.log(settingName)
         if (typeof checkCustom === 'undefined') {
             this.mapUserSetState(selectUserParameters, this.state.userId, settingName);
         } else {
-            this.setState({tempDomain: [checkCustom.temp_low_critical, checkCustom.temp_high_critical].slice()});
+            this.setState({tempDomain: [checkCustom.temp_low_critical, checkCustom.temp_high_critical,
+
+
+                ].slice()});
             this.mapUserSetState(selectUserParameters, this.state.userId, settingName);
         }
+
     };
 
     render() {
+        let demos = {
+            soundcloud:
+                '<iframe class="iframe-blog" scrolling="yes" frameborder="no" allow="autoplay" src=https://fullstack-adventure.com/contact/"></iframe>',
 
+        };
         const {systemParams} = this.state;
 
         if (systemParams === null) {
@@ -730,6 +768,7 @@ class ApProjectContainer extends Component {
                                 handleValidSubmit={this.handleValidSubmit}
                                 handleInvalidSubmit={this.handleInvalidSubmit}
                                 handleSettingNameChange={this.handleSettingNameChange}
+                                setCustom={this.state.setCustom}
                             />
 
                         </div>
@@ -741,6 +780,11 @@ class ApProjectContainer extends Component {
                             system</p>
                         <div className={classes.StatusWrapper}>
                             <AdviceContainer/>
+                        </div>
+                        <h2 className="reading-box">Give feedback and sign up for more info.</h2>
+
+                        <div id="container">
+                            <Iframe iframe={demos["soundcloud"]} allow="autoplay"/>
                         </div>
                         <hr className="divider"/>
                         <div className="project-icons">

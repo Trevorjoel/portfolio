@@ -13,7 +13,6 @@ class GraphSwitch extends Component {
     }
 
     render() {
-        console.log(this.props)
         return (
             <label style={{padding:"10px"}} onClick={()=>this.props.click()}>
                 <Switch

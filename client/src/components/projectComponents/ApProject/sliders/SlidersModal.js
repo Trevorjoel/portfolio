@@ -1,7 +1,8 @@
-import {Button, Modal} from 'react-bootstrap';
+import  {Button, Modal, Row, Col} from 'react-bootstrap';
 import React, {useState} from "react";
 import classes from './SlidersModal.module.css'
-
+import Rpi from '../Assets/pi-power.png';
+import Sensors from '../Assets/AP-7000-Sleeve-On-1024x446_1.jpg'
 function SlidersModal() {
     const [show, setShow] = useState(true);
     const handleClose = () => setShow(false);
@@ -18,16 +19,16 @@ function SlidersModal() {
                     <Modal.Title className={classes.Title}>ALERT</Modal.Title>
                 </Modal.Header >
                 <Modal.Body  className={classes.Body}><p>The sliders you are about to see are for development and demonstration of the app.
-                <br/>They are a substitute
-                for information coming from water quality probes.</p>
+                <br/></p>
+                    <p>These values will come from water quality sensors connected to a computer which sends data to a central server.</p>
+                    <Row style={{margin: "20px 0"}}><Col><img style={{width: "80%"}} src={Sensors} /> </Col><Col><img style={{width: "80%"}} src={Rpi} /></Col></Row>
 
-                       <p> They <strong>ARE NOT</strong> in the final project. -The readings come from the probes in the water.<p/>
+                    <p> They <strong>ARE NOT</strong> in the final project. -The readings come from the probes in the water.<p/>
                            <p>They <strong>ARE NOT</strong> the same as the "View historical data" section.</p>
                 </p><p><strong>So how to use them?</strong></p>
                     <p>Move the values in the sliders up and down and check the changes in the "Current Status" section.
                         <br/>Take note of the alerts, these would be sent to your telephone.<br/><br/>
-
-                        <p><strong>Alerts</strong> come in three categories and are triggered when the probes detect readings in certain ranges related
+        <p><strong>Alerts</strong> come in three categories and are triggered when the probes detect readings in certain ranges related
                         to the needs of the selected fish or user entered settings:<br/><br/>
                        <strong> 1) Optimal <br/></strong> This is the range where you are aiming to keep your system parameters.<br/>
                         At these ranges your fish are most comfortable.<br/>

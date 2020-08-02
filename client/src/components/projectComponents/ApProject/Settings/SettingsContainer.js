@@ -17,25 +17,44 @@ class SettingsContainer extends Component{
             tempSettingsUpdate: null,
             phSettingsUpdate: null,
             nh3SettingsUpdate: null,
+
         };
     }
+    checkIfUsrCustom =()=>{
+        let setName;
+        let containsCustom = this.props.fishSettingName.includes("_custom")
+        console.log("containsCustom : " + containsCustom);
+        console.log("setCustom:  " + this.props.setCustom)
+// todo: extra function here to prevent "setting name_custom_custom".
+        // containsCustom : false
+        // setCustom:  true
+        if (this.props.setCustom === false && containsCustom === false ||
+            this.props.setCustom === true && containsCustom === true ) {
+            return true;
+        }else{
 
+            console.log("Hide the Enter")
+            return false;
+        }
+
+    }
     componentDidMount() {
 
         this.setState({
             tempSettingsUpdate: this.props.tempUpdate,
             phSettingsUpdate: this.props.phUpdate,
             nh3SettingsUpdate: this.props.nh3Update,
-            tempDomain: [this.props.minDomain, this.props.maxDomain]
-
+            tempDomain: [this.props.minDomain, this.props.maxDomain],
+            disabledButtonMsg:""
         })
+
     }
 
     render() {
 
         return(
             <Tabs className={classes.TabContainer} Key="customise-current" id="custom-tab">
-
+              {/*  {console.log(this.props.allowSettingChange)}*/}
                 <Tab eventKey="customise-current" title="Current Fish"
                      style={{background: "white", color: "black", borderRadius: "0px 0px 20px 20px"}}>
                     <br/>
@@ -44,8 +63,10 @@ class SettingsContainer extends Component{
                         selectedName={this.props.fishSettingName}
                         size={150}
                     />
-
+                    {this.checkIfUsrCustom() === true ? null :<p style={{color: "red"}}>
+                        * Modifying user customisation parameters not available in the demo.</p>}
                     <br/>
+                    <p>{this.state.disabledButtonMsg}</p>
                    <SettingsTemp
                         vertical={true}
                         onChange={(value)=> this.props.handleChange('tempSettingsUpdate', value )}
@@ -54,7 +75,7 @@ class SettingsContainer extends Component{
                         maxdomain={this.props.maxDomain}
                         reset={this.props.resetTempSettings}
                         save={this.props.saveTempSettings}
-                        renderButtons={true}
+                        renderButtons={this.checkIfUsrCustom()}
 
                     />
                     <SettingsPh
@@ -62,14 +83,14 @@ class SettingsContainer extends Component{
                         updates={this.props.phUpdate}
                         reset={this.props.resetPhSettings}
                         save={this.props.savePhSettings}
-                        renderButtons={true}
+                        renderButtons={this.checkIfUsrCustom()}
                     />
                     <SettingsNh3
                            onChange={(value)=>this.props.handleChange('nh3SettingsUpdate', value )}
                            updates={this.props.nh3Update}
                            reset={this.props.resetNh3Settings}
                            save={this.props.saveNh3Settings}
-                           renderButtons={true}
+                           renderButtons={this.checkIfUsrCustom()}
                     />
 
                 </Tab>

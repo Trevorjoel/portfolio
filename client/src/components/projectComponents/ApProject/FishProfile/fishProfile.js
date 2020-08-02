@@ -55,7 +55,7 @@ const FishProfile = (props) =>{ // todo: write a decent function for image swap
                                 props.allSettings.map((setting, index) => {
 
                                     return (
-                                        <DropdownItem onClick={()=>props.onSettingsChange(setting.setting_name)}>{setting.setting_name}</DropdownItem>
+                                        <DropdownItem onClick={()=>props.onSettingsChange(setting.setting_name)}>{setting.setting_name}  </DropdownItem>
                                     )
                             })}
                         </DropdownMenu>

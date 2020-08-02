@@ -15,6 +15,9 @@ import ComingSoon from "../Loading/ComingSoon";
 import PhBasics from "./TextComponents/PhBasics";
 import BarramundiInfo from "./TextComponents/BarramundiInfo";
 import SilverPerchInfoInfo from "./TextComponents/SilverPerchInfo";
+import Trevorprofile from "./TextComponents/TrevorProfile";
+import DimitryProfile from "./TextComponents/DimitryProfile";
+import AnnaProfile from "./TextComponents/AnnaProfile";
 
 class AdviceWiki extends Component {
 
@@ -27,9 +30,10 @@ class AdviceWiki extends Component {
                 <nav className="section-nav">
                     <ol>
                         <li><a href="#introduction">Introduction</a></li>
+
                         <li><a href="#ammonia">Ammonia</a>
                             <ul>
-                                <li className=""><a href="#ammonia--basics">Basics</a></li>
+
                                 <li className=""><a href="#ammonia--high">High</a></li>
                                 <li className=""><a href="#ammonia--low">Low</a></li>
 
@@ -45,7 +49,7 @@ class AdviceWiki extends Component {
                         </li>
                         <li><a href="#ph">pH</a>
                             <ul>
-                                <li className=""><a href="#ph--basics">Basics</a></li>
+
                                 <li className=""><a href="#ph--high">High</a></li>
                                 <li className=""><a href="#ph--low">Low</a></li>
 
@@ -54,7 +58,7 @@ class AdviceWiki extends Component {
                         </li>
                         <li><a href="#temperature">Temperature</a>
                             <ul>
-                                <li className=""><a href="#temperature--basics">Basics</a></li>
+
                                 <li className=""><a href="#temperature--high">High</a></li>
                                 <li className=""><a href="#temperature--low">Low</a></li>
 
@@ -77,21 +81,22 @@ class AdviceWiki extends Component {
                 <div>
 
                     <section id="introduction">
-                        <h2>Introduction</h2>
+                        <h2 className={classes.IntroHeader}>Introduction</h2>
+                        <hr />
                         <Introduction/>
                     </section>
                     <section id="ammonia">
                         <h2>Ammonia</h2>
                         <hr/>
-                        <section id="ammonia--basics">
+
                          <AmmoniaBasics/>
-                        </section>
+
                         <section id="ammonia--high">
-                            <h3>High</h3>
+                            <h4>High</h4>
                             <AmmoniaHigh/>
                         </section>
                         <section id="ammonia--low">
-                            <h3>Low</h3>
+                            <h4>Low</h4>
 <AmmoniaLow/>
                         </section>
                     </section>
@@ -106,11 +111,11 @@ class AdviceWiki extends Component {
                         <hr/>
 <p>Common fish in aquaponics systems.<br/>If you don't find your species you can add new in the settings section.</p>
                         <section id="fish--barramundi">
-                            <h3>Barramundi</h3>
+                            <h4>Barramundi</h4>
                             <BarramundiInfo/>
                         </section>
                         <section id="fish--silver-perch">
-                            <h3>Silver Perch</h3>
+                            <h4>Silver Perch</h4>
                             <SilverPerchInfoInfo/>
                         </section>
                         <section id="fish--trout">
@@ -121,16 +126,16 @@ class AdviceWiki extends Component {
                     <section id="ph">
                         <h2>pH</h2>
                         <hr/>
-                        <section id="ph--basics">
+
                             <PhBasics/>
-                        </section>
+
                         <section id="ph--high">
-                            <h3>High</h3>
+                            <h4>High</h4>
                             <p>Actions to take if pH is high</p>
                             <ComingSoon/>
                         </section>
                         <section id="ph--low">
-                            <h3>Low</h3>
+                            <h4>Low</h4>
                             <p>Actions to take if pH is low</p>
                             <ComingSoon/>
                         </section>
@@ -139,16 +144,16 @@ class AdviceWiki extends Component {
                         <h2>Temperature</h2>
                         <hr/>
                         <p>Temperature and it's relationship with water quality</p>
-                        <section id="temperature--basics">
+
                             <ComingSoon/>
-                        </section>
+
                         <section id="temperature--high">
-                            <h3>High</h3>
+                            <h4>High</h4>
                             <p>Actions to take if temperature is high</p>
                             <ComingSoon/>
                         </section>
                         <section id="temperature--low">
-                            <h3>Low</h3>
+                            <h4>Low</h4>
                             <p>Actions to take if temperature is low</p>
                             <ComingSoon/>
                         </section>
@@ -158,16 +163,16 @@ class AdviceWiki extends Component {
                         <hr/>
                         <p>Meet the crew developing the app.</p>
                         <section id="credits--trevor">
-                            <h3>Trevor Garrity</h3>
-                            <p>...</p>
+                            <h4>Trevor Garrity</h4>
+                         <Trevorprofile/>
                         </section>
                         <section id="credits--dimitry">
-                            <h3>Dimitry Radyukin</h3>
-                            <p>...</p>
+                            <h4>Dimitry Radyukin</h4>
+                            <DimitryProfile/>
                         </section>
                         <section id="credits--anna">
-                            <h3>Anna Osyatinskaya</h3>
-                            <p>...</p>
+                            <h4>Anna Osyatinskaya</h4>
+                            <AnnaProfile/>
                         </section>
                     </section>
 
