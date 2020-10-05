@@ -3,7 +3,7 @@ import trout from "../Assets/troutPic.png";
 import silverPerch from "../Assets/silver_perchPic.png";
 import barramundi from "../Assets/barraPic.png";
 import classes from "../FishProfile/FishProfile.module.scss";
-import custom from "../Assets/pinpng.com-great-white-shark-png-686944.png";
+import custom from "../Assets/custom_fish.png";
 import LoadingContainer from "../Loading/LoadingContainer";
 
 const FishSwitch = (props) =>{

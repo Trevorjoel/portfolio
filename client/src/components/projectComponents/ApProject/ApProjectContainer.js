@@ -1,20 +1,16 @@
 import React, {Component} from 'react';
 import * as Assets from './Assets/ApProjectAssets';
+import * as Requests from './ApFunctions/Requests';
+import * as HandleState from './ApFunctions/HandleState';
 import classes from './ApProjectContainer.module.scss';
-
+import * as handleState from './ApFunctions/HandleState';
 import {
-    addReadingsToDB,
-    addSettingsToDB,
     createNotificationController,
-    getFish,
-    getPreviousTime,
-    getSettings,
     nh3Controller,
     phController,
-    selectFishType,
-    selectUserParameters,
     tempController,
 } from './ApFunctions/apFunctions';
+
 import DateRange from "./DateRanges/DateRange";
 import {NotificationContainer} from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
@@ -117,26 +113,26 @@ class ApProjectContainer extends Component {
         this.phController = phController.bind(this);
         this.nh3Controller = nh3Controller.bind(this);
         this.createNotificationController = createNotificationController.bind(this);
-        this.addReadingsToDB = addReadingsToDB.bind(this);
-        this.getPreviousTime = getPreviousTime.bind(this);
-        this.getFish = getFish.bind(this);
+        this.addReadingsToDB = Requests.addReadingsToDB.bind(this);
+        this.getPreviousTime = Requests.getPreviousTime.bind(this);
+        this.getFish = Requests.getFish.bind(this);
         this.handleToggleSliders = this.handleToggleSliders.bind(this);
-        this.saveTempSettings = this.saveTempSettings.bind(this);
-        this.savePhSettings = this.savePhSettings.bind(this);
-        this.saveNh3Settings = this.saveNh3Settings.bind(this);
-        this.addSettingsToDB = addSettingsToDB.bind(this);
-        this.selectUserParameters = selectUserParameters.bind(this);
-        this.resetTempSettings = this.resetTempSettings.bind(this);
-        this.resetPhSettings = this.resetPhSettings.bind(this);
-        this.resetNh3Settings = this.resetNh3Settings.bind(this);
-        this.resetUserSettings = this.resetUserSettings.bind(this);
-        this.saveUserSettings = this.saveUserSettings.bind(this);
+        this.saveTempSettings = HandleState.saveTempSettings.bind(this);
+        this.savePhSettings = HandleState.savePhSettings.bind(this);
+        this.saveNh3Settings = HandleState.saveNh3Settings.bind(this);
+        this.addSettingsToDB = Requests.addSettingsToDB.bind(this);
+        this.selectUserParameters = Requests.selectUserParameters.bind(this);
+        this.resetTempSettings = HandleState.resetTempSettings.bind(this);
+        this.resetPhSettings = HandleState.resetPhSettings.bind(this);
+        this.resetNh3Settings = HandleState.resetNh3Settings.bind(this);
+        this.resetUserSettings = HandleState.resetUserSettings.bind(this);
+        this.saveUserSettings = HandleState.saveUserSettings.bind(this);
         this.handleSettingNameChange = this.handleSettingNameChange.bind(this); // Is this used?
         this.handleValidSubmit = this.handleValidSubmit.bind(this);
         this.handleInvalidSubmit = this.handleInvalidSubmit.bind(this);
-        this.getSettings = getSettings.bind(this);
-        this.settingNameWriteToDB = this.settingNameWriteToDB.bind(this);
-
+        this.getSettings = Requests.getSettings.bind(this);
+        this.settingNameWriteToDB = HandleState.settingNameWriteToDB.bind(this);
+        this.updateAllStateForView = HandleState.updateAllStateForView.bind(this);
         // References for the sticky history component
         this.topTriggerEl = React.createRef();
         this.containerEl = React.createRef();
@@ -214,130 +210,6 @@ class ApProjectContainer extends Component {
 
     }
 
-    // Reset settings to default of selected fish setting by param
-    resetTempSettings = () => {
-        this.setState({
-            tempSettingsUpdate: [this.state.systemParams.temp_low_critical,
-                this.state.systemParams.temp_low_warn,
-                this.state.systemParams.temp_high_warn,
-                this.state.systemParams.temp_high_critical].slice(),
-        })
-    }
-
-    resetPhSettings = () => {
-
-        this.setState({
-            phSettingsUpdate: [this.state.systemParams.ph_low_critical,
-                this.state.systemParams.ph_low_warn,
-                this.state.systemParams.ph_high_warn,
-                this.state.systemParams.ph_high_critical].slice(),
-        })
-
-    }
-
-    resetNh3Settings = () => {
-
-        this.setState({
-            nh3SettingsUpdate: [this.state.systemParams.nh3_warn,
-                this.state.systemParams.nh3_critical].slice(),
-        })
-    }
-
-// Reset settings to default of selected fish/usr all Just confirm
-    resetUserSettings = () => {
-        this.setState({
-            tempSettingsUpdate: [this.state.systemParams.temp_low_critical,
-                this.state.systemParams.temp_low_warn,
-                this.state.systemParams.temp_high_warn,
-                this.state.systemParams.temp_high_critical].slice(),
-            phSettingsUpdate: [this.state.systemParams.ph_low_critical,
-                this.state.systemParams.ph_low_warn,
-                this.state.systemParams.ph_high_warn,
-                this.state.systemParams.ph_high_critical].slice(),
-            nh3SettingsUpdate: [this.state.systemParams.nh3_warn,
-                this.state.systemParams.nh3_critical].slice(),
-        })
-    }
-
-    settingNameWriteToDB = () => {
-        let setName ='';
-        const checkCustom = this.state.fish.find(item => item.fish_name + '_custom' === this.state.fishSettingName);
-// todo: extra function here to prevent "setting name_custom_custom".
-        if (typeof checkCustom === 'undefined') {
-            setName = this.state.fishSettingName + '_custom';
-        } else {
-            setName = this.state.fishSettingName;
-        }
-
-        return setName;
-
-    }
-
-    saveTempSettings = () => {
-        if (JSON.stringify(this.state.tempSettingsUpdate) !== JSON.stringify(this.state.tempSettingsValue))
-        {
-            this.addSettingsToDB('addtempsettings', this.settingNameWriteToDB(), this.state.tempSettingsUpdate[0], this.state.tempSettingsUpdate[1],
-                this.state.tempSettingsUpdate[2], this.state.tempSettingsUpdate[3], this.state.phSettingsValue[0],
-                this.state.phSettingsValue[1], this.state.phSettingsValue[2], this.state.phSettingsValue[3],
-                this.state.nh3SettingsValue[0], this.state.nh3SettingsValue[1], this.state.tempValue[0],
-                this.state.phValue[0], this.state.nh3Value[0]);
-
-            this.setState({
-                tempSettingsValue: this.state.tempSettingsUpdate.slice(),
-            })
-            console.log('save temperature settings ');
-            this.mapSettings(getSettings);
-        }
-    }
-
-    savePhSettings = () => {
-        if (JSON.stringify(this.state.phSettingsUpdate) !== JSON.stringify(this.state.phSettingsValue)) {
-            this.addSettingsToDB('addphpsettings', this.settingNameWriteToDB(), this.state.tempSettingsValue[0], this.state.tempSettingsValue[1],
-                this.state.tempSettingsValue[2], this.state.tempSettingsValue[3], this.state.phSettingsUpdate[0],
-                this.state.phSettingsUpdate[1], this.state.phSettingsUpdate[2], this.state.phSettingsUpdate[3],
-                this.state.nh3SettingsValue[0], this.state.nh3SettingsValue[1], this.state.tempValue[0],
-                this.state.phValue[0], this.state.nh3Value[0]);
-
-            this.setState({
-                phSettingsValue: this.state.phSettingsUpdate.slice(),
-            })
-            this.mapSettings(getSettings);
-        }
-    }
-
-    saveNh3Settings = () => {
-        if (JSON.stringify(this.state.nh3SettingsUpdate) !== JSON.stringify(this.state.nh3SettingsValue)) {
-            this.addSettingsToDB('addnh3psettings', this.settingNameWriteToDB(), this.state.tempSettingsValue[0], this.state.tempSettingsValue[1],
-                this.state.tempSettingsValue[2], this.state.tempSettingsValue[3], this.state.phSettingsValue[0],
-                this.state.phSettingsValue[1], this.state.phSettingsValue[2], this.state.phSettingsValue[3],
-                this.state.nh3SettingsUpdate[0], this.state.nh3SettingsUpdate[1], this.state.tempValue[0],
-                this.state.phValue[0], this.state.nh3Value[0]);
-
-            this.setState({
-                nh3SettingsValue: this.state.nh3SettingsUpdate.slice(),
-            })
-            this.mapSettings(getSettings);
-        }
-    }
-
-    saveUserSettings = () => {
-        if (this.state.settingName !== '' && this.state.settingName !== 'default_settings') {
-            this.addSettingsToDB('addsettings', this.state.settingName, this.state.tempSettingsUpdate[0], this.state.tempSettingsUpdate[1],
-                this.state.tempSettingsUpdate[2], this.state.tempSettingsUpdate[3], this.state.phSettingsUpdate[0],
-                this.state.phSettingsUpdate[1], this.state.phSettingsUpdate[2], this.state.phSettingsUpdate[3],
-                this.state.nh3SettingsUpdate[0], this.state.nh3SettingsUpdate[1], this.state.tempValue[0],
-                this.state.phValue[0], this.state.nh3Value[0]);
-
-            this.setState({
-                tempSettingsValue: this.state.tempSettingsUpdate.slice(),
-                phSettingsValue: this.state.phSettingsUpdate.slice(),
-                nh3SettingsValue: this.state.nh3SettingsUpdate.slice(),
-            })
-
-            this.form && this.form.reset();
-        }
-    }
-
     mapFishSetState = (requestFunction, fishId) => {
         requestFunction(fishId)
             .then(query => {
@@ -345,48 +217,6 @@ class ApProjectContainer extends Component {
                   this.updateAllStateForView(returnedFishParams);
                 }
             )
-    }
-    updateAllStateForView = (returnedData) =>{
-        if(returnedData.fish_name){
-            this.setState({fishSettingName: returnedData.fish_name,
-                setCustom: false})
-        }else {
-            this.setState({fishSettingName: returnedData.setting_name,
-                setCustom: true})
-        }
-        this.setState({
-            systemParams: returnedData,
-
-            // Set state here
-            tempSettingsValue: [returnedData.temp_low_critical,
-                returnedData.temp_low_warn,
-                returnedData.temp_high_warn,
-                returnedData.temp_high_critical].slice(),
-            tempSettingsUpdate: [returnedData.temp_low_critical,
-                returnedData.temp_low_warn,
-                returnedData.temp_high_warn,
-                returnedData.temp_high_critical].slice(),
-            phSettingsValue: [returnedData.ph_low_critical,
-                returnedData.ph_low_warn,
-                returnedData.ph_high_warn,
-                returnedData.ph_high_critical].slice(),
-            phSettingsUpdate: [returnedData.ph_low_critical,
-                returnedData.ph_low_warn,
-                returnedData.ph_high_warn,
-                returnedData.ph_high_critical].slice(),
-            nh3SettingsValue: [returnedData.nh3_warn,
-                returnedData.nh3_critical].slice(),
-            nh3SettingsUpdate: [returnedData.nh3_warn,
-                returnedData.nh3_critical].slice(),
-            tempValue: [this.setTarget(returnedData.temp_low_warn, returnedData.temp_high_warn)].slice(),
-            tempUpdate: [this.setTarget(returnedData.temp_low_warn, returnedData.temp_high_warn)].slice(),
-            phValue: [this.setTarget(returnedData.ph_low_warn, returnedData.ph_high_warn)].slice(),
-            phUpdate: [this.setTarget(returnedData.ph_low_warn, returnedData.ph_high_warn)].slice(),
-            nh3Value: [returnedData.nh3_target].slice(),
-            nh3Update: [returnedData.nh3_target].slice(),
-            tempDomain: [returnedData.temp_low_critical,
-                returnedData.temp_high_critical].slice(),
-        })
     }
 
     mapUserSetState = (requestFunction, userId, settingName) => {
@@ -428,7 +258,7 @@ class ApProjectContainer extends Component {
     handleValidSubmit(event, values) {
         this.setState({settingName: values.fname});
         this.saveUserSettings();
-        this.mapSettings(getSettings);
+        this.mapSettings(this.getSettings);
     }
 
     handleInvalidSubmit(event, errors, values) {
@@ -474,30 +304,28 @@ class ApProjectContainer extends Component {
     componentDidMount() {
 
         this.getPreviousTime();
-        this.mapFishSetState(selectFishType, this.state.fishId);
-        this.mapFish(getFish);
-        this.mapSettings(getSettings);
+        this.mapFishSetState(Requests.selectFishType, this.state.fishId);
+        this.mapFish(Requests.getFish);
+        this.mapSettings(Requests.getSettings);
         window.addEventListener('scroll', this.handleScroll);
-
-
     }
 
 
     onFishChange = fishId => {
-        this.mapFishSetState(selectFishType, fishId);
+        this.mapFishSetState(Requests.selectFishType, fishId);
     };
 
     onSettingsChange = settingName => {
 
         const checkCustom = this.state.fish.find(item => item.fish_name + '_custom' === settingName);
         if (typeof checkCustom === 'undefined') {
-            this.mapUserSetState(selectUserParameters, this.state.userId, settingName);
+            this.mapUserSetState(this.selectUserParameters, this.state.userId, settingName);
         } else {
             this.setState({tempDomain: [checkCustom.temp_low_critical, checkCustom.temp_high_critical,
 
 
                 ].slice()});
-            this.mapUserSetState(selectUserParameters, this.state.userId, settingName);
+            this.mapUserSetState(this.selectUserParameters, this.state.userId, settingName);
         }
 
     };
@@ -550,8 +378,7 @@ class ApProjectContainer extends Component {
 
                         <h1 className={classes.Title}><strong>Aquaponics System Monitor</strong></h1>
                         <img style={{width: "200px", marginBottom: "40px"}} src={Logo}/>
-                        <p className={classes.SectionText}>Simplify back yard aquaponics
-                            and collect data to help achieve the best possible results. </p>
+                        <p className={classes.SectionText}>Monitor water quality, record history and advise aquaponics system users</p>
                         <hr className="divider"/>
 
 
@@ -574,16 +401,17 @@ class ApProjectContainer extends Component {
                                     />
                                 </div>
 
-                                <div className={classes.BarsWrapper}
-                                     title="Live readings from your system & information to help">
-                                    <div className={classes.AccordionContainer}>
+
+
                                         <h2 className={classes.SecondaryTitle}><strong>Current Status</strong></h2>
 
                                         <p className={classes.SectionText}>The parameters shown are updated live or in
                                             very short
                                             frequencies to give an instant picture of the water quality and alert the
                                             user if there are problems.</p>
-
+                                    <div className={classes.AccordionContainer}>
+                                        <div className={classes.BarsWrapper}
+                                             title="Live readings from your system & information to help">
                                         {this.tempController(this.state.tempUpdate[0])}
                                         {this.phController(this.state.phUpdate[0])}
                                         {this.nh3Controller(this.state.nh3Update[0])}
@@ -782,7 +610,7 @@ class ApProjectContainer extends Component {
                             <AdviceContainer/>
                         </div>
                         <h2 className="reading-box">Give feedback and sign up for more info.</h2>
-
+                        <p className={classes.SectionText}>We'd love to hear back from you.</p>
                         <div id="container">
                             <Iframe iframe={demos["soundcloud"]} allow="autoplay"/>
                         </div>

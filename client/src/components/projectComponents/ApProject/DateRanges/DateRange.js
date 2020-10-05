@@ -5,7 +5,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import {Col, Row} from 'react-bootstrap';
 import DropdownDates from "./DropdownDates";
 
-import {getFirstLastReadings, getReadingsRange,} from '../ApFunctions/apFunctions';
+import {getFirstLastReadings, getReadingsRange,} from '../ApFunctions/Requests';
 import moment from 'moment';
 import DropdownFish from "./DropDownFish";
 
@@ -131,7 +131,7 @@ class DateRange extends React.Component {
             <div id="range-select" className={classes.Wrap}>
                 <Row>
 
-                    <Col lg={2} md={2} sm={2} xs={6}>
+                    <Col lg={4} md={4} sm={12} xs={12}>
                     <DropdownDates
                         showDay={() => this.setPeriodOfDates('day')}
                         showWeek={() => this.setPeriodOfDates('week')}
@@ -141,7 +141,7 @@ class DateRange extends React.Component {
                         dropDownLabel={this.state.dropDownLabel}
                     />
                 </Col>
-                    <Col lg={4} md={4} sm={4} xs={6}>
+                    <Col lg={4} md={4} sm={6} xs={6}>
 
                         <DatePicker
                             dateFormat="dd/MM/yyyy"
@@ -157,7 +157,7 @@ class DateRange extends React.Component {
                             withPortal
                         />
                     </Col>
-                    <Col lg={4} md={4} sm={4} xs={6}>
+                    <Col lg={4} md={4} sm={6} xs={6}>
 
                         <DatePicker
                             dateFormat="dd/MM/yyyy"

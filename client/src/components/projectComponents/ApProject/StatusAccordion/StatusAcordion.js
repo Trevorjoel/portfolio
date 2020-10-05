@@ -76,9 +76,16 @@ const Accordion = (props) => {
                             data-aos-duration="1000"
                             activeClassName="" tag={RRNavLink} href="/" exact to="/sensors">Please see <a href="#"> our wiki.</a></p>
                     </Link>
-
-                    <Button variant="info" size={"sm"}>Modify {
-                        props.paramName === "" ? "nh3" : props.paramName} alerts</Button><br/>
+<Link               exact
+                    activeClass=""
+                    to="sticky-end"
+                    spy={true}
+                    smooth={true}
+                    offset={-70}
+                    duration={500}>
+                    <Button  tag={RRNavLink} href="/" exact to="/sticky-end"
+                             variant="info" size={"sm"}>Modify {
+                        props.paramName === "" ? "nh3" : props.paramName} alerts</Button></Link><br/>
                     <br/>
                 </div>
             </div>

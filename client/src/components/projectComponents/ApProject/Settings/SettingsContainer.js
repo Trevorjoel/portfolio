@@ -23,8 +23,7 @@ class SettingsContainer extends Component{
     checkIfUsrCustom =()=>{
         let setName;
         let containsCustom = this.props.fishSettingName.includes("_custom")
-        console.log("containsCustom : " + containsCustom);
-        console.log("setCustom:  " + this.props.setCustom)
+
 // todo: extra function here to prevent "setting name_custom_custom".
         // containsCustom : false
         // setCustom:  true
@@ -33,7 +32,6 @@ class SettingsContainer extends Component{
             return true;
         }else{
 
-            console.log("Hide the Enter")
             return false;
         }
 
@@ -54,7 +52,6 @@ class SettingsContainer extends Component{
 
         return(
             <Tabs className={classes.TabContainer} Key="customise-current" id="custom-tab">
-              {/*  {console.log(this.props.allowSettingChange)}*/}
                 <Tab eventKey="customise-current" title="Current Fish"
                      style={{background: "white", color: "black", borderRadius: "0px 0px 20px 20px"}}>
                     <br/>

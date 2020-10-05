@@ -70,7 +70,7 @@ class AdviceWiki extends Component {
                             <ul>
                                 <li className=""><a href="#credits--trevor">Trevor Garrity</a></li>
                                 <li className=""><a href="#credits--dimitry">Dimitry Radyukin</a></li>
-                                <li className=""><a href="#credits--anna">Anna Osyatinskaya</a></li>
+
                             </ul>
                         </li>
                         <li className=""><a href="#resources">Resources</a></li>
@@ -167,13 +167,10 @@ class AdviceWiki extends Component {
                          <Trevorprofile/>
                         </section>
                         <section id="credits--dimitry">
-                            <h4>Dimitry Radyukin</h4>
+                            <h4>Dmitry Radyukin</h4>
                             <DimitryProfile/>
                         </section>
-                        <section id="credits--anna">
-                            <h4>Anna Osyatinskaya</h4>
-                            <AnnaProfile/>
-                        </section>
+
                     </section>
 
                     <section id="resources">

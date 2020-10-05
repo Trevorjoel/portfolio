@@ -21,7 +21,7 @@
 
 }
 .Fields{
-    width: 50%;
+    width: 80%;
     margin:0px 10px 0 10px;
 }
 .Title{
@@ -45,7 +45,13 @@
 
 @media (max-width: 575px)  {
     .Fields{
-        width: 50%;
+        width: 86%;
+        margin:10px 10px 0 10px;
+    }
+}
+@media (max-width: 766px)  {
+    .Fields{
+        width: 80%;
         margin:10px 10px 0 10px;
     }
 }
