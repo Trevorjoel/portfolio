@@ -3,11 +3,11 @@
 * Middleware for the aquaponics API
 * */
 
-const TakeData = require('../models/aquaponicsModel');
+const DataModel = require('../models/DataModel');
 
 exports.get_previous_time =  (req, res) => {
     console.log('GetTime Runs');
-    TakeData.getPreviousTime((err, data)=>{
+    DataModel.getPreviousTime((err, data)=>{
         if (err)
             res.send(err)
         else
@@ -16,7 +16,7 @@ exports.get_previous_time =  (req, res) => {
 };
 
 exports.select_recent_readings = (req, res) => {
-    TakeData.selectRecent(req.body.numberOfReadings, (err, data) => {
+    DataModel.selectRecent(req.body.numberOfReadings, (err, data) => {
         if (err)
             res.send(err)
         else
@@ -27,7 +27,7 @@ exports.select_recent_readings = (req, res) => {
 exports.add_reading = async (req, res) => {
     console.log('addReadings RUns');
 
-    TakeData.addReading(req, (err, data) =>{
+    DataModel.addReading(req, (err, data) =>{
         if (err)
             res.send(err)
         else
@@ -37,7 +37,7 @@ exports.add_reading = async (req, res) => {
 };
 // Under construction
 exports.select_fish_parameters = (req, res) => {
-    TakeData.selectFishParams(req.body.fishId, (err, data) => {
+    DataModel.selectFishParams(req.body.fishId, (err, data) => {
         if (err)
             res.send(err)
         else
@@ -47,7 +47,7 @@ exports.select_fish_parameters = (req, res) => {
 };
 
 exports.select_first_last_readings = (req, res) => {
-    TakeData.selectFirstLastReadings((err, data) => {
+    DataModel.selectFirstLastReadings((err, data) => {
         if (err)
             res.send(err)
         else
@@ -57,7 +57,7 @@ exports.select_first_last_readings = (req, res) => {
 };
 
 exports.select_fish = (req, res) => {
-    TakeData.selectFish((err, data) => {
+    DataModel.selectFish((err, data) => {
         if (err)
             res.send(err)
         else
@@ -67,7 +67,7 @@ exports.select_fish = (req, res) => {
 };
 
 exports.select_readings_range = (req, res) => {
-    TakeData.selectReadingsRange(req.body.from, req.body.to, (err, data) => {
+    DataModel.selectReadingsRange(req.body.from, req.body.to, (err, data) => {
         if (err)
             res.send(err)
         else
@@ -78,7 +78,7 @@ exports.select_readings_range = (req, res) => {
 exports.add_settings = async (req, res) => {
     console.log('add settings runs');
 
-    TakeData.addSettings(req, (err, data) =>{
+    DataModel.addSettings(req, (err, data) =>{
         if (err)
             res.send(err)
         else
@@ -90,7 +90,7 @@ exports.add_settings = async (req, res) => {
 exports.add_temp_settings = async (req, res) => {
     console.log('add temp settings runs');
 
-    TakeData.addTempSettings(req, (err, data) =>{
+    DataModel.addTempSettings(req, (err, data) =>{
         if (err)
             res.send(err)
         else
@@ -102,7 +102,7 @@ exports.add_temp_settings = async (req, res) => {
 exports.add_ph_settings = async (req, res) => {
     console.log('add ph settings runs');
 
-    TakeData.addPhSettings(req, (err, data) =>{
+    DataModel.addPhSettings(req, (err, data) =>{
         if (err)
             res.send(err)
         else
@@ -114,7 +114,7 @@ exports.add_ph_settings = async (req, res) => {
 exports.add_nh3_settings = async (req, res) => {
     console.log('add nh3 settings runs');
 
-    TakeData.addNh3Settings(req, (err, data) =>{
+    DataModel.addNh3Settings(req, (err, data) =>{
         if (err)
             res.send(err)
         else
@@ -124,7 +124,7 @@ exports.add_nh3_settings = async (req, res) => {
 };
 
 exports.select_user_parameters = (req, res) => {
-    TakeData.selectUserParams(req.body.userId, req.body.settingName, (err, data) => {
+    DataModel.selectUserParams(req.body.userId, req.body.settingName, (err, data) => {
         if (err)
             res.send(err)
         else
@@ -134,7 +134,7 @@ exports.select_user_parameters = (req, res) => {
 };
 
 exports.select_settings = (req, res) => {
-    TakeData.selectSettings((err, data) => {
+    DataModel.selectSettings((err, data) => {
         if (err)
             res.send(err)
         else

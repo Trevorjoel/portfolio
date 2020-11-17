@@ -1,6 +1,8 @@
 
 // All API requests
-
+/*
+* todo: Investigate if axios is worth using for requests.
+* */
 import * as Assets from "../Assets/ApProjectAssets";
 
 export const getFish = async function () {
@@ -219,4 +221,7 @@ export const getSettings = async function () {
     if (response.status !== 200) throw Error(query.message);
     return query;
 }
+
+
+
 /**/

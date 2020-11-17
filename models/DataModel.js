@@ -1,5 +1,5 @@
 import {validationResult} from "express-validator";
-const sqlAquaponics = require('.//dbAquaponics');
+const sqlAquaponics = require('.//DbConnect');
 
 let TakeData = function (req) {
     this.numberOfReadings = req.body.numberOfReadings

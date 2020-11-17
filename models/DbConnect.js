@@ -13,7 +13,7 @@ aquaponicsConnection.connect((err) => {
     if (err) {
         console.log(err);
     } else {
-        console.log('Aquaponics db conected....')
+        console.log('Aquaponics db connected....')
     }
 });
 module.exports = aquaponicsConnection;

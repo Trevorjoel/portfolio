@@ -2,7 +2,7 @@ import express from 'express';
 
 const router = express.Router();
 const appController = require('../../controller/appController');
-const Aquaponics = require('../../controller/aquaponicsController');
+const Aquaponics = require('../../controller/Controller');
 const {check} = require('express-validator');
 const app = express();
 app.use(express.json());

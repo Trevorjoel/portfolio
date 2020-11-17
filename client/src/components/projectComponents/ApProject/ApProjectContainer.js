@@ -99,13 +99,13 @@ class ApProjectContainer extends Component {
 
             // NEW STATE
 
-                fishSettingName: 'Loading...', // Pass in  fish.fish_name or settings.setting_name
-                fishImage: 'Loading...', // Pass in URL or function to render image
-                navTo: '#', // Pass in string with element ID
-                systemParams: null,
-                storedParams: [],
-                readings: [], // keep the readings in here?
-                setCustom: false
+            fishSettingName: 'Loading...', // Pass in  fish.fish_name or settings.setting_name
+            fishImage: 'Loading...', // Pass in URL or function to render image
+            navTo: '#', // Pass in string with element ID
+            systemParams: null,
+            storedParams: [],
+            readings: [], // keep the readings in here?
+            setCustom: false
 
         };
         // Bind the imported functions
@@ -116,7 +116,6 @@ class ApProjectContainer extends Component {
         this.addReadingsToDB = Requests.addReadingsToDB.bind(this);
         this.getPreviousTime = Requests.getPreviousTime.bind(this);
         this.getFish = Requests.getFish.bind(this);
-        this.handleToggleSliders = this.handleToggleSliders.bind(this);
         this.saveTempSettings = HandleState.saveTempSettings.bind(this);
         this.savePhSettings = HandleState.savePhSettings.bind(this);
         this.saveNh3Settings = HandleState.saveNh3Settings.bind(this);
@@ -127,12 +126,20 @@ class ApProjectContainer extends Component {
         this.resetNh3Settings = HandleState.resetNh3Settings.bind(this);
         this.resetUserSettings = HandleState.resetUserSettings.bind(this);
         this.saveUserSettings = HandleState.saveUserSettings.bind(this);
-        this.handleSettingNameChange = this.handleSettingNameChange.bind(this); // Is this used?
-        this.handleValidSubmit = this.handleValidSubmit.bind(this);
-        this.handleInvalidSubmit = this.handleInvalidSubmit.bind(this);
+        this.handleSettingNameChange = HandleState.handleSettingNameChange.bind(this); // Is this used?
+        this.handleValidSubmit = HandleState.handleValidSubmit.bind(this);
+        this.handleInvalidSubmit = HandleState.handleInvalidSubmit.bind(this);
         this.getSettings = Requests.getSettings.bind(this);
         this.settingNameWriteToDB = HandleState.settingNameWriteToDB.bind(this);
         this.updateAllStateForView = HandleState.updateAllStateForView.bind(this);
+        this.mapFishSetState = HandleState.mapFishSetState.bind(this);
+        this.mapFish = HandleState.mapFish.bind(this);
+        this.mapUserSetState = HandleState.mapUserSetState.bind(this);
+        this.handleToggleSliders = HandleState.handleToggleSliders.bind(this);
+        this.changeHandler = HandleState.changeHandler.bind(this);
+        this.toggleHandler = HandleState.toggleHandler.bind(this);
+        this.mapReadingsRangeSetState = HandleState.mapReadingsRangeSetState.bind(this);
+        this.mapSettings = HandleState.mapSettings.bind(this);
         // References for the sticky history component
         this.topTriggerEl = React.createRef();
         this.containerEl = React.createRef();
@@ -159,30 +166,6 @@ class ApProjectContainer extends Component {
             }
         }
     }
-// Test if parameters are from a user entered setting
-
-    /*
-    * <div ref={this.topTriggerEl} className="check" id="sticky-trigger"></div>
-    *  <li><a href="#ammonia">Ammonia</a>
-                            <ul>
-                                <li className=""><a href="#ammonia--basics">Basics</a></li>
-                                <li className=""><a href="#ammonia--high">High</a></li>
-                                <li className=""><a href="#ammonia--low">Low</a></li>
-
-                            </ul>
-                        </li>
-
-                         <section id="ammonia">
-                        <section id="ammonia--basics">
-                        ...
-                        </section>
-                        <section id="ammonia--high">
-                         ...
-                        </section>
-                        <section id="ammonia--low">
-                        ...
-                        </section>
-    * */
 
     // handles the navigation in the advice component
     handleObservations = () => {
@@ -210,90 +193,6 @@ class ApProjectContainer extends Component {
 
     }
 
-    mapFishSetState = (requestFunction, fishId) => {
-        requestFunction(fishId)
-            .then(query => {
-                    const returnedFishParams = query;
-                  this.updateAllStateForView(returnedFishParams);
-                }
-            )
-    }
-
-    mapUserSetState = (requestFunction, userId, settingName) => {
-        requestFunction(userId, settingName)
-            .then(query => {
-                    const returnedUserParams = query;
-                    this.updateAllStateForView(returnedUserParams)
-                }
-            )
-    }
-
-    mapFish = (requestFunction) => {
-        requestFunction()
-            .then(query => {
-                    const allFish = query.database1.slice();
-                    this.setState({fish: allFish.slice()})
-                }
-            )
-    }
-
-    handleToggleSliders() {
-        this.setState({
-            activeSliders: !this.state.activeSliders,
-            setButtonText: this.state.setButtonText === "Test Alerts" ? "Close Test" : "Test Alerts"
-        })
-    }
-
-    // Universal on change handler
-    changeHandler = (name, value) => {this.setState({[name]: value})}
-
-// Universal toggle handler.. binary toggle single set state
-
-    toggleHandler = (name) => {this.setState({[name]: !this.state[name]})}
-
-    handleSettingNameChange( event ) {
-        this.setState({settingName: event.target.value})
-    }
-
-    handleValidSubmit(event, values) {
-        this.setState({settingName: values.fname});
-        this.saveUserSettings();
-        this.mapSettings(this.getSettings);
-    }
-
-    handleInvalidSubmit(event, errors, values) {
-        this.setState({settingName: ''});
-    }
-
-    mapReadingsRangeSetState = (requestFunction, from, to) => {
-        requestFunction(from, to)
-            .then(query => {
-                    const returnedReadings = query.database1.slice();
-                    const updatedReadings = returnedReadings.map(
-                        reading => {
-                            return {
-                                ...reading
-                            }
-                        }
-                    );
-                    this.setState({
-                        readings: updatedReadings,
-                        startPeriod: moment(from).format('ddd, MMM Do, YYYY'),
-                        endPeriod: moment(to).format('ddd, MMM Do,  YYYY'),
-                    })
-                },
-            )
-
-    }
-
-    mapSettings = (requestFunction) => {
-        requestFunction()
-            .then(query => {
-                    const allSettings = query.database1.slice();
-                    this.setState({settings: allSettings.slice()})
-                }
-            )
-    }
     // create a number between hi warn and low warn
     setTarget = (lowWarn, highWarn)=>{
         const a =  lowWarn + highWarn;
@@ -331,23 +230,79 @@ class ApProjectContainer extends Component {
     };
 
     render() {
+
         let demos = {
             soundcloud:
                 '<iframe class="iframe-blog" scrolling="yes" frameborder="no" allow="autoplay" src=https://fullstack-adventure.com/contact/"></iframe>',
 
         };
-        const {systemParams} = this.state;
+        // This is to show test sliders for the demonstration. it wont be in the final app
+        let testSliders = null;
+        if(this.state.activeSliders){
+            testSliders =(
+                <div className={classes.SlidersWrap}>
+                    <Row>
+                        <h4 className={classes.h5}>Substitute probe readings</h4>
 
-        if (systemParams === null) {
-            return <LoadingContainer/>;
+                    </Row><Row>
+                    <Col lg={4} md={4} sm={4} xs={4}>
+                        <div className={classes.SlidersContainer}>
+                            <div className=""><p>TEMP</p>
+
+                            </div>
+                            <TempSliderVertical
+                                values={this.state.tempValue}
+                                update={this.state.tempUpdate}
+                                onUpdate={(value) => this.changeHandler('tempUpdate', value)}
+                                onChange={(value) => this.changeHandler('tempChange', value)}
+                            />
+                        </div>
+                    </Col><Col lg={4} md={4} sm={4} xs={4}>
+                    <div className={classes.SlidersContainer}>
+                        <div className="">
+                            <p>pH</p>
+                        </div>
+                        <PhSliderVertical
+                            values={this.state.phValue}
+                            update={this.state.phUpdate}
+                            defaultValues={Assets.defaultPh}
+                            onUpdate={(value) => this.changeHandler('phUpdate', value)}
+                            onChange={(value) => this.changeHandler('phChange', value)}
+                        />
+                    </div>
+                </Col><Col lg={4} md={4} sm={4} xs={4}>
+                    <div className={classes.SlidersContainer}>
+                        <div className="">
+                            <p>
+                                NH<sub>3</sub>
+                                &nbsp;</p>
+                        </div>
+                        <Nh3SliderVertical
+                            values={this.state.nh3Value}
+                            update={this.state.nh3Update}
+                            defaultValues={Assets.defaultNh3}
+                            onUpdate={(value) => this.changeHandler('nh3Update', value)}
+                            onChange={(value) => this.changeHandler('nh3Change', value)}
+
+                        />
+                    </div>
+                </Col>
+                </Row>
+                    <Button color="info" onClick={() => {
+                        this.addReadingsToDB();
+                    }} size="md" block>Enter readings into database.</Button>
+
+                    <SlidersModal/>
+                </div>
+            );
+
         }
-        this.handleObservations()
 
-        return (
-            <div>
-                <Container className={classes.SensorsContainer}>
-
-                    {this.state.activeDescription &&
+        // This is to show description of the project. it wont be in the final project
+        let projectDescription = null;
+        if(this.state.activeDescription) {
+            projectDescription =
+                (
                     <div>
                         <ProjectsHeader
                             projectName={Assets.projectName}
@@ -369,7 +324,20 @@ class ApProjectContainer extends Component {
                         </div>
                         <hr className="divider"/>
                     </div>
-                    }
+                );
+        };
+        // Shows a loading animation if data does not load from API
+        const {systemParams} = this.state;
+        if (systemParams === null) {
+            return <LoadingContainer/>;
+        }
+        this.handleObservations()
+
+        return (
+            <div>
+                <Container className={classes.SensorsContainer}>
+
+                    {projectDescription}
                     <Button size="sm" className={classes.ToggleButton} type="button"
                             onClick={(value) => this.toggleHandler('activeDescription', value)}>
                         Development Details!
@@ -400,77 +368,21 @@ class ApProjectContainer extends Component {
                                         onSettingsChange={this.onSettingsChange}
                                     />
                                 </div>
+                                <h2 className={classes.SecondaryTitle}><strong>Current Status</strong></h2>
 
-
-
-                                        <h2 className={classes.SecondaryTitle}><strong>Current Status</strong></h2>
-
-                                        <p className={classes.SectionText}>The parameters shown are updated live or in
-                                            very short
-                                            frequencies to give an instant picture of the water quality and alert the
-                                            user if there are problems.</p>
-                                    <div className={classes.AccordionContainer}>
-                                        <div className={classes.BarsWrapper}
-                                             title="Live readings from your system & information to help">
+                                <p className={classes.SectionText}>The parameters shown are updated live or in
+                                    very short
+                                    frequencies to give an instant picture of the water quality and alert the
+                                    user if there are problems.</p>
+                                <div className={classes.AccordionContainer}>
+                                    <div className={classes.BarsWrapper}
+                                         title="Live readings from your system & information to help">
                                         {this.tempController(this.state.tempUpdate[0])}
                                         {this.phController(this.state.phUpdate[0])}
                                         {this.nh3Controller(this.state.nh3Update[0])}
                                     </div>
 
-                                    {this.state.activeSliders &&
-                                    <div className={classes.SlidersWrap}>
-                                        <Row>
-                                            <h4 className={classes.h5}>Substitute probe readings</h4>
-
-                                        </Row><Row>
-                                        <Col lg={4} md={4} sm={4} xs={4}>
-                                            <div className={classes.SlidersContainer}>
-                                                <div className=""><p>TEMP</p>
-
-                                                </div>
-                                                <TempSliderVertical
-                                                    values={this.state.tempValue}
-                                                    update={this.state.tempUpdate}
-                                                    onUpdate={(value) => this.changeHandler('tempUpdate', value)}
-                                                    onChange={(value) => this.changeHandler('tempChange', value)}
-                                                />
-                                            </div>
-                                        </Col><Col lg={4} md={4} sm={4} xs={4}>
-                                        <div className={classes.SlidersContainer}>
-                                            <div className="">
-                                                <p>pH</p>
-                                            </div>
-                                            <PhSliderVertical
-                                                values={this.state.phValue}
-                                                update={this.state.phUpdate}
-                                                defaultValues={Assets.defaultPh}
-                                                onUpdate={(value) => this.changeHandler('phUpdate', value)}
-                                                onChange={(value) => this.changeHandler('phChange', value)}
-                                            />
-                                        </div>
-                                    </Col><Col lg={4} md={4} sm={4} xs={4}>
-                                        <div className={classes.SlidersContainer}>
-                                            <div className="">
-                                                <p>
-                                                    NH<sub>3</sub>
-                                                    &nbsp;</p>
-                                            </div>
-                                            <Nh3SliderVertical
-                                                values={this.state.nh3Value}
-                                                update={this.state.nh3Update}
-                                                defaultValues={Assets.defaultNh3}
-                                                onUpdate={(value) => this.changeHandler('nh3Update', value)}
-                                                onChange={(value) => this.changeHandler('nh3Change', value)}
-
-                                            />
-                                        </div>
-                                    </Col>
-                                    </Row>
-                                        <Button color="info" onClick={() => {
-                                            this.addReadingsToDB();
-                                        }} size="md" block>Enter readings into database.</Button>
-
-                                        <SlidersModal/></div>}
+                                    {testSliders}
                                     {<Button title="See the system working" className={classes.TestButton}
                                              onClick={() => {
                                                  this.handleToggleSliders();
@@ -520,12 +432,12 @@ class ApProjectContainer extends Component {
                                                         size={150}
                                                     />
 
-                                                        <DropdownFish allFish={this.state.fish}
-                                                                      selectedName={this.state.fishSettingName}
-                                                                      onFishChange={this.onFishChange}
-                                                                      allSettings={this.state.settings}
-                                                                      onSettingsChange={this.onSettingsChange}
-                                                        />
+                                                    <DropdownFish allFish={this.state.fish}
+                                                                  selectedName={this.state.fishSettingName}
+                                                                  onFishChange={this.onFishChange}
+                                                                  allSettings={this.state.settings}
+                                                                  onSettingsChange={this.onSettingsChange}
+                                                    />
 
                                                     <h3 className={classes.GraphTitle}>Hourly readings</h3>
 

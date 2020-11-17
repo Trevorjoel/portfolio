@@ -3,6 +3,8 @@
 * */
 
 // Reset settings to default of selected fish setting by param
+import moment from "moment";
+
 export const resetTempSettings = function () {
     this.setState({
         tempSettingsUpdate: [this.state.systemParams.temp_low_critical,
@@ -163,4 +165,88 @@ export const updateAllStateForView = function (returnedData){
         tempDomain: [returnedData.temp_low_critical,
             returnedData.temp_high_critical].slice(),
     })
+}
+
+export const mapFishSetState = function (requestFunction, fishId) {
+    requestFunction(fishId)
+        .then(query => {
+                const returnedFishParams = query;
+                this.updateAllStateForView(returnedFishParams);
+            }
+        )
+}
+export const mapUserSetState = function (requestFunction, userId, settingName) {
+    requestFunction(userId, settingName)
+        .then(query => {
+                const returnedUserParams = query;
+                this.updateAllStateForView(returnedUserParams)
+            }
+        )
+}
+
+export const mapFish = function (requestFunction){
+    requestFunction()
+        .then(query => {
+                const allFish = query.database1.slice();
+                this.setState({fish: allFish.slice()})
+            }
+        )
+}
+// Toggle the test sliders
+export const handleToggleSliders = function () {
+    this.setState({
+        activeSliders: !this.state.activeSliders,
+        setButtonText: this.state.setButtonText === "Test Alerts" ? "Close Test" : "Test Alerts"
+    })
+}
+// Universal on change handler
+export const changeHandler = function (name, value) {this.setState({[name]: value})}
+
+// Universal toggle handler.. binary toggle single set state
+
+export const toggleHandler = function(name)  {this.setState({[name]: !this.state[name]})}
+
+export const handleSettingNameChange = function ( event ) {
+    this.setState({settingName: event.target.value})
+}
+
+
+// handle submissions from the custom settings feature
+export const handleValidSubmit = function (event, values) {
+    this.setState({settingName: values.fname});
+    this.saveUserSettings();
+    this.mapSettings(this.getSettings);
+}
+
+export const handleInvalidSubmit = function (event, errors, values) {
+    this.setState({settingName: ''});
+}
+
+export const mapReadingsRangeSetState = function(requestFunction, from, to) {
+    requestFunction(from, to)
+        .then(query => {
+                const returnedReadings = query.database1.slice();
+                const updatedReadings = returnedReadings.map(
+                    reading => {
+                        return {
+                            ...reading
+                        }
+                    }
+                );
+                this.setState({
+                    readings: updatedReadings,
+                    startPeriod: moment(from).format('ddd, MMM Do, YYYY'),
+                    endPeriod: moment(to).format('ddd, MMM Do,  YYYY'),
+                })
+            },
+        )
+}
+
+export const mapSettings = function (requestFunction) {
+    requestFunction()
+        .then(query => {
+                const allSettings = query.database1.slice();
+                this.setState({settings: allSettings.slice()})
+            }
+        )
 }

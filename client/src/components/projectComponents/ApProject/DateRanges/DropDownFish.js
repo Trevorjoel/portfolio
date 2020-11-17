@@ -25,7 +25,7 @@ const DropdownFish = (props) =>{
                               props.allFish.map((fish, index) => {
 
                                     return (
-                                        <DropdownItem  onClick={()=>props.onFishChange(fish.id)}>{fish.fish_name}</DropdownItem>
+                                        <DropdownItem key={fish + "-" + index} onClick={()=>props.onFishChange(fish.id)}>{fish.fish_name}</DropdownItem>
                                     )
                                 })}
                             <DropdownItem divider />
@@ -35,7 +35,7 @@ const DropdownFish = (props) =>{
                                 props.allSettings.map((setting, index) => {
 
                                     return (
-                                        <DropdownItem onClick={()=>props.onSettingsChange(setting.setting_name)}>{setting.setting_name}</DropdownItem>
+                                        <DropdownItem key={"usr" + "-" + index} onClick={()=>props.onSettingsChange(setting.setting_name)}>{setting.setting_name}</DropdownItem>
                                     )
                             })}
                         </DropdownMenu>
